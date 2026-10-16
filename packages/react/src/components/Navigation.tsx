@@ -1,8 +1,11 @@
-import { Fragment, useEffect, useId, useState } from 'react';
+import { Fragment, useEffect, useId, useRef, useState } from 'react';
 import type { MouseEvent, ReactNode } from 'react';
-import { cx } from '../utils';
+import { useDismiss } from '../positioning';
+import { cx, useControllable } from '../utils';
 import { Icon } from './Icon';
 import type { IconName } from './Icon';
+import { FocusOnOpen, Floating, focusTrigger } from './Popover';
+import { Tooltip } from './Tooltip';
 
 /* ---------- Breadcrumbs ---------- */
 
@@ -196,14 +199,18 @@ export interface SidebarItem {
   badge?: ReactNode;
   active?: boolean;
   onClick?: (e: MouseEvent<HTMLAnchorElement>) => void;
-  /** Nested items; the parent becomes a toggle. */
+  /** Nested items; the parent becomes a toggle (a flyout when the sidebar is collapsed). */
   items?: SidebarItem[];
 }
 
 export interface SidebarNavProps {
   sections: Array<{ title?: string; items: SidebarItem[] }>;
-  /** Icons only; labels become tooltips. */
+  /** Icons only. Labels move into tooltips and nested items into flyouts. */
   collapsed?: boolean;
+  defaultCollapsed?: boolean;
+  onCollapsedChange?: (collapsed: boolean) => void;
+  /** Show the built-in collapse/expand icon button at the bottom. */
+  collapsible?: boolean;
   /** Accessible name. Default "Sidebar". */
   label?: string;
   header?: ReactNode;
@@ -215,21 +222,95 @@ function containsActive(it: SidebarItem): boolean {
   return !!it.active || !!it.items?.some(containsActive);
 }
 
-function SidebarEntry({ item, depth, collapsed }: { item: SidebarItem; depth: number; collapsed?: boolean }) {
-  const id = useId();
-  const [open, setOpen] = useState(() => containsActive(item));
-  const inner = (
+function ItemInner({ item, depth }: { item: SidebarItem; depth: number }) {
+  return (
     <>
       {item.icon ? <Icon name={item.icon} /> : depth === 0 && <span className="ts-icon" aria-hidden="true" />}
       <span className="ts-side-label">{item.label}</span>
       {item.badge != null && <span className="ts-side-badge">{item.badge}</span>}
     </>
   );
+}
+
+/** Collapsed mode: a group's icon opens its children in a flyout to the right. */
+function CollapsedGroup({ item }: { item: SidebarItem }) {
+  const id = useId();
+  const [open, setOpen] = useState(false);
+  const anchor = useRef<HTMLSpanElement>(null);
+  const panel = useRef<HTMLDivElement>(null);
+  useDismiss(open, [anchor, panel], () => setOpen(false));
+  const close = (refocus: boolean) => {
+    setOpen(false);
+    if (refocus) focusTrigger(anchor.current);
+  };
+  const within = containsActive(item);
+  const button = (
+    <button
+      type="button"
+      className={cx('ts-side-link', within && 'ts-side-within')}
+      aria-label={item.label}
+      aria-expanded={open}
+      aria-controls={open ? `${id}-fly` : undefined}
+      onClick={() => setOpen(!open)}
+    >
+      <ItemInner item={item} depth={0} />
+    </button>
+  );
+  return (
+    <li>
+      <span ref={anchor} className="ts-anchor ts-side-anchor">
+        <Tooltip content={item.label} placement="right" open={open ? false : undefined}>
+          {button}
+        </Tooltip>
+      </span>
+      <Floating
+        anchorRef={anchor}
+        open={open}
+        placement="right-start"
+        offset={10}
+        floatingRef={panel}
+        id={`${id}-fly`}
+        className="ts-side-flyout"
+        onKeyDown={(e) => {
+          if (e.key === 'Escape') {
+            e.stopPropagation();
+            close(true);
+          }
+        }}
+      >
+        <FocusOnOpen panelRef={panel} />
+        <div className="ts-side-title">{item.label}</div>
+        <ul className="ts-side-list">
+          {item.items!.map((c, i) => (
+            <li key={i}>
+              <a
+                className="ts-side-link"
+                href={c.href}
+                aria-current={c.active ? 'page' : undefined}
+                onClick={(e) => {
+                  c.onClick?.(e);
+                  close(false);
+                }}
+              >
+                <ItemInner item={c} depth={1} />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </Floating>
+    </li>
+  );
+}
+
+function SidebarEntry({ item, depth, collapsed }: { item: SidebarItem; depth: number; collapsed: boolean }) {
+  const id = useId();
+  const [open, setOpen] = useState(() => containsActive(item));
   if (item.items?.length) {
+    if (collapsed && depth === 0) return <CollapsedGroup item={item} />;
     return (
       <li>
-        <button type="button" className={cx('ts-side-link', containsActive(item) && 'ts-side-within')} aria-expanded={open} aria-controls={`${id}-sub`} onClick={() => setOpen(!open)} title={collapsed ? item.label : undefined}>
-          {inner}
+        <button type="button" className={cx('ts-side-link', containsActive(item) && 'ts-side-within')} aria-expanded={open} aria-controls={`${id}-sub`} onClick={() => setOpen(!open)}>
+          <ItemInner item={item} depth={depth} />
           <Icon name="chevron" className="ts-side-chev" />
         </button>
         <ul id={`${id}-sub`} className="ts-side-sub" hidden={!open}>
@@ -240,17 +321,28 @@ function SidebarEntry({ item, depth, collapsed }: { item: SidebarItem; depth: nu
       </li>
     );
   }
+  const link = (
+    <a className="ts-side-link" href={item.href} aria-current={item.active ? 'page' : undefined} aria-label={collapsed ? item.label : undefined} onClick={item.onClick}>
+      <ItemInner item={item} depth={depth} />
+    </a>
+  );
   return (
     <li>
-      <a className="ts-side-link" href={item.href} aria-current={item.active ? 'page' : undefined} onClick={item.onClick} title={collapsed ? item.label : undefined}>
-        {inner}
-      </a>
+      {collapsed ? (
+        <Tooltip content={item.label} placement="right">
+          {link}
+        </Tooltip>
+      ) : (
+        link
+      )}
     </li>
   );
 }
 
-/** Vertical navigation for apps and docs: grouped sections, nested items, an optional icon-only mode. */
-export function SidebarNav({ sections, collapsed, label = 'Sidebar', header, footer, className }: SidebarNavProps) {
+/** Vertical navigation for apps and docs: grouped sections, nested items, an icon-only mode. */
+export function SidebarNav({ sections, collapsed: collapsedProp, defaultCollapsed = false, onCollapsedChange, collapsible, label = 'Sidebar', header, footer, className }: SidebarNavProps) {
+  const [collapsed, setCollapsed] = useControllable(collapsedProp, defaultCollapsed, onCollapsedChange);
+  const toggleLabel = collapsed ? 'Expand sidebar' : 'Collapse sidebar';
   return (
     <nav aria-label={label} className={cx('ts-sidebar', collapsed && 'ts-sidebar-collapsed', className)}>
       {header && <div className="ts-sidebar-head">{header}</div>}
@@ -266,7 +358,18 @@ export function SidebarNav({ sections, collapsed, label = 'Sidebar', header, foo
           </Fragment>
         ))}
       </div>
-      {footer && <div className="ts-sidebar-foot">{footer}</div>}
+      {(footer || collapsible) && (
+        <div className="ts-sidebar-foot">
+          {footer && <div className="ts-sidebar-foot-content">{footer}</div>}
+          {collapsible && (
+            <Tooltip content={toggleLabel} placement="right">
+              <button type="button" className="ts-sidebar-toggle ts-focus" aria-label={toggleLabel} aria-pressed={collapsed} onClick={() => setCollapsed(!collapsed)}>
+                <Icon name="sidebar" />
+              </button>
+            </Tooltip>
+          )}
+        </div>
+      )}
     </nav>
   );
 }

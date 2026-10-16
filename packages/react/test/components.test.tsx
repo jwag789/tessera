@@ -310,6 +310,36 @@ describe('Navigation', () => {
   });
 });
 
+describe('SidebarNav collapsed', () => {
+  const sections = [{ title: 'Workspace', items: [{ label: 'Home', icon: 'home' as const, href: '#' }, { label: 'Resumes', icon: 'file' as const, items: [{ label: 'Globex', href: '#', active: true }] }] }];
+
+  it('collapses with the icon toggle and keeps the highlight on the group', async () => {
+    const onCollapsedChange = vi.fn();
+    render(<SidebarNav collapsible sections={sections} onCollapsedChange={onCollapsedChange} />);
+    await userEvent.click(screen.getByRole('button', { name: 'Collapse sidebar' }));
+    expect(onCollapsedChange).toHaveBeenCalledWith(true);
+    const toggle = screen.getByRole('button', { name: 'Expand sidebar' });
+    expect(toggle).toHaveAttribute('aria-pressed', 'true');
+    // The active sub-item is no longer in the list; its group's icon carries the highlight.
+    expect(screen.queryByRole('link', { name: 'Globex' })).not.toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Resumes' })).toHaveClass('ts-side-within');
+    expect(screen.getByRole('link', { name: 'Home' })).toBeInTheDocument();
+  });
+
+  it('opens a group as a flyout and closes it on Escape', async () => {
+    render(<SidebarNav defaultCollapsed sections={sections} />);
+    const group = screen.getByRole('button', { name: 'Resumes' });
+    await userEvent.click(group);
+    expect(group).toHaveAttribute('aria-expanded', 'true');
+    const link = await screen.findByRole('link', { name: 'Globex' });
+    expect(link).toHaveAttribute('aria-current', 'page');
+    await waitFor(() => expect(link).toHaveFocus());
+    await userEvent.keyboard('{Escape}');
+    expect(group).toHaveAttribute('aria-expanded', 'false');
+    expect(group).toHaveFocus();
+  });
+});
+
 describe('DatePicker', () => {
   it('opens a calendar, moves by keyboard and picks a day', async () => {
     const onChange = vi.fn();

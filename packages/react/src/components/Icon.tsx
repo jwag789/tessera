@@ -12,6 +12,7 @@ const PATHS = {
   search: 'M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3',
   mail: 'M3 6h18v12H3zM3 7l9 6 9-6',
   menu: 'M4 6h16M4 12h16M4 18h16',
+  sidebar: 'M4 5h16v14H4zM9.5 5v14M6 9h1.5M6 12h1.5',
   more: 'M5 12h.01M12 12h.01M19 12h.01',
   calendar: 'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',
   home: 'M3 11l9-7 9 7M5 10v10h14V10',

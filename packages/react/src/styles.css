@@ -379,11 +379,33 @@
 .ts-side-link[aria-current="page"] .ts-side-badge { background: var(--lapis); color: var(--on-lapis); }
 .ts-side-chev { transition: transform var(--duration-base) var(--ease-spring); }
 .ts-side-link[aria-expanded="true"] .ts-side-chev { transform: rotate(180deg); }
+.ts-sidebar-foot { display: flex; align-items: center; gap: var(--space-2); }
+.ts-sidebar-foot-content { flex: 1; min-width: 0; }
+.ts-sidebar-toggle { flex: none; margin-left: auto; width: 32px; height: 32px; display: grid; place-items: center; border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface); color: var(--ink-muted); cursor: pointer; transition: color var(--duration-fast), background var(--duration-fast), border-color var(--duration-fast); }
+.ts-sidebar-toggle:hover { color: var(--ink); background: var(--surface-sunken); border-color: var(--line-strong); }
+.ts-sidebar-toggle .ts-icon { width: 18px; height: 18px; transition: transform var(--duration-base) var(--ease-spring); }
+.ts-sidebar-toggle:active .ts-icon { transform: scale(.85); }
+.ts-sidebar-collapsed .ts-sidebar-toggle .ts-icon { transform: scaleX(-1); }
+.ts-sidebar-collapsed .ts-sidebar-toggle:active .ts-icon { transform: scaleX(-1) scale(.85); }
+
+/* Collapsed: icons only; labels move to tooltips, groups open as flyouts */
 .ts-sidebar-collapsed { width: 68px; }
-.ts-sidebar-collapsed .ts-side-label, .ts-sidebar-collapsed .ts-side-badge, .ts-sidebar-collapsed .ts-side-chev, .ts-sidebar-collapsed .ts-side-title { display: none; }
-.ts-sidebar-collapsed .ts-side-link { justify-content: center; }
-.ts-sidebar-collapsed .ts-side-sub { padding-left: 0; }
-.ts-sidebar-collapsed .ts-side-sub::before { display: none; }
+.ts-sidebar-collapsed .ts-sidebar-head { padding-inline: var(--space-3); display: flex; justify-content: center; }
+.ts-sidebar-collapsed .ts-sidebar-body { padding-inline: var(--space-2); }
+.ts-sidebar-collapsed .ts-side-label, .ts-sidebar-collapsed .ts-side-badge, .ts-sidebar-collapsed .ts-side-chev, .ts-sidebar-collapsed .ts-side-title, .ts-sidebar-collapsed .ts-side-sub, .ts-sidebar-collapsed .ts-sidebar-foot-content { display: none; }
+.ts-sidebar-collapsed .ts-side-list + .ts-side-list { margin-top: var(--space-3); padding-top: var(--space-3); border-top: 1px solid var(--line); }
+.ts-sidebar-collapsed .ts-side-link { justify-content: center; padding: 9px 0; }
+.ts-sidebar-collapsed .ts-side-link .ts-icon { width: 18px; height: 18px; }
+.ts-sidebar-collapsed .ts-side-within { background: var(--lapis-soft); color: var(--lapis); }
+.ts-sidebar-collapsed .ts-sidebar-foot { padding-inline: 0; justify-content: center; }
+.ts-sidebar-collapsed .ts-sidebar-toggle { margin-left: 0; }
+.ts-side-anchor { display: flex; width: 100%; }
+.ts-side-anchor > .ts-anchor { display: flex; width: 100%; }
+.ts-sidebar .ts-anchor { display: flex; }
+.ts-sidebar-collapsed .ts-side-list > li > .ts-anchor { width: 100%; }
+.ts-side-flyout { min-width: 220px; padding: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); }
+.ts-side-flyout .ts-side-title { padding: 6px 10px 6px; }
+.ts-side-flyout .ts-side-link { animation: ts-opt-in var(--duration-slow) var(--ease-out) both; }
 
 /* Command palette */
 .ts-cmd-overlay { align-items: start; padding-top: min(18vh, 140px); }

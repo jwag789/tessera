@@ -313,7 +313,7 @@ export const DEMOS: Demo[] = [
     isNew: true,
     layout: 'wide',
     render: () => <SidebarDemo />,
-    snippet: '<SidebarNav sections={[\n  { title: "Workspace", items: [\n    { label: "Home", icon: "home", href: "/", active: true },\n    { label: "Resumes", icon: "file", badge: 4, items: [\n      { label: "Frontend — Globex", href: "/r/1" },\n    ] },\n  ] },\n]} />'
+    snippet: '<SidebarNav collapsible sections={[\n  { title: "Workspace", items: [\n    { label: "Home", icon: "home", href: "/", active: true },\n    { label: "Resumes", icon: "file", badge: 4, items: [\n      { label: "Frontend — Globex", href: "/r/1" },\n    ] },\n  ] },\n]} />'
   },
   {
     name: 'Tabs',
@@ -600,7 +600,9 @@ function SidebarDemo() {
   return (
     <div className="demo-frame demo-frame-side">
       <SidebarNav
+        collapsible
         collapsed={collapsed}
+        onCollapsedChange={setCollapsed}
         header={
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, font: '800 17px/1 var(--font-display)' }}>
             {mark}
@@ -627,13 +629,8 @@ function SidebarDemo() {
           },
           { title: 'Account', items: [{ label: 'Profile', icon: 'user', href: '#c-SidebarNav' }, { label: 'Settings', icon: 'settings', href: '#c-SidebarNav' }] }
         ]}
-        footer={
-          <Button size="sm" variant="ghost" block iconLeft={<Icon name={collapsed ? 'chevron-right' : 'chevron-left'} />} onClick={() => setCollapsed(!collapsed)}>
-            {collapsed ? '' : 'Collapse'}
-          </Button>
-        }
       />
-      <div className="demo-frame-body">Open “Resumes”, then try Collapse.</div>
+      <div className="demo-frame-body">Collapse it with the icon at the bottom, then click the Resumes icon to open its flyout.</div>
     </div>
   );
 }
