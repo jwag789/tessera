@@ -1,0 +1,14 @@
+// Writes dist/styles.css (tokens + component styles, one import for consumers) and dist/fonts.css.
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
+
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const require = createRequire(import.meta.url);
+const tokensCss = readFileSync(require.resolve('@tessera/tokens/tokens.css'), 'utf8');
+const componentsCss = readFileSync(join(root, 'src/styles.css'), 'utf8');
+mkdirSync(join(root, 'dist'), { recursive: true });
+writeFileSync(join(root, 'dist/styles.css'), tokensCss + '\n' + componentsCss);
+writeFileSync(join(root, 'dist/fonts.css'), readFileSync(join(root, 'src/fonts.css'), 'utf8'));
+console.log('css: dist/styles.css, dist/fonts.css');

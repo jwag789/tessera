@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "types": ["vite/client"],
+    "paths": {
+      "@tessera/react": ["../../packages/react/src/index.ts"]
+    }
+  },
+  "include": ["src"]
+}

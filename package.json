@@ -1,0 +1,23 @@
+{
+  "name": "tessera",
+  "private": true,
+  "description": "Tessera: a bold, tile-built design system and React component library.",
+  "workspaces": [
+    "packages/tokens",
+    "packages/react",
+    "apps/docs"
+  ],
+  "scripts": {
+    "build": "npm run build -w @tessera/tokens && npm run build -w @tessera/react && npm run build -w @tessera/docs",
+    "build:packages": "npm run build -w @tessera/tokens && npm run build -w @tessera/react",
+    "dev": "npm run build -w @tessera/tokens && npm run dev -w @tessera/docs",
+    "test": "npm run build -w @tessera/tokens && npm run test -w @tessera/react",
+    "typecheck": "npm run build -w @tessera/tokens && npm run typecheck -w @tessera/react && npm run typecheck -w @tessera/docs"
+  },
+  "devDependencies": {
+    "typescript": "5.6.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

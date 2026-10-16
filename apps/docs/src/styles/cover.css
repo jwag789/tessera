@@ -1,0 +1,32 @@
+/* The animated cover: laid out at 960×288 and scaled to fit. */
+.cv { position:relative; height:288px; overflow:hidden; }
+.cv-art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
+.cv-art svg { display:block; width:480px; height:288px; overflow:visible; }
+.cv-brand { fill:var(--lapis); }
+.cv-deep { fill:var(--ink); }
+.cv-tint { fill:var(--lapis-soft); }
+.cv-accent { fill:var(--saffron); }
+.cv-ground { fill:var(--bg); }
+.cv-blk { rx:var(--radius-lg); }
+.cv-tile { rx:var(--radius-sm); }
+.cv-sq { rx:var(--radius-md); }
+.cv rect { transform-box:fill-box; transform-origin:center; }
+.cv-slab { animation:cv-slab var(--duration-reveal) var(--ease-out) both; transform-origin:top; }
+.cv-slide { animation:cv-slide var(--duration-reveal) var(--ease-out) both; animation-delay:120ms; }
+.cv-fade { animation:cv-fade var(--duration-slow) var(--ease-out) both; animation-delay:260ms; }
+.cv-drop { animation:cv-drop var(--duration-slow) var(--ease-spring) both; }
+.cv-pop { animation:cv-pop var(--duration-slow) var(--ease-spring) both; }
+.cv-shadow { animation:cv-fade var(--duration-base) linear both; animation-delay:1500ms; }
+.cv-odd { animation:cv-odd 1s var(--ease-spring) both; animation-delay:1250ms; }
+@keyframes cv-slab { from { transform:scaleY(0); } to { transform:none; } }
+@keyframes cv-slide { from { transform:translateX(60%); } to { transform:none; } }
+@keyframes cv-fade { from { opacity:0; } to { opacity:1; } }
+@keyframes cv-drop { from { opacity:0; transform:translateY(-40px) scale(.6); } to { opacity:1; transform:none; } }
+@keyframes cv-pop { from { transform:scale(0); } to { transform:none; } }
+@keyframes cv-odd { 0% { opacity:0; transform:translate(-40px, 120px) rotate(-90deg) scale(.4); } 60% { opacity:1; transform:translate(4px, 4px) rotate(4deg); } 100% { transform:none; } }
+.cv-words { position:absolute; left:var(--space-8); bottom:var(--space-8); max-width:440px; }
+.cv-name { margin:0; font-family:var(--font-display); font-size:104px; line-height:.92; font-weight:800; letter-spacing:-.035em; font-variation-settings:'opsz' 96; color:var(--ink); display:flex; }
+.cv-name span { display:inline-block; animation:cv-letter var(--duration-reveal) var(--ease-out) both; }
+@keyframes cv-letter { from { opacity:0; transform:translateY(40%); } to { opacity:1; transform:none; } }
+.cv-tag { margin:var(--space-3) 0 0 4px; font-size:14px; line-height:20px; color:var(--ink-muted); animation:cv-fade var(--duration-reveal) var(--ease-out) both; animation-delay:700ms; }
+@media (prefers-reduced-motion: reduce) { .cv * { animation:none !important; } }
