@@ -224,3 +224,21 @@ a { color: var(--link); }
 .d-props td code:not(.d-prop-type):not(.d-prop-name code) { font: 400 .9em/1 var(--font-mono); background: var(--surface-sunken); padding: 2px 5px; border-radius: var(--radius-sm); }
 .demo-spin-accent { color: var(--saffron); }
 .d-prop-default { white-space: nowrap; overflow-wrap: normal; }
+
+/* Layout explainer */
+.lay-legend { margin: 0; display: flex; align-items: center; flex-wrap: wrap; gap: 6px 10px; font: 400 13px/18px var(--font-sans); color: var(--ink-muted); }
+.lay-swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: middle; }
+.lay-swatch-box { background: var(--lapis-soft); border: 1.5px solid var(--lapis); }
+.lay-swatch-gap { background: repeating-linear-gradient(135deg, var(--saffron) 0 2px, transparent 2px 6px); border: 1px solid var(--saffron-deep); }
+.lay-panels { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+.lay-panel { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface); min-width: 0; }
+.lay-head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-3); flex-wrap: wrap; }
+.lay-head b { font: 700 16px/22px var(--font-display); letter-spacing: -.01em; }
+.lay-head code { font: 500 12px/16px var(--font-mono); color: var(--lapis); background: var(--lapis-soft); padding: 2px 6px; border-radius: var(--radius-sm); }
+.lay-note { margin: 0; font: 400 13px/18px var(--font-sans); color: var(--ink-muted); }
+.lay-canvas { margin-top: var(--space-2); padding: var(--space-3); border-radius: var(--radius-md); background: var(--bg); min-height: 120px; }
+.lay-gapped { background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--saffron) 55%, transparent) 0 2px, transparent 2px 6px); border-radius: 4px; transition: gap var(--duration-base) var(--ease-out), row-gap var(--duration-base) var(--ease-out), column-gap var(--duration-base) var(--ease-out); }
+.lay-box { display: grid; place-items: center; min-height: 34px; padding: 0 var(--space-3); border-radius: 4px; background: var(--lapis-soft); border: 1.5px solid var(--lapis); color: var(--lapis); font: 600 12px/16px var(--font-mono); white-space: nowrap; }
+.lay-box-wide { justify-items: start; }
+.lay-container-frame { padding: var(--space-2) 0; background: repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 12px); border-radius: 4px; }
+.lay-container { background: var(--surface); border-inline: 2px dashed var(--lapis); max-width: 240px !important; padding-block: var(--space-3); }

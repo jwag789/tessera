@@ -692,29 +692,8 @@ export const DEMOS: Demo[] = [
     isNew: true,
     layout: 'wide',
     props: ['Stack', 'Inline', 'Grid', 'Container', 'Divider'],
-    render: () => (
-      <Container size="lg" style={{ paddingInline: 0 }}>
-        <Stack gap={5}>
-          <Inline gap={2} justify="between">
-            <h3 className="heading-sm" style={{ margin: 0 }}>Templates</h3>
-            <Inline gap={2}>
-              <Button size="sm" variant="ghost">Import</Button>
-              <Button size="sm">New</Button>
-            </Inline>
-          </Inline>
-          <Grid minChildWidth={180} gap={4}>
-            {['Mono', 'Serif', 'Grid'].map((t) => (
-              <Card key={t} title={t} eyebrow="Template" interactive />
-            ))}
-          </Grid>
-          <Divider label="or start blank" />
-          <Inline justify="center">
-            <Button variant="secondary" iconLeft={<Icon name="plus" />}>Blank resume</Button>
-          </Inline>
-        </Stack>
-      </Container>
-    ),
-    snippet: '<Container size="lg">\n  <Stack gap={5}>\n    <Inline justify="between">…</Inline>\n    <Grid minChildWidth={180} gap={4}>{cards}</Grid>\n    <Divider label="or start blank" />\n  </Stack>\n</Container>'
+    render: () => <LayoutDemo />,
+    snippet: '<Container size="lg">\n  <Stack gap={6}>\n    <Inline justify="between">\n      <h2>Templates</h2>\n      <Button>New</Button>\n    </Inline>\n    <Grid minChildWidth={200} gap={4}>{cards}</Grid>\n    <Divider label="or" />\n  </Stack>\n</Container>'
   },
   {
     name: 'ThemeProvider',
@@ -889,6 +868,79 @@ function ThemeDemo() {
       <span className="demo-note">
         Showing <b>{resolvedTheme}</b>. These docs run inside a ThemeProvider, so this switch and the one in the sidebar are the same state.
       </span>
+    </Stack>
+  );
+}
+
+const SPACE_PX: Record<number, number> = { 2: 8, 3: 12, 4: 16, 6: 24, 8: 32 };
+
+function Box({ children, wide }: { children: ReactNode; wide?: boolean }) {
+  return <span className={'lay-box' + (wide ? ' lay-box-wide' : '')}>{children}</span>;
+}
+
+function LayoutPanel({ name, code, note, children }: { name: string; code: string; note: string; children: ReactNode }) {
+  return (
+    <div className="lay-panel">
+      <div className="lay-head">
+        <b>{name}</b>
+        <code>{code}</code>
+      </div>
+      <p className="lay-note">{note}</p>
+      <div className="lay-canvas">{children}</div>
+    </div>
+  );
+}
+
+function LayoutDemo() {
+  const [gap, setGap] = useState<2 | 3 | 4 | 6 | 8>(4);
+  const [cols, setCols] = useState(140);
+  return (
+    <Stack gap={5}>
+      <Inline gap={6} align="end">
+        <div style={{ flex: '1 1 220px' }}>
+          <Slider label="gap" min={0} max={4} value={[2, 3, 4, 6, 8].indexOf(gap)} onChange={(i) => setGap(([2, 3, 4, 6, 8] as const)[i])} format={(i) => { const g = [2, 3, 4, 6, 8][i]; return `${g} · space-${g} · ${SPACE_PX[g]}px`; }} />
+        </div>
+        <div style={{ flex: '1 1 220px' }}>
+          <Slider label="Grid minChildWidth" min={80} max={240} step={20} value={cols} onChange={setCols} format={(v) => `${v}px`} />
+        </div>
+      </Inline>
+      <p className="lay-legend">
+        <span className="lay-swatch lay-swatch-box" /> child <span className="lay-swatch lay-swatch-gap" /> gap (the striped space is what the token controls)
+      </p>
+      <div className="lay-panels">
+        <LayoutPanel name="Stack" code={`<Stack gap={${gap}}>`} note="A column. The default for vertical rhythm: form fields, sections, card bodies.">
+          <Stack gap={gap} className="lay-gapped">
+            <Box wide>Heading</Box>
+            <Box wide>Paragraph</Box>
+            <Box wide>Actions</Box>
+          </Stack>
+        </LayoutPanel>
+        <LayoutPanel name="Inline" code={`<Inline gap={${gap}}>`} note={'A row that wraps. Button groups, tags, toolbars. justify="between" pushes to the ends.'}>
+          <Inline gap={gap} className="lay-gapped">
+            {['React', 'TypeScript', 'Accessibility', 'Design systems', 'Figma'].map((t) => (
+              <Box key={t}>{t}</Box>
+            ))}
+          </Inline>
+        </LayoutPanel>
+        <LayoutPanel name="Grid" code={`<Grid minChildWidth={${cols}} gap={${gap}}>`} note="As many equal columns as fit at the minimum width. Reflows from phone to desktop with no media queries.">
+          <Grid minChildWidth={cols} gap={gap} className="lay-gapped">
+            {Array.from({ length: 6 }, (_, i) => (
+              <Box key={i}>{i + 1}</Box>
+            ))}
+          </Grid>
+        </LayoutPanel>
+        <LayoutPanel name="Container + Divider" code={'<Container size="sm">'} note="Container centers content at a readable max width with the page gutter. Divider separates groups.">
+          <div className="lay-container-frame">
+            <Container size="sm" className="lay-container">
+              <Stack gap={3}>
+                <Box wide>Max width</Box>
+                <Divider label="or" />
+                <Box wide>Next group</Box>
+              </Stack>
+            </Container>
+          </div>
+        </LayoutPanel>
+      </div>
     </Stack>
   );
 }
