@@ -227,7 +227,7 @@ const THEME_NOTES: Record<string, string[]> = {
   tessera: ['Saturated lapis with one saffron tile', 'Tight corners, hard offset shadow', 'Bricolage Grotesque headings'],
   cartridge: ['Charcoal shell with light labels, in both modes', 'Green, red, blue and yellow keys that press down', 'Big Lilita One headings over Nunito'],
   polygon: ['Matte grey plastic with dark recessed panels', 'Hard 1-2px bevels, a menu cursor on the selection', 'Silkscreen pixel headings, Space Mono labels'],
-  gloop: ['Orange, slime green, grape and teal', 'Thick outlines, clashing shadows, everything a bit tilted', 'Luckiest Guy lettering over Fredoka']
+  gloop: ['Slime green and orange, with a splash of blue and purple', 'Thick outlines, clashing shadows, everything a bit tilted', 'Luckiest Guy lettering over Fredoka']
 };
 
 function ThemeSample({ name }: { name: string }) {

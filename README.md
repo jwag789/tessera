@@ -40,7 +40,7 @@ export function App() {
 
 ### Themes
 
-Tessera ships four themes, each in light and dark: **Tessera** (the default), **Cartridge** (charcoal plastic with light labels, four button colors, chunky keys that press down) and **Polygon** (matte grey plastic, dark recessed panels, hard bevels and pixel headings) and **Gloop** (90s kids-TV: orange and slime green, thick outlines, everything a bit tilted). Import a theme's CSS and pick it with `ThemeProvider`:
+Tessera ships four themes, each in light and dark: **Tessera** (the default), **Cartridge** (charcoal plastic with light labels, four button colors, chunky keys that press down) and **Polygon** (matte grey plastic, dark recessed panels, hard bevels and pixel headings) and **Gloop** (90s kids-TV: slime green and orange, thick outlines, everything a bit tilted). Import a theme's CSS and pick it with `ThemeProvider`:
 
 ```tsx
 import '@tessera/react/themes/cartridge.css';
