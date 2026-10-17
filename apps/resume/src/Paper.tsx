@@ -17,13 +17,12 @@ function Experience({ r }: { r: Resume }) {
             {e.company && <span>{e.company}</span>}
             <time>{range(e.start, e.end)}</time>
           </div>
-          {e.bullets.trim() && (
+          {e.points.some((p) => p.text.trim()) && (
             <ul>
-              {e.bullets
-                .split('\n')
-                .filter((b) => b.trim())
-                .map((b, i) => (
-                  <li key={i}>{b}</li>
+              {e.points
+                .filter((p) => p.text.trim())
+                .map((p) => (
+                  <li key={p.id}>{p.text}</li>
                 ))}
             </ul>
           )}

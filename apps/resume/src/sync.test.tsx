@@ -5,7 +5,7 @@ import type { Data } from './store';
 import { diffData } from './sync';
 
 const server = vi.hoisted(() => ({
-  data: { resumes: [], applications: [] } as Data,
+  data: { resumes: [], applications: [], achievements: [] } as Data,
   pushes: [] as unknown[],
   fail: false,
   listener: null as ((s: unknown) => void) | null
@@ -43,25 +43,26 @@ const settle = () => wait(700);
 
 beforeEach(() => {
   localStorage.clear();
-  server.data = { resumes: [], applications: [] };
+  server.data = { resumes: [], applications: [], achievements: [] };
   server.pushes = [];
   server.fail = false;
 });
 
 describe('diffData', () => {
   it('lists changed and new rows to write, and missing ones to delete', () => {
-    const before: Data = { resumes: [], applications: [app, { ...app, id: 'y' }] };
-    const after: Data = { resumes: [], applications: [{ ...app, status: 'offer' }, { ...app, id: 'z' }] };
+    const before: Data = { resumes: [], applications: [app, { ...app, id: 'y' }], achievements: [] };
+    const after: Data = { resumes: [], applications: [{ ...app, status: 'offer' }, { ...app, id: 'z' }], achievements: [] };
     const c = diffData(before, after);
     expect(c.applications.upsert.map((a) => a.id)).toEqual(['x', 'z']);
     expect(c.applications.remove).toEqual(['y']);
     expect(c.resumes).toEqual({ upsert: [], remove: [] });
+    expect(c.achievements).toEqual({ upsert: [], remove: [] });
   });
 });
 
 describe('server sync', () => {
   it('loads the account on sign-in and saves edits as one batch', async () => {
-    server.data = { resumes: [], applications: [app] };
+    server.data = { resumes: [], applications: [app], achievements: [] };
     render(<StoreProvider><Probe /></StoreProvider>);
     await signIn();
     expect(store.account?.email).toBe('ada@lovelace.dev');

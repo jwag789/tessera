@@ -12,13 +12,26 @@ export const TEMPLATES: { id: TemplateId; label: string; description: string }[]
   { id: 'compact', label: 'Compact', description: 'Tight spacing to fit more on one page.' }
 ];
 
+/** One line under a job. Linked lines (`ref`) mirror an achievement in the bank and update with it. */
+export interface Point {
+  id: string;
+  text: string;
+  ref?: string | null;
+}
 export interface Experience {
   id: string;
   role: string;
   company: string;
   start: string; // YYYY-MM
   end: string; // YYYY-MM, empty while current
-  bullets: string; // one per line
+  points: Point[];
+  /** Before points: one line per achievement. Read once on load, then dropped. */
+  bullets?: string;
+}
+/** An achievement written once and linked into any number of resumes. */
+export interface Achievement {
+  id: string;
+  text: string;
 }
 export interface Education {
   id: string;
@@ -91,6 +104,15 @@ export function blankResume(name: string, template: TemplateId): Resume {
   };
 }
 
+const SAMPLE_BANK: Achievement[] = [
+  { id: 'k1', text: 'Led the design system used by 40 engineers across 6 product teams' },
+  { id: 'k2', text: 'Cut median page load from 3.1s to 1.2s by moving rendering to the server' },
+  { id: 'k3', text: 'Mentored four engineers into senior roles' },
+  { id: 'k4', text: 'Built the checkout used by 2M customers a month' },
+  { id: 'k5', text: 'Introduced visual regression tests that caught 120 bugs before release' }
+];
+const linked = (...ids: string[]): Point[] => ids.map((id) => ({ id: `p-${id}`, text: SAMPLE_BANK.find((a) => a.id === id)!.text, ref: id }));
+
 const SAMPLE_RESUME: Resume = {
   id: 'ada',
   name: 'Frontend engineer',
@@ -106,8 +128,8 @@ const SAMPLE_RESUME: Resume = {
     summary: 'Frontend engineer who turns complicated products into calm, fast interfaces. Eight years building design systems and the apps on top of them.'
   },
   experience: [
-    { id: 'e1', role: 'Staff frontend engineer', company: 'Analytical Engines', start: '2022-03', end: '', bullets: 'Led the design system used by 40 engineers across 6 product teams\nCut median page load from 3.1s to 1.2s by moving rendering to the server\nMentored four engineers into senior roles' },
-    { id: 'e2', role: 'Frontend engineer', company: 'Babbage & Co', start: '2018-06', end: '2022-02', bullets: 'Built the checkout used by 2M customers a month\nIntroduced visual regression tests that caught 120 bugs before release' }
+    { id: 'e1', role: 'Staff frontend engineer', company: 'Analytical Engines', start: '2022-03', end: '', points: linked('k1', 'k2', 'k3') },
+    { id: 'e2', role: 'Frontend engineer', company: 'Babbage & Co', start: '2018-06', end: '2022-02', points: linked('k4', 'k5') }
   ],
   education: [{ id: 'd1', school: 'University of London', degree: 'BSc Mathematics', start: '2014-09', end: '2018-06' }],
   skills: ['TypeScript', 'React', 'Design systems', 'Accessibility', 'Performance', 'Node.js']
@@ -164,11 +186,24 @@ const KEY = 'folio:v1';
 export interface Data {
   resumes: Resume[];
   applications: Application[];
+  achievements: Achievement[];
+}
+
+/** Brings data from any version up to date: bullets become points, a missing bank becomes empty. */
+export function normalize(d: Partial<Data>): Data {
+  const resumes = (d.resumes ?? []).map((r) => ({
+    ...r,
+    experience: r.experience.map(({ bullets, ...e }) => ({
+      ...e,
+      points: e.points ?? (bullets ?? '').split('\n').filter((b) => b.trim()).map((text, i) => ({ id: `${e.id}-${i}`, text: text.trim() }))
+    }))
+  }));
+  return { resumes, applications: d.applications ?? [], achievements: d.achievements ?? [] };
 }
 function load(): Data {
   try {
     const raw = localStorage.getItem(KEY);
-    if (raw) return JSON.parse(raw) as Data;
+    if (raw) return normalize(JSON.parse(raw) as Partial<Data>);
   } catch {
     /* storage unavailable or corrupt: start from the samples */
   }
@@ -185,6 +220,7 @@ function sampleData(): Data {
   };
   return {
     resumes,
+    achievements: SAMPLE_BANK,
     applications: SAMPLE_APPS.map((a) => (a.id === 'a1' ? { ...a, snapshot: { resume: older, sentAt: a.appliedOn! } } : withSnapshot(a, resumes)))
   };
 }
@@ -201,7 +237,7 @@ export function parseBackup(text: string): Data {
   if (d?.app !== 'folio' || !Array.isArray(d.resumes) || !Array.isArray(d.applications)) {
     throw new Error('That file isn’t a Folio backup. Choose a file named like folio-backup-2026-10-17.json.');
   }
-  return { resumes: d.resumes, applications: d.applications };
+  return normalize(d);
 }
 
 /** Saves everything as a JSON file the person keeps. */
@@ -227,6 +263,12 @@ interface Store extends Data {
   removeResume: (id: string) => void;
   saveApplication: (a: Application) => void;
   removeApplication: (id: string) => void;
+  /** Adds an achievement to the bank and returns it. */
+  addAchievement: (text: string) => Achievement;
+  /** Rewrites an achievement in the bank and in every resume line linked to it. Sent copies keep their text. */
+  updateAchievement: (id: string, text: string) => void;
+  /** Removes it from the bank; linked lines keep their text and stop updating. */
+  removeAchievement: (id: string) => void;
   /** Signed in with a server account, or null when working locally. */
   account: Account | null;
   sync: SyncState;
@@ -238,12 +280,12 @@ interface Store extends Data {
 }
 const StoreContext = createContext<Store | null>(null);
 
-const EMPTY: Data = { resumes: [], applications: [] };
+const EMPTY: Data = { resumes: [], applications: [], achievements: [] };
 const cacheKey = (uid: string) => `folio:cloud:${uid}`;
 function readJson(key: string): Data | null {
   try {
     const raw = localStorage.getItem(key);
-    return raw ? (JSON.parse(raw) as Data) : null;
+    return raw ? normalize(JSON.parse(raw) as Partial<Data>) : null;
   } catch {
     return null;
   }
@@ -317,7 +359,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
           setData(server);
           setSync('saved');
           const local = readJson(KEY);
-          if (!server.resumes.length && !server.applications.length && local && (local.resumes.length || local.applications.length)) setUploadOffer(local);
+          if (!server.resumes.length && !server.applications.length && !server.achievements.length && local && (local.resumes.length || local.applications.length || local.achievements.length)) setUploadOffer(local);
         })
         .catch(() => setSync('error'));
     };
@@ -363,7 +405,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const addResume = useCallback((r: Resume) => setData((d) => ({ ...d, resumes: [r, ...d.resumes] })), []);
   const removeResume = useCallback(
     (id: string) =>
-      setData((d) => ({ resumes: d.resumes.filter((x) => x.id !== id), applications: d.applications.map((a) => (a.resumeId === id ? { ...a, resumeId: null } : a)) })),
+      setData((d) => ({ ...d, resumes: d.resumes.filter((x) => x.id !== id), applications: d.applications.map((a) => (a.resumeId === id ? { ...a, resumeId: null } : a)) })),
     []
   );
   const saveApplication = useCallback(
@@ -375,6 +417,33 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     []
   );
   const removeApplication = useCallback((id: string) => setData((d) => ({ ...d, applications: d.applications.filter((x) => x.id !== id) })), []);
+  const addAchievement = useCallback((text: string) => {
+    const a = { id: uid(), text };
+    setData((d) => ({ ...d, achievements: [...d.achievements, a] }));
+    return a;
+  }, []);
+  const updateAchievement = useCallback(
+    (id: string, text: string) =>
+      setData((d) => ({
+        ...d,
+        achievements: d.achievements.map((a) => (a.id === id ? { ...a, text } : a)),
+        resumes: d.resumes.map((r) =>
+          r.experience.some((e) => e.points.some((p) => p.ref === id))
+            ? { ...r, updatedAt: now(), experience: r.experience.map((e) => ({ ...e, points: e.points.map((p) => (p.ref === id ? { ...p, text } : p)) })) }
+            : r
+        )
+      })),
+    []
+  );
+  const removeAchievement = useCallback(
+    (id: string) =>
+      setData((d) => ({
+        ...d,
+        achievements: d.achievements.filter((a) => a.id !== id),
+        resumes: d.resumes.map((r) => ({ ...r, experience: r.experience.map((e) => ({ ...e, points: e.points.map((p) => (p.ref === id ? { ...p, ref: null } : p)) })) }))
+      })),
+    []
+  );
   const replaceAll = useCallback((d: Data) => setData(d), []);
   const retrySync = useCallback(() => void flush(), [flush]);
   const signOut = useCallback(() => void cloudSignOut(), []);
@@ -387,8 +456,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   );
 
   const value = useMemo(
-    () => ({ ...data, replaceAll, saveResume, addResume, removeResume, saveApplication, removeApplication, account, sync, retrySync, signOut, uploadOffer, answerUpload }),
-    [data, replaceAll, saveResume, addResume, removeResume, saveApplication, removeApplication, account, sync, retrySync, signOut, uploadOffer, answerUpload]
+    () => ({ ...data, replaceAll, saveResume, addResume, removeResume, saveApplication, removeApplication, addAchievement, updateAchievement, removeAchievement, account, sync, retrySync, signOut, uploadOffer, answerUpload }),
+    [data, replaceAll, saveResume, addResume, removeResume, saveApplication, removeApplication, addAchievement, updateAchievement, removeAchievement, account, sync, retrySync, signOut, uploadOffer, answerUpload]
   );
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
 }

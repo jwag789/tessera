@@ -69,7 +69,7 @@ export function BackupDialog({ open, onClose }: { open: boolean; onClose: () => 
           variant="secondary"
           iconLeft={<Icon name="file" />}
           onClick={() => {
-            downloadBackup({ resumes: store.resumes, applications: store.applications });
+            downloadBackup({ resumes: store.resumes, applications: store.applications, achievements: store.achievements });
             try {
               localStorage.setItem(BACKUP_TIP_KEY, '1');
             } catch {

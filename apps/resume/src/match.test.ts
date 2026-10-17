@@ -30,7 +30,7 @@ describe('matchPosting', () => {
   it('marks what the resume already shows, wherever it is written', () => {
     const r = resume({
       skills: ['JS', 'TypeScript'],
-      experience: [{ id: 'e', role: 'Engineer', company: 'Acme', start: '', end: '', bullets: 'Mentored three engineers\nMade checkout WCAG compliant\nBuilt payment flows' }]
+      experience: [{ id: 'e', role: 'Engineer', company: 'Acme', start: '', end: '', points: ['Mentored three engineers', 'Made checkout WCAG compliant', 'Built payment flows'].map((text, i) => ({ id: String(i), text })) }]
     });
     const m = matchPosting(POSTING, r);
     const found = new Set(m.terms.filter((t) => t.found).map((t) => t.term));

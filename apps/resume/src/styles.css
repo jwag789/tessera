@@ -40,6 +40,22 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); 
 .f-chip-count { margin-left: 4px; opacity: .7; font-variant-numeric: tabular-nums; }
 .f-sent-page { border: 1px solid var(--line); border-radius: var(--radius-md); overflow: hidden; background: #fff; max-height: 420px; overflow-y: auto; }
 
+.f-points { display: flex; flex-direction: column; gap: var(--space-3); }
+.f-point { display: flex; flex-direction: column; gap: 6px; }
+.f-point-row { display: flex; align-items: flex-start; gap: var(--space-1); }
+.f-point-input { min-height: 44px; resize: none; overflow: hidden; }
+.f-point-linked .f-point-input { border-left: 3px solid var(--lapis); }
+.f-point-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 4px var(--space-3); padding-left: 2px; }
+.f-point-badge { display: inline-flex; border-radius: var(--radius-sm); }
+.f-hint { display: inline-flex; align-items: center; gap: 4px; font: 400 12.5px/18px var(--font-sans); color: var(--ink-muted); }
+.f-hint .ts-icon { width: 13px; height: 13px; color: var(--warning); flex: none; }
+.f-points-add { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.f-bank { display: flex; flex-direction: column; gap: var(--space-3); }
+.f-bank-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; max-height: 280px; overflow-y: auto; }
+.f-bank-item { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; width: 100%; padding: 8px 10px; border: 0; border-radius: var(--radius-sm); background: none; color: var(--ink); font: 400 14px/20px var(--font-sans); text-align: left; cursor: pointer; }
+.f-bank-item:hover { background: var(--surface-sunken); }
+.f-bank-item small { font-size: 12px; color: var(--ink-muted); }
+
 /* Editor */
 .f-head-editor { align-items: flex-end; }
 .f-editor-name { display: flex; align-items: flex-end; gap: var(--space-3); flex: 1 1 320px; min-width: 0; }

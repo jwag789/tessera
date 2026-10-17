@@ -5,6 +5,7 @@ import { Accordion, Breadcrumbs, Button, Checkbox, EmptyState, Icon, Progress, S
 import { Paper } from '../Paper';
 import { SaveStatus } from '../Account';
 import { EditorMatch } from '../Tailor';
+import { Points } from '../Points';
 import { ScaledPaper } from '../ScaledPaper';
 import { TEMPLATES, uid, useStore } from '../store';
 import type { Education, Experience, Resume, TemplateId } from '../store';
@@ -47,7 +48,7 @@ function completeness(r: Resume) {
     [!!r.profile.title.trim(), 'add a headline'],
     [r.profile.summary.trim().length >= 80, 'write a summary of two or three sentences'],
     [r.experience.length > 0, 'add a job'],
-    [r.experience.some((e) => e.bullets.split('\n').filter((b) => b.trim()).length >= 2), 'list at least two achievements for a job'],
+    [r.experience.some((e) => e.points.filter((p) => p.text.trim()).length >= 2), 'list at least two achievements for a job'],
     [r.education.length > 0, 'add your education'],
     [r.skills.length >= 3, 'add at least three skills']
   ];
@@ -126,10 +127,10 @@ function Form({ r, set }: { r: Resume; set: (r: Resume) => void }) {
                     <TextField label="End" type="month" value={e.end} disabled={!e.end && !!e.start} onChange={(ev) => setExp(i, { end: ev.target.value })} />
                   </div>
                   <Checkbox label="I work here now" checked={!e.end} onChange={(ev) => setExp(i, { end: ev.target.checked ? '' : e.start })} />
-                  <Textarea label="What you did" hint="One achievement per line. Start with a verb and include a number when you can." autoResize value={e.bullets} onChange={(ev) => setExp(i, { bullets: ev.target.value })} />
+                  <Points jobTitle={e.role || e.company || `job ${i + 1}`} points={e.points} onChange={(points) => setExp(i, { points })} />
                 </Entry>
               ))}
-              <Button variant="secondary" iconLeft={<Icon name="plus" />} onClick={() => set({ ...r, experience: [...r.experience, { id: uid(), role: '', company: '', start: '', end: '', bullets: '' }] })}>
+              <Button variant="secondary" iconLeft={<Icon name="plus" />} onClick={() => set({ ...r, experience: [...r.experience, { id: uid(), role: '', company: '', start: '', end: '', points: [{ id: uid(), text: '' }] }] })}>
                 Add a job
               </Button>
             </div>

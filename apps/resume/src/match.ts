@@ -65,7 +65,7 @@ const stem = (w: string) => w.replace(/(ing|ed|es|s)$/, '').replace(/(.)\1$/, '$
 
 export function resumeText(r: Resume) {
   const p = r.profile;
-  return [p.title, p.summary, ...r.skills, ...r.experience.flatMap((e) => [e.role, e.company, e.bullets]), ...r.education.flatMap((e) => [e.degree, e.school])].join('\n');
+  return [p.title, p.summary, ...r.skills, ...r.experience.flatMap((e) => [e.role, e.company, ...e.points.map((p) => p.text)]), ...r.education.flatMap((e) => [e.degree, e.school])].join('\n');
 }
 
 /** What the posting asks for, most mentioned first, and whether the resume shows each one. */
