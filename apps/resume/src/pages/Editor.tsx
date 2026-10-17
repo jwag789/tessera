@@ -4,6 +4,7 @@ import { createPortal } from 'react-dom';
 import { Accordion, Breadcrumbs, Button, Checkbox, EmptyState, Icon, Progress, Select, Tabs, TagInput, TextField, Textarea, Tooltip, useToast } from '@tessera/react';
 import { Paper } from '../Paper';
 import { SaveStatus } from '../Account';
+import { EditorMatch } from '../Tailor';
 import { ScaledPaper } from '../ScaledPaper';
 import { TEMPLATES, uid, useStore } from '../store';
 import type { Education, Experience, Resume, TemplateId } from '../store';
@@ -205,6 +206,14 @@ export function EditorPage({ id }: { id: string }) {
   const form = (
     <div className="f-form">
       <Completeness r={resume} />
+      <EditorMatch
+        resume={resume}
+        onAddSkill={(term) => {
+          if (resume.skills.some((s) => s.toLowerCase() === term.toLowerCase())) return;
+          saveResume({ ...resume, skills: [...resume.skills, term] });
+          toast({ title: `Added ${term} to skills`, icon: 'success', action: { label: 'Undo', onClick: () => saveResume(resume) } });
+        }}
+      />
       <Form r={resume} set={saveResume} />
     </div>
   );

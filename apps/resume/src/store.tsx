@@ -55,7 +55,25 @@ export interface Application {
   resumeId: string | null;
   link: string;
   notes: string;
+  /** The job posting, pasted in, for matching. */
+  posting?: string;
+  /** The resume tailored for this job, which may differ from the one already sent. */
+  tailoredId?: string | null;
+  /** A frozen copy of the resume as it was sent. Taken when the application moves past Saved. */
+  snapshot?: { resume: Resume; sentAt: string } | null;
 }
+
+/** Keeps an application's snapshot in step with it: taken once it's sent, dropped if a different resume is chosen. */
+export function withSnapshot(a: Application, resumes: Resume[]): Application {
+  let snap = a.snapshot ?? null;
+  if (snap && snap.resume.id !== a.resumeId) snap = null;
+  const r = resumes.find((x) => x.id === a.resumeId);
+  if (!snap && r && a.status !== 'saved') snap = { resume: structuredClone(r), sentAt: a.appliedOn ?? toIsoDay(new Date()) };
+  return { ...a, snapshot: snap };
+}
+
+/** Whether a resume has been edited since a snapshot of it was taken. */
+export const editedSince = (current: Resume, snap: Resume) => JSON.stringify({ ...current, updatedAt: '' }) !== JSON.stringify({ ...snap, updatedAt: '' });
 
 export const uid = () => Math.random().toString(36).slice(2, 10);
 const now = () => new Date().toISOString();
@@ -105,8 +123,33 @@ const SAMPLE_RESUME_2: Resume = {
   skills: ['Prototyping', 'Figma', 'React', 'CSS', 'Motion', 'Design systems']
 };
 
+const GLOBEX_POSTING = `Frontend Lead, Globex
+
+Globex is hiring a Frontend Lead to own the web app that 3 million people use to manage their payments.
+
+What you'll do
+- Lead a team of five frontend engineers and mentor them as they grow
+- Own our design system with the design team, in React and TypeScript
+- Make the payments dashboard fast: you'll own web performance and Core Web Vitals
+- Make accessibility part of every release (WCAG 2.2 AA)
+- Work with product on the roadmap and present to stakeholders
+
+What we're looking for
+- 6+ years building production React apps with TypeScript
+- Experience leading engineers and doing code reviews
+- GraphQL and testing with Playwright or Cypress
+- Payments or fintech experience is a plus`;
+
+const HOOLI_POSTING = `UI Platform Engineer, Hooli
+
+Build the platform every Hooli product team ships on: our component library, build tooling and the
+patterns that keep 40 apps consistent. You'll work in TypeScript and React, own our Storybook, and
+help teams adopt the platform. Experience with Vite or Webpack, monorepos and CI/CD helps. Bonus:
+Kubernetes, Node.js and a habit of writing great documentation. The platform team partners with design
+on the design system and with every product team on platform adoption.`;
+
 const SAMPLE_APPS: Application[] = [
-  { id: 'a1', company: 'Globex', role: 'Frontend lead', status: 'interview', appliedOn: '2026-10-02', resumeId: 'ada', link: 'https://globex.example/jobs/42', notes: 'Second round on the 21st with the design team.' },
+  { id: 'a1', company: 'Globex', role: 'Frontend lead', status: 'interview', appliedOn: '2026-10-02', resumeId: 'ada', link: 'https://globex.example/jobs/42', notes: 'Second round on the 21st with the design team.', posting: GLOBEX_POSTING },
   { id: 'a2', company: 'Northwind', role: 'Staff engineer', status: 'applied', appliedOn: '2026-10-09', resumeId: 'ada', link: '', notes: '' },
   { id: 'a3', company: 'Umbrella', role: 'Design engineer', status: 'offer', appliedOn: '2026-09-18', resumeId: 'ada-design', link: '', notes: 'Offer expires Oct 30.' },
   { id: 'a4', company: 'Initech', role: 'Senior frontend engineer', status: 'rejected', appliedOn: '2026-09-04', resumeId: 'ada', link: '', notes: '' },
@@ -114,7 +157,7 @@ const SAMPLE_APPS: Application[] = [
   { id: 'a7', company: 'Stark Industries', role: 'Design systems lead', status: 'interview', appliedOn: '2026-09-29', resumeId: 'ada-design', link: '', notes: 'Portfolio review Friday.' },
   { id: 'a8', company: 'Wonka', role: 'Creative technologist', status: 'saved', appliedOn: null, resumeId: null, link: '', notes: '' },
   { id: 'a9', company: 'Cyberdyne', role: 'Senior UI engineer', status: 'applied', appliedOn: '2026-10-15', resumeId: 'ada', link: '', notes: '' },
-  { id: 'a5', company: 'Hooli', role: 'UI platform engineer', status: 'saved', appliedOn: null, resumeId: null, link: 'https://hooli.example/careers', notes: 'Referral from Grace.' }
+  { id: 'a5', company: 'Hooli', role: 'UI platform engineer', status: 'saved', appliedOn: null, resumeId: null, link: 'https://hooli.example/careers', notes: 'Referral from Grace.', posting: HOOLI_POSTING }
 ];
 
 const KEY = 'folio:v1';
@@ -129,7 +172,21 @@ function load(): Data {
   } catch {
     /* storage unavailable or corrupt: start from the samples */
   }
-  return { resumes: [SAMPLE_RESUME, SAMPLE_RESUME_2], applications: SAMPLE_APPS };
+  return sampleData();
+}
+
+/** The samples, with the resume each sent application went out with. Globex got an older draft. */
+function sampleData(): Data {
+  const resumes = [SAMPLE_RESUME, SAMPLE_RESUME_2];
+  const older: Resume = {
+    ...SAMPLE_RESUME,
+    profile: { ...SAMPLE_RESUME.profile, summary: 'Frontend engineer with eight years of experience building web apps and design systems.' },
+    skills: ['JavaScript', 'React', 'CSS', 'Design systems']
+  };
+  return {
+    resumes,
+    applications: SAMPLE_APPS.map((a) => (a.id === 'a1' ? { ...a, snapshot: { resume: older, sentAt: a.appliedOn! } } : withSnapshot(a, resumes)))
+  };
 }
 
 /** Reads a backup file's text. Throws a readable message if it isn't one. */
@@ -310,8 +367,11 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     []
   );
   const saveApplication = useCallback(
-    (a: Application) =>
-      setData((d) => ({ ...d, applications: d.applications.some((x) => x.id === a.id) ? d.applications.map((x) => (x.id === a.id ? a : x)) : [a, ...d.applications] })),
+    (raw: Application) =>
+      setData((d) => {
+        const a = withSnapshot(raw, d.resumes);
+        return { ...d, applications: d.applications.some((x) => x.id === a.id) ? d.applications.map((x) => (x.id === a.id ? a : x)) : [a, ...d.applications] };
+      }),
     []
   );
   const removeApplication = useCallback((id: string) => setData((d) => ({ ...d, applications: d.applications.filter((x) => x.id !== id) })), []);

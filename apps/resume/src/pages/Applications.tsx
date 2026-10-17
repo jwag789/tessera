@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Avatar, Badge, Button, Combobox, DatePicker, Drawer, EmptyState, Icon, Popover, Select, Stepper, Table, TextField, Textarea, useToast } from '@tessera/react';
+import { Alert, Avatar, Badge, Button, Combobox, DatePicker, Drawer, EmptyState, Icon, Popover, Select, Stepper, Table, Tabs, TextField, Textarea, useToast } from '@tessera/react';
 import type { TableColumn } from '@tessera/react';
 import { STATUSES, formatDay, fromIsoDay, toIsoDay, uid, useStore } from '../store';
 import type { Application, Status } from '../store';
 import { go } from '../route';
+import { MatchPanel, SentVersion } from '../Tailor';
+import { matchPosting, tailor } from '../match';
 
 const blank = (): Application => ({ id: uid(), company: '', role: '', status: 'saved', appliedOn: null, resumeId: null, link: '', notes: '' });
 const statusOf = (s: Status) => STATUSES.find((x) => x.id === s)!;
@@ -84,7 +86,7 @@ function StatusCell({ app }: { app: Application }) {
 }
 
 function ApplicationDrawer({ app, isNew, onClose }: { app: Application | null; isNew: boolean; onClose: () => void }) {
-  const { resumes, applications, saveApplication, removeApplication } = useStore();
+  const { resumes, applications, saveApplication, removeApplication, addResume } = useStore();
   const { toast } = useToast();
   // Names already used, so a second job at the same company is spelled the same way.
   const unique = (xs: string[]) => [...new Set(xs.map((x) => x.trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b));
@@ -92,9 +94,11 @@ function ApplicationDrawer({ app, isNew, onClose }: { app: Application | null; i
   const roles = useMemo(() => unique(applications.map((a) => a.role)), [applications]);
   const [draft, setDraft] = useState<Application>(app ?? blank());
   const [tried, setTried] = useState(false);
+  const [tab, setTab] = useState('details');
   useEffect(() => {
     setDraft(app ?? blank());
     setTried(false);
+    setTab('details');
   }, [app]);
   const set = (patch: Partial<Application>) => setDraft((d) => ({ ...d, ...patch }));
   const missing = !draft.company.trim();
@@ -106,6 +110,22 @@ function ApplicationDrawer({ app, isNew, onClose }: { app: Application | null; i
     toast({ title: isNew ? 'Application added' : 'Application saved', description: draft.company, icon: 'success' });
     onClose();
   };
+  const resume = resumes.find((r) => r.id === draft.resumeId) ?? null;
+  const match = useMemo(() => matchPosting(draft.posting ?? '', resume), [draft.posting, resume]);
+  /** A copy of the chosen resume for this job, attached to it if it hasn't been sent yet, opened in the editor. */
+  const tailorCopy = () => {
+    setTried(true);
+    if (missing || !resume) return;
+    const company = draft.company.trim();
+    const copy = tailor(resume, match, `${resume.name} · ${company}`, uid());
+    addResume(copy);
+    const sent = draft.status !== 'saved';
+    saveApplication({ ...draft, company, role: draft.role.trim(), resumeId: sent ? draft.resumeId : copy.id, tailoredId: copy.id });
+    toast({ title: 'Tailored copy created', description: sent ? `${copy.name}. The sent version stays attached.` : copy.name, icon: 'success' });
+    onClose();
+    go(`/resume/${copy.id}`);
+  };
+
   const remove = () => {
     const gone = draft;
     removeApplication(gone.id);
@@ -133,36 +153,92 @@ function ApplicationDrawer({ app, isNew, onClose }: { app: Application | null; i
         </>
       }
     >
-      <form
-        className="f-form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          save();
-        }}
-      >
-        <Pipeline status={draft.status} onChange={(s) => set({ status: s, appliedOn: s === 'applied' && !draft.appliedOn ? toIsoDay(new Date()) : draft.appliedOn })} />
-        <Combobox
-          label="Company"
-          allowCustom
-          options={companies}
-          value={draft.company || null}
-          onChange={(v) => set({ company: v ?? '' })}
-          placeholder="Type a company"
-          emptyText="Type a company name"
-          error={tried && missing ? 'Add the company name.' : undefined}
-        />
-        <Combobox label="Role" allowCustom options={roles} value={draft.role || null} onChange={(v) => set({ role: v ?? '' })} placeholder="e.g. Frontend engineer" emptyText="Type a role" />
-        <Select label="Status" value={draft.status} onChange={(v) => set({ status: v as Status })} options={STATUSES.map((s) => ({ value: s.id, label: s.label }))} />
-        <DatePicker label="Applied on" value={fromIsoDay(draft.appliedOn)} onChange={(d) => set({ appliedOn: toIsoDay(d) })} max={new Date()} placeholder="Not yet" />
-        <Select
-          label="Resume sent"
-          value={draft.resumeId ?? 'none'}
-          onChange={(v) => set({ resumeId: v === 'none' ? null : v })}
-          options={[{ value: 'none', label: 'None yet' }, ...resumes.map((r) => ({ value: r.id, label: r.name }))]}
-        />
-        <TextField label="Job posting" type="url" icon="external" placeholder="https://" value={draft.link} onChange={(e) => set({ link: e.target.value })} />
-        <Textarea label="Notes" hint="Contacts, interview dates, what they asked." autoResize value={draft.notes} onChange={(e) => set({ notes: e.target.value })} />
-      </form>
+      <Tabs
+        label="Application"
+        value={tab}
+        onChange={setTab}
+        items={[
+          {
+            id: 'details',
+            label: 'Details',
+            content: (
+          <form
+            className="f-form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              save();
+            }}
+          >
+            <Pipeline status={draft.status} onChange={(s) => set({ status: s, appliedOn: s === 'applied' && !draft.appliedOn ? toIsoDay(new Date()) : draft.appliedOn })} />
+            <Combobox
+              label="Company"
+              allowCustom
+              options={companies}
+              value={draft.company || null}
+              onChange={(v) => set({ company: v ?? '' })}
+              placeholder="Type a company"
+              emptyText="Type a company name"
+              error={tried && missing ? 'Add the company name.' : undefined}
+            />
+            <Combobox label="Role" allowCustom options={roles} value={draft.role || null} onChange={(v) => set({ role: v ?? '' })} placeholder="e.g. Frontend engineer" emptyText="Type a role" />
+            <Select label="Status" value={draft.status} onChange={(v) => set({ status: v as Status })} options={STATUSES.map((s) => ({ value: s.id, label: s.label }))} />
+            <DatePicker label="Applied on" value={fromIsoDay(draft.appliedOn)} onChange={(d) => set({ appliedOn: toIsoDay(d) })} max={new Date()} placeholder="Not yet" />
+            <Select
+              label="Resume sent"
+              value={draft.resumeId ?? 'none'}
+              onChange={(v) => set({ resumeId: v === 'none' ? null : v })}
+              options={[{ value: 'none', label: 'None yet' }, ...resumes.map((r) => ({ value: r.id, label: r.name }))]}
+            />
+            <TextField label="Link to the posting" type="url" icon="external" placeholder="https://" value={draft.link} onChange={(e) => set({ link: e.target.value })} />
+            <Textarea label="Notes" hint="Contacts, interview dates, what they asked." autoResize value={draft.notes} onChange={(e) => set({ notes: e.target.value })} />
+          </form>
+            )
+          },
+          {
+            id: 'match',
+            label: match.total ? `Match ${match.found}/${match.total}` : 'Match',
+            content: (
+              <div className="f-form">
+                <Textarea
+                  label="Job posting"
+                  hint="Paste the whole ad. It stays in Folio and is only compared with your resume."
+                  rows={6}
+                  autoResize={false}
+                  value={draft.posting ?? ''}
+                  onChange={(e) => set({ posting: e.target.value })}
+                />
+                {resume ? (
+                  <>
+                    <p className="f-meta">
+                      Comparing with <b>{resume.name}</b>. Change it under Details.
+                    </p>
+                    <MatchPanel match={match} />
+                    {match.total > 0 && (
+                      <Button variant="secondary" iconLeft={<Icon name="copy" />} onClick={tailorCopy}>
+                        Tailor a copy for {draft.company.trim() || 'this job'}
+                      </Button>
+                    )}
+                  </>
+                ) : (
+                  <Alert tone="info" title="Choose a resume to compare">
+                    <span className="f-alert-body">
+                      Pick the resume you’re sending under Details.
+                      <Button size="sm" variant="secondary" onClick={() => setTab('details')}>
+                        Go to Details
+                      </Button>
+                    </span>
+                  </Alert>
+                )}
+              </div>
+            )
+          },
+          {
+            id: 'sent',
+            label: 'Sent version',
+            content: <SentVersion app={draft} onReplace={(r) => set({ snapshot: { resume: structuredClone(r), sentAt: toIsoDay(new Date()) } })} />
+          }
+        ]}
+      />
     </Drawer>
   );
 }
