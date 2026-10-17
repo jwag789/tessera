@@ -222,12 +222,12 @@ export function BrandPage() {
 
 /* ---------- themes ---------- */
 
-const THEME_ORDER = ['tessera', 'soft', 'cartridge', 'polygon'];
+const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop'];
 const THEME_NOTES: Record<string, string[]> = {
   tessera: ['Saturated lapis with one saffron tile', 'Tight corners, hard offset shadow', 'Bricolage Grotesque headings'],
-  soft: ['Periwinkle and apricot', 'Rounder corners, soft lifted shadows', 'Same type, same layout'],
   cartridge: ['Charcoal shell with light labels, in both modes', 'Green, red, blue and yellow keys that press down', 'Big Lilita One headings over Nunito'],
-  polygon: ['Matte grey plastic with dark recessed panels', 'Hard 1-2px bevels, a menu cursor on the selection', 'Silkscreen pixel headings, Space Mono labels']
+  polygon: ['Matte grey plastic with dark recessed panels', 'Hard 1-2px bevels, a menu cursor on the selection', 'Silkscreen pixel headings, Space Mono labels'],
+  gloop: ['Orange, slime green, grape and teal', 'Thick outlines, clashing shadows, everything a bit tilted', 'Luckiest Guy lettering over Fredoka']
 };
 
 function ThemeSample({ name }: { name: string }) {
@@ -315,7 +315,7 @@ export function ThemesPage() {
         label="main.tsx"
         src={`import '@tessera/react/styles.css';
 import '@tessera/react/themes/cartridge.css';       // the theme's tokens and treatments
-import '@tessera/react/themes/cartridge-fonts.css'; // its fonts (Cartridge and Polygon)
+import '@tessera/react/themes/cartridge-fonts.css'; // its fonts (every theme but Tessera)
 
 <ThemeProvider defaultBrand="cartridge" storageKey="theme">
   <App />

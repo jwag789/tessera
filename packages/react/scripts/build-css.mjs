@@ -12,8 +12,9 @@ mkdirSync(join(root, 'dist'), { recursive: true });
 writeFileSync(join(root, 'dist/styles.css'), tokensCss + '\n' + componentsCss);
 writeFileSync(join(root, 'dist/fonts.css'), readFileSync(join(root, 'src/fonts.css'), 'utf8'));
 // Theme packs: the tokens' theme CSS plus this package's component treatments, one file per theme.
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync, readdirSync, rmSync } from 'node:fs';
 const tokenThemes = join(dirname(require.resolve('@tessera/tokens/tokens.css')), 'themes');
+rmSync(join(root, 'dist/themes'), { recursive: true, force: true });
 mkdirSync(join(root, 'dist/themes'), { recursive: true });
 const built = [];
 for (const f of readdirSync(tokenThemes)) {

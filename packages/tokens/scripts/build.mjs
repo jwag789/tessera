@@ -1,6 +1,6 @@
 // Builds dist/ from tokens.json: tokens.css (CSS variables for both themes plus type classes),
 // index.js (the tokens as data) and index.d.ts (token names as string unions).
-import { readFileSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, readdirSync, writeFileSync, mkdirSync, rmSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -121,6 +121,7 @@ export declare function cssVar(name: TokenName): string;
 // and its selectors are specific enough to win over the base tokens regardless of mode.
 // Each theme starts from the full base set, so a theme nested inside another doesn't inherit the outer one's values.
 const themeMeta = [];
+rmSync(join(out, 'themes'), { recursive: true, force: true }); // drop output of removed themes
 mkdirSync(join(out, 'themes'), { recursive: true });
 for (const [i, file] of themeFiles.entries()) {
   const t = themeDefs[i];

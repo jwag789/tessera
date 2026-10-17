@@ -279,11 +279,11 @@ describe('ThemeProvider', () => {
 
   it('can theme just a subtree', () => {
     const { container } = render(
-      <ThemeProvider scope="local" theme="dark" brand="soft">
+      <ThemeProvider scope="local" theme="dark" brand="gloop">
         <span>inside</span>
       </ThemeProvider>
     );
     expect(container.firstElementChild).toHaveAttribute('data-theme', 'dark');
-    expect(container.firstElementChild).toHaveAttribute('data-brand', 'soft');
+    expect(container.firstElementChild).toHaveAttribute('data-brand', 'gloop');
   });
 });
