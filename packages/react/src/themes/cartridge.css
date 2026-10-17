@@ -1,46 +1,162 @@
-/* Cartridge: component treatments the tokens can't express. Plastic keys with an extruded edge that
-   press down, chunky outlines, pill badges, recessed inputs. Scoped to [data-brand="cartridge"]. */
+/* Cartridge: component treatments the tokens can't express. A charcoal plastic shell with light labels
+   stuck on top, keys in four button colors with an extruded edge that press down, chunky Lilita One
+   headings. Scoped to [data-brand="cartridge"]. */
 /* Scoped so a nested area with a different data-brand keeps its own look. */
 @scope ([data-brand="cartridge"]) to ([data-brand]:not([data-brand="cartridge"])) {
-  :scope { font-synthesis: none; }
+  :scope {
+    font-synthesis: none;
+    /* The shell palette, captured here so shell parts can restore it inside a label. */
+    --shell-bg: var(--bg);
+    --shell-surface-sunken: var(--surface-sunken);
+    --shell-line: var(--line);
+    --shell-line-strong: var(--line-strong);
+    --shell-ink: var(--ink);
+    --shell-ink-muted: var(--ink-muted);
+    --shell-lapis: var(--lapis);
+    --shell-lapis-hover: var(--lapis-hover);
+    --shell-lapis-soft: var(--lapis-soft);
+    --shell-on-lapis: var(--on-lapis);
+    --shell-success: var(--success);
+    --shell-success-soft: var(--success-soft);
+    --shell-warning: var(--warning);
+    --shell-saffron-soft: var(--saffron-soft);
+    --shell-danger: var(--danger);
+    --shell-danger-soft: var(--danger-soft);
+    --shell-on-danger: var(--on-danger);
+    --shell-inverse-accent: var(--inverse-accent);
+    --shell-focus: var(--focus);
+    --shell-link: var(--link);
+  }
 
-  /* Keys: a solid bottom edge instead of a glow; pressing pushes the key into it. */
+  /* Labels. The page ground is the charcoal shell in both modes, so the base tokens describe the shell.
+     Anything painted with --surface is a label: it re-declares the palette, so text, links and tints
+     inside it are tuned for the label (dark on light in light mode). Add data-surface="label" to make
+     your own panel a label. */
+  :scope :is([data-surface="label"], .ts-btn-secondary, .ts-input, .ts-sel-trigger, .ts-sel-list, .ts-card, .ts-table-wrap, .ts-dialog, .ts-popover, .ts-menu, .ts-accordion, .ts-page-step, .ts-navbar-toggle, .ts-sidebar-toggle, .ts-side-flyout, .ts-cmd, .ts-cal-nav, .ts-empty, .ts-number, .ts-tags, .ts-drop, .ts-file, .ts-drawer, .ts-step-marker, .ts-check-box, .ts-radio-dot) {
+    --bg: var(--label-bg);
+    --surface: var(--label-surface);
+    --surface-sunken: var(--label-surface-sunken);
+    --line: var(--label-line);
+    --line-strong: var(--label-line-strong);
+    --ink: var(--label-ink);
+    --ink-muted: var(--label-ink-muted);
+    --lapis: var(--label-lapis);
+    --lapis-hover: var(--label-lapis-hover);
+    --lapis-soft: var(--label-lapis-soft);
+    --on-lapis: var(--label-on-lapis);
+    --success: var(--label-success);
+    --success-soft: var(--label-success-soft);
+    --warning: var(--label-warning);
+    --saffron-soft: var(--label-saffron-soft);
+    --danger: var(--label-danger);
+    --danger-soft: var(--label-danger-soft);
+    --on-danger: var(--label-on-danger);
+    --inverse-accent: var(--label-inverse-accent);
+    --focus: var(--label-focus);
+    --link: var(--label-link);
+  }
+
+  /* Shell parts (navbar, sidebar) are charcoal wherever they sit, even inside a label. */
+  :scope :is(.ts-navbar, .ts-sidebar) {
+    --bg: var(--shell-bg);
+    --surface-sunken: var(--shell-surface-sunken);
+    --line: var(--shell-line);
+    --line-strong: var(--shell-line-strong);
+    --ink: var(--shell-ink);
+    --ink-muted: var(--shell-ink-muted);
+    --lapis: var(--shell-lapis);
+    --lapis-hover: var(--shell-lapis-hover);
+    --lapis-soft: var(--shell-lapis-soft);
+    --on-lapis: var(--shell-on-lapis);
+    --success: var(--shell-success);
+    --success-soft: var(--shell-success-soft);
+    --warning: var(--shell-warning);
+    --saffron-soft: var(--shell-saffron-soft);
+    --danger: var(--shell-danger);
+    --danger-soft: var(--shell-danger-soft);
+    --on-danger: var(--shell-on-danger);
+    --inverse-accent: var(--shell-inverse-accent);
+    --focus: var(--shell-focus);
+    --link: var(--shell-link);
+  }
+
+  /* Display type: Lilita One, bigger, with a hard extruded shadow on the shell. */
+  :scope :is(.ts-card-title, .ts-dialog-title, .ts-popover-title, .ts-empty-title, .ts-cal-title, .ts-navbar-brand) { font-weight: 400; letter-spacing: .01em; }
+  :scope .ts-card-title { font-size: 26px; line-height: 30px; }
+  :scope .ts-dialog-title { font-size: 28px; line-height: 32px; }
+  :scope .ts-navbar-brand { font-size: 23px; }
+  :scope :is(.display-2xl, .display-xl, .display-lg, .heading-lg, .heading-md) { font-weight: 400; letter-spacing: .005em; }
+  :scope .display-2xl { font-size: 84px; }
+  :scope .display-xl { font-size: 64px; }
+  :scope .display-lg { font-size: 46px; }
+  :scope .heading-lg { font-size: 32px; }
+  :scope .heading-md { font-size: 25px; }
+
+  /* Keys: a solid bottom edge instead of a glow; pressing pushes the key into it. Each color gets its own edge. */
   :scope .ts-btn { font-weight: 800; border-width: 2px; transition: transform var(--duration-instant) var(--ease-out), box-shadow var(--duration-instant) var(--ease-out), background var(--duration-fast); }
-  :scope .ts-btn-primary { box-shadow: 0 4px 0 0 var(--lapis-deep); }
-  :scope .ts-btn-primary:hover:not([disabled]) { transform: translateY(-1px); box-shadow: 0 5px 0 0 var(--lapis-deep); }
-  :scope .ts-btn-secondary { border-color: var(--ink); box-shadow: 0 4px 0 0 var(--ink); }
-  :scope .ts-btn-secondary:hover:not([disabled]) { transform: translateY(-1px); box-shadow: 0 5px 0 0 var(--ink); border-color: var(--ink); }
-  :scope .ts-btn-danger { box-shadow: 0 4px 0 0 color-mix(in srgb, var(--danger) 55%, #000); }
-  :scope .ts-btn-tile { border-width: 2px; }
-  :scope .ts-btn-tile:hover:not([disabled]) { transform: translateY(-2px); }
+  :scope .ts-btn-primary { box-shadow: inset 0 2px 0 rgba(255, 255, 255, .3), 0 4px 0 0 var(--lapis-deep); }
+  :scope .ts-btn-primary:hover:not([disabled]) { transform: translateY(-1px); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .3), 0 5px 0 0 var(--lapis-deep); }
+  :scope .ts-btn-secondary { border-color: transparent; box-shadow: inset 0 2px 0 rgba(255, 255, 255, .5), 0 4px 0 0 color-mix(in srgb, var(--surface) 55%, #000); }
+  :scope .ts-btn-secondary:hover:not([disabled]) { transform: translateY(-1px); border-color: transparent; box-shadow: inset 0 2px 0 rgba(255, 255, 255, .5), 0 5px 0 0 color-mix(in srgb, var(--surface) 55%, #000); }
+  :scope .ts-btn-ghost:hover:not([disabled]) { background: var(--shell-raised); }
+  :scope .ts-btn-danger { box-shadow: inset 0 2px 0 rgba(255, 255, 255, .25), 0 4px 0 0 color-mix(in srgb, var(--danger) 50%, #000); }
+  :scope .ts-btn-tile { border-color: transparent; box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 4px 0 0 var(--saffron-deep); }
+  :scope .ts-btn-tile:hover:not([disabled]) { transform: translateY(-2px); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 6px 0 0 var(--saffron-deep); }
   :scope .ts-btn:active:not([disabled]) { transform: translateY(4px); box-shadow: 0 0 0 0 transparent; }
   :scope .ts-btn-primary::after, :scope .ts-btn-tile::after { display: none; }
 
-  /* Surfaces: thicker outlines, extruded featured cards. */
-  :scope .ts-card { border-width: 2px; }
-  :scope .ts-card-tile { border-width: 2px; }
-  :scope .ts-card-tile.ts-card-interactive:hover { transform: translateY(-3px); }
-  :scope .ts-card-interactive:not(.ts-card-tile):hover { transform: translateY(-3px); box-shadow: 0 6px 0 0 var(--line); }
-  :scope .ts-card-title, :scope .ts-dialog-title { font-weight: 400; letter-spacing: 0; }
+  /* Shell parts: navbar and sidebar are raised charcoal plastic, with the four colors as a stripe. */
+  :scope .ts-navbar { background: var(--shell-raised); border-bottom: 0; box-shadow: inset 0 -4px 0 0 var(--surface-sunken); position: relative; }
+  :scope .ts-navbar::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: linear-gradient(90deg, var(--tile-1) 0 25%, var(--tile-2) 0 50%, var(--tile-3) 0 75%, var(--tile-4) 0); }
+  :scope .ts-navlink:hover, :scope .ts-side-link:hover { background: var(--line); }
+  :scope .ts-navlink[aria-current="page"]::after { height: 4px; bottom: -12px; border-radius: 2px; }
+  :scope .ts-navbar-links .ts-navlink:nth-child(4n + 1)[aria-current="page"]::after { background: var(--tile-1); }
+  :scope .ts-navbar-links .ts-navlink:nth-child(4n + 2)[aria-current="page"]::after { background: var(--tile-2); }
+  :scope .ts-navbar-links .ts-navlink:nth-child(4n + 3)[aria-current="page"]::after { background: var(--tile-3); }
+  :scope .ts-navbar-links .ts-navlink:nth-child(4n + 4)[aria-current="page"]::after { background: var(--tile-4); }
+  :scope .ts-sidebar { background: var(--shell-raised); border-right-color: var(--surface-sunken); }
+  :scope .ts-side-title { display: flex; align-items: center; gap: 8px; color: var(--ink); }
+  :scope .ts-side-title::before { content: ""; width: 10px; height: 10px; border-radius: 50%; flex: none; background: var(--tile-1); box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .3); }
+  :scope .ts-sidebar-body > .ts-side-title:nth-of-type(4n + 2)::before { background: var(--tile-2); }
+  :scope .ts-sidebar-body > .ts-side-title:nth-of-type(4n + 3)::before { background: var(--tile-3); }
+  :scope .ts-sidebar-body > .ts-side-title:nth-of-type(4n + 4)::before { background: var(--tile-4); }
+  :scope .ts-side-link[aria-current="page"] { background: var(--lapis); color: var(--on-lapis); box-shadow: 0 3px 0 0 var(--lapis-deep); font-weight: 800; }
+  :scope .ts-side-link[aria-current="page"] .ts-side-badge { background: var(--on-lapis); color: var(--lapis); }
+
+  /* Labels: thick outlines, extruded edges. Featured cards get the four-color stripe across the top. */
+  :scope .ts-card { border: 0; box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 5px 0 0 rgba(0, 0, 0, .45); }
+  :scope .ts-card-tile { border: 0; padding-top: calc(var(--space-6) + 8px); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 6px 0 0 rgba(0, 0, 0, .5); }
+  :scope .ts-card-tile::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 8px; background: linear-gradient(90deg, var(--tile-1) 0 25%, var(--tile-2) 0 50%, var(--tile-3) 0 75%, var(--tile-4) 0); }
+  :scope .ts-card-tile.ts-card-interactive:hover { transform: translateY(-3px); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 9px 0 0 rgba(0, 0, 0, .5); }
+  :scope .ts-card-interactive:not(.ts-card-tile):hover { transform: translateY(-3px); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 8px 0 0 rgba(0, 0, 0, .45); }
+  :scope :is(.ts-dialog, .ts-cmd, .ts-popover, .ts-menu, .ts-sel-list, .ts-side-flyout) { border: 0; }
 
   /* Recessed inputs: a darker top edge, like a slot in the shell. */
-  :scope .ts-input, :scope .ts-sel-trigger, :scope .ts-tags, :scope .ts-number { border-width: 2px; box-shadow: inset 0 3px 0 0 var(--surface-sunken); }
-  :scope .ts-input:focus-visible, :scope .ts-sel-open .ts-sel-trigger { box-shadow: inset 0 3px 0 0 var(--surface-sunken), 0 0 0 4px var(--lapis-glow); }
+  :scope .ts-input, :scope .ts-sel-trigger, :scope .ts-tags, :scope .ts-number { border-width: 2px; box-shadow: inset 0 3px 0 0 var(--line); }
+  :scope .ts-input:focus-visible, :scope .ts-sel-open .ts-sel-trigger { box-shadow: inset 0 3px 0 0 var(--line), 0 0 0 4px var(--lapis-glow); }
 
-  /* Pills and round controls. */
+  /* Pills and round controls in the button colors. */
   :scope .ts-badge { border-radius: var(--radius-full); padding-inline: 10px; font-weight: 800; }
-  :scope .ts-badge-accent { box-shadow: 0 2px 0 0 var(--ink); }
+  :scope .ts-badge-accent { box-shadow: 0 2px 0 0 var(--saffron-deep); }
   :scope .ts-check-box { border-width: 2px; border-radius: 6px; }
   :scope .ts-radio-dot { border-width: 2px; }
-  :scope .ts-switch-track { box-shadow: inset 0 2px 0 rgba(0, 0, 0, .25); }
-  :scope .ts-tab[aria-selected="true"] { color: var(--lapis); }
+  :scope .ts-switch-track { background: var(--surface-sunken); box-shadow: inset 0 2px 0 rgba(0, 0, 0, .35), 0 0 0 2px var(--line-strong); }
+  :scope .ts-switch input:checked + .ts-switch-track { background: var(--lapis); box-shadow: inset 0 2px 0 rgba(0, 0, 0, .2), 0 0 0 2px var(--lapis-deep); }
+  :scope .ts-tab { font-weight: 800; }
   :scope .ts-tab-ink { height: 4px; border-radius: 4px 4px 0 0; }
+  :scope .ts-tablist:has(> .ts-tab:nth-of-type(4n + 2)[aria-selected="true"]) .ts-tab-ink { background: var(--tile-2); }
+  :scope .ts-tablist:has(> .ts-tab:nth-of-type(4n + 3)[aria-selected="true"]) .ts-tab-ink { background: var(--tile-3); }
+  :scope .ts-tablist:has(> .ts-tab:nth-of-type(4n + 4)[aria-selected="true"]) .ts-tab-ink { background: var(--tile-4); }
+  :scope .ts-segctl { background: var(--surface-sunken); box-shadow: inset 0 2px 0 rgba(0, 0, 0, .35); }
+  :scope .ts-segctl-ink { background: var(--saffron); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 2px 0 0 var(--saffron-deep); }
+  :scope .ts-segctl-on, :scope .ts-segctl-on:hover { color: var(--on-saffron); font-weight: 800; }
   :scope .ts-page-current { box-shadow: 0 3px 0 0 var(--lapis-deep); }
   :scope .ts-day-selected { box-shadow: 0 3px 0 0 var(--lapis-deep); }
-  :scope .ts-progress-track { height: 12px; border-radius: var(--radius-full); box-shadow: inset 0 2px 0 rgba(0, 0, 0, .12); }
-  :scope .ts-progress-bar { border-radius: var(--radius-full); }
+  :scope .ts-step-current .ts-step-marker { border-color: transparent; box-shadow: 0 3px 0 0 var(--saffron-deep); }
+  :scope .ts-progress-track { height: 12px; border-radius: var(--radius-full); background: var(--surface-sunken); box-shadow: inset 0 2px 0 rgba(0, 0, 0, .3); }
+  :scope .ts-progress-bar { border-radius: var(--radius-full); background: linear-gradient(90deg, var(--tile-1), var(--tile-3)); }
 
-  /* The four button colors take turns in the segmented progress and the spinner. */
+  /* The four button colors take turns in the segmented progress, the spinner and avatars. */
   :scope .ts-progress-segmented .ts-seg:nth-child(4n + 1)::after { background: var(--tile-1); }
   :scope .ts-progress-segmented .ts-seg:nth-child(4n + 2)::after { background: var(--tile-2); }
   :scope .ts-progress-segmented .ts-seg:nth-child(4n + 3)::after { background: var(--tile-3); }
@@ -49,8 +165,11 @@
   :scope .ts-spinner i:nth-child(2) { color: var(--tile-2); }
   :scope .ts-spinner i:nth-child(3) { color: var(--tile-3); }
   :scope .ts-spinner i:nth-child(4) { color: var(--tile-4); }
+  :scope .ts-avatar { background: var(--tile-3); color: #ffffff; }
+  :scope .ts-avatar:nth-child(4n + 2) { background: var(--tile-2); }
+  :scope .ts-avatar:nth-child(4n + 3) { background: var(--tile-1); color: #0e1a11; }
+  :scope .ts-avatar:nth-child(4n + 4) { background: var(--tile-4); color: #1a1608; }
 
   /* Mosaic: chunkier tiles with an extruded edge. */
-  :scope .ts-mosaic-tile { border-radius: 6px; box-shadow: 0 3px 0 0 rgba(0, 0, 0, .35); }
-  :scope .ts-mosaic-tile[data-c="4"] { box-shadow: 0 3px 0 0 var(--saffron-deep); }
+  :scope .ts-mosaic-tile { border-radius: 6px; box-shadow: inset 0 2px 0 rgba(255, 255, 255, .25), 0 3px 0 0 rgba(0, 0, 0, .45); }
 }

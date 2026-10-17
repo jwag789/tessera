@@ -87,7 +87,7 @@ class Boundary extends Component<{ children: ReactNode }, { error: Error | null 
 function Stage({ label = 'Live example', layout = 'row', minHeight, children }: { label?: string; layout?: Demo['layout']; minHeight?: number; children: ReactNode }) {
   const [key, setKey] = useState(0);
   return (
-    <div className={`d-stage d-stage-${layout}`}>
+    <div className={`d-stage d-stage-${layout}`} data-surface="label">
       <div className="d-stage-bar">
         <span>{label}</span>
         <Button size="sm" variant="ghost" onClick={() => setKey(key + 1)}>
@@ -226,7 +226,7 @@ const THEME_ORDER = ['tessera', 'soft', 'cartridge'];
 const THEME_NOTES: Record<string, string[]> = {
   tessera: ['Saturated lapis with one saffron tile', 'Tight corners, hard offset shadow', 'Bricolage Grotesque headings'],
   soft: ['Periwinkle and apricot', 'Rounder corners, soft lifted shadows', 'Same type, same layout'],
-  cartridge: ['Four button colors on charcoal plastic', 'Chunky rounded keys that press down', 'Lilita One and Nunito']
+  cartridge: ['Charcoal shell with light labels, in both modes', 'Green, red, blue and yellow keys that press down', 'Big Lilita One headings over Nunito']
 };
 
 function ThemeSample({ name }: { name: string }) {
@@ -532,7 +532,7 @@ export function ElevationPage() {
   return (
     <div className="d-page">
       <Head eyebrow="Foundations" title="Elevation" lead="Soft shadows separate layers. The hard tile shadow is the brand gesture: one per view." />
-      <div className="d-stage">
+      <div className="d-stage" data-surface="label">
         <div className="d-stage-body">
           <div className="d-shadows" style={{ width: '100%' }}>
             {shadows.map((t) => (

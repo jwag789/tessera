@@ -15,6 +15,16 @@ const alias = (v) => {
   return m ? `var(--${m[1]})` : v;
 };
 
+// Theme packs (read here so the base can reset tokens that only some themes define).
+const themeDir = join(root, 'themes');
+const themeFiles = readdirSync(themeDir).filter((f) => f.endsWith('.json'));
+const themeDefs = themeFiles.map((f) => JSON.parse(readFileSync(join(themeDir, f), 'utf8')));
+const baseNames = new Set([...tokens.color.tokens, ...(tokens.shadow?.tokens ?? [])].map((t) => t.name));
+const ownNames = (t) => [...(t.color?.tokens ?? []), ...(t.shadow?.tokens ?? [])].map((x) => x.name);
+// Tokens only some themes define (e.g. Cartridge's label-*) are reset elsewhere, so a nested theme doesn't inherit them.
+const extraNames = [...new Set(themeDefs.flatMap(ownNames).filter((n) => !baseNames.has(n)))];
+const resetsFor = (own) => extraNames.filter((n) => !own.has(n)).map((n) => `--${n}: initial;`);
+
 const light = [];
 const dark = [];
 for (const t of [...tokens.color.tokens, ...(tokens.shadow?.tokens ?? [])]) {
@@ -53,7 +63,7 @@ const typeClasses = tokens.type.groups.flatMap((g) =>
 const css = `/* ${tokens.name} tokens, generated from tokens.json. Do not edit by hand. */
 :root,
 [data-brand="tessera"] {
-${indent([...scalars, ...families], 2)}
+${indent([...scalars, ...families, ...resetsFor(new Set())], 2)}
 }
 
 :root,
@@ -109,14 +119,14 @@ export declare function cssVar(name: TokenName): string;
 // ---------- Theme packs: themes/*.json → dist/themes/<name>.css ----------
 // A theme overrides any subset of tokens. It applies wherever data-brand="<name>" is set, in both modes,
 // and its selectors are specific enough to win over the base tokens regardless of mode.
-const themeDir = join(root, 'themes');
+// Each theme starts from the full base set, so a theme nested inside another doesn't inherit the outer one's values.
 const themeMeta = [];
 mkdirSync(join(out, 'themes'), { recursive: true });
-for (const file of readdirSync(themeDir).filter((f) => f.endsWith('.json'))) {
-  const t = JSON.parse(readFileSync(join(themeDir, file), 'utf8'));
+for (const [i, file] of themeFiles.entries()) {
+  const t = themeDefs[i];
   const sel = `[data-brand="${t.name}"]`;
-  const tLight = [];
-  const tDark = [];
+  const tLight = [...light];
+  const tDark = [...dark];
   for (const tok of [...(t.color?.tokens ?? []), ...(t.shadow?.tokens ?? [])]) {
     if (typeof tok.value === 'string') {
       tLight.push(`--${tok.name}: ${alias(tok.value)};`);
@@ -126,20 +136,14 @@ for (const file of readdirSync(themeDir).filter((f) => f.endsWith('.json'))) {
     tLight.push(`--${tok.name}: ${alias(tok.value[first])};`);
     if (tok.value[second] !== undefined) tDark.push(`--${tok.name}: ${alias(tok.value[second])};`);
   }
-  // Base aliases resolve per element, so re-declare them inside the theme too.
-  for (const tok of tokens.color.tokens) {
-    if (typeof tok.value === 'string' && /^\{.+\}$/.test(tok.value)) {
-      tLight.push(`--${tok.name}: ${alias(tok.value)};`);
-      tDark.push(`--${tok.name}: ${alias(tok.value)};`);
-    }
-  }
   const tScalars = Object.keys(t)
     .filter((k) => !['name', 'label', 'description', 'fonts', 'color', 'type', 'shadow'].includes(k) && Array.isArray(t[k]?.tokens))
     .flatMap((k) => t[k].tokens.map((x) => `--${x.name}: ${x.value};`));
   const tFamilies = Object.entries(t.type?.families ?? {}).map(([k, v]) => `--font-${k}: ${v};`);
+  const tResets = resetsFor(new Set(ownNames(t)));
   const tcss = `/* ${tokens.name} theme: ${t.label ?? t.name}. Generated from themes/${file}. Load after the base tokens and set data-brand="${t.name}". */
 ${sel} {
-${indent([...tScalars, ...tFamilies], 2)}
+${indent([...scalars, ...families, ...tScalars, ...tFamilies, ...tResets], 2)}
 }
 
 ${sel},

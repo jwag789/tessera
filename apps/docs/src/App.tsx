@@ -152,6 +152,7 @@ function Shell() {
                   <Icon name="search" />
                   <input
                     id="d-search"
+                    className="ts-input"
                     ref={search}
                     type="search"
                     placeholder="Filter pages"
