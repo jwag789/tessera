@@ -71,6 +71,12 @@ describe('basics', () => {
     expect(onChange).toHaveBeenCalledWith('A4');
   });
 
+  it('RadioGroup shows option descriptions under the label', () => {
+    render(<RadioGroup label="Template" options={[{ value: 'modern', label: 'Modern', description: 'A colored sidebar.' }]} />);
+    const radio = screen.getByRole('radio', { name: /Modern/ });
+    expect(radio.closest('label')).toHaveTextContent('A colored sidebar.');
+  });
+
   it('Badge, Avatar, Card, Alert, Progress render their roles', () => {
     render(
       <>

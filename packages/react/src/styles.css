@@ -112,6 +112,10 @@
 .ts-check input:checked + .ts-check-box path { stroke-dashoffset: 0; transition-delay: 60ms; }
 @keyframes ts-boing { 0% { transform: scale(.8); } 100% { transform: scale(1); } }
 .ts-radio-group { display: flex; flex-direction: column; gap: var(--space-3); border: 0; padding: 0; margin: 0; }
+.ts-radio:has(.ts-radio-desc) { align-items: flex-start; }
+.ts-radio:has(.ts-radio-desc) .ts-radio-dot { margin-top: 1px; }
+.ts-radio-text { display: flex; flex-direction: column; gap: 2px; }
+.ts-radio-desc { font-size: 13px; line-height: 18px; color: var(--ink-muted); }
 .ts-radio-group legend { font: 600 14px/20px var(--font-sans); margin-bottom: var(--space-3); padding: 0; }
 .ts-radio-dot { width: 20px; height: 20px; box-sizing: border-box; border: 1.5px solid var(--line-strong); border-radius: var(--radius-full); background: var(--surface); flex: none; display: grid; place-items: center; transition: border-color var(--duration-fast); }
 .ts-radio-dot::after { content: ""; width: 10px; height: 10px; border-radius: var(--radius-full); background: var(--lapis); transform: scale(0); transition: transform var(--duration-base) var(--ease-spring); }

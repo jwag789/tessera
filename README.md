@@ -53,6 +53,8 @@ A theme is a token file in `packages/tokens/themes/` plus optional component tre
 
 Dark mode follows the system setting. Wrap the app in `<ThemeProvider storageKey="theme">` to let people choose and remember it, override tokens (`tokens={{ lapis: '#0f766e' }}`), or theme one subtree with `scope="local"`. Without React, set `data-theme="dark"` or `"light"` on any element.
 
+`apps/resume` is **Folio**, a resume builder and job tracker built on the library, with every theme. Run it with `npm run dev:resume`.
+
 The bundle starts with `"use client"`, so it works from React Server Components in the Next.js App Router.
 
 ## Components

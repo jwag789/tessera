@@ -60,7 +60,14 @@ export function RadioGroup({ label, name: nameProp, options, value: valueProp, d
         <label key={o.value} className="ts-radio">
           <input type="radio" name={name} value={o.value} disabled={o.disabled} checked={value === o.value} onChange={() => setValue(o.value)} />
           <span className="ts-radio-dot" />
-          <span>{o.label}</span>
+          {o.description ? (
+            <span className="ts-radio-text">
+              <span>{o.label}</span>
+              <span className="ts-radio-desc">{o.description}</span>
+            </span>
+          ) : (
+            <span>{o.label}</span>
+          )}
         </label>
       ))}
     </fieldset>
