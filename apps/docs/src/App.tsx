@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ComponentType } from 'react';
-import { Badge, Button, CommandPalette, Icon, SidebarNav, ToastProvider, useHotkey } from '@tessera/react';
+import { Badge, Button, CommandPalette, Icon, SegmentedControl, SidebarNav, ThemeProvider, ToastProvider, useHotkey, useTheme } from '@tessera/react';
 import type { Command, SidebarItem } from '@tessera/react';
 import { DEMOS } from './demos';
 import type { Demo } from './demos';
@@ -15,7 +15,7 @@ interface Route {
   demo?: Demo;
 }
 
-const GROUP_ORDER = ['Actions', 'Forms', 'Navigation', 'Layout', 'Data', 'Status', 'Feedback', 'Overlays', 'Brand'];
+const GROUP_ORDER = ['Actions', 'Forms', 'Navigation', 'Layout', 'Data', 'Status', 'Feedback', 'Overlays', 'Theming', 'Brand'];
 
 const ROUTES: Route[] = [
   { id: 'showcase', title: 'Showcase', section: 'Overview', icon: 'sparkle', page: ShowcasePage },
@@ -35,16 +35,6 @@ const ROUTES: Route[] = [
 ];
 
 const current = () => ROUTES.find((r) => r.id === location.hash.replace(/^#/, '')) ?? ROUTES[0];
-
-type Theme = 'system' | 'light' | 'dark';
-function readTheme(): Theme {
-  try {
-    const t = localStorage.getItem('tessera-docs-theme');
-    return t === 'light' || t === 'dark' ? t : 'system';
-  } catch {
-    return 'system';
-  }
-}
 
 const Mark = () => (
   <svg viewBox="0 0 48 48" width="28" height="28" aria-hidden="true" className="d-mark">
@@ -70,20 +60,8 @@ function Shell() {
   const [query, setQuery] = useState('');
   const [drawer, setDrawer] = useState(false);
   const [palette, setPalette] = useState(false);
-  const [theme, setTheme] = useState<Theme>(readTheme);
+  const { theme, setTheme } = useTheme();
   const search = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const root = document.documentElement;
-    if (theme === 'system') root.removeAttribute('data-theme');
-    else root.setAttribute('data-theme', theme);
-    try {
-      if (theme === 'system') localStorage.removeItem('tessera-docs-theme');
-      else localStorage.setItem('tessera-docs-theme', theme);
-    } catch {
-      /* storage can be unavailable; the theme still applies for this visit */
-    }
-  }, [theme]);
 
   useEffect(() => {
     const onHash = () => {
@@ -138,7 +116,7 @@ function Shell() {
       { id: 'theme-light', label: 'Use light theme', group: 'Theme', icon: 'settings', keywords: ['mode', 'day'], onRun: () => setTheme('light') },
       { id: 'theme-system', label: 'Match system theme', group: 'Theme', icon: 'settings', keywords: ['mode', 'auto'], onRun: () => setTheme('system') }
     ],
-    []
+    [setTheme]
   );
 
   const idx = ROUTES.indexOf(route);
@@ -196,13 +174,13 @@ function Shell() {
           footer={
             <div className="d-foot">
               <span className="d-foot-label">Theme</span>
-              <div className="d-seg" role="group" aria-label="Theme">
-                {(['system', 'light', 'dark'] as const).map((t) => (
-                  <button key={t} type="button" aria-pressed={theme === t} onClick={() => setTheme(t)}>
-                    {t[0].toUpperCase() + t.slice(1)}
-                  </button>
-                ))}
-              </div>
+              <SegmentedControl
+                label="Theme"
+                size="sm"
+                options={[{ value: 'system', label: 'System' }, { value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }]}
+                value={theme}
+                onChange={(v) => setTheme(v as typeof theme)}
+              />
             </div>
           }
         />
@@ -236,8 +214,10 @@ function Shell() {
 
 export function App() {
   return (
-    <ToastProvider>
-      <Shell />
-    </ToastProvider>
+    <ThemeProvider storageKey="tessera-docs-theme">
+      <ToastProvider>
+        <Shell />
+      </ToastProvider>
+    </ThemeProvider>
   );
 }

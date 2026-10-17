@@ -7,6 +7,7 @@ import { Showcase } from './Showcase';
 import { DEMOS } from './demos';
 import type { Demo } from './demos';
 import { brandIntro, brandSections, componentDocs, logosDoc, md, mdInline } from './content';
+import propsData from './generated/props.json';
 
 /* ---------- shared bits ---------- */
 
@@ -93,7 +94,9 @@ function Stage({ label = 'Live example', layout = 'row', minHeight, children }: 
         </Button>
       </div>
       <div className="d-stage-body" style={{ minHeight }}>
-        <Boundary key={key}>{children}</Boundary>
+        <Boundary key={key}>
+          <div className="d-stage-content">{children}</div>
+        </Boundary>
       </div>
     </div>
   );
@@ -581,6 +584,43 @@ export function ComponentPage({ demo }: { demo: Demo }) {
       <Code label="Usage" src={demo.snippet} />
       <H2>Guidelines</H2>
       <Md src={doc.body} />
+      {(demo.props ?? [demo.name]).map((name) => (
+        <PropsTable key={name} name={name} showName={(demo.props ?? [demo.name]).length > 1 || name !== demo.name} />
+      ))}
     </div>
+  );
+}
+
+type PropRow = { name: string; type: string; required: boolean; description: string; default?: string };
+const PROPS = propsData as Record<string, { props: PropRow[]; inherits: string[] }>;
+
+function PropsTable({ name, showName }: { name: string; showName?: boolean }) {
+  const entry = PROPS[name];
+  if (!entry) return null;
+  return (
+    <section className="d-props">
+      <H2 note="Generated from the TypeScript types">{showName ? `${name} props` : 'Props'}</H2>
+      <Table
+        caption={`${name} props`}
+        rowKey={(r) => r.name}
+        rows={entry.props}
+        columns={[
+          {
+            key: 'name',
+            header: 'Prop',
+            render: (r) => (
+              <span className="d-prop-name">
+                <code>{r.name}</code>
+                {r.required && <Badge tone="brand">required</Badge>}
+              </span>
+            )
+          },
+          { key: 'type', header: 'Type', render: (r) => <code className="d-prop-type">{r.type}</code> },
+          { key: 'default', header: 'Default', render: (r) => (r.default ? <code className="d-prop-type d-prop-default">{r.default}</code> : <span className="d-prop-none">—</span>) },
+          { key: 'description', header: 'Description', render: (r) => (r.description ? <span dangerouslySetInnerHTML={mdInline(r.description)} /> : <span className="d-prop-none">—</span>) }
+        ]}
+      />
+      {entry.inherits.length > 0 && <p className="d-prop-inherits">Also accepts every native {entry.inherits.join(' and ')} attribute, passed straight through.</p>}
+    </section>
   );
 }

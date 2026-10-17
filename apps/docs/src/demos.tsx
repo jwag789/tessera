@@ -2,6 +2,23 @@ import { useState } from 'react';
 import type { ReactNode } from 'react';
 import {
   Accordion,
+  Container,
+  Divider,
+  Drawer,
+  EmptyState,
+  FileDropzone,
+  Grid,
+  Inline,
+  Kbd,
+  NumberInput,
+  SegmentedControl,
+  Slider,
+  Spinner,
+  Stack,
+  Stepper,
+  TagInput,
+  Textarea,
+  useTheme,
   Alert,
   Avatar,
   AvatarGroup,
@@ -39,6 +56,8 @@ export interface Demo {
   name: string;
   group: string;
   isNew?: boolean;
+  /** Components whose props tables appear on this page. Default: just `name`. */
+  props?: string[];
   /** Stage layout: centered row (default), a narrow column, wide, or top-aligned for things that open downward. */
   layout?: 'row' | 'stack' | 'wide' | 'top';
   minHeight?: number;
@@ -237,6 +256,7 @@ export const DEMOS: Demo[] = [
     name: 'DatePicker',
     group: 'Forms',
     isNew: true,
+    props: ['DatePicker', 'Calendar'],
     layout: 'top',
     minHeight: 400,
     render: () => (
@@ -391,19 +411,8 @@ export const DEMOS: Demo[] = [
     name: 'Table',
     group: 'Data',
     layout: 'wide',
-    render: () => (
-      <Table
-        caption="Applications"
-        columns={[
-          { key: 'company', header: 'Company' },
-          { key: 'role', header: 'Role' },
-          { key: 'status', header: 'Status', render: (r: (typeof apps)[number]) => <Badge tone={r.tone} dot>{r.status}</Badge> },
-          { key: 'days', header: 'Days', align: 'right' }
-        ]}
-        rows={apps}
-      />
-    ),
-    snippet: '<Table caption="Applications" rows={apps} columns={[\n  { key: "company", header: "Company" },\n  { key: "status", header: "Status", render: r => <Badge tone={r.tone} dot>{r.status}</Badge> },\n  { key: "days", header: "Days", align: "right" },\n]} />'
+    render: () => <TableDemo />,
+    snippet: '<Table caption="Applications" rows={apps} selectable rowLabel={r => r.company}\n  selected={selected} onSelectionChange={setSelected} stickyHeader maxHeight={320}\n  columns={[\n    { key: "company", header: "Company", sortable: true },\n    { key: "status", header: "Status", render: r => <Badge tone={r.tone} dot>{r.status}</Badge> },\n    { key: "days", header: "Days", align: "right", sortable: true },\n  ]} />'
   },
   {
     name: 'Badge',
@@ -429,6 +438,7 @@ export const DEMOS: Demo[] = [
   {
     name: 'Avatar',
     group: 'Status',
+    props: ['Avatar'],
     render: () => (
       <div className="demo-row">
         <Avatar name="Ada Lovelace" size={48} />
@@ -569,6 +579,152 @@ export const DEMOS: Demo[] = [
     snippet: '<Tooltip content="Copy share link" placement="bottom">\n  <Button variant="secondary" size="sm">Share</Button>\n</Tooltip>'
   },
   {
+    name: 'Textarea',
+    group: 'Forms',
+    isNew: true,
+    layout: 'stack',
+    render: () => <Textarea label="Professional summary" maxLength={280} hint="Two or three sentences. Lead with what you're best at." defaultValue="Frontend engineer who turns design systems into shipped product. 8 years across React, TypeScript and accessibility." />,
+    snippet: '<Textarea label="Professional summary" maxLength={280}\n  value={summary} onChange={e => setSummary(e.target.value)} />'
+  },
+  {
+    name: 'Slider',
+    group: 'Forms',
+    isNew: true,
+    layout: 'stack',
+    render: () => (
+      <>
+        <Slider label="Years of experience" min={0} max={20} defaultValue={8} format={(v) => (v === 20 ? '20+ years' : `${v} years`)} marks={[{ value: 0 }, { value: 5 }, { value: 10 }, { value: 15 }, { value: 20, label: '20+' }]} />
+        <Slider label="Remote preference" defaultValue={70} format={(v) => `${v}% remote`} />
+      </>
+    ),
+    snippet: '<Slider label="Years of experience" min={0} max={20}\n  value={years} onChange={setYears} format={v => `${v} years`}\n  marks={[{ value: 0 }, { value: 10 }, { value: 20, label: "20+" }]} />'
+  },
+  {
+    name: 'SegmentedControl',
+    group: 'Forms',
+    isNew: true,
+    render: () => (
+      <div className="demo-col" style={{ alignItems: 'center' }}>
+        <SegmentedControl label="View" options={['List', 'Board', 'Calendar']} defaultValue="Board" />
+        <SegmentedControl label="Page size" size="sm" options={[{ value: 'letter', label: 'US Letter' }, { value: 'a4', label: 'A4' }]} />
+      </div>
+    ),
+    snippet: '<SegmentedControl label="View" options={["List", "Board", "Calendar"]}\n  value={view} onChange={setView} />'
+  },
+  {
+    name: 'NumberInput',
+    group: 'Forms',
+    isNew: true,
+    layout: 'stack',
+    render: () => (
+      <>
+        <NumberInput label="Years at this role" defaultValue={3} min={0} max={50} suffix="years" hint="Arrow keys step by 1, Shift+arrow by 10." />
+        <NumberInput label="Expected salary (k)" defaultValue={140} min={0} step={5} suffix="k USD" />
+      </>
+    ),
+    snippet: '<NumberInput label="Years at this role" min={0} max={50} suffix="years"\n  value={years} onChange={setYears} />'
+  },
+  {
+    name: 'TagInput',
+    group: 'Forms',
+    isNew: true,
+    layout: 'stack',
+    render: () => <TagInput label="Skills" defaultValue={['React', 'TypeScript', 'Accessibility']} max={12} hint="Press Enter or comma to add. Backspace removes the last one." />,
+    snippet: '<TagInput label="Skills" value={skills} onChange={setSkills} max={12}\n  validate={t => t.length > 24 ? "Keep each skill under 24 characters." : undefined} />'
+  },
+  {
+    name: 'FileDropzone',
+    group: 'Forms',
+    isNew: true,
+    layout: 'stack',
+    render: () => <FileDropzone label="Import an existing resume" accept=".pdf,.docx" maxSize={5 * 1024 * 1024} hint="We'll pull your roles and education out of it." />,
+    snippet: '<FileDropzone label="Import a resume" accept=".pdf,.docx" maxSize={5 * 1024 * 1024}\n  files={files} onFilesChange={setFiles} />'
+  },
+  {
+    name: 'Stepper',
+    group: 'Navigation',
+    isNew: true,
+    layout: 'wide',
+    render: () => <StepperDemo />,
+    snippet: '<Stepper current={step} onStepClick={setStep} steps={[\n  { id: "basics", label: "Basics", description: "Name and role" },\n  { id: "exp", label: "Experience" },\n  { id: "review", label: "Review" },\n]} />'
+  },
+  {
+    name: 'Drawer',
+    group: 'Overlays',
+    isNew: true,
+    minHeight: 420,
+    render: () => <DrawerDemo />,
+    snippet: '<Drawer open={open} onClose={() => setOpen(false)} title="Northwind"\n  description="Staff Engineer · applied Oct 3"\n  footer={<><Button variant="ghost" onClick={close}>Cancel</Button><Button>Save</Button></>}>\n  …\n</Drawer>'
+  },
+  {
+    name: 'EmptyState',
+    group: 'Feedback',
+    isNew: true,
+    layout: 'stack',
+    render: () => <EmptyState title="No applications yet" description="Track every role you apply to, with its status and the resume you sent." actions={<><Button iconLeft={<Icon name="plus" />}>Add application</Button><Button variant="ghost">Import from CSV</Button></>} />,
+    snippet: '<EmptyState title="No applications yet"\n  description="Track every role you apply to."\n  actions={<Button iconLeft={<Icon name="plus" />}>Add application</Button>} />'
+  },
+  {
+    name: 'Spinner',
+    group: 'Feedback',
+    isNew: true,
+    props: ['Spinner'],
+    render: () => (
+      <div className="demo-row" style={{ gap: 28 }}>
+        <Spinner size={16} />
+        <Spinner />
+        <Spinner size={32} />
+        <span style={{ color: 'var(--saffron)' }}>
+          <span style={{ display: 'inline-flex' }}>
+            <Spinner size={32} label="Exporting" className="demo-spin-accent" />
+          </span>
+        </span>
+        <span className="demo-note">
+          Pair with <Kbd>esc</Kbd> to cancel long work.
+        </span>
+      </div>
+    ),
+    snippet: '<Spinner />\n<Spinner size={32} label="Exporting" />'
+  },
+  {
+    name: 'Layout',
+    group: 'Layout',
+    isNew: true,
+    layout: 'wide',
+    props: ['Stack', 'Inline', 'Grid', 'Container', 'Divider'],
+    render: () => (
+      <Container size="lg" style={{ paddingInline: 0 }}>
+        <Stack gap={5}>
+          <Inline gap={2} justify="between">
+            <h3 className="heading-sm" style={{ margin: 0 }}>Templates</h3>
+            <Inline gap={2}>
+              <Button size="sm" variant="ghost">Import</Button>
+              <Button size="sm">New</Button>
+            </Inline>
+          </Inline>
+          <Grid minChildWidth={180} gap={4}>
+            {['Mono', 'Serif', 'Grid'].map((t) => (
+              <Card key={t} title={t} eyebrow="Template" interactive />
+            ))}
+          </Grid>
+          <Divider label="or start blank" />
+          <Inline justify="center">
+            <Button variant="secondary" iconLeft={<Icon name="plus" />}>Blank resume</Button>
+          </Inline>
+        </Stack>
+      </Container>
+    ),
+    snippet: '<Container size="lg">\n  <Stack gap={5}>\n    <Inline justify="between">…</Inline>\n    <Grid minChildWidth={180} gap={4}>{cards}</Grid>\n    <Divider label="or start blank" />\n  </Stack>\n</Container>'
+  },
+  {
+    name: 'ThemeProvider',
+    group: 'Theming',
+    isNew: true,
+    props: ['ThemeProvider'],
+    render: () => <ThemeDemo />,
+    snippet: '<ThemeProvider defaultTheme="system" storageKey="theme"\n  tokens={{ lapis: "#0f766e" }}>\n  <App />\n</ThemeProvider>\n\nconst { theme, resolvedTheme, setTheme } = useTheme();'
+  },
+  {
     name: 'Mosaic',
     group: 'Brand',
     layout: 'wide',
@@ -632,5 +788,107 @@ function SidebarDemo() {
       />
       <div className="demo-frame-body">Collapse it with the icon at the bottom, then click the Resumes icon to open its flyout.</div>
     </div>
+  );
+}
+
+const allApps = [
+  ...apps,
+  { id: 5, company: 'Hooli', role: 'Platform Engineer', status: 'Interview', tone: 'brand' as const, days: 7 },
+  { id: 6, company: 'Stark Industries', role: 'UI Engineer', status: 'Applied', tone: 'neutral' as const, days: 2 },
+  { id: 7, company: 'Acme', role: 'Staff Frontend', status: 'Offer', tone: 'success' as const, days: 44 }
+];
+
+function TableDemo() {
+  const [selected, setSelected] = useState<Array<string | number>>([2]);
+  return (
+    <Stack gap={3}>
+      <Inline justify="between">
+        <span className="demo-note">{selected.length ? `${selected.length} selected` : 'Click a header to sort; tick rows to select.'}</span>
+        <Button size="sm" variant="secondary" disabled={!selected.length} onClick={() => setSelected([])}>
+          Clear selection
+        </Button>
+      </Inline>
+      <Table
+        caption="Applications"
+        rows={allApps}
+        selectable
+        rowLabel={(r) => r.company}
+        selected={selected}
+        onSelectionChange={setSelected}
+        stickyHeader
+        maxHeight={300}
+        defaultSort={{ key: 'days', direction: 'desc' }}
+        columns={[
+          { key: 'company', header: 'Company', sortable: true },
+          { key: 'role', header: 'Role' },
+          { key: 'status', header: 'Status', sortable: true, render: (r) => <Badge tone={r.tone} dot>{r.status}</Badge> },
+          { key: 'days', header: 'Days', align: 'right', sortable: true }
+        ]}
+      />
+    </Stack>
+  );
+}
+
+function StepperDemo() {
+  const [step, setStep] = useState(1);
+  const steps = [
+    { id: 'basics', label: 'Basics', description: 'Name and role' },
+    { id: 'exp', label: 'Experience', description: '4 roles' },
+    { id: 'skills', label: 'Skills', description: 'Up to 12' },
+    { id: 'review', label: 'Review', description: 'Export PDF' }
+  ];
+  return (
+    <Stack gap={6}>
+      <Stepper steps={steps} current={step} onStepClick={setStep} />
+      <Inline justify="between">
+        <Button variant="ghost" disabled={step === 0} onClick={() => setStep(step - 1)}>Back</Button>
+        <Button iconRight={<Icon name="arrow" />} onClick={() => setStep(Math.min(steps.length, step + 1))} disabled={step >= steps.length}>
+          {step >= steps.length - 1 ? 'Finish' : 'Continue'}
+        </Button>
+      </Inline>
+      <div style={{ maxWidth: 280 }}>
+        <Stepper steps={steps} current={step} onStepClick={setStep} orientation="vertical" label="Progress (vertical)" />
+      </div>
+    </Stack>
+  );
+}
+
+function DrawerDemo() {
+  const [open, setOpen] = useState(true);
+  return (
+    <>
+      <Button variant="secondary" onClick={() => setOpen(true)}>Open application</Button>
+      <Drawer
+        inline
+        open={open}
+        onClose={() => setOpen(false)}
+        title="Northwind"
+        description="Staff Engineer · applied Oct 3"
+        size={360}
+        footer={
+          <>
+            <Button variant="ghost" onClick={() => setOpen(false)}>Cancel</Button>
+            <Button onClick={() => setOpen(false)}>Save</Button>
+          </>
+        }
+      >
+        <Stack gap={4}>
+          <Select label="Status" options={['Applied', 'Interview', 'Offer', 'Rejected']} defaultValue="Interview" />
+          <Textarea label="Notes" defaultValue="Second round Thursday. Ask about the design system team." />
+        </Stack>
+      </Drawer>
+    </>
+  );
+}
+
+function ThemeDemo() {
+  const { theme, resolvedTheme, setTheme } = useTheme();
+  return (
+    <Stack gap={4} align="center">
+      <SegmentedControl label="Theme" options={[{ value: 'system', label: 'System' }, { value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }]} value={theme} onChange={(v) => setTheme(v as typeof theme)} />
+      <span className="demo-note">
+        Showing <b>{resolvedTheme}</b>. These docs run inside a ThemeProvider, so this switch and the one in the sidebar are the same state.
+      </span>
+    </Stack>
   );
 }

@@ -1,8 +1,49 @@
 import { useEffect, useId, useRef } from 'react';
-import type { KeyboardEvent, ReactNode } from 'react';
+import type { KeyboardEvent, ReactNode, RefObject } from 'react';
 import { createPortal } from 'react-dom';
 import { cx, focusables, usePresence } from '../utils';
 import { CloseButton } from './Feedback';
+
+/**
+ * Shared modal behavior for Dialog and Drawer: focus moves in on open and back out on close,
+ * Escape calls onClose, Tab cycles inside, and the page behind stops scrolling.
+ */
+export function useModal(open: boolean, panel: RefObject<HTMLElement>, onClose?: () => void) {
+  const closeRef = useRef(onClose);
+  closeRef.current = onClose;
+
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.activeElement as HTMLElement | null;
+    const { overflow } = document.body.style;
+    document.body.style.overflow = 'hidden';
+    panel.current?.focus({ preventScroll: true });
+    const onKey = (e: globalThis.KeyboardEvent) => {
+      if (e.key === 'Escape') closeRef.current?.();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = overflow;
+      prev?.focus?.({ preventScroll: true });
+    };
+  }, [open, panel]);
+
+  return function trap(e: KeyboardEvent) {
+    if (e.key !== 'Tab') return;
+    const items = focusables(panel.current);
+    if (!items.length) return e.preventDefault();
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (e.shiftKey && (document.activeElement === first || document.activeElement === panel.current)) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  };
+}
 
 export interface DialogProps {
   open: boolean;
@@ -21,37 +62,8 @@ export function Dialog({ open, onClose, title, actions, children, className, inl
   const titleId = useId();
   const panel = useRef<HTMLDivElement>(null);
   const { mounted, closing } = usePresence(open, 220);
-  const closeRef = useRef(onClose);
-  closeRef.current = onClose;
-
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.activeElement as HTMLElement | null;
-    panel.current?.focus({ preventScroll: true });
-    const onKey = (e: globalThis.KeyboardEvent) => {
-      if (e.key === 'Escape') closeRef.current?.();
-    };
-    document.addEventListener('keydown', onKey);
-    return () => {
-      document.removeEventListener('keydown', onKey);
-      prev?.focus?.({ preventScroll: true });
-    };
-  }, [open]);
-
-  function trap(e: KeyboardEvent) {
-    if (e.key !== 'Tab') return;
-    const items = focusables(panel.current);
-    if (!items.length) return e.preventDefault();
-    const first = items[0];
-    const last = items[items.length - 1];
-    if (e.shiftKey && (document.activeElement === first || document.activeElement === panel.current)) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
-  }
+  const trap = useModal(open && !inline, panel, onClose);
+  useInlineFocus(open && !!inline, panel, onClose);
 
   if (!mounted) return null;
   const node = (
@@ -74,4 +86,16 @@ export function Dialog({ open, onClose, title, actions, children, className, inl
     </div>
   );
   return inline || typeof document === 'undefined' ? node : createPortal(node, document.body);
+}
+
+/** Inline demos: Escape still closes, but focus and page scroll are left alone. */
+export function useInlineFocus(open: boolean, _panel: RefObject<HTMLElement>, onClose?: () => void) {
+  const closeRef = useRef(onClose);
+  closeRef.current = onClose;
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: globalThis.KeyboardEvent) => e.key === 'Escape' && closeRef.current?.();
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
 }

@@ -20,6 +20,8 @@ const dark = [];
 for (const t of [...tokens.color.tokens, ...(tokens.shadow?.tokens ?? [])]) {
   if (typeof t.value === 'string') {
     light.push(`--${t.name}: ${alias(t.value)};`);
+    // Aliases resolve where they are declared, so a [data-theme] subtree needs its own copy.
+    if (/^\{.+\}$/.test(t.value)) dark.push(`--${t.name}: ${alias(t.value)};`);
     continue;
   }
   light.push(`--${t.name}: ${alias(t.value[first])};`);
@@ -47,9 +49,15 @@ const typeClasses = tokens.type.groups.flatMap((g) =>
   })
 );
 
+// Theme colors are declared on :root and on any [data-theme] element, so a subtree can switch theme.
 const css = `/* ${tokens.name} tokens, generated from tokens.json. Do not edit by hand. */
 :root {
-${indent([...light, ...scalars, ...families], 2)}
+${indent([...scalars, ...families], 2)}
+}
+
+:root,
+[data-theme="${first}"] {
+${indent([...light, 'color-scheme: light;'], 2)}
 }
 
 @media (prefers-color-scheme: dark) {
@@ -58,7 +66,7 @@ ${indent([...dark, 'color-scheme: dark;'], 4)}
   }
 }
 
-:root[data-theme="${second}"] {
+[data-theme="${second}"] {
 ${indent([...dark, 'color-scheme: dark;'], 2)}
 }
 

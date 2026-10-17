@@ -4,10 +4,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
+    "props": "node scripts/gen-props.mjs",
+    "dev": "npm run props && vite",
+    "build": "npm run props && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "npm run props && tsc --noEmit"
   },
   "dependencies": {
     "@tessera/react": "0.1.0",

@@ -16,13 +16,18 @@
     "./styles.css": "./dist/styles.css",
     "./fonts.css": "./dist/fonts.css"
   },
-  "files": ["dist"],
-  "sideEffects": ["*.css"],
+  "files": [
+    "dist"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "build": "tsup && node scripts/build-css.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "size": "node scripts/size.mjs"
   },
   "peerDependencies": {
     "react": ">=18.2.0",
@@ -37,10 +42,15 @@
     "@testing-library/user-event": "14.5.2",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
+    "axe-core": "^4.10.2",
     "jsdom": "25.0.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "tsup": "8.3.5",
     "vitest": "2.1.8"
+  },
+  "sizeBudgets": {
+    "dist/index.js": 32768,
+    "dist/styles.css": 14336
   }
 }
