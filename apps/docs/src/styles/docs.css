@@ -345,7 +345,7 @@ a { color: var(--link); }
   :scope .d-side { border-right: 3px solid var(--ink); }
   :scope .d-top { background: var(--saffron); border-bottom: 3px solid #1d1030; --ink: #1d1030; --surface: #ffffff; color: #1d1030; }
   :scope .d-stage { border: 3px solid var(--ink); box-shadow: 7px 7px 0 0 var(--tile-2); }
-  :scope .d-stage-bar { background: color-mix(in srgb, var(--tile-2) 28%, var(--surface)); border-bottom: 3px solid var(--ink); }
+  :scope .d-stage-bar { background: light-dark(color-mix(in srgb, var(--tile-2) 28%, var(--surface)), var(--surface)); border-bottom: 3px solid var(--ink); }
   :scope .d-code { border: 3px solid var(--ink); box-shadow: 5px 5px 0 0 var(--saffron); }
   :scope :is(.d-tilelink, .d-swatch, .d-family, .d-scale, .d-shadow, .d-play, .d-dd, .d-icon, .lay-panel) { border: 3px solid var(--ink); }
   :scope .d-tilelink:hover { transform: translate(-3px, -3px) rotate(-1deg); box-shadow: 6px 6px 0 0 var(--tile-1); border-color: var(--ink); }
