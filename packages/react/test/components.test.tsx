@@ -176,6 +176,26 @@ describe('Tabs', () => {
   });
 });
 
+describe('Tabs render loop (regression)', () => {
+  it('settles after mounting and switching, even once fonts have loaded', async () => {
+    // Browsers resolve document.fonts.ready; jsdom has no document.fonts, which hid this loop in tests.
+    Object.defineProperty(document, 'fonts', { value: { ready: Promise.resolve() }, configurable: true });
+    let renders = 0;
+    function Counted() {
+      renders++;
+      return <Tabs label="Sections" items={[{ id: 'a', label: 'One', content: 'First' }, { id: 'b', label: 'Two', content: 'Second' }]} />;
+    }
+    render(<Counted />);
+    await userEvent.click(screen.getByRole('tab', { name: 'Two' }));
+    await new Promise((r) => setTimeout(r, 50));
+    const settled = renders;
+    await new Promise((r) => setTimeout(r, 50));
+    expect(renders).toBe(settled);
+    expect(screen.getByRole('tabpanel')).toHaveTextContent('Second');
+    delete (document as unknown as { fonts?: unknown }).fonts;
+  });
+});
+
 describe('Accordion', () => {
   it('single mode keeps one section open', async () => {
     render(<Accordion items={[{ id: 'a', title: 'Shipping', content: 'A' }, { id: 'b', title: 'Returns', content: 'B' }]} defaultValue={['a']} />);

@@ -1,4 +1,4 @@
-import { useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from 'react';
 import type { KeyboardEvent, ReactNode } from 'react';
 import { cx, useControllable } from '../utils';
 
@@ -25,16 +25,23 @@ export function Tabs({ items, label, value: valueProp, defaultValue, onChange, c
   const refs = useRef<Record<string, HTMLButtonElement | null>>({});
   const [ink, setInk] = useState({ x: 0, w: 0, ready: false });
 
-  const measure = () => {
+  // Only re-render when the indicator actually moves; a fresh object every time would loop.
+  const measure = useCallback(() => {
     const el = refs.current[value];
-    if (el) setInk({ x: el.offsetLeft + 12, w: Math.max(0, el.offsetWidth - 24), ready: true });
-  };
-  useLayoutEffect(measure, [value, items.length]);
+    if (!el) return;
+    const next = { x: el.offsetLeft + 12, w: Math.max(0, el.offsetWidth - 24), ready: true };
+    setInk((prev) => (prev.x === next.x && prev.w === next.w && prev.ready ? prev : next));
+  }, [value]);
+  useLayoutEffect(measure, [measure, items.length]);
   useEffect(() => {
-    document.fonts?.ready.then(measure);
+    let alive = true;
+    document.fonts?.ready.then(() => alive && measure());
     window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
-  });
+    return () => {
+      alive = false;
+      window.removeEventListener('resize', measure);
+    };
+  }, [measure]);
 
   function onKeyDown(e: KeyboardEvent) {
     const i = items.findIndex((t) => t.id === value);

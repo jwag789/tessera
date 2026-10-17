@@ -161,13 +161,17 @@ export function SegmentedControl({ label, options, value: valueProp, defaultValu
   useLayoutEffect(() => {
     const measure = () => {
       const el = root.current?.querySelector<HTMLElement>(`[data-value="${CSS.escape(value)}"]`);
-      if (el) setInk({ x: el.offsetLeft, w: el.offsetWidth });
+      if (el) setInk((prev) => (prev && prev.x === el.offsetLeft && prev.w === el.offsetWidth ? prev : { x: el.offsetLeft, w: el.offsetWidth }));
     };
+    let alive = true;
     measure();
     const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null;
     if (ro && root.current) ro.observe(root.current);
-    document.fonts?.ready.then(measure);
-    return () => ro?.disconnect();
+    document.fonts?.ready.then(() => alive && measure());
+    return () => {
+      alive = false;
+      ro?.disconnect();
+    };
   }, [value, options.length]);
 
   return (
