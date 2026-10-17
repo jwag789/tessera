@@ -242,3 +242,26 @@ a { color: var(--link); }
 .lay-box-wide { justify-items: start; }
 .lay-container-frame { padding: var(--space-2) 0; background: repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 12px); border-radius: 4px; }
 .lay-container { background: var(--surface); border-inline: 2px dashed var(--lapis); max-width: 240px !important; padding-block: var(--space-3); }
+
+/* Theme picker and comparison */
+.d-foot { flex-direction: column; align-items: stretch; gap: var(--space-3); }
+.d-theme-select .ts-field-label { font-size: 12px; line-height: 16px; color: var(--ink-muted); font-weight: 500; font-family: var(--font-mono); letter-spacing: .08em; text-transform: uppercase; }
+.d-theme-select .ts-sel-trigger { height: 38px; }
+.d-theme-dot { display: inline-block; width: 18px; height: 18px; border-radius: 5px; background: conic-gradient(var(--c1) 0 25%, var(--c2) 0 50%, var(--c3) 0 75%, var(--c4) 0); }
+.d-theme-dot-tessera { --c1: #2633e8; --c2: #121a8f; --c3: #2633e8; --c4: #ffb020; }
+.d-theme-dot-soft { --c1: #5151cc; --c2: #ecebff; --c3: #7373e0; --c4: #ffb38a; border-radius: 9px; }
+.d-theme-dot-cartridge { --c1: #1747c8; --c2: #cc1d1d; --c3: #ffc915; --c4: #127a37; border-radius: 6px; }
+.ts-opt-icon:has(.d-theme-dot) { background: none; }
+.d-theme-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+.d-themes { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); align-items: start; }
+.d-theme-col { border-radius: var(--radius-xl); border: 1px solid var(--line); overflow: hidden; min-width: 0; }
+.d-theme-current { border-color: var(--lapis); box-shadow: 0 0 0 2px var(--lapis); }
+.d-theme-frame { padding: var(--space-5); display: flex; flex-direction: column; gap: var(--space-3); min-height: 100%; box-sizing: border-box; }
+.d-theme-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.d-theme-head h2 { margin: 0; font: 800 26px/1.1 var(--font-display); letter-spacing: -.02em; color: var(--ink); }
+.d-theme-desc { margin: 0; font: 400 14px/20px var(--font-sans); color: var(--ink-muted); }
+.d-theme-notes { margin: 0 0 var(--space-2); padding-left: var(--space-5); font: 400 13px/20px var(--font-sans); color: var(--ink); }
+.d-theme-notes li::marker { color: var(--lapis); }
+.d-sample { display: flex; flex-direction: column; gap: var(--space-4); }
+.d-sample-row { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
+.d-sample .ts-mosaic { border-radius: var(--radius-lg); }

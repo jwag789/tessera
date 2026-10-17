@@ -1,10 +1,11 @@
 # ThemeProvider
 
-Light, dark or system theme, remembered between visits, with optional token overrides. Read and change it anywhere with `useTheme()`.
+Light, dark or system mode, a theme pack (`brand`), remembered between visits, with optional token overrides. Read and change both anywhere with `useTheme()`.
 
-**Consumer provides:** optional `theme` + `onThemeChange` or `defaultTheme` (default `system`), `storageKey` to remember the choice in localStorage, `tokens` to override values (`{ lapis: '#0f766e' }`, or `{ light: {...}, dark: {...} }`), and `scope`.
+**Consumer provides:** optional `theme` + `onThemeChange` or `defaultTheme` (default `system`); `brand` + `onBrandChange` or `defaultBrand` (default `tessera`); `storageKey` to remember both in localStorage; `tokens` to override values (`{ lapis: '#0f766e' }`, or `{ light: {...}, dark: {...} }`); and `scope`.
 
-- `scope="document"` (default) sets `data-theme` on `<html>`, so menus, dialogs and toasts rendered in portals match.
-- `scope="local"` themes one subtree, like a dark hero on a light page. Portaled layers it opens use the page theme.
-- `useTheme()` returns `{ theme, resolvedTheme, setTheme }`. `resolvedTheme` is what's showing, with `system` resolved and kept in sync with the OS.
-- Without a provider, the CSS still follows the system setting; `useTheme()` just can't change it.
+- Mode and theme are separate: every theme has a light and a dark version. `data-theme` holds the mode, `data-brand` the theme.
+- Load a theme's CSS before using it: `import '@tessera/react/themes/cartridge.css'`. Tessera itself needs nothing extra. See [Themes](#themes) to compare them.
+- `scope="document"` (default) sets both attributes on `<html>`, so menus, dialogs and toasts rendered in portals match.
+- `scope="local"` themes one subtree, like the comparison columns on the Themes page. Theme treatments are scoped with CSS `@scope`, so a nested area with a different theme keeps its own look.
+- `useTheme()` returns `{ theme, resolvedTheme, setTheme, brand, setBrand }`. `resolvedTheme` is what's showing, with `system` resolved and kept in sync with the OS.

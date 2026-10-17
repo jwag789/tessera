@@ -701,7 +701,7 @@ export const DEMOS: Demo[] = [
     isNew: true,
     props: ['ThemeProvider'],
     render: () => <ThemeDemo />,
-    snippet: '<ThemeProvider defaultTheme="system" storageKey="theme"\n  tokens={{ lapis: "#0f766e" }}>\n  <App />\n</ThemeProvider>\n\nconst { theme, resolvedTheme, setTheme } = useTheme();'
+    snippet: 'import "@tessera/react/themes/cartridge.css";\n\n<ThemeProvider defaultTheme="system" defaultBrand="cartridge" storageKey="theme">\n  <App />\n</ThemeProvider>\n\nconst { theme, resolvedTheme, setTheme, brand, setBrand } = useTheme();'
   },
   {
     name: 'Mosaic',
@@ -866,7 +866,7 @@ function ThemeDemo() {
     <Stack gap={4} align="center">
       <SegmentedControl label="Theme" options={[{ value: 'system', label: 'System' }, { value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }]} value={theme} onChange={(v) => setTheme(v as typeof theme)} />
       <span className="demo-note">
-        Showing <b>{resolvedTheme}</b>. These docs run inside a ThemeProvider, so this switch and the one in the sidebar are the same state.
+        Showing <b>{resolvedTheme}</b>. These docs run inside a ThemeProvider, so this switch and the one in the sidebar are the same state. Theme packs live on the <a href="#themes">Themes</a> page.
       </span>
     </Stack>
   );

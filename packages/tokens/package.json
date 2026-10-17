@@ -12,10 +12,17 @@
       "import": "./dist/index.js"
     },
     "./tokens.css": "./dist/tokens.css",
-    "./tokens.json": "./tokens.json"
+    "./tokens.json": "./tokens.json",
+    "./themes/*": "./dist/themes/*"
   },
-  "files": ["dist", "tokens.json"],
-  "sideEffects": ["*.css"],
+  "files": [
+    "dist",
+    "tokens.json",
+    "themes"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
   "scripts": {
     "build": "node scripts/build.mjs"
   }

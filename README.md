@@ -38,6 +38,19 @@ export function App() {
 }
 ```
 
+### Themes
+
+Tessera ships three themes, each in light and dark: **Tessera** (the default), **Soft** (periwinkle and apricot, softer shadows) and **Cartridge** (late-90s console colors, chunky keys that press down). Import a theme's CSS and pick it with `ThemeProvider`:
+
+```tsx
+import '@tessera/react/themes/cartridge.css';
+import '@tessera/react/themes/cartridge-fonts.css';
+
+<ThemeProvider defaultBrand="cartridge" storageKey="theme"><App /></ThemeProvider>
+```
+
+A theme is a token file in `packages/tokens/themes/` plus optional component treatments in `packages/react/src/themes/`, built into one CSS file scoped to `[data-brand="name"]`.
+
 Dark mode follows the system setting. Wrap the app in `<ThemeProvider storageKey="theme">` to let people choose and remember it, override tokens (`tokens={{ lapis: '#0f766e' }}`), or theme one subtree with `scope="local"`. Without React, set `data-theme="dark"` or `"light"` on any element.
 
 The bundle starts with `"use client"`, so it works from React Server Components in the Next.js App Router.
@@ -54,7 +67,7 @@ The bundle starts with `"use client"`, so it works from React Server Components 
 | Status | Badge, Avatar (+ AvatarGroup), Kbd |
 | Feedback | Alert, Toast (+ ToastProvider, `useToast`), Progress, Skeleton, Spinner, EmptyState |
 | Overlays | Dialog, Drawer, Popover (+ Floating), Tooltip |
-| Theming | ThemeProvider (+ `useTheme`) |
+| Theming | ThemeProvider (+ `useTheme`), themes: Tessera, Soft, Cartridge |
 | Brand | Mosaic, Icon |
 
 Popover, DropdownMenu, DatePicker and Tooltip share one positioning layer (`Floating`): portal, flip when there's no room, shift to stay on screen, follow scroll and resize, and animate in from the side they open on.

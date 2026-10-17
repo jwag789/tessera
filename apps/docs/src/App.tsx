@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ComponentType } from 'react';
-import { Badge, Button, CommandPalette, Icon, SegmentedControl, SidebarNav, ThemeProvider, ToastProvider, useHotkey, useTheme } from '@tessera/react';
+import { Badge, Button, CommandPalette, Icon, SegmentedControl, Select, SidebarNav, ThemeProvider, ToastProvider, useHotkey, useTheme } from '@tessera/react';
+import { themes } from '@tessera/tokens';
 import type { Command, SidebarItem } from '@tessera/react';
 import { DEMOS } from './demos';
 import type { Demo } from './demos';
-import { A11yPage, BrandPage, ColorPage, ComponentPage, ElevationPage, IconsPage, MotionPage, ShowcasePage, SpacePage, StartPage, TypePage, VoicePage } from './pages';
+import { A11yPage, BrandPage, ThemesPage, ColorPage, ComponentPage, ElevationPage, IconsPage, MotionPage, ShowcasePage, SpacePage, StartPage, TypePage, VoicePage } from './pages';
 
 interface Route {
   id: string;
@@ -21,6 +22,7 @@ const ROUTES: Route[] = [
   { id: 'showcase', title: 'Showcase', section: 'Overview', icon: 'sparkle', page: ShowcasePage },
   { id: 'start', title: 'Getting started', section: 'Overview', icon: 'arrow', page: StartPage },
   { id: 'brand', title: 'Brand', section: 'Overview', icon: 'home', page: BrandPage },
+  { id: 'themes', title: 'Themes', section: 'Overview', icon: 'settings', page: ThemesPage },
   { id: 'color', title: 'Color', section: 'Foundations', page: ColorPage },
   { id: 'type', title: 'Typography', section: 'Foundations', page: TypePage },
   { id: 'space', title: 'Space and shape', section: 'Foundations', page: SpacePage },
@@ -35,6 +37,11 @@ const ROUTES: Route[] = [
 ];
 
 const current = () => ROUTES.find((r) => r.id === location.hash.replace(/^#/, '')) ?? ROUTES[0];
+
+const THEME_ORDER = ['tessera', 'soft', 'cartridge'];
+const themeOptions = [...themes]
+  .sort((a, b) => THEME_ORDER.indexOf(a.name) - THEME_ORDER.indexOf(b.name))
+  .map((t) => ({ value: t.name, label: t.label, icon: <span className={`d-theme-dot d-theme-dot-${t.name}`} /> }));
 
 const Mark = () => (
   <svg viewBox="0 0 48 48" width="28" height="28" aria-hidden="true" className="d-mark">
@@ -60,7 +67,7 @@ function Shell() {
   const [query, setQuery] = useState('');
   const [drawer, setDrawer] = useState(false);
   const [palette, setPalette] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, brand, setBrand } = useTheme();
   const search = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -114,9 +121,10 @@ function Shell() {
       })),
       { id: 'theme-dark', label: 'Use dark theme', group: 'Theme', icon: 'settings', keywords: ['mode', 'night'], onRun: () => setTheme('dark') },
       { id: 'theme-light', label: 'Use light theme', group: 'Theme', icon: 'settings', keywords: ['mode', 'day'], onRun: () => setTheme('light') },
-      { id: 'theme-system', label: 'Match system theme', group: 'Theme', icon: 'settings', keywords: ['mode', 'auto'], onRun: () => setTheme('system') }
+      { id: 'theme-system', label: 'Match system theme', group: 'Theme', icon: 'settings', keywords: ['mode', 'auto'], onRun: () => setTheme('system') },
+      ...themes.map((t) => ({ id: `brand-${t.name}`, label: `Switch to the ${t.label} theme`, group: 'Theme', icon: 'sparkle' as const, keywords: ['theme', 'skin', 'look', t.name], onRun: () => setBrand(t.name) }))
     ],
-    [setTheme]
+    [setTheme, setBrand]
   );
 
   const idx = ROUTES.indexOf(route);
@@ -173,10 +181,17 @@ function Shell() {
           sections={sections}
           footer={
             <div className="d-foot">
-              <span className="d-foot-label">Theme</span>
-              <SegmentedControl
+              <Select
                 label="Theme"
+                className="d-theme-select"
+                options={themeOptions}
+                value={brand}
+                onChange={(v) => setBrand(v)}
+              />
+              <SegmentedControl
+                label="Mode"
                 size="sm"
+                block
                 options={[{ value: 'system', label: 'System' }, { value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }]}
                 value={theme}
                 onChange={(v) => setTheme(v as typeof theme)}

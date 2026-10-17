@@ -261,12 +261,29 @@ describe('ThemeProvider', () => {
     expect(localStorage.getItem('t-theme')).toBe('dark');
   });
 
+  it('switches theme packs with data-brand and remembers them', async () => {
+    function Brand() {
+      const { brand, setBrand } = useTheme();
+      return <button onClick={() => setBrand('cartridge')}>{brand}</button>;
+    }
+    render(
+      <ThemeProvider storageKey="t2">
+        <Brand />
+      </ThemeProvider>
+    );
+    expect(document.documentElement).not.toHaveAttribute('data-brand');
+    await userEvent.click(screen.getByRole('button', { name: 'tessera' }));
+    expect(document.documentElement).toHaveAttribute('data-brand', 'cartridge');
+    expect(localStorage.getItem('t2:brand')).toBe('cartridge');
+  });
+
   it('can theme just a subtree', () => {
     const { container } = render(
-      <ThemeProvider scope="local" theme="dark">
+      <ThemeProvider scope="local" theme="dark" brand="soft">
         <span>inside</span>
       </ThemeProvider>
     );
     expect(container.firstElementChild).toHaveAttribute('data-theme', 'dark');
+    expect(container.firstElementChild).toHaveAttribute('data-brand', 'soft');
   });
 });

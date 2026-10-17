@@ -1,6 +1,7 @@
 import { Component, useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
-import { Alert, Badge, Button, Icon, Switch, Checkbox, Table, iconNames, useToast } from '@tessera/react';
+import { Alert, Avatar, Badge, Button, Card, Icon, Mosaic, Progress, SegmentedControl, Switch, Checkbox, Table, TextField, ThemeProvider, Toast, iconNames, useTheme, useToast } from '@tessera/react';
+import { themes } from '@tessera/tokens';
 import { tokens } from '@tessera/tokens';
 import { Cover } from './Cover';
 import { Showcase } from './Showcase';
@@ -215,6 +216,116 @@ export function BrandPage() {
       <Md src={logosDoc} />
       <H2>The Mosaic</H2>
       <Md src={brandSections['The Mosaic'] ?? ''} />
+    </div>
+  );
+}
+
+/* ---------- themes ---------- */
+
+const THEME_ORDER = ['tessera', 'soft', 'cartridge'];
+const THEME_NOTES: Record<string, string[]> = {
+  tessera: ['Saturated lapis with one saffron tile', 'Tight corners, hard offset shadow', 'Bricolage Grotesque headings'],
+  soft: ['Periwinkle and apricot', 'Rounder corners, soft lifted shadows', 'Same type, same layout'],
+  cartridge: ['Four button colors on charcoal plastic', 'Chunky rounded keys that press down', 'Lilita One and Nunito']
+};
+
+function ThemeSample({ name }: { name: string }) {
+  return (
+    <div className="d-sample">
+      <Mosaic columns={10} rows={3} seed={name.length * 7} gap={5} interactive={false} />
+      <Card eyebrow="Template" title="Grid" variant="tile" actions={<Button size="sm">Use template</Button>}>
+        Two columns with a skills sidebar.
+      </Card>
+      <div className="d-sample-row">
+        <Button size="sm">Export PDF</Button>
+        <Button size="sm" variant="secondary">
+          Preview
+        </Button>
+        <Button size="sm" variant="tile">
+          Start
+        </Button>
+      </div>
+      <div className="d-sample-row">
+        <Badge tone="brand">Template</Badge>
+        <Badge tone="success" dot>
+          Offer
+        </Badge>
+        <Badge tone="danger" dot>
+          Rejected
+        </Badge>
+        <Badge tone="accent">New</Badge>
+      </div>
+      <TextField label="Email" icon="mail" defaultValue="ada@lovelace.dev" />
+      <div className="d-sample-row" style={{ justifyContent: 'space-between' }}>
+        <Switch label="Public link" defaultChecked />
+        <Avatar name="Ada Lovelace" />
+      </div>
+      <Progress label="Profile complete" value={3} max={5} steps />
+      <Toast icon="success" title="Exported" style={{ animation: 'none', maxWidth: 'none' }}>
+        resume.pdf
+      </Toast>
+    </div>
+  );
+}
+
+export function ThemesPage() {
+  const { brand, setBrand, resolvedTheme, theme, setTheme } = useTheme();
+  const ordered = [...themes].sort((a, b) => THEME_ORDER.indexOf(a.name) - THEME_ORDER.indexOf(b.name));
+  return (
+    <div className="d-page d-page-wide">
+      <Head
+        eyebrow="Overview"
+        title="Themes"
+        lead="One set of components, three looks. Each theme is a token pack plus a few component treatments, in light and dark. Compare them here, then switch the whole site with Use this theme."
+      />
+      <div className="d-theme-bar">
+        <SegmentedControl label="Mode for the comparison" size="sm" options={[{ value: 'system', label: 'System' }, { value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }]} value={theme} onChange={(v) => setTheme(v as typeof theme)} />
+        <span className="demo-note">Showing {resolvedTheme} mode. The samples are live components, so hover and click them.</span>
+      </div>
+      <div className="d-themes">
+        {ordered.map((t) => (
+          <section key={t.name} className={'d-theme-col' + (brand === t.name ? ' d-theme-current' : '')} aria-labelledby={`theme-${t.name}`}>
+            <ThemeProvider scope="local" theme={resolvedTheme} brand={t.name} className="d-theme-frame">
+              <div className="d-theme-head">
+                <h2 id={`theme-${t.name}`}>{t.label}</h2>
+                {brand === t.name ? (
+                  <Badge tone="success" dot>
+                    In use
+                  </Badge>
+                ) : (
+                  <Button size="sm" variant="secondary" onClick={() => setBrand(t.name)}>
+                    Use this theme
+                  </Button>
+                )}
+              </div>
+              <p className="d-theme-desc">{t.description}</p>
+              <ul className="d-theme-notes">
+                {(THEME_NOTES[t.name] ?? []).map((n) => (
+                  <li key={n}>{n}</li>
+                ))}
+              </ul>
+              <ThemeSample name={t.name} />
+            </ThemeProvider>
+          </section>
+        ))}
+      </div>
+      <H2>Use a theme in your app</H2>
+      <Code
+        label="main.tsx"
+        src={`import '@tessera/react/styles.css';
+import '@tessera/react/themes/cartridge.css';       // the theme's tokens and treatments
+import '@tessera/react/themes/cartridge-fonts.css'; // its fonts (Cartridge only)
+
+<ThemeProvider defaultBrand="cartridge" storageKey="theme">
+  <App />
+</ThemeProvider>`}
+      />
+      <H2>Make your own</H2>
+      <Md
+        src={
+          'A theme is a JSON file in `packages/tokens/themes/` that overrides any subset of tokens (colors for light and dark, radii, shadows, font families) and, optionally, a stylesheet in `packages/react/src/themes/` for what tokens can’t express. The build turns it into one CSS file scoped to `[data-brand="name"]`, so themes can sit side by side on one page, as they do above. Check the text pairs on the [Color](#color) page; the shipped themes meet 4.5:1 in both modes.'
+        }
+      />
     </div>
   );
 }

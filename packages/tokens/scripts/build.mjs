@@ -1,6 +1,6 @@
 // Builds dist/ from tokens.json: tokens.css (CSS variables for both themes plus type classes),
 // index.js (the tokens as data) and index.d.ts (token names as string unions).
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, readdirSync, writeFileSync, mkdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -51,12 +51,15 @@ const typeClasses = tokens.type.groups.flatMap((g) =>
 
 // Theme colors are declared on :root and on any [data-theme] element, so a subtree can switch theme.
 const css = `/* ${tokens.name} tokens, generated from tokens.json. Do not edit by hand. */
-:root {
+:root,
+[data-brand="tessera"] {
 ${indent([...scalars, ...families], 2)}
 }
 
 :root,
-[data-theme="${first}"] {
+[data-theme="${first}"],
+[data-brand="tessera"],
+[data-brand="tessera"][data-theme="${first}"] {
 ${indent([...light, 'color-scheme: light;'], 2)}
 }
 
@@ -103,4 +106,70 @@ export declare function cssVar(name: TokenName): string;
 `
 );
 
-console.log(`tokens: ${colorNames.length} colors, ${otherNames.length} scale tokens, ${styleNames.length} type styles → dist/`);
+// ---------- Theme packs: themes/*.json → dist/themes/<name>.css ----------
+// A theme overrides any subset of tokens. It applies wherever data-brand="<name>" is set, in both modes,
+// and its selectors are specific enough to win over the base tokens regardless of mode.
+const themeDir = join(root, 'themes');
+const themeMeta = [];
+mkdirSync(join(out, 'themes'), { recursive: true });
+for (const file of readdirSync(themeDir).filter((f) => f.endsWith('.json'))) {
+  const t = JSON.parse(readFileSync(join(themeDir, file), 'utf8'));
+  const sel = `[data-brand="${t.name}"]`;
+  const tLight = [];
+  const tDark = [];
+  for (const tok of [...(t.color?.tokens ?? []), ...(t.shadow?.tokens ?? [])]) {
+    if (typeof tok.value === 'string') {
+      tLight.push(`--${tok.name}: ${alias(tok.value)};`);
+      if (/^\{.+\}$/.test(tok.value)) tDark.push(`--${tok.name}: ${alias(tok.value)};`);
+      continue;
+    }
+    tLight.push(`--${tok.name}: ${alias(tok.value[first])};`);
+    if (tok.value[second] !== undefined) tDark.push(`--${tok.name}: ${alias(tok.value[second])};`);
+  }
+  // Base aliases resolve per element, so re-declare them inside the theme too.
+  for (const tok of tokens.color.tokens) {
+    if (typeof tok.value === 'string' && /^\{.+\}$/.test(tok.value)) {
+      tLight.push(`--${tok.name}: ${alias(tok.value)};`);
+      tDark.push(`--${tok.name}: ${alias(tok.value)};`);
+    }
+  }
+  const tScalars = Object.keys(t)
+    .filter((k) => !['name', 'label', 'description', 'fonts', 'color', 'type', 'shadow'].includes(k) && Array.isArray(t[k]?.tokens))
+    .flatMap((k) => t[k].tokens.map((x) => `--${x.name}: ${x.value};`));
+  const tFamilies = Object.entries(t.type?.families ?? {}).map(([k, v]) => `--font-${k}: ${v};`);
+  const tcss = `/* ${tokens.name} theme: ${t.label ?? t.name}. Generated from themes/${file}. Load after the base tokens and set data-brand="${t.name}". */
+${sel} {
+${indent([...tScalars, ...tFamilies], 2)}
+}
+
+${sel},
+${sel}[data-theme="${first}"] {
+${indent([...tLight, 'color-scheme: light;'], 2)}
+}
+
+@media (prefers-color-scheme: dark) {
+  ${sel}:not([data-theme="${first}"]) {
+${indent([...tDark, 'color-scheme: dark;'], 4)}
+  }
+}
+
+${sel}[data-theme="${second}"] {
+${indent([...tDark, 'color-scheme: dark;'], 2)}
+}
+`;
+  writeFileSync(join(out, 'themes', `${t.name}.css`), tcss);
+  if (t.fonts) writeFileSync(join(out, 'themes', `${t.name}-fonts.css`), `/* Fonts for the ${t.label ?? t.name} theme. */\n@import url('${t.fonts}');\n`);
+  themeMeta.push({ name: t.name, label: t.label ?? t.name, description: t.description ?? '', fonts: t.fonts ?? null });
+}
+writeFileSync(
+  join(out, 'index.js'),
+  readFileSync(join(out, 'index.js'), 'utf8') +
+    `\n/** Theme packs: import '@tessera/tokens/themes/<name>.css' and set data-brand="<name>". */\nexport const themes = ${JSON.stringify([{ name: 'tessera', label: tokens.name, description: 'The default: bold lapis with one saffron tile out of place.', fonts: null }, ...themeMeta], null, 2)};\n`
+);
+writeFileSync(
+  join(out, 'index.d.ts'),
+  readFileSync(join(out, 'index.d.ts'), 'utf8') +
+    `export type ThemeName = ${['tessera', ...themeMeta.map((m) => m.name)].map((n) => JSON.stringify(n)).join(' | ')};\nexport declare const themes: { name: ThemeName; label: string; description: string; fonts: string | null }[];\n`
+);
+
+console.log(`tokens: ${colorNames.length} colors, ${otherNames.length} scale tokens, ${styleNames.length} type styles, themes: ${themeMeta.map((m) => m.name).join(', ')} → dist/`);
