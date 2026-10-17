@@ -222,11 +222,12 @@ export function BrandPage() {
 
 /* ---------- themes ---------- */
 
-const THEME_ORDER = ['tessera', 'soft', 'cartridge'];
+const THEME_ORDER = ['tessera', 'soft', 'cartridge', 'polygon'];
 const THEME_NOTES: Record<string, string[]> = {
   tessera: ['Saturated lapis with one saffron tile', 'Tight corners, hard offset shadow', 'Bricolage Grotesque headings'],
   soft: ['Periwinkle and apricot', 'Rounder corners, soft lifted shadows', 'Same type, same layout'],
-  cartridge: ['Charcoal shell with light labels, in both modes', 'Green, red, blue and yellow keys that press down', 'Big Lilita One headings over Nunito']
+  cartridge: ['Charcoal shell with light labels, in both modes', 'Green, red, blue and yellow keys that press down', 'Big Lilita One headings over Nunito'],
+  polygon: ['Matte grey plastic with dark recessed panels', 'Hard 1-2px bevels, a menu cursor on the selection', 'Silkscreen pixel headings, Space Mono labels']
 };
 
 function ThemeSample({ name }: { name: string }) {
@@ -276,7 +277,7 @@ export function ThemesPage() {
       <Head
         eyebrow="Overview"
         title="Themes"
-        lead="One set of components, three looks. Each theme is a token pack plus a few component treatments, in light and dark. Compare them here, then switch the whole site with Use this theme."
+        lead="One set of components, four looks. Each theme is a token pack plus a few component treatments, in light and dark. Compare them here, then switch the whole site with Use this theme."
       />
       <div className="d-theme-bar">
         <SegmentedControl label="Mode for the comparison" size="sm" options={[{ value: 'system', label: 'System' }, { value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }]} value={theme} onChange={(v) => setTheme(v as typeof theme)} />
@@ -314,7 +315,7 @@ export function ThemesPage() {
         label="main.tsx"
         src={`import '@tessera/react/styles.css';
 import '@tessera/react/themes/cartridge.css';       // the theme's tokens and treatments
-import '@tessera/react/themes/cartridge-fonts.css'; // its fonts (Cartridge only)
+import '@tessera/react/themes/cartridge-fonts.css'; // its fonts (Cartridge and Polygon)
 
 <ThemeProvider defaultBrand="cartridge" storageKey="theme">
   <App />
@@ -323,7 +324,7 @@ import '@tessera/react/themes/cartridge-fonts.css'; // its fonts (Cartridge only
       <H2>Make your own</H2>
       <Md
         src={
-          'A theme is a JSON file in `packages/tokens/themes/` that overrides any subset of tokens (colors for light and dark, radii, shadows, font families) and, optionally, a stylesheet in `packages/react/src/themes/` for what tokens can’t express. The build turns it into one CSS file scoped to `[data-brand="name"]`, so themes can sit side by side on one page, as they do above. Check the text pairs on the [Color](#color) page; the shipped themes meet 4.5:1 in both modes.'
+          'A theme is a JSON file in `packages/tokens/themes/` that overrides any subset of tokens (colors for light and dark, radii, shadows, font families) and, optionally, a stylesheet in `packages/react/src/themes/` for what tokens can’t express. The build turns it into one CSS file scoped to `[data-brand="name"]`, so themes can sit side by side on one page, as they do above. A theme can also give surfaces their own palette with `label-*` tokens, the way Cartridge puts light labels on a charcoal shell and Polygon sets dark panels into grey plastic. The shipped themes meet 4.5:1 for text in both modes, on the page and inside surfaces, and `packages/react/test/themes.test.ts` checks it.'
         }
       />
     </div>

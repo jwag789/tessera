@@ -38,7 +38,7 @@ const ROUTES: Route[] = [
 
 const current = () => ROUTES.find((r) => r.id === location.hash.replace(/^#/, '')) ?? ROUTES[0];
 
-const THEME_ORDER = ['tessera', 'soft', 'cartridge'];
+const THEME_ORDER = ['tessera', 'soft', 'cartridge', 'polygon'];
 const themeOptions = [...themes]
   .sort((a, b) => THEME_ORDER.indexOf(a.name) - THEME_ORDER.indexOf(b.name))
   .map((t) => ({ value: t.name, label: t.label, icon: <span className={`d-theme-dot d-theme-dot-${t.name}`} /> }));

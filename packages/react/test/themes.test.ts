@@ -70,3 +70,24 @@ describe.each([{ name: 'tessera', theme: null as TokenFile | null }, ...themes.m
     expect(failures).toEqual([]);
   });
 });
+
+describe('theme packs', () => {
+  const tokensDist = join(tokensDir, 'dist/themes');
+
+  it.each(themes.map((t) => t.name))('%s has scoped component treatments and is listed', async (name) => {
+    const css = readFileSync(join(__dirname, '../src/themes', `${name}.css`), 'utf8');
+    expect(css).toContain(`@scope ([data-brand="${name}"]) to ([data-brand]:not([data-brand="${name}"]))`);
+    const { themes: listed } = await import('@tessera/tokens');
+    expect(listed.map((t) => t.name)).toContain(name);
+  });
+
+  it.each(themes.map((t) => t.name))('%s CSS stands alone when nested in another theme', (name) => {
+    const css = readFileSync(join(tokensDist, `${name}.css`), 'utf8');
+    // The full base set comes first, so nothing is inherited from an outer theme…
+    for (const token of ['--font-display', '--tile-1', '--focus', '--radius-full']) expect(css).toContain(`${token}:`);
+    // …and tokens only other themes define are reset.
+    const own = new Set((themes.find((t) => t.name === name)!.color?.tokens ?? []).map((t) => t.name));
+    const foreign = themes.flatMap((t) => (t.color?.tokens ?? []).map((x) => x.name)).filter((n) => !own.has(n) && !base.color!.tokens.some((b) => b.name === n));
+    for (const n of new Set(foreign)) expect(css).toContain(`--${n}: initial;`);
+  });
+});

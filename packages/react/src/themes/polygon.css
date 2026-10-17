@@ -1,0 +1,170 @@
+/* Polygon: component treatments the tokens can't express. Matte grey plastic with dark recessed panels
+   set into it, hard 1-2px bevels instead of soft shadows, pixel headings over a monospace secondary, and a
+   memory-card-menu cursor on whatever is selected. Scoped to [data-brand="polygon"]. */
+/* Scoped so a nested area with a different data-brand keeps its own look. */
+@scope ([data-brand="polygon"]) to ([data-brand]:not([data-brand="polygon"])) {
+  :scope {
+    font-synthesis: none;
+    /* The plastic palette, captured here so plastic parts can restore it inside a panel. */
+    --shell-bg: var(--bg);
+    --shell-surface-sunken: var(--surface-sunken);
+    --shell-line: var(--line);
+    --shell-line-strong: var(--line-strong);
+    --shell-ink: var(--ink);
+    --shell-ink-muted: var(--ink-muted);
+    --shell-lapis: var(--lapis);
+    --shell-lapis-hover: var(--lapis-hover);
+    --shell-lapis-soft: var(--lapis-soft);
+    --shell-on-lapis: var(--on-lapis);
+    --shell-success: var(--success);
+    --shell-success-soft: var(--success-soft);
+    --shell-warning: var(--warning);
+    --shell-saffron-soft: var(--saffron-soft);
+    --shell-danger: var(--danger);
+    --shell-danger-soft: var(--danger-soft);
+    --shell-on-danger: var(--on-danger);
+    --shell-inverse-accent: var(--inverse-accent);
+    --shell-focus: var(--focus);
+    --shell-link: var(--link);
+    /* Hard bevels: a light top-left edge and a dark bottom-right edge. Pressed and recessed parts swap them. */
+    --bevel-up: inset 1px 1px 0 rgba(255, 255, 255, .55), inset -2px -2px 0 rgba(0, 0, 0, .28);
+    --bevel-down: inset 2px 2px 0 rgba(0, 0, 0, .3), inset -1px -1px 0 rgba(255, 255, 255, .35);
+    --bevel-well: inset 2px 2px 0 rgba(0, 0, 0, .5), inset -1px -1px 0 rgba(255, 255, 255, .1);
+    --scanlines: repeating-linear-gradient(to bottom, rgba(255, 255, 255, .035) 0 1px, transparent 1px 3px);
+  }
+  /* Dither on the page ground. */
+  :scope body { background-image: radial-gradient(rgba(0, 0, 0, .07) .7px, transparent .9px); background-size: 3px 3px; }
+
+  /* Panels. Anything painted with --surface is a dark panel recessed into the plastic: it re-declares the
+     palette, so text, links and tints inside it are tuned for the panel. Add data-surface="label" to make
+     your own panel one. */
+  :scope :is([data-surface="label"], .ts-input, .ts-sel-trigger, .ts-sel-list, .ts-card, .ts-table-wrap, .ts-dialog, .ts-popover, .ts-menu, .ts-accordion, .ts-side-flyout, .ts-cmd, .ts-empty, .ts-number, .ts-tags, .ts-drop, .ts-file, .ts-drawer, .ts-step-marker, .ts-check-box, .ts-radio-dot) {
+    --bg: var(--label-bg);
+    --surface: var(--label-surface);
+    --surface-sunken: var(--label-surface-sunken);
+    --line: var(--label-line);
+    --line-strong: var(--label-line-strong);
+    --ink: var(--label-ink);
+    --ink-muted: var(--label-ink-muted);
+    --lapis: var(--label-lapis);
+    --lapis-hover: var(--label-lapis-hover);
+    --lapis-soft: var(--label-lapis-soft);
+    --on-lapis: var(--label-on-lapis);
+    --success: var(--label-success);
+    --success-soft: var(--label-success-soft);
+    --warning: var(--label-warning);
+    --saffron-soft: var(--label-saffron-soft);
+    --danger: var(--label-danger);
+    --danger-soft: var(--label-danger-soft);
+    --on-danger: var(--label-on-danger);
+    --inverse-accent: var(--label-inverse-accent);
+    --focus: var(--label-focus);
+    --link: var(--label-link);
+  }
+
+  /* Plastic parts (keys, navbar, sidebar) are grey plastic wherever they sit, even inside a panel. */
+  :scope :is(.ts-btn-secondary, .ts-navbar, .ts-sidebar, .ts-navbar-toggle, .ts-sidebar-toggle, .ts-page-step, .ts-cal-nav, .ts-segctl) {
+    --bg: var(--shell-bg);
+    --surface-sunken: var(--shell-surface-sunken);
+    --line: var(--shell-line);
+    --line-strong: var(--shell-line-strong);
+    --ink: var(--shell-ink);
+    --ink-muted: var(--shell-ink-muted);
+    --lapis: var(--shell-lapis);
+    --lapis-hover: var(--shell-lapis-hover);
+    --lapis-soft: var(--shell-lapis-soft);
+    --on-lapis: var(--shell-on-lapis);
+    --success: var(--shell-success);
+    --success-soft: var(--shell-success-soft);
+    --warning: var(--shell-warning);
+    --saffron-soft: var(--shell-saffron-soft);
+    --danger: var(--shell-danger);
+    --danger-soft: var(--shell-danger-soft);
+    --on-danger: var(--shell-on-danger);
+    --inverse-accent: var(--shell-inverse-accent);
+    --focus: var(--shell-focus);
+    --link: var(--shell-link);
+  }
+
+  /* Pixel headings; Silkscreen is wide, so sizes come down a step. The monospace carries the secondary text. */
+  :scope :is(.ts-card-title, .ts-dialog-title, .ts-popover-title, .ts-empty-title, .ts-cal-title, .ts-navbar-brand) { font-weight: 400; letter-spacing: 0; }
+  :scope .ts-card-title { font-size: 20px; line-height: 26px; }
+  :scope .ts-dialog-title { font-size: 22px; line-height: 28px; }
+  :scope .ts-navbar-brand { font-size: 18px; }
+  :scope :is(.display-2xl, .display-xl, .display-lg, .heading-lg, .heading-md) { font-weight: 400; letter-spacing: 0; }
+  :scope :is(.ts-btn, .ts-badge, .ts-tab, .ts-navlink, .ts-segctl-item, .ts-card-eyebrow, .ts-side-title, .ts-field-label, .ts-kbd) { font-family: var(--font-mono); letter-spacing: .02em; }
+  :scope :is(.ts-btn, .ts-badge, .ts-tab, .ts-navlink, .ts-segctl-item) { text-transform: uppercase; font-weight: 700; font-size: 12px; }
+  :scope .ts-btn-lg { font-size: 14px; }
+
+  /* Keys: hard bevels and a 1px outline; pressing swaps the bevel and nudges the key down-right. */
+  :scope .ts-btn { border: 1px solid rgba(0, 0, 0, .55); transition: transform var(--duration-instant), box-shadow var(--duration-instant), background var(--duration-fast); }
+  :scope :is(.ts-btn-primary, .ts-btn-danger, .ts-btn-tile, .ts-btn-secondary) { box-shadow: var(--bevel-up); }
+  :scope .ts-btn-secondary { background: var(--shell-raised); }
+  :scope :is(.ts-btn-primary, .ts-btn-danger, .ts-btn-tile, .ts-btn-secondary):hover:not([disabled]) { transform: none; filter: brightness(1.06); box-shadow: var(--bevel-up); border-color: rgba(0, 0, 0, .55); }
+  :scope .ts-btn-tile:hover:not([disabled]) { transform: none; }
+  :scope .ts-btn:active:not([disabled]) { transform: translate(1px, 1px); box-shadow: var(--bevel-down); }
+  :scope .ts-btn-tile:active:not([disabled]) { background: var(--saffron-deep); }
+  :scope .ts-btn-ghost { border-color: transparent; }
+  :scope .ts-btn-ghost:hover:not([disabled]) { background: var(--surface-sunken); }
+  :scope .ts-btn-primary::after, :scope .ts-btn-tile::after { display: none; }
+  :scope :is(.ts-navbar-toggle, .ts-sidebar-toggle, .ts-page-step, .ts-cal-nav) { background: var(--shell-raised); border-color: rgba(0, 0, 0, .55); box-shadow: var(--bevel-up); }
+
+  /* Plastic: navbar and sidebar are raised grey with a bevel; the current item gets the menu cursor. */
+  :scope .ts-navbar { background: var(--shell-raised); border-bottom: 1px solid rgba(0, 0, 0, .55); box-shadow: var(--bevel-up); }
+  :scope .ts-sidebar { background: var(--shell-raised); border-right: 1px solid rgba(0, 0, 0, .55); box-shadow: var(--bevel-up); }
+  :scope .ts-navlink:hover, :scope .ts-side-link:hover { background: var(--surface-sunken); }
+  :scope .ts-navlink[aria-current="page"] { background: var(--lapis); color: var(--on-lapis); box-shadow: var(--bevel-down); }
+  :scope .ts-navlink[aria-current="page"]::after { display: none; }
+  :scope .ts-side-title::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 8px; vertical-align: 0; background: var(--tile-1); box-shadow: 1px 1px 0 rgba(0, 0, 0, .5); }
+  :scope .ts-sidebar-body > .ts-side-title:nth-of-type(4n + 2)::before { background: var(--tile-2); }
+  :scope .ts-sidebar-body > .ts-side-title:nth-of-type(4n + 3)::before { background: var(--tile-3); }
+  :scope .ts-sidebar-body > .ts-side-title:nth-of-type(4n + 4)::before { background: var(--tile-4); }
+  :scope .ts-side-link[aria-current="page"], :scope .ts-menu-item-active { background: var(--lapis); color: var(--on-lapis); box-shadow: var(--bevel-down); }
+  :scope .ts-side-link[aria-current="page"]::before, :scope .ts-menu-item-active::before { content: "\25B8"; font: 400 12px/1 var(--font-mono); margin-right: -4px; }
+  :scope .ts-side-link[aria-current="page"] .ts-side-badge { background: var(--on-lapis); color: var(--lapis); }
+
+  /* Panels: recessed into the plastic, scanlines on the large ones. */
+  :scope :is(.ts-card, .ts-table-wrap, .ts-accordion, .ts-empty, .ts-drop, .ts-file) { border: 1px solid rgba(0, 0, 0, .6); box-shadow: var(--bevel-well); }
+  :scope :is(.ts-card, .ts-dialog, .ts-drawer, .ts-cmd, .ts-empty, [data-surface="label"]) { background-image: var(--scanlines); }
+  :scope .ts-card-tile { border: 1px solid rgba(0, 0, 0, .6); box-shadow: var(--bevel-well), 3px 3px 0 0 var(--saffron); }
+  :scope .ts-card-tile.ts-card-interactive:hover, :scope .ts-card-interactive:not(.ts-card-tile):hover { transform: none; outline: 2px solid var(--focus); outline-offset: 2px; }
+  :scope :is(.ts-dialog, .ts-cmd, .ts-drawer, .ts-popover, .ts-menu, .ts-sel-list, .ts-side-flyout) { border: 1px solid rgba(0, 0, 0, .7); box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .12), 4px 4px 0 0 rgba(0, 0, 0, .45); }
+  :scope :is(.ts-input, .ts-sel-trigger, .ts-tags, .ts-number) { border: 1px solid rgba(0, 0, 0, .6); box-shadow: var(--bevel-well); }
+  :scope :is(.ts-input, .ts-sel-trigger, .ts-tags, .ts-number):hover { border-color: rgba(0, 0, 0, .8); }
+  :scope .ts-input:focus-visible, :scope .ts-sel-open .ts-sel-trigger { border-color: var(--focus); box-shadow: var(--bevel-well), 0 0 0 2px var(--focus); }
+
+  /* Status and selection in the four accents: green, red, blue, pink. */
+  :scope .ts-badge { border-radius: 0; box-shadow: 1px 1px 0 rgba(0, 0, 0, .35); }
+  :scope .ts-badge-accent { box-shadow: 1px 1px 0 0 var(--saffron-deep); }
+  :scope .ts-check-box { border: 1px solid rgba(0, 0, 0, .6); box-shadow: var(--bevel-well); border-radius: 0; }
+  :scope .ts-check input:checked + .ts-check-box { background: var(--tile-1); border-color: rgba(0, 0, 0, .6); box-shadow: var(--bevel-up); }
+  :scope .ts-check input:checked + .ts-check-box path { stroke: #0b1a10; }
+  :scope .ts-radio-dot { border: 1px solid rgba(0, 0, 0, .6); box-shadow: var(--bevel-well); }
+  :scope .ts-switch-track { border-radius: 0; background: var(--surface-sunken); box-shadow: var(--bevel-down); outline: 1px solid rgba(0, 0, 0, .55); }
+  :scope .ts-switch-track::after { border-radius: 0; background: var(--shell-raised); box-shadow: var(--bevel-up); outline: 1px solid rgba(0, 0, 0, .5); }
+  :scope .ts-switch input:checked + .ts-switch-track { background: var(--tile-1); }
+  :scope .ts-tab-ink { height: 3px; border-radius: 0; background: var(--tile-4); }
+  :scope .ts-segctl { background: var(--surface-sunken); border-radius: var(--radius-sm); box-shadow: var(--bevel-down); }
+  :scope .ts-segctl-ink { background: var(--shell-raised); border-radius: 0; box-shadow: var(--bevel-up), 0 0 0 1px rgba(0, 0, 0, .55); }
+  :scope .ts-page-current, :scope .ts-day-selected { box-shadow: var(--bevel-down); }
+  :scope .ts-step-current .ts-step-marker { background: var(--saffron); border-color: rgba(0, 0, 0, .6); box-shadow: var(--bevel-up); }
+  :scope .ts-progress-track { height: 12px; border-radius: 0; background: var(--surface-sunken); box-shadow: var(--bevel-down); }
+  :scope .ts-progress-bar { border-radius: 0; background: repeating-linear-gradient(90deg, var(--tile-3) 0 8px, transparent 8px 10px); }
+  :scope .ts-avatar { border-radius: var(--radius-sm); background: var(--tile-3); color: #0b1020; box-shadow: var(--bevel-up); }
+  :scope .ts-avatar:nth-child(4n + 2) { background: var(--tile-4); color: #1c0b15; }
+  :scope .ts-avatar:nth-child(4n + 3) { background: var(--tile-1); color: #0b1a10; }
+  :scope .ts-avatar:nth-child(4n + 4) { background: var(--tile-2); color: #1a0809; }
+  :scope .ts-tooltip, :scope .ts-toast { border-radius: 0; box-shadow: 3px 3px 0 0 rgba(0, 0, 0, .45); }
+
+  /* The four accents take turns in the segmented progress, the spinner and the mosaic memory blocks. */
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 1)::after { background: var(--tile-1); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 2)::after { background: var(--tile-2); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 3)::after { background: var(--tile-3); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 4)::after { background: var(--tile-4); }
+  :scope .ts-spinner i:nth-child(1) { color: var(--tile-1); }
+  :scope .ts-spinner i:nth-child(2) { color: var(--tile-2); }
+  :scope .ts-spinner i:nth-child(3) { color: var(--tile-3); }
+  :scope .ts-spinner i:nth-child(4) { color: var(--tile-4); }
+  :scope .ts-mosaic { background-image: var(--scanlines); }
+  :scope .ts-mosaic-tile { border-radius: 0; box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .35), inset -1px -1px 0 rgba(0, 0, 0, .35); }
+}

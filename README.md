@@ -40,7 +40,7 @@ export function App() {
 
 ### Themes
 
-Tessera ships three themes, each in light and dark: **Tessera** (the default), **Soft** (periwinkle and apricot, softer shadows) and **Cartridge** (late-90s console colors, chunky keys that press down). Import a theme's CSS and pick it with `ThemeProvider`:
+Tessera ships four themes, each in light and dark: **Tessera** (the default), **Soft** (periwinkle and apricot, softer shadows), **Cartridge** (charcoal plastic with light labels, four button colors, chunky keys that press down) and **Polygon** (matte grey plastic, dark recessed panels, hard bevels and pixel headings). Import a theme's CSS and pick it with `ThemeProvider`:
 
 ```tsx
 import '@tessera/react/themes/cartridge.css';
@@ -67,7 +67,7 @@ The bundle starts with `"use client"`, so it works from React Server Components 
 | Status | Badge, Avatar (+ AvatarGroup), Kbd |
 | Feedback | Alert, Toast (+ ToastProvider, `useToast`), Progress, Skeleton, Spinner, EmptyState |
 | Overlays | Dialog, Drawer, Popover (+ Floating), Tooltip |
-| Theming | ThemeProvider (+ `useTheme`), themes: Tessera, Soft, Cartridge |
+| Theming | ThemeProvider (+ `useTheme`), themes: Tessera, Soft, Cartridge, Polygon |
 | Brand | Mosaic, Icon |
 
 Popover, DropdownMenu, DatePicker and Tooltip share one positioning layer (`Floating`): portal, flip when there's no room, shift to stay on screen, follow scroll and resize, and animate in from the side they open on.
