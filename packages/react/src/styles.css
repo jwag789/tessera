@@ -452,6 +452,8 @@
 .ts-day-today::after { content: ""; position: absolute; bottom: 5px; left: 50%; width: 4px; height: 4px; margin-left: -2px; border-radius: 1px; background: var(--saffron); }
 .ts-day-selected { background: var(--lapis); color: var(--on-lapis); box-shadow: 2px 2px 0 var(--lapis-deep); animation: ts-boing var(--duration-slow) var(--ease-spring); }
 .ts-day-selected.ts-day-today::after { background: var(--on-lapis); }
+.ts-day-marked::before { content: ""; position: absolute; top: 5px; right: 5px; width: 6px; height: 6px; border-radius: var(--radius-full); background: var(--lapis); }
+.ts-day-selected.ts-day-marked::before { background: var(--on-lapis); }
 
 /* Toaster (ToastProvider) */
 .ts-toaster { position: fixed; right: var(--space-6); bottom: calc(var(--space-6) + env(safe-area-inset-bottom, 0px)); z-index: var(--z-toast); display: flex; flex-direction: column; align-items: flex-end; gap: var(--space-3); pointer-events: none; }

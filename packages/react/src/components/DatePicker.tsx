@@ -39,6 +39,8 @@ export interface CalendarProps {
   max?: Date;
   /** Days that can't be picked. */
   isDisabled?: (date: Date) => boolean;
+  /** Days with something on them get a dot. Return a short description ("Interview") to have it read out. */
+  isMarked?: (date: Date) => boolean | string;
   /** 0 = Sunday (default), 1 = Monday. */
   weekStartsOn?: 0 | 1;
   locale?: string;
@@ -50,7 +52,7 @@ export interface CalendarProps {
 }
 
 /** A month grid for picking a day (WAI-ARIA date grid). */
-export function Calendar({ value: valueProp, defaultValue = null, onChange, min, max, isDisabled, weekStartsOn = 0, locale, autoFocus, onEscape, className }: CalendarProps) {
+export function Calendar({ value: valueProp, defaultValue = null, onChange, min, max, isDisabled, isMarked, weekStartsOn = 0, locale, autoFocus, onEscape, className }: CalendarProps) {
   const id = useId();
   const [value, setValue] = useControllable<Date | null>(valueProp, defaultValue);
   const today = startOfDay(new Date());
@@ -141,13 +143,15 @@ export function Calendar({ value: valueProp, defaultValue = null, onChange, min,
               const outside = d.getMonth() !== month.getMonth();
               const sel = sameDay(d, value);
               const off = disabled(d);
+              const mark = isMarked?.(d);
+              const dayName = d.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
               return (
                 <div role="gridcell" key={d.getTime()} aria-selected={sel || undefined}>
                   <button
                     type="button"
-                    className={cx('ts-day', outside && 'ts-day-out', sel && 'ts-day-selected', sameDay(d, today) && 'ts-day-today')}
+                    className={cx('ts-day', outside && 'ts-day-out', sel && 'ts-day-selected', sameDay(d, today) && 'ts-day-today', mark && 'ts-day-marked')}
                     tabIndex={sameDay(d, focusDay) ? 0 : -1}
-                    aria-label={d.toLocaleDateString(locale, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}
+                    aria-label={mark ? `${dayName}, ${typeof mark === 'string' ? mark : 'has something scheduled'}` : dayName}
                     aria-current={sameDay(d, today) ? 'date' : undefined}
                     aria-disabled={off || undefined}
                     disabled={off}

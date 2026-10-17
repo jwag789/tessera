@@ -5,6 +5,7 @@ import { STATUSES, formatDay, fromIsoDay, toIsoDay, uid, useStore } from '../sto
 import type { Application, Status } from '../store';
 import { go } from '../route';
 import { MatchPanel, SentVersion } from '../Tailor';
+import { FollowUps } from '../FollowUps';
 import { matchPosting, tailor } from '../match';
 
 const blank = (): Application => ({ id: uid(), company: '', role: '', status: 'saved', appliedOn: null, resumeId: null, link: '', notes: '' });
@@ -106,7 +107,7 @@ function ApplicationDrawer({ app, isNew, onClose }: { app: Application | null; i
   const save = () => {
     setTried(true);
     if (missing) return;
-    saveApplication({ ...draft, company: draft.company.trim(), role: draft.role.trim() });
+    saveApplication({ ...draft, company: draft.company.trim(), role: draft.role.trim(), nextStep: draft.nextStep?.date ? draft.nextStep : null });
     toast({ title: isNew ? 'Application added' : 'Application saved', description: draft.company, icon: 'success' });
     onClose();
   };
@@ -169,7 +170,11 @@ function ApplicationDrawer({ app, isNew, onClose }: { app: Application | null; i
               save();
             }}
           >
-            <Pipeline status={draft.status} onChange={(s) => set({ status: s, appliedOn: s === 'applied' && !draft.appliedOn ? toIsoDay(new Date()) : draft.appliedOn })} />
+            <div className="f-row">
+          <TextField label="Next step" placeholder="e.g. Interview with the design team" value={draft.nextStep?.label ?? ''} onChange={(e) => set({ nextStep: e.target.value || draft.nextStep?.date ? { date: draft.nextStep?.date ?? '', label: e.target.value } : null })} />
+          <DatePicker label="When" value={fromIsoDay(draft.nextStep?.date || null)} onChange={(d) => set({ nextStep: { label: draft.nextStep?.label || 'Next step', date: toIsoDay(d) } })} placeholder="Pick a date" />
+        </div>
+        <Pipeline status={draft.status} onChange={(s) => set({ status: s, appliedOn: s === 'applied' && !draft.appliedOn ? toIsoDay(new Date()) : draft.appliedOn })} />
             <Combobox
               label="Company"
               allowCustom
@@ -294,6 +299,8 @@ export function ApplicationsPage({ adding }: { adding: boolean }) {
           Add application
         </Button>
       </header>
+
+      <FollowUps onOpen={setEditing} />
 
       <div className="f-stats">
         {STATUSES.map((s) => (

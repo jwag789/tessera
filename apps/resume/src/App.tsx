@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Button, CommandPalette, DropdownMenu, Icon, Navbar, ThemeProvider, ToastProvider, useHotkey, useTheme } from '@tessera/react';
+import { Badge, Button, CommandPalette, DropdownMenu, Icon, Navbar, ThemeProvider, ToastProvider, useHotkey, useTheme } from '@tessera/react';
 import type { Command, MenuItem } from '@tessera/react';
 import { themes } from '@tessera/tokens';
 import { StoreProvider, useStore } from './store';
@@ -10,6 +10,8 @@ import { ApplicationsPage } from './pages/Applications';
 import { BackupDialog, openBackup } from './Backup';
 import { AccountMenu, SignInDialog, UploadOfferDialog, openSignIn } from './Account';
 import { cloudEnabled } from './cloud';
+import { nudges } from './followups';
+import { toIsoDay } from './store';
 
 const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop'];
 const ordered = [...themes].sort((a, b) => THEME_ORDER.indexOf(a.name) - THEME_ORDER.indexOf(b.name));
@@ -31,7 +33,8 @@ const Mark = () => (
 
 function Shell() {
   const route = useRoute();
-  const { resumes, account, signOut } = useStore();
+  const { resumes, applications, account, signOut } = useStore();
+  const nudgeCount = nudges(applications, toIsoDay(new Date())).length;
   const { theme, setTheme, brand, setBrand } = useTheme();
   const [palette, setPalette] = useState(false);
   const [backup, setBackup] = useState(false);
@@ -101,7 +104,20 @@ function Shell() {
         }
         links={[
           { label: 'Resumes', href: '#/', active: route.page === 'resumes' || route.page === 'editor' },
-          { label: 'Applications', href: '#/applications', active: route.page === 'applications' }
+          {
+            label: (
+              <span className="f-navlabel">
+                Applications
+                {nudgeCount > 0 && (
+                  <Badge tone="warning" aria-label={`${nudgeCount} need a follow-up`}>
+                    {nudgeCount}
+                  </Badge>
+                )}
+              </span>
+            ),
+            href: '#/applications',
+            active: route.page === 'applications'
+          }
         ]}
         actions={
           <>

@@ -74,6 +74,10 @@ export interface Application {
   posting?: string;
   /** The resume tailored for this job, which may differ from the one already sent. */
   tailoredId?: string | null;
+  /** What happens next and when, e.g. an interview. */
+  nextStep?: { date: string; label: string } | null;
+  /** When to nudge again after following up. */
+  followUpOn?: string | null;
   /** A frozen copy of the resume as it was sent. Taken when the application moves past Saved. */
   snapshot?: { resume: Resume; sentAt: string } | null;
 }
@@ -220,10 +224,16 @@ function sampleData(): Data {
     profile: { ...SAMPLE_RESUME.profile, summary: 'Frontend engineer with eight years of experience building web apps and design systems.' },
     skills: ['JavaScript', 'React', 'CSS', 'Design systems']
   };
+  const soon = (n: number) => toIsoDay(new Date(Date.now() + n * 86400000));
+  const steps: Record<string, { date: string; label: string }> = {
+    a1: { date: soon(4), label: 'Second round with the design team' },
+    a7: { date: soon(2), label: 'Portfolio review' },
+    a3: { date: soon(9), label: 'Offer deadline' }
+  };
   return {
     resumes,
     achievements: SAMPLE_BANK,
-    applications: SAMPLE_APPS.map((a) => (a.id === 'a1' ? { ...a, snapshot: { resume: older, sentAt: a.appliedOn! } } : withSnapshot(a, resumes)))
+    applications: SAMPLE_APPS.map((a) => ({ ...(a.id === 'a1' ? { ...a, snapshot: { resume: older, sentAt: a.appliedOn! } } : withSnapshot(a, resumes)), nextStep: steps[a.id] ?? null }))
   };
 }
 

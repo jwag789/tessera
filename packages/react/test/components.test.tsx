@@ -11,6 +11,7 @@ import {
   Button,
   Card,
   Checkbox,
+  Calendar,
   Combobox,
   CommandPalette,
   DatePicker,
@@ -393,6 +394,16 @@ describe('SidebarNav collapsed', () => {
     await userEvent.keyboard('{Escape}');
     expect(group).toHaveAttribute('aria-expanded', 'false');
     expect(group).toHaveFocus();
+  });
+});
+
+describe('Calendar', () => {
+  it('marks days and reads out what is on them', () => {
+    render(<Calendar defaultValue={new Date(2026, 9, 15)} isMarked={(d) => (d.getDate() === 21 && d.getMonth() === 9 ? 'Interview' : d.getDate() === 23 && d.getMonth() === 9)} />);
+    const interview = screen.getByRole('button', { name: /October 21, 2026, Interview/ });
+    expect(interview).toHaveClass('ts-day-marked');
+    expect(screen.getByRole('button', { name: /October 23, 2026, has something scheduled/ })).toHaveClass('ts-day-marked');
+    expect(screen.getByRole('button', { name: /October 22, 2026$/ })).not.toHaveClass('ts-day-marked');
   });
 });
 

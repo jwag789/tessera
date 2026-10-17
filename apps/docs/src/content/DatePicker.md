@@ -9,3 +9,4 @@ A field that opens a calendar to pick one day. `Calendar` is exported on its own
 - Keyboard follows the WAI-ARIA date grid: arrows move by day and week, Page Up/Down by month (Shift for year), Home/End to the week's ends, Enter picks, Escape closes.
 - Dates are local days with no time. Format for display with the reader's locale; send `YYYY-MM-DD` to servers.
 - For dates people know by heart (a birthday), three plain fields are faster than a calendar.
+- `Calendar` on its own takes `isMarked(date)` to dot days with something on them; return a short description ("Interview") and screen readers hear it with the date.
