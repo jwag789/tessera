@@ -119,7 +119,7 @@ const SAMPLE_BANK: Achievement[] = [
 ];
 const linked = (...ids: string[]): Point[] => ids.map((id) => ({ id: `p-${id}`, text: SAMPLE_BANK.find((a) => a.id === id)!.text, ref: id }));
 
-const SAMPLE_RESUME: Resume = {
+export const SAMPLE_RESUME: Resume = {
   id: 'ada',
   name: 'Frontend engineer',
   template: 'modern',
@@ -175,6 +175,8 @@ patterns that keep 40 apps consistent. You'll work in TypeScript and React, own 
 help teams adopt the platform. Experience with Vite or Webpack, monorepos and CI/CD helps. Bonus:
 Kubernetes, Node.js and a habit of writing great documentation. The platform team partners with design
 on the design system and with every product team on platform adoption.`;
+
+export const SAMPLE_POSTING = GLOBEX_POSTING;
 
 const SAMPLE_APPS: Application[] = [
   { id: 'a1', company: 'Globex', role: 'Frontend lead', status: 'interview', appliedOn: '2026-10-02', resumeId: 'ada', link: 'https://globex.example/jobs/42', notes: 'Second round on the 21st with the design team.', posting: GLOBEX_POSTING },
@@ -421,11 +423,14 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     []
   );
   const saveApplication = useCallback(
-    (raw: Application) =>
+    (raw: Application) => {
+      const before = latest.current.applications.find((x) => x.id === raw.id);
+      if (raw.status === 'offer' && before?.status !== 'offer') queueMicrotask(() => window.dispatchEvent(new CustomEvent('folio:offer', { detail: raw.company })));
       setData((d) => {
         const a = withSnapshot(raw, d.resumes);
         return { ...d, applications: d.applications.some((x) => x.id === a.id) ? d.applications.map((x) => (x.id === a.id ? a : x)) : [a, ...d.applications] };
-      }),
+      });
+    },
     []
   );
   const removeApplication = useCallback((id: string) => setData((d) => ({ ...d, applications: d.applications.filter((x) => x.id !== id) })), []);

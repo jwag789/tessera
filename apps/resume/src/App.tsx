@@ -7,6 +7,8 @@ import { go, useRoute } from './route';
 import { ResumesPage } from './pages/Resumes';
 import { EditorPage } from './pages/Editor';
 import { ApplicationsPage } from './pages/Applications';
+import { WELCOMED_KEY, WelcomePage } from './pages/Welcome';
+import { Celebrate } from './Celebrate';
 import { BackupDialog, openBackup } from './Backup';
 import { AccountMenu, SignInDialog, UploadOfferDialog, openSignIn } from './Account';
 import { cloudEnabled } from './cloud';
@@ -14,6 +16,13 @@ import { nudges } from './followups';
 import { toIsoDay } from './store';
 
 const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop'];
+
+// A first visit (no saved work, never welcomed) opens on the welcome page. Read before the store saves anything.
+try {
+  if (!localStorage.getItem('folio:v1') && !localStorage.getItem(WELCOMED_KEY) && !location.hash.replace(/^#\/?/, '')) location.replace('#/welcome');
+} catch {
+  /* storage unavailable: open the app as usual */
+}
 const ordered = [...themes].sort((a, b) => THEME_ORDER.indexOf(a.name) - THEME_ORDER.indexOf(b.name));
 const MODES = [
   { id: 'system', label: 'Match system' },
@@ -56,7 +65,7 @@ function Shell() {
 
   useEffect(() => {
     const name = route.page === 'editor' ? resumes.find((r) => r.id === route.id)?.name : route.page === 'applications' ? 'Applications' : null;
-    document.title = name ? `${name} · Folio` : 'Folio';
+    document.title = name ? `${name} · Folio` : route.page === 'welcome' ? 'Folio: tailor your resume to every job' : 'Folio';
   }, [route, resumes]);
   // Move focus to the new page's heading so screen readers announce the change.
   useEffect(() => {
@@ -149,7 +158,15 @@ function Shell() {
         {route.page === 'resumes' && <ResumesPage creating={route.creating} />}
         {route.page === 'editor' && <EditorPage key={route.id} id={route.id} />}
         {route.page === 'applications' && <ApplicationsPage adding={route.adding} />}
+        {route.page === 'welcome' && <WelcomePage />}
       </main>
+      <footer className="f-footer">
+        <p>
+          <b>Folio is free, including PDF export.</b> No account needed, no ads, no tracking. {account ? 'Your work is saved to your account.' : 'Your work stays in this browser unless you sign in.'}
+        </p>
+        <a href="#/welcome">Why Folio</a>
+      </footer>
+      <Celebrate />
       <BackupDialog open={backup} onClose={() => setBackup(false)} />
       <SignInDialog open={signIn} onClose={() => setSignIn(false)} />
       <UploadOfferDialog />
