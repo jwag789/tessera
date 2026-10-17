@@ -148,28 +148,30 @@ function Shell() {
             <>
               <Brand />
               <div className="d-search">
-                <Icon name="search" />
-                <input
-                  id="d-search"
-                  ref={search}
-                  type="search"
-                  placeholder="Filter pages"
-                  aria-label="Filter pages"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter' && visible[0]) {
-                      location.hash = visible[0].id;
-                      setQuery('');
-                      e.currentTarget.blur();
-                    }
-                  }}
-                />
-                {!query && (
-                  <span className="d-kbd" aria-hidden="true">
-                    /
-                  </span>
-                )}
+                <div className="d-search-box">
+                  <Icon name="search" />
+                  <input
+                    id="d-search"
+                    ref={search}
+                    type="search"
+                    placeholder="Filter pages"
+                    aria-label="Filter pages"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' && visible[0]) {
+                        location.hash = visible[0].id;
+                        setQuery('');
+                        e.currentTarget.blur();
+                      }
+                    }}
+                  />
+                  {!query && (
+                    <span className="d-kbd" aria-hidden="true">
+                      /
+                    </span>
+                  )}
+                </div>
               </div>
               <button type="button" className="d-cmdk ts-focus" onClick={() => setPalette(true)}>
                 <Icon name="sparkle" />
