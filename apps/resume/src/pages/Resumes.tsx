@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { Alert, Button, Card, Dialog, DropdownMenu, EmptyState, Grid, Icon, RadioGroup, TextField, useToast } from '@tessera/react';
+import { Alert, Button, Card, Skeleton, Dialog, DropdownMenu, EmptyState, Grid, Icon, RadioGroup, TextField, useToast } from '@tessera/react';
 import { ScaledPaper } from '../ScaledPaper';
 import { TEMPLATES, blankResume, uid, useStore } from '../store';
 import type { Resume, TemplateId } from '../store';
 import { go } from '../route';
 import { BACKUP_TIP_KEY, openBackup } from '../Backup';
+import { openSignIn } from '../Account';
+import { cloudEnabled } from '../cloud';
 
 const edited = (iso: string) => new Date(iso).toLocaleDateString('en', { month: 'short', day: 'numeric' });
 
@@ -100,7 +102,7 @@ function ResumeCard({ resume, onDelete }: { resume: Resume; onDelete: () => void
 }
 
 export function ResumesPage({ creating }: { creating: boolean }) {
-  const { resumes, removeResume } = useStore();
+  const { resumes, removeResume, account, sync } = useStore();
   const { toast } = useToast();
   const [doomed, setDoomed] = useState<Resume | null>(null);
   const [tip, setTip] = useState(() => {
@@ -131,17 +133,33 @@ export function ResumesPage({ creating }: { creating: boolean }) {
           New resume
         </Button>
       </header>
-      {tip && (
+      {tip && !account && (
         <Alert tone="info" title="Your work is saved in this browser only" onDismiss={hideTip}>
           <span className="f-alert-body">
-            Clearing your browser data deletes it too. Download a backup now and then, or to move to another computer.
+            {cloudEnabled ? 'Sign in to save it to your account and open it on any device, or download a backup.' : 'Clearing your browser data deletes it too. Download a backup now and then, or to move to another computer.'}
+            {cloudEnabled && (
+              <Button size="sm" onClick={openSignIn}>
+                Sign in
+              </Button>
+            )}
             <Button size="sm" variant="secondary" onClick={openBackup}>
               Back up now
             </Button>
           </span>
         </Alert>
       )}
-      {resumes.length ? (
+      {sync === 'loading' && !resumes.length ? (
+        <Grid minChildWidth={260} gap={6}>
+          {[0, 1].map((i) => (
+            <div key={i} className="f-skeleton-card" aria-hidden="true">
+              <Skeleton width="40%" height={12} />
+              <Skeleton width="70%" height={22} />
+              <Skeleton height={200} />
+              <Skeleton lines={2} />
+            </div>
+          ))}
+        </Grid>
+      ) : resumes.length ? (
         <Grid minChildWidth={260} gap={6}>
           {resumes.map((r) => (
             <ResumeCard key={r.id} resume={r} onDelete={() => setDoomed(r)} />

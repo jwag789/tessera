@@ -25,11 +25,15 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); 
 .f-resume-card .ts-card-title { overflow-wrap: anywhere; }
 .f-thumb { border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-sm); max-height: 220px; background: #fff; }
 
+.f-skeleton-card { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-6); border: 1px solid var(--line); border-radius: var(--radius-lg); }
+.f-account { display: grid; place-items: center; padding: 0; border: 0; background: none; border-radius: var(--radius-full); cursor: pointer; }
+.f-saving { display: inline-flex; align-items: center; gap: var(--space-2); font: 500 13px/18px var(--font-sans); color: var(--ink-muted); }
+
 /* Editor */
 .f-head-editor { align-items: flex-end; }
 .f-editor-name { display: flex; align-items: flex-end; gap: var(--space-3); flex: 1 1 320px; min-width: 0; }
 .f-editor-name .ts-field { flex: 1; max-width: 420px; }
-.f-editor-name .ts-badge { margin-bottom: 12px; }
+.f-editor-name > :last-child { margin-bottom: 11px; }
 .f-editor-tools { display: flex; align-items: flex-end; gap: var(--space-3); flex-wrap: wrap; }
 .f-template { width: 170px; }
 .f-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-8); align-items: start; }

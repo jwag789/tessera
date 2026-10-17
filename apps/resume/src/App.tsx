@@ -8,6 +8,8 @@ import { ResumesPage } from './pages/Resumes';
 import { EditorPage } from './pages/Editor';
 import { ApplicationsPage } from './pages/Applications';
 import { BackupDialog, openBackup } from './Backup';
+import { AccountMenu, SignInDialog, UploadOfferDialog, openSignIn } from './Account';
+import { cloudEnabled } from './cloud';
 
 const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop'];
 const ordered = [...themes].sort((a, b) => THEME_ORDER.indexOf(a.name) - THEME_ORDER.indexOf(b.name));
@@ -29,14 +31,20 @@ const Mark = () => (
 
 function Shell() {
   const route = useRoute();
-  const { resumes } = useStore();
+  const { resumes, account, signOut } = useStore();
   const { theme, setTheme, brand, setBrand } = useTheme();
   const [palette, setPalette] = useState(false);
   const [backup, setBackup] = useState(false);
+  const [signIn, setSignIn] = useState(false);
   useEffect(() => {
-    const on = () => setBackup(true);
-    window.addEventListener('folio:backup', on);
-    return () => window.removeEventListener('folio:backup', on);
+    const onBackup = () => setBackup(true);
+    const onSignIn = () => setSignIn(true);
+    window.addEventListener('folio:backup', onBackup);
+    window.addEventListener('folio:sign-in', onSignIn);
+    return () => {
+      window.removeEventListener('folio:backup', onBackup);
+      window.removeEventListener('folio:sign-in', onSignIn);
+    };
   }, []);
   useHotkey('mod+k', (e) => {
     e.preventDefault();
@@ -69,12 +77,15 @@ function Shell() {
       { id: 'go-apps', label: 'Applications', group: 'Go to', icon: 'calendar', onRun: () => go('/applications') },
       ...resumes.map((r) => ({ id: `open-${r.id}`, label: `Edit ${r.name}`, group: 'Resumes', icon: 'file' as const, keywords: ['resume', 'open'], onRun: () => go(`/resume/${r.id}`) })),
       { id: 'new-resume', label: 'New resume', group: 'Create', icon: 'plus', keywords: ['create', 'add'], onRun: () => go('/new') },
+      ...(cloudEnabled
+        ? [account ? { id: 'sign-out', label: `Sign out (${account.email})`, group: 'Account', icon: 'logout' as const, keywords: ['log out', 'account'], onRun: signOut } : { id: 'sign-in', label: 'Sign in to save to your account', group: 'Account', icon: 'user' as const, keywords: ['log in', 'account', 'sync'], onRun: openSignIn }]
+        : []),
       { id: 'backup', label: 'Back up or restore data', group: 'Create', icon: 'file', keywords: ['export', 'import', 'download', 'json', 'save'], onRun: openBackup },
       { id: 'new-app', label: 'Add application', group: 'Create', icon: 'plus', keywords: ['job', 'track'], onRun: () => go('/applications/new') },
       ...ordered.map((t) => ({ id: `theme-${t.name}`, label: `Use the ${t.label} theme`, group: 'Appearance', icon: 'sparkle' as const, keywords: ['theme', 'look'], onRun: () => setBrand(t.name) })),
       ...MODES.map((m) => ({ id: `mode-${m.id}`, label: m.id === 'system' ? 'Match system mode' : `Use ${m.label.toLowerCase()} mode`, group: 'Appearance', icon: 'settings' as const, keywords: ['dark', 'light', 'mode'], onRun: () => setTheme(m.id) }))
     ],
-    [resumes, setBrand, setTheme]
+    [resumes, setBrand, setTheme, account, signOut]
   );
 
   return (
@@ -107,6 +118,14 @@ function Shell() {
               }
               items={themeItems}
             />
+            {cloudEnabled &&
+              (account ? (
+                <AccountMenu />
+              ) : (
+                <Button size="sm" onClick={openSignIn}>
+                  Sign in
+                </Button>
+              ))}
           </>
         }
       />
@@ -116,6 +135,8 @@ function Shell() {
         {route.page === 'applications' && <ApplicationsPage adding={route.adding} />}
       </main>
       <BackupDialog open={backup} onClose={() => setBackup(false)} />
+      <SignInDialog open={signIn} onClose={() => setSignIn(false)} />
+      <UploadOfferDialog />
       <CommandPalette open={palette} onOpenChange={setPalette} commands={commands} placeholder="Jump to a resume, page or command…" />
     </div>
   );

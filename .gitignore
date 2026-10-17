@@ -6,3 +6,5 @@ coverage/
 .vite/
 .claude/
 apps/docs/src/generated/
+.env.local
+.env.*.local

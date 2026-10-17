@@ -1,4 +1,4 @@
-name: Deploy docs
+name: Deploy docs and Folio
 
 on:
   push:
@@ -28,6 +28,11 @@ jobs:
       - run: npm run build -w @tessera/docs
         env:
           DOCS_BASE: /${{ github.event.repository.name }}/
+      # Folio rides along at /<repo>/folio/. Its Supabase settings come from apps/resume/.env.production.
+      - run: npm run build -w @tessera/resume
+        env:
+          APP_BASE: /${{ github.event.repository.name }}/folio/
+      - run: cp -r apps/resume/dist apps/docs/dist/folio
       - uses: actions/upload-pages-artifact@v3
         with:
           path: apps/docs/dist

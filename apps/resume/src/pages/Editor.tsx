@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import { Accordion, Badge, Breadcrumbs, Button, Checkbox, EmptyState, Icon, Progress, Select, Tabs, TagInput, TextField, Textarea, Tooltip, useToast } from '@tessera/react';
+import { Accordion, Breadcrumbs, Button, Checkbox, EmptyState, Icon, Progress, Select, Tabs, TagInput, TextField, Textarea, Tooltip, useToast } from '@tessera/react';
 import { Paper } from '../Paper';
+import { SaveStatus } from '../Account';
 import { ScaledPaper } from '../ScaledPaper';
 import { TEMPLATES, uid, useStore } from '../store';
 import type { Education, Experience, Resume, TemplateId } from '../store';
@@ -219,9 +220,7 @@ export function EditorPage({ id }: { id: string }) {
       <header className="f-head f-head-editor">
         <div className="f-editor-name">
           <TextField label="Resume name" value={resume.name} onChange={(e) => saveResume({ ...resume, name: e.target.value })} />
-          <Badge tone="success" dot>
-            Saved
-          </Badge>
+          <SaveStatus />
         </div>
         <div className="f-editor-tools">
           <Select label="Template" className="f-template" value={resume.template} onChange={(v) => saveResume({ ...resume, template: v as TemplateId })} options={TEMPLATES.map((t) => ({ value: t.id, label: t.label }))} />

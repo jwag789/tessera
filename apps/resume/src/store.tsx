@@ -1,5 +1,8 @@
 // Folio's data: resumes and job applications, kept in localStorage. One context, plain updater functions.
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { cloudEnabled, currentSession, loadAll, onSessionChange, push, signOut as cloudSignOut } from './cloud';
+import type { Session } from './cloud';
+import { diffData, isEmpty } from './sync';
 import type { ReactNode } from 'react';
 
 export type TemplateId = 'classic' | 'modern' | 'compact';
@@ -154,6 +157,12 @@ export function downloadBackup(data: Data) {
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 
+export type SyncState = 'local' | 'loading' | 'saving' | 'saved' | 'error';
+export interface Account {
+  id: string;
+  email: string;
+}
+
 interface Store extends Data {
   replaceAll: (d: Data) => void;
   saveResume: (r: Resume) => void;
@@ -161,18 +170,137 @@ interface Store extends Data {
   removeResume: (id: string) => void;
   saveApplication: (a: Application) => void;
   removeApplication: (id: string) => void;
+  /** Signed in with a server account, or null when working locally. */
+  account: Account | null;
+  sync: SyncState;
+  retrySync: () => void;
+  signOut: () => void;
+  /** This browser's local work, offered for upload on a first sign-in to an empty account. */
+  uploadOffer: Data | null;
+  answerUpload: (upload: boolean) => void;
 }
 const StoreContext = createContext<Store | null>(null);
 
+const EMPTY: Data = { resumes: [], applications: [] };
+const cacheKey = (uid: string) => `folio:cloud:${uid}`;
+function readJson(key: string): Data | null {
+  try {
+    const raw = localStorage.getItem(key);
+    return raw ? (JSON.parse(raw) as Data) : null;
+  } catch {
+    return null;
+  }
+}
+function writeJson(key: string, d: Data) {
+  try {
+    localStorage.setItem(key, JSON.stringify(d));
+  } catch {
+    /* storage unavailable: changes last for this visit */
+  }
+}
+
 export function StoreProvider({ children }: { children: ReactNode }) {
   const [data, setData] = useState<Data>(load);
-  useEffect(() => {
-    try {
-      localStorage.setItem(KEY, JSON.stringify(data));
-    } catch {
-      /* storage unavailable: changes last for this visit */
+  const [account, setAccount] = useState<Account | null>(null);
+  const [sync, setSync] = useState<SyncState>('local');
+  const [uploadOffer, setUploadOffer] = useState<Data | null>(null);
+
+  // Server mode: `saved` is what the server has; `latest` is what's on screen. Saves run one at a time.
+  const saved = useRef<Data | null>(null);
+  const latest = useRef(data);
+  latest.current = data;
+  const who = useRef<Account | null>(null);
+  const busy = useRef(false);
+  const again = useRef(false);
+
+  const flush = useCallback(async () => {
+    const acct = who.current;
+    if (!acct || !saved.current) return;
+    if (busy.current) {
+      again.current = true;
+      return;
     }
-  }, [data]);
+    const target = latest.current;
+    const changes = diffData(saved.current, target);
+    if (isEmpty(changes)) {
+      setSync('saved');
+      return;
+    }
+    busy.current = true;
+    setSync('saving');
+    try {
+      await push(changes, acct.id);
+      if (who.current?.id === acct.id) saved.current = target;
+      setSync(latest.current === target ? 'saved' : 'saving');
+    } catch {
+      setSync('error');
+    } finally {
+      busy.current = false;
+      if (again.current) {
+        again.current = false;
+        void flush();
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!cloudEnabled) return;
+    const enter = (session: Session) => {
+      const acct = { id: session.user.id, email: session.user.email ?? '' };
+      if (who.current?.id === acct.id) return;
+      who.current = acct;
+      saved.current = null;
+      setAccount(acct);
+      setSync('loading');
+      setData(readJson(cacheKey(acct.id)) ?? EMPTY);
+      loadAll()
+        .then((server) => {
+          if (who.current?.id !== acct.id) return;
+          saved.current = server;
+          setData(server);
+          setSync('saved');
+          const local = readJson(KEY);
+          if (!server.resumes.length && !server.applications.length && local && (local.resumes.length || local.applications.length)) setUploadOffer(local);
+        })
+        .catch(() => setSync('error'));
+    };
+    const leave = () => {
+      who.current = null;
+      saved.current = null;
+      setAccount(null);
+      setUploadOffer(null);
+      setSync('local');
+      setData(load());
+    };
+    void currentSession().then((s) => s && enter(s));
+    return onSessionChange((s) => (s ? enter(s) : who.current && leave()));
+  }, []);
+
+  // Keep a local copy either way; in server mode, also save to the server shortly after edits stop.
+  useEffect(() => {
+    if (!account) {
+      writeJson(KEY, data);
+      return;
+    }
+    writeJson(cacheKey(account.id), data);
+    if (!saved.current) return;
+    const t = setTimeout(() => void flush(), 600);
+    return () => clearTimeout(t);
+  }, [data, account, flush]);
+
+  // Retry when the connection comes back, and warn before closing with unsaved changes.
+  useEffect(() => {
+    const online = () => void flush();
+    const leaving = (e: BeforeUnloadEvent) => {
+      if (who.current && saved.current && !isEmpty(diffData(saved.current, latest.current))) e.preventDefault();
+    };
+    window.addEventListener('online', online);
+    window.addEventListener('beforeunload', leaving);
+    return () => {
+      window.removeEventListener('online', online);
+      window.removeEventListener('beforeunload', leaving);
+    };
+  }, [flush]);
 
   const saveResume = useCallback((r: Resume) => setData((d) => ({ ...d, resumes: d.resumes.map((x) => (x.id === r.id ? { ...r, updatedAt: now() } : x)) })), []);
   const addResume = useCallback((r: Resume) => setData((d) => ({ ...d, resumes: [r, ...d.resumes] })), []);
@@ -187,9 +315,21 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     []
   );
   const removeApplication = useCallback((id: string) => setData((d) => ({ ...d, applications: d.applications.filter((x) => x.id !== id) })), []);
-
   const replaceAll = useCallback((d: Data) => setData(d), []);
-  const value = useMemo(() => ({ ...data, replaceAll, saveResume, addResume, removeResume, saveApplication, removeApplication }), [data, replaceAll, saveResume, addResume, removeResume, saveApplication, removeApplication]);
+  const retrySync = useCallback(() => void flush(), [flush]);
+  const signOut = useCallback(() => void cloudSignOut(), []);
+  const answerUpload = useCallback(
+    (upload: boolean) => {
+      if (upload && uploadOffer) setData(uploadOffer);
+      setUploadOffer(null);
+    },
+    [uploadOffer]
+  );
+
+  const value = useMemo(
+    () => ({ ...data, replaceAll, saveResume, addResume, removeResume, saveApplication, removeApplication, account, sync, retrySync, signOut, uploadOffer, answerUpload }),
+    [data, replaceAll, saveResume, addResume, removeResume, saveApplication, removeApplication, account, sync, retrySync, signOut, uploadOffer, answerUpload]
+  );
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
 }
 

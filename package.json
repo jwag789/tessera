@@ -12,7 +12,7 @@
     "build": "npm run build -w @tessera/tokens && npm run build -w @tessera/react && npm run build -w @tessera/docs && npm run build -w @tessera/resume",
     "build:packages": "npm run build -w @tessera/tokens && npm run build -w @tessera/react",
     "dev": "npm run build -w @tessera/tokens && npm run dev -w @tessera/docs",
-    "test": "npm run build -w @tessera/tokens && npm run test -w @tessera/react",
+    "test": "npm run build -w @tessera/tokens && npm run test -w @tessera/react && npm run test -w @tessera/resume",
     "typecheck": "npm run build -w @tessera/tokens && npm run typecheck -w @tessera/react && npm run typecheck -w @tessera/docs && npm run typecheck -w @tessera/resume",
     "size": "npm run size -w @tessera/react",
     "changeset": "changeset",
