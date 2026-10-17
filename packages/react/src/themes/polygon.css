@@ -60,6 +60,8 @@
     --inverse-accent: var(--label-inverse-accent);
     --focus: var(--label-focus);
     --link: var(--label-link);
+    /* Text that inherits its color (a drawer title, plain copy in a card) follows the surface too. */
+    color: var(--ink);
   }
 
   /* Plastic parts (keys, navbar, sidebar) are grey plastic wherever they sit, even inside a panel. */

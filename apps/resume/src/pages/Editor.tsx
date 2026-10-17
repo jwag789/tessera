@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import { Accordion, Badge, Breadcrumbs, Button, Checkbox, EmptyState, Icon, Select, Tabs, TagInput, TextField, Textarea, useToast } from '@tessera/react';
+import { Accordion, Badge, Breadcrumbs, Button, Checkbox, EmptyState, Icon, Progress, Select, Tabs, TagInput, TextField, Textarea, Tooltip, useToast } from '@tessera/react';
 import { Paper } from '../Paper';
 import { ScaledPaper } from '../ScaledPaper';
 import { TEMPLATES, uid, useStore } from '../store';
@@ -15,18 +15,49 @@ function Entry({ title, index, count, onMove, onRemove, children }: { title: str
       <div className="f-entry-head">
         <b>{title}</b>
         <span className="f-entry-tools">
-          <Button size="sm" variant="ghost" aria-label={`Move ${title} up`} disabled={index === 0} onClick={() => onMove(index - 1)}>
-            <Icon name="chevron" style={{ transform: 'rotate(180deg)' }} />
-          </Button>
-          <Button size="sm" variant="ghost" aria-label={`Move ${title} down`} disabled={index === count - 1} onClick={() => onMove(index + 1)}>
-            <Icon name="chevron" />
-          </Button>
-          <Button size="sm" variant="ghost" aria-label={`Remove ${title}`} onClick={onRemove}>
-            <Icon name="trash" />
-          </Button>
+          <Tooltip content="Move up">
+            <Button size="sm" variant="ghost" aria-label={`Move ${title} up`} disabled={index === 0} onClick={() => onMove(index - 1)}>
+              <Icon name="chevron" style={{ transform: 'rotate(180deg)' }} />
+            </Button>
+          </Tooltip>
+          <Tooltip content="Move down">
+            <Button size="sm" variant="ghost" aria-label={`Move ${title} down`} disabled={index === count - 1} onClick={() => onMove(index + 1)}>
+              <Icon name="chevron" />
+            </Button>
+          </Tooltip>
+          <Tooltip content="Remove">
+            <Button size="sm" variant="ghost" aria-label={`Remove ${title}`} onClick={onRemove}>
+              <Icon name="trash" />
+            </Button>
+          </Tooltip>
         </span>
       </div>
       <div className="f-form">{children}</div>
+    </div>
+  );
+}
+
+/** What a recruiter expects to find, in the order worth fixing. */
+function completeness(r: Resume) {
+  const checks: [boolean, string][] = [
+    [!!r.profile.name.trim(), 'add your name'],
+    [!!r.profile.email.trim() || !!r.profile.phone.trim(), 'add an email or phone number'],
+    [!!r.profile.title.trim(), 'add a headline'],
+    [r.profile.summary.trim().length >= 80, 'write a summary of two or three sentences'],
+    [r.experience.length > 0, 'add a job'],
+    [r.experience.some((e) => e.bullets.split('\n').filter((b) => b.trim()).length >= 2), 'list at least two achievements for a job'],
+    [r.education.length > 0, 'add your education'],
+    [r.skills.length >= 3, 'add at least three skills']
+  ];
+  return { done: checks.filter(([ok]) => ok).length, total: checks.length, next: checks.find(([ok]) => !ok)?.[1] };
+}
+
+function Completeness({ r }: { r: Resume }) {
+  const { done, total, next } = completeness(r);
+  return (
+    <div className="f-complete">
+      <Progress value={done} max={total} steps tone={done === total ? 'success' : 'brand'} label={done === total ? 'Ready to send' : `${Math.round((done / total) * 100)}% complete`} />
+      <p className="f-meta">{next ? `Next: ${next}.` : 'Everything a recruiter looks for is here.'}</p>
     </div>
   );
 }
@@ -170,7 +201,12 @@ export function EditorPage({ id }: { id: string }) {
     toast({ title: 'Choose “Save as PDF”', description: 'Your browser’s print dialog does the export.', icon: 'info' });
     setTimeout(() => window.print(), 300);
   };
-  const form = <Form r={resume} set={saveResume} />;
+  const form = (
+    <div className="f-form">
+      <Completeness r={resume} />
+      <Form r={resume} set={saveResume} />
+    </div>
+  );
   const preview = (
     <div className="f-preview">
       <ScaledPaper resume={resume} />

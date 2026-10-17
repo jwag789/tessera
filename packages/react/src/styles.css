@@ -634,6 +634,7 @@
 @media (max-width: 600px) { .ts-drawer-right, .ts-drawer-left { width: 100%; border-radius: 0; } }
 
 /* ---------- Stepper ---------- */
+.ts-stepper { container-type: inline-size; }
 .ts-stepper ol { list-style: none; margin: 0; padding: 0; display: flex; }
 .ts-stepper-horizontal ol { gap: var(--space-2); }
 .ts-stepper-horizontal .ts-step { flex: 1; min-width: 0; display: flex; flex-direction: column; }
@@ -655,6 +656,8 @@ button.ts-step-btn:hover .ts-step-label { text-decoration: underline; text-under
 .ts-step-label { font: 600 14px/20px var(--font-sans); color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .ts-step-upcoming .ts-step-label { color: var(--ink-muted); }
 .ts-step-desc { font: 400 12px/16px var(--font-sans); color: var(--ink-muted); }
+/* A narrow stepper (a drawer, a card) stacks each label under its marker so labels get the full step width. */
+@container (max-width: 520px) { .ts-stepper-horizontal .ts-step-btn { flex-direction: column; gap: var(--space-2); } .ts-stepper-horizontal .ts-step-text { padding-top: 0; } }
 @media (max-width: 600px) { .ts-stepper-horizontal .ts-step-text { display: none; } .ts-stepper-horizontal .ts-step-current .ts-step-text { display: flex; } }
 
 /* ---------- Table: sorting, selection, sticky header ---------- */

@@ -74,7 +74,7 @@ export function Progress({ value: raw, max = 100, label, steps, tone, className 
       {steps ? (
         <div className="ts-progress-track" style={{ gridTemplateColumns: `repeat(${max}, 1fr)` }}>
           {Array.from({ length: max }, (_, i) => (
-            <span key={i} className={cx('ts-seg', i < shown && 'ts-seg-on', i === value - 1 && 'ts-seg-current')} style={{ '--i': i } as CSSProperties} />
+            <span key={i} className={cx('ts-seg', i < shown && 'ts-seg-on', i === value - 1 && value < max && 'ts-seg-current')} style={{ '--i': i } as CSSProperties} />
           ))}
         </div>
       ) : (

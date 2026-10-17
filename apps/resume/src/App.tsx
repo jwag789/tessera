@@ -7,6 +7,7 @@ import { go, useRoute } from './route';
 import { ResumesPage } from './pages/Resumes';
 import { EditorPage } from './pages/Editor';
 import { ApplicationsPage } from './pages/Applications';
+import { BackupDialog, openBackup } from './Backup';
 
 const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop'];
 const ordered = [...themes].sort((a, b) => THEME_ORDER.indexOf(a.name) - THEME_ORDER.indexOf(b.name));
@@ -31,6 +32,12 @@ function Shell() {
   const { resumes } = useStore();
   const { theme, setTheme, brand, setBrand } = useTheme();
   const [palette, setPalette] = useState(false);
+  const [backup, setBackup] = useState(false);
+  useEffect(() => {
+    const on = () => setBackup(true);
+    window.addEventListener('folio:backup', on);
+    return () => window.removeEventListener('folio:backup', on);
+  }, []);
   useHotkey('mod+k', (e) => {
     e.preventDefault();
     setPalette((p) => !p);
@@ -51,7 +58,9 @@ function Shell() {
     ...ordered.map((t) => ({ label: t.label, icon: brand === t.name ? ('check' as const) : undefined, onSelect: () => setBrand(t.name) })),
     { type: 'separator' },
     { type: 'label', label: 'Mode' },
-    ...MODES.map((m) => ({ label: m.label, icon: theme === m.id ? ('check' as const) : undefined, onSelect: () => setTheme(m.id) }))
+    ...MODES.map((m) => ({ label: m.label, icon: theme === m.id ? ('check' as const) : undefined, onSelect: () => setTheme(m.id) })),
+    { type: 'separator' },
+    { label: 'Back up or restore…', icon: 'file', onSelect: openBackup }
   ];
 
   const commands = useMemo<Command[]>(
@@ -60,6 +69,7 @@ function Shell() {
       { id: 'go-apps', label: 'Applications', group: 'Go to', icon: 'calendar', onRun: () => go('/applications') },
       ...resumes.map((r) => ({ id: `open-${r.id}`, label: `Edit ${r.name}`, group: 'Resumes', icon: 'file' as const, keywords: ['resume', 'open'], onRun: () => go(`/resume/${r.id}`) })),
       { id: 'new-resume', label: 'New resume', group: 'Create', icon: 'plus', keywords: ['create', 'add'], onRun: () => go('/new') },
+      { id: 'backup', label: 'Back up or restore data', group: 'Create', icon: 'file', keywords: ['export', 'import', 'download', 'json', 'save'], onRun: openBackup },
       { id: 'new-app', label: 'Add application', group: 'Create', icon: 'plus', keywords: ['job', 'track'], onRun: () => go('/applications/new') },
       ...ordered.map((t) => ({ id: `theme-${t.name}`, label: `Use the ${t.label} theme`, group: 'Appearance', icon: 'sparkle' as const, keywords: ['theme', 'look'], onRun: () => setBrand(t.name) })),
       ...MODES.map((m) => ({ id: `mode-${m.id}`, label: m.id === 'system' ? 'Match system mode' : `Use ${m.label.toLowerCase()} mode`, group: 'Appearance', icon: 'settings' as const, keywords: ['dark', 'light', 'mode'], onRun: () => setTheme(m.id) }))
@@ -89,7 +99,7 @@ function Shell() {
               <kbd className="ts-kbd f-hide-sm">⌘K</kbd>
             </Button>
             <DropdownMenu
-              label="Appearance"
+              label="Appearance and data"
               trigger={
                 <Button size="sm" variant="secondary" iconLeft={<Icon name="sparkle" />}>
                   {ordered.find((t) => t.name === brand)?.label ?? 'Theme'}
@@ -105,6 +115,7 @@ function Shell() {
         {route.page === 'editor' && <EditorPage key={route.id} id={route.id} />}
         {route.page === 'applications' && <ApplicationsPage adding={route.adding} />}
       </main>
+      <BackupDialog open={backup} onClose={() => setBackup(false)} />
       <CommandPalette open={palette} onOpenChange={setPalette} commands={commands} placeholder="Jump to a resume, page or command…" />
     </div>
   );

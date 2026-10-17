@@ -18,6 +18,8 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); 
 .f-row { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); }
 
 /* Resumes */
+.f-alert-body { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+.f-dialog-text { margin: 0; color: var(--ink-muted); }
 .f-resume-card { cursor: pointer; }
 .f-card-actions { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); width: 100%; }
 .f-resume-card .ts-card-title { overflow-wrap: anywhere; }
@@ -33,6 +35,7 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); 
 .f-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--space-8); align-items: start; }
 .f-split-preview { position: sticky; top: calc(64px + var(--space-6)); }
 .f-preview { border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-lg); background: #fff; }
+.f-complete { display: flex; flex-direction: column; gap: var(--space-2); }
 .f-entries { display: flex; flex-direction: column; gap: var(--space-4); }
 .f-entry { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-4); display: flex; flex-direction: column; gap: var(--space-3); background: var(--bg); }
 .f-entry-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
@@ -48,6 +51,10 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); 
 .f-stat-on { border-color: var(--lapis); box-shadow: 0 0 0 2px var(--lapis); }
 .f-toolbar { display: flex; align-items: flex-end; gap: var(--space-3); flex-wrap: wrap; }
 .f-search { width: min(100%, 280px); }
+.f-company { display: flex; align-items: center; gap: var(--space-3); }
+.f-pipeline { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); }
+.f-pipeline-closed { flex-direction: row; align-items: center; justify-content: space-between; }
+.f-pipeline-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
 .f-link { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; border-radius: var(--radius-sm); }
 .f-link b { color: var(--link); font-weight: 650; }
 .f-link span { font-size: 13px; color: var(--ink-muted); }

@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Button, Card, Dialog, DropdownMenu, EmptyState, Grid, Icon, RadioGroup, TextField, useToast } from '@tessera/react';
+import { Alert, Button, Card, Dialog, DropdownMenu, EmptyState, Grid, Icon, RadioGroup, TextField, useToast } from '@tessera/react';
 import { ScaledPaper } from '../ScaledPaper';
 import { TEMPLATES, blankResume, uid, useStore } from '../store';
 import type { Resume, TemplateId } from '../store';
 import { go } from '../route';
+import { BACKUP_TIP_KEY, openBackup } from '../Backup';
 
 const edited = (iso: string) => new Date(iso).toLocaleDateString('en', { month: 'short', day: 'numeric' });
 
@@ -102,6 +103,21 @@ export function ResumesPage({ creating }: { creating: boolean }) {
   const { resumes, removeResume } = useStore();
   const { toast } = useToast();
   const [doomed, setDoomed] = useState<Resume | null>(null);
+  const [tip, setTip] = useState(() => {
+    try {
+      return !localStorage.getItem(BACKUP_TIP_KEY);
+    } catch {
+      return true;
+    }
+  });
+  const hideTip = () => {
+    setTip(false);
+    try {
+      localStorage.setItem(BACKUP_TIP_KEY, '1');
+    } catch {
+      /* storage unavailable: the tip comes back next visit */
+    }
+  };
   return (
     <div className="f-page">
       <header className="f-head">
@@ -115,6 +131,16 @@ export function ResumesPage({ creating }: { creating: boolean }) {
           New resume
         </Button>
       </header>
+      {tip && (
+        <Alert tone="info" title="Your work is saved in this browser only" onDismiss={hideTip}>
+          <span className="f-alert-body">
+            Clearing your browser data deletes it too. Download a backup now and then, or to move to another computer.
+            <Button size="sm" variant="secondary" onClick={openBackup}>
+              Back up now
+            </Button>
+          </span>
+        </Alert>
+      )}
       {resumes.length ? (
         <Grid minChildWidth={260} gap={6}>
           {resumes.map((r) => (

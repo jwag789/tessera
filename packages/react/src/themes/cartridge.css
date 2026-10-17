@@ -54,6 +54,8 @@
     --inverse-accent: var(--label-inverse-accent);
     --focus: var(--label-focus);
     --link: var(--label-link);
+    /* Text that inherits its color (a drawer title, plain copy in a card) follows the surface too. */
+    color: var(--ink);
   }
 
   /* Shell parts (navbar, sidebar) are charcoal wherever they sit, even inside a label. */

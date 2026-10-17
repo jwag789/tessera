@@ -115,7 +115,7 @@ const SAMPLE_APPS: Application[] = [
 ];
 
 const KEY = 'folio:v1';
-interface Data {
+export interface Data {
   resumes: Resume[];
   applications: Application[];
 }
@@ -129,7 +129,33 @@ function load(): Data {
   return { resumes: [SAMPLE_RESUME, SAMPLE_RESUME_2], applications: SAMPLE_APPS };
 }
 
+/** Reads a backup file's text. Throws a readable message if it isn't one. */
+export function parseBackup(text: string): Data {
+  let raw: unknown;
+  try {
+    raw = JSON.parse(text);
+  } catch {
+    throw new Error('That file isn’t valid JSON. Choose a backup downloaded from Folio.');
+  }
+  const d = raw as Partial<Data> & { app?: string };
+  if (d?.app !== 'folio' || !Array.isArray(d.resumes) || !Array.isArray(d.applications)) {
+    throw new Error('That file isn’t a Folio backup. Choose a file named like folio-backup-2026-10-17.json.');
+  }
+  return { resumes: d.resumes, applications: d.applications };
+}
+
+/** Saves everything as a JSON file the person keeps. */
+export function downloadBackup(data: Data) {
+  const blob = new Blob([JSON.stringify({ app: 'folio', version: 1, savedAt: new Date().toISOString(), ...data }, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `folio-backup-${toIsoDay(new Date())}.json`;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
 interface Store extends Data {
+  replaceAll: (d: Data) => void;
   saveResume: (r: Resume) => void;
   addResume: (r: Resume) => void;
   removeResume: (id: string) => void;
@@ -162,7 +188,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   );
   const removeApplication = useCallback((id: string) => setData((d) => ({ ...d, applications: d.applications.filter((x) => x.id !== id) })), []);
 
-  const value = useMemo(() => ({ ...data, saveResume, addResume, removeResume, saveApplication, removeApplication }), [data, saveResume, addResume, removeResume, saveApplication, removeApplication]);
+  const replaceAll = useCallback((d: Data) => setData(d), []);
+  const value = useMemo(() => ({ ...data, replaceAll, saveResume, addResume, removeResume, saveApplication, removeApplication }), [data, replaceAll, saveResume, addResume, removeResume, saveApplication, removeApplication]);
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>;
 }
 

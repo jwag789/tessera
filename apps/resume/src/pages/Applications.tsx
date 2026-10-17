@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Badge, Button, DatePicker, Drawer, EmptyState, Icon, Select, Table, TextField, Textarea, useToast } from '@tessera/react';
+import { Avatar, Badge, Button, DatePicker, Drawer, EmptyState, Icon, Select, Stepper, Table, TextField, Textarea, useToast } from '@tessera/react';
 import type { TableColumn } from '@tessera/react';
 import { STATUSES, formatDay, fromIsoDay, toIsoDay, uid, useStore } from '../store';
 import type { Application, Status } from '../store';
@@ -7,6 +7,40 @@ import { go } from '../route';
 
 const blank = (): Application => ({ id: uid(), company: '', role: '', status: 'saved', appliedOn: null, resumeId: null, link: '', notes: '' });
 const statusOf = (s: Status) => STATUSES.find((x) => x.id === s)!;
+// The path a job moves along. Rejected can happen at any point, so it isn't a step.
+const PIPELINE: Status[] = ['saved', 'applied', 'interview', 'offer'];
+
+function Pipeline({ status, onChange }: { status: Status; onChange: (s: Status) => void }) {
+  if (status === 'rejected') {
+    return (
+      <div className="f-pipeline f-pipeline-closed">
+        <Badge tone="danger" dot>
+          Rejected
+        </Badge>
+        <Button size="sm" variant="ghost" onClick={() => onChange('applied')}>
+          Reopen as applied
+        </Button>
+      </div>
+    );
+  }
+  const at = PIPELINE.indexOf(status);
+  const next = PIPELINE[at + 1];
+  return (
+    <div className="f-pipeline">
+      <Stepper label="Application stage" current={at} onStepClick={(i) => onChange(PIPELINE[i])} steps={PIPELINE.map((s) => ({ id: s, label: statusOf(s).label }))} />
+      <div className="f-pipeline-actions">
+        {next && (
+          <Button size="sm" iconRight={<Icon name="arrow" />} onClick={() => onChange(next)}>
+            Move to {statusOf(next).label.toLowerCase()}
+          </Button>
+        )}
+        <Button size="sm" variant="ghost" onClick={() => onChange('rejected')}>
+          Mark rejected
+        </Button>
+      </div>
+    </div>
+  );
+}
 
 function ApplicationDrawer({ app, isNew, onClose }: { app: Application | null; isNew: boolean; onClose: () => void }) {
   const { resumes, saveApplication, removeApplication } = useStore();
@@ -61,6 +95,7 @@ function ApplicationDrawer({ app, isNew, onClose }: { app: Application | null; i
           save();
         }}
       >
+        <Pipeline status={draft.status} onChange={(s) => set({ status: s, appliedOn: s === 'applied' && !draft.appliedOn ? toIsoDay(new Date()) : draft.appliedOn })} />
         <TextField label="Company" value={draft.company} onChange={(e) => set({ company: e.target.value })} error={tried && missing ? 'Add the company name.' : undefined} autoFocus={isNew} />
         <TextField label="Role" value={draft.role} onChange={(e) => set({ role: e.target.value })} />
         <Select label="Status" value={draft.status} onChange={(v) => set({ status: v as Status })} options={STATUSES.map((s) => ({ value: s.id, label: s.label }))} />
@@ -97,10 +132,16 @@ export function ApplicationsPage({ adding }: { adding: boolean }) {
       header: 'Company',
       sortable: true,
       render: (a) => (
-        <button type="button" className="f-link ts-focus" onClick={() => setEditing(a)}>
-          <b>{a.company}</b>
-          <span>{a.role}</span>
-        </button>
+        <span className="f-company">
+          {/* The name is right beside it, so the initials are decoration for screen readers. */}
+          <span aria-hidden="true">
+            <Avatar name={a.company} size={34} />
+          </span>
+          <button type="button" className="f-link ts-focus" onClick={() => setEditing(a)}>
+            <b>{a.company}</b>
+            <span>{a.role}</span>
+          </button>
+        </span>
       )
     },
     { key: 'status', header: 'Status', sortable: true, sortValue: (a) => STATUSES.findIndex((s) => s.id === a.status), render: (a) => <Badge tone={statusOf(a.status).tone} dot>{statusOf(a.status).label}</Badge> },

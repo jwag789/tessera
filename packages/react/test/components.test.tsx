@@ -77,6 +77,13 @@ describe('basics', () => {
     expect(radio.closest('label')).toHaveTextContent('A colored sidebar.');
   });
 
+  it('segmented Progress marks the latest step, and none once complete', () => {
+    const { container, rerender } = render(<Progress label="Profile" value={3} max={5} steps />);
+    expect(container.querySelectorAll('.ts-seg-current')).toHaveLength(1);
+    rerender(<Progress label="Profile" value={5} max={5} steps />);
+    expect(container.querySelectorAll('.ts-seg-current')).toHaveLength(0);
+  });
+
   it('Badge, Avatar, Card, Alert, Progress render their roles', () => {
     render(
       <>
