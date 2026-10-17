@@ -1,4 +1,5 @@
 // The resume as it prints. Paper has its own fixed palette and fonts, so the PDF looks the same in every app theme.
+import type { CSSProperties } from 'react';
 import type { Resume } from './store';
 import { formatMonth } from './store';
 
@@ -65,6 +66,7 @@ function Skills({ r }: { r: Resume }) {
 }
 
 export function Paper({ resume: r }: { resume: Resume }) {
+  const vars = { '--p-scale': r.layout?.scale ?? 1, '--p-margin': r.layout?.margin ?? 1 } as CSSProperties;
   const head = (
     <header className="p-head">
       <h1>{r.profile.name || 'Your name'}</h1>
@@ -74,7 +76,7 @@ export function Paper({ resume: r }: { resume: Resume }) {
   const summary = r.profile.summary && <p className="p-summary">{r.profile.summary}</p>;
   if (r.template === 'modern') {
     return (
-      <article className="paper paper-modern" aria-label="Resume preview">
+      <article className="paper paper-modern" aria-label="Resume preview" style={vars}>
         <aside className="p-side">
           {head}
           <ul className="p-contact">
@@ -93,7 +95,7 @@ export function Paper({ resume: r }: { resume: Resume }) {
     );
   }
   return (
-    <article className={`paper paper-${r.template}`} aria-label="Resume preview">
+    <article className={`paper paper-${r.template}`} aria-label="Resume preview" style={vars}>
       {head}
       <p className="p-contact-line">{contact(r).join('  ·  ')}</p>
       {summary}

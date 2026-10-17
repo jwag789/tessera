@@ -6,7 +6,7 @@ import { Paper } from '../Paper';
 import { SaveStatus } from '../Account';
 import { EditorMatch } from '../Tailor';
 import { Points } from '../Points';
-import { ScaledPaper } from '../ScaledPaper';
+import { Preview } from '../Preview';
 import { TEMPLATES, uid, useStore } from '../store';
 import type { Education, Experience, Resume, TemplateId } from '../store';
 import { go } from '../route';
@@ -218,11 +218,7 @@ export function EditorPage({ id }: { id: string }) {
       <Form r={resume} set={saveResume} />
     </div>
   );
-  const preview = (
-    <div className="f-preview">
-      <ScaledPaper resume={resume} />
-    </div>
-  );
+  const preview = <Preview resume={resume} onLayout={(layout) => saveResume({ ...resume, layout })} />;
 
   return (
     <div className="f-page f-editor">

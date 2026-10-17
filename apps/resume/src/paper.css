@@ -1,49 +1,50 @@
 /* The printed page. Fixed colors and type on purpose: a resume looks the same whatever theme the app is in. */
-.paper { box-sizing: border-box; width: 816px; min-height: 1056px; padding: 56px 64px; background: #ffffff; color: #1a1d24; font: 400 13.5px/1.5 "Instrument Sans", "Helvetica Neue", Arial, sans-serif; text-align: left; }
+/* --p-scale (text size) and --p-margin (page margins) come from the resume's page settings; 1 is the default. */
+.paper { --p-scale: 1; --p-margin: 1; box-sizing: border-box; width: 816px; min-height: 1056px; padding: calc(56px * var(--p-margin)) calc(64px * var(--p-margin)); background: #ffffff; color: #1a1d24; font: 400 calc(13.5px * var(--p-scale))/1.5 "Instrument Sans", "Helvetica Neue", Arial, sans-serif; text-align: left; }
 .paper h1, .paper h2, .paper p, .paper ul { margin: 0; }
 .paper ul { padding-left: 18px; }
-.p-head h1 { font: 700 32px/1.1 "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif; letter-spacing: -.02em; }
-.p-title { margin-top: 4px; font-size: 16px; color: #3d4350; }
-.p-contact-line { margin-top: 10px; font-size: 12.5px; color: #4b5260; }
+.p-head h1 { font: 700 2.37em/1.1 "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif; letter-spacing: -.02em; }
+.p-title { margin-top: 4px; font-size: 1.185em; color: #3d4350; }
+.p-contact-line { margin-top: 10px; font-size: 0.926em; color: #4b5260; }
 .p-summary { margin-top: 18px; }
 .p-section { margin-top: 22px; }
-.p-section h2 { font: 700 11.5px/1 "Instrument Sans", Arial, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #2633e8; padding-bottom: 6px; border-bottom: 1.5px solid #dfe2ea; margin-bottom: 10px; }
+.p-section h2 { font: 700 0.852em/1 "Instrument Sans", Arial, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #2633e8; padding-bottom: 6px; border-bottom: 1.5px solid #dfe2ea; margin-bottom: 10px; }
 .p-item + .p-item { margin-top: 12px; }
 .p-item-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; }
 .p-item-head b { font-weight: 650; }
 .p-item-head span { color: #3d4350; }
 .p-item-head span::before { content: "· "; }
-.p-item-head time { margin-left: auto; font-size: 12px; color: #5b6271; white-space: nowrap; }
+.p-item-head time { margin-left: auto; font-size: 0.889em; color: #5b6271; white-space: nowrap; }
 .p-item ul { margin-top: 4px; }
 .p-item li + li { margin-top: 2px; }
 .p-skills { list-style: none; padding: 0 !important; display: flex; flex-wrap: wrap; gap: 6px; }
-.p-skills li { padding: 2px 9px; border-radius: 4px; background: #eef0f6; font-size: 12.5px; }
+.p-skills li { padding: 2px 9px; border-radius: 4px; background: #eef0f6; font-size: 0.926em; }
 
 /* Classic: serif, centered header, quiet rules. */
 .paper-classic { font-family: Georgia, "Times New Roman", serif; }
 .paper-classic .p-head, .paper-classic .p-contact-line { text-align: center; }
-.paper-classic .p-head h1 { font: 400 34px/1.1 Georgia, "Times New Roman", serif; letter-spacing: .01em; }
+.paper-classic .p-head h1 { font: 400 2.519em/1.1 Georgia, "Times New Roman", serif; letter-spacing: .01em; }
 .paper-classic .p-section h2 { font-family: Georgia, serif; color: #1a1d24; letter-spacing: .2em; }
 .paper-classic .p-skills li { background: none; padding: 0; }
 .paper-classic .p-skills li + li::before { content: "· "; margin-right: 6px; }
 
 /* Modern: a colored sidebar for contact, skills and education. */
 .paper-modern { display: grid; grid-template-columns: 250px 1fr; padding: 0; }
-.p-side { background: #121a8f; color: #eef0ff; padding: 48px 28px; }
+.p-side { background: #121a8f; color: #eef0ff; padding: calc(48px * var(--p-margin)) calc(28px * var(--p-margin)); }
 .p-side .p-title { color: #c7ccff; }
 .p-side .p-section h2 { color: #ffbe45; border-bottom-color: rgba(255, 255, 255, .2); }
 .p-side .p-item-head { flex-direction: column; gap: 2px; }
 .p-side .p-item-head span, .p-side .p-item-head time { color: #c7ccff; margin-left: 0; }
 .p-side .p-item-head span::before { content: none; }
 .p-side .p-skills li { background: rgba(255, 255, 255, .12); color: #ffffff; }
-.p-contact { list-style: none; padding: 0 !important; margin-top: 20px !important; display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; overflow-wrap: anywhere; }
-.p-main { padding: 48px 40px; }
-.p-main .p-summary { margin-top: 0; font-size: 14.5px; }
+.p-contact { list-style: none; padding: 0 !important; margin-top: 20px !important; display: flex; flex-direction: column; gap: 4px; font-size: 0.926em; overflow-wrap: anywhere; }
+.p-main { padding: calc(48px * var(--p-margin)) calc(40px * var(--p-margin)); }
+.p-main .p-summary { margin-top: 0; font-size: 1.074em; }
 
 /* Compact: smaller type and tighter rhythm. */
-.paper-compact { padding: 40px 48px; font-size: 12.5px; line-height: 1.42; }
+.paper-compact { padding: calc(40px * var(--p-margin)) calc(48px * var(--p-margin)); font-size: calc(12.5px * var(--p-scale)); line-height: 1.42; }
 .paper-compact .p-head { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
-.paper-compact .p-head h1 { font-size: 26px; }
+.paper-compact .p-head h1 { font-size: 2.08em; }
 .paper-compact .p-title { margin: 0; }
 .paper-compact .p-section { margin-top: 14px; }
 .paper-compact .p-section h2 { margin-bottom: 6px; }

@@ -49,6 +49,8 @@ export interface Resume {
   experience: Experience[];
   education: Education[];
   skills: string[];
+  /** Page settings: text size and margins as multiples of the template's defaults. */
+  layout?: { scale: number; margin: number };
 }
 
 export type Status = 'saved' | 'applied' | 'interview' | 'offer' | 'rejected';
