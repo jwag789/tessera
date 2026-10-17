@@ -23,6 +23,8 @@ export interface ComboboxProps {
   className?: string;
   /** Custom matcher. Default: case-insensitive match on label and description text. */
   filter?: (option: SelectOption, query: string) => boolean;
+  /** Accept typed text that isn't an option, e.g. a new company name. The value is then the text itself. */
+  allowCustom?: boolean;
 }
 
 const defaultFilter = (o: SelectOption, q: string) => {
@@ -48,14 +50,16 @@ export function highlight(label: string, query: string): ReactNode {
 }
 
 /** A text input that filters a list as you type (WAI-ARIA combobox with list autocomplete). */
-export function Combobox({ label, options, value: valueProp, defaultValue = null, onChange, placeholder, emptyText = 'No matches', hint, error, disabled, name, id: idProp, className, filter = defaultFilter }: ComboboxProps) {
+export function Combobox({ label, options, value: valueProp, defaultValue = null, onChange, placeholder, emptyText = 'No matches', hint, error, disabled, name, id: idProp, className, filter = defaultFilter, allowCustom }: ComboboxProps) {
   const auto = useId();
   const id = idProp ?? auto;
   const listId = `${id}-list`;
   const opts = useMemo(() => normalizeOptions(options), [options]);
   const [value, setValue] = useControllable<string | null>(valueProp, defaultValue);
   const selected = opts.find((o) => o.value === value) ?? null;
-  const [query, setQuery] = useState(selected?.label ?? '');
+  // With allowCustom, a value that isn't an option is shown as typed.
+  const display = selected?.label ?? (allowCustom ? value ?? '' : '');
+  const [query, setQuery] = useState(display);
   const [typing, setTyping] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(-1);
@@ -63,16 +67,20 @@ export function Combobox({ label, options, value: valueProp, defaultValue = null
   const input = useRef<HTMLInputElement>(null);
   const list = useRef<HTMLUListElement>(null);
 
-  const shown = typing ? opts.filter((o) => filter(o, query)) : opts;
+  const q = query.trim();
+  const exact = opts.find((o) => o.label.toLowerCase() === q.toLowerCase());
+  const custom: SelectOption | null = allowCustom && typing && q && !exact ? { value: q, label: q } : null;
+  const matches = typing ? opts.filter((o) => filter(o, query)) : opts;
+  const shown = custom ? [custom, ...matches] : matches;
 
   useEffect(() => {
-    if (!typing) setQuery(selected?.label ?? '');
-  }, [selected?.label, typing]);
+    if (!typing) setQuery(display);
+  }, [display, typing]);
 
   useEffect(() => {
     if (!open) return;
     const away = (e: PointerEvent) => {
-      if (root.current && !root.current.contains(e.target as Node)) commitClose();
+      if (root.current && !root.current.contains(e.target as Node)) closeKeepingText();
     };
     document.addEventListener('pointerdown', away);
     return () => document.removeEventListener('pointerdown', away);
@@ -92,10 +100,22 @@ export function Combobox({ label, options, value: valueProp, defaultValue = null
     setActive(-1);
   }
 
+  /** Leaving the field: with allowCustom, what was typed is kept as the value. */
+  function closeKeepingText() {
+    if (allowCustom && typing) {
+      const next = exact ? exact.value : q || null;
+      if (next !== value) {
+        setValue(next);
+        onChange?.(next, exact ?? null);
+      }
+    }
+    commitClose();
+  }
+
   function choose(o: SelectOption) {
     if (o.disabled) return;
     setValue(o.value);
-    onChange?.(o.value, o);
+    onChange?.(o.value, o === custom ? null : o);
     setQuery(o.label);
     commitClose();
     input.current?.focus();
@@ -136,7 +156,7 @@ export function Combobox({ label, options, value: valueProp, defaultValue = null
         onChange?.(null, null);
       }
     } else if (e.key === 'Tab') {
-      if (open) commitClose();
+      if (open) closeKeepingText();
     }
   }
 
@@ -208,7 +228,7 @@ export function Combobox({ label, options, value: valueProp, defaultValue = null
                 onMouseDown={(e) => e.preventDefault()}
                 onClick={() => choose(o)}
               >
-                <OptionContent option={o} label={highlight(o.label, typing ? query : '')} />
+                <OptionContent option={o} label={o === custom ? <>Use “{q}”</> : highlight(o.label, typing ? query : '')} />
               </li>
             ))}
           </ul>

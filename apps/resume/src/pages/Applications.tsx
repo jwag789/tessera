@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Avatar, Badge, Button, DatePicker, Drawer, EmptyState, Icon, Select, Stepper, Table, TextField, Textarea, useToast } from '@tessera/react';
+import { Avatar, Badge, Button, Combobox, DatePicker, Drawer, EmptyState, Icon, Popover, Select, Stepper, Table, TextField, Textarea, useToast } from '@tessera/react';
 import type { TableColumn } from '@tessera/react';
 import { STATUSES, formatDay, fromIsoDay, toIsoDay, uid, useStore } from '../store';
 import type { Application, Status } from '../store';
@@ -42,9 +42,54 @@ function Pipeline({ status, onChange }: { status: Status; onChange: (s: Status) 
   );
 }
 
-function ApplicationDrawer({ app, isNew, onClose }: { app: Application | null; isNew: boolean; onClose: () => void }) {
-  const { resumes, saveApplication, removeApplication } = useStore();
+/** The status badge doubles as a quick switcher, so the table doesn't need the drawer for the common change. */
+function StatusCell({ app }: { app: Application }) {
+  const { saveApplication } = useStore();
   const { toast } = useToast();
+  const [open, setOpen] = useState(false);
+  const s = statusOf(app.status);
+  const change = (status: Status) => {
+    setOpen(false);
+    if (status === app.status) return;
+    saveApplication({ ...app, status, appliedOn: status === 'applied' && !app.appliedOn ? toIsoDay(new Date()) : app.appliedOn });
+    toast({ title: `${app.company}: ${statusOf(status).label}`, icon: 'success', action: { label: 'Undo', onClick: () => saveApplication(app) } });
+  };
+  return (
+    <Popover
+      open={open}
+      onOpenChange={setOpen}
+      title={`Status for ${app.company}`}
+      placement="bottom-start"
+      trigger={
+        <button type="button" className="f-status ts-focus" aria-label={`Status: ${s.label}. Change status for ${app.company}`}>
+          <Badge tone={s.tone} dot>
+            {s.label}
+          </Badge>
+          <Icon name="chevron" />
+        </button>
+      }
+    >
+      <div className="f-status-list" role="group" aria-label="Choose a status">
+        {STATUSES.map((x) => (
+          <button key={x.id} type="button" className="f-status-opt ts-focus" aria-pressed={x.id === app.status} onClick={() => change(x.id)}>
+            <Badge tone={x.tone} dot>
+              {x.label}
+            </Badge>
+            {x.id === app.status && <Icon name="check" />}
+          </button>
+        ))}
+      </div>
+    </Popover>
+  );
+}
+
+function ApplicationDrawer({ app, isNew, onClose }: { app: Application | null; isNew: boolean; onClose: () => void }) {
+  const { resumes, applications, saveApplication, removeApplication } = useStore();
+  const { toast } = useToast();
+  // Names already used, so a second job at the same company is spelled the same way.
+  const unique = (xs: string[]) => [...new Set(xs.map((x) => x.trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b));
+  const companies = useMemo(() => unique(applications.map((a) => a.company)), [applications]);
+  const roles = useMemo(() => unique(applications.map((a) => a.role)), [applications]);
   const [draft, setDraft] = useState<Application>(app ?? blank());
   const [tried, setTried] = useState(false);
   useEffect(() => {
@@ -96,8 +141,17 @@ function ApplicationDrawer({ app, isNew, onClose }: { app: Application | null; i
         }}
       >
         <Pipeline status={draft.status} onChange={(s) => set({ status: s, appliedOn: s === 'applied' && !draft.appliedOn ? toIsoDay(new Date()) : draft.appliedOn })} />
-        <TextField label="Company" value={draft.company} onChange={(e) => set({ company: e.target.value })} error={tried && missing ? 'Add the company name.' : undefined} autoFocus={isNew} />
-        <TextField label="Role" value={draft.role} onChange={(e) => set({ role: e.target.value })} />
+        <Combobox
+          label="Company"
+          allowCustom
+          options={companies}
+          value={draft.company || null}
+          onChange={(v) => set({ company: v ?? '' })}
+          placeholder="Type a company"
+          emptyText="Type a company name"
+          error={tried && missing ? 'Add the company name.' : undefined}
+        />
+        <Combobox label="Role" allowCustom options={roles} value={draft.role || null} onChange={(v) => set({ role: v ?? '' })} placeholder="e.g. Frontend engineer" emptyText="Type a role" />
         <Select label="Status" value={draft.status} onChange={(v) => set({ status: v as Status })} options={STATUSES.map((s) => ({ value: s.id, label: s.label }))} />
         <DatePicker label="Applied on" value={fromIsoDay(draft.appliedOn)} onChange={(d) => set({ appliedOn: toIsoDay(d) })} max={new Date()} placeholder="Not yet" />
         <Select
@@ -144,7 +198,7 @@ export function ApplicationsPage({ adding }: { adding: boolean }) {
         </span>
       )
     },
-    { key: 'status', header: 'Status', sortable: true, sortValue: (a) => STATUSES.findIndex((s) => s.id === a.status), render: (a) => <Badge tone={statusOf(a.status).tone} dot>{statusOf(a.status).label}</Badge> },
+    { key: 'status', header: 'Status', sortable: true, sortValue: (a) => STATUSES.findIndex((s) => s.id === a.status), render: (a) => <StatusCell app={a} /> },
     { key: 'appliedOn', header: 'Applied', sortable: true, sortValue: (a) => a.appliedOn ?? '', render: (a) => formatDay(a.appliedOn) },
     { key: 'resume', header: 'Resume', render: (a) => resumes.find((r) => r.id === a.resumeId)?.name ?? <span className="f-muted">None</span> }
   ];

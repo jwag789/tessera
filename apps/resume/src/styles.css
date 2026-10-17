@@ -55,6 +55,13 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); 
 .f-pipeline { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg); }
 .f-pipeline-closed { flex-direction: row; align-items: center; justify-content: space-between; }
 .f-pipeline-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.f-status { display: inline-flex; align-items: center; gap: 4px; padding: 2px 4px 2px 2px; margin: -2px -4px -2px -2px; border: 0; border-radius: var(--radius-sm); background: none; color: var(--ink-muted); cursor: pointer; }
+.f-status .ts-icon { width: 14px; height: 14px; transition: transform var(--duration-fast); }
+.f-status:hover .ts-icon, .f-status[aria-expanded="true"] .ts-icon { color: var(--ink); }
+.f-status[aria-expanded="true"] .ts-icon { transform: rotate(180deg); }
+.f-status-list { display: flex; flex-direction: column; gap: 2px; min-width: 180px; }
+.f-status-opt { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: 6px 8px; border: 0; border-radius: var(--radius-sm); background: none; color: var(--ink); cursor: pointer; }
+.f-status-opt:hover { background: var(--surface-sunken); }
 .f-link { display: flex; flex-direction: column; align-items: flex-start; gap: 2px; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; border-radius: var(--radius-sm); }
 .f-link b { color: var(--link); font-weight: 650; }
 .f-link span { font-size: 13px; color: var(--ink-muted); }

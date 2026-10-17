@@ -176,6 +176,29 @@ describe('Combobox', () => {
     await userEvent.type(screen.getByRole('combobox'), 'zzz');
     expect(screen.getByText('Nothing here')).toBeInTheDocument();
   });
+
+  it('with allowCustom, keeps typed text and offers it as the first option', async () => {
+    const onChange = vi.fn();
+    render(<Combobox label="Company" options={['Globex', 'Northwind']} allowCustom onChange={onChange} />);
+    const input = screen.getByRole('combobox', { name: 'Company' });
+    await userEvent.type(input, 'Glo');
+    expect(screen.getAllByRole('option')[0]).toHaveTextContent('Use “Glo”');
+    expect(screen.getAllByRole('option')[1]).toHaveTextContent('Globex');
+    await userEvent.clear(input);
+    await userEvent.type(input, 'Acme');
+    await userEvent.tab();
+    expect(onChange).toHaveBeenLastCalledWith('Acme', null);
+    expect(input).toHaveValue('Acme');
+  });
+
+  it('with allowCustom, an exact match still picks the real option', async () => {
+    const onChange = vi.fn();
+    render(<Combobox label="Company" options={[{ value: 'gx', label: 'Globex' }]} allowCustom onChange={onChange} />);
+    await userEvent.type(screen.getByRole('combobox'), 'globex');
+    expect(screen.queryByText(/Use “/)).not.toBeInTheDocument();
+    await userEvent.tab();
+    expect(onChange).toHaveBeenLastCalledWith('gx', expect.objectContaining({ label: 'Globex' }));
+  });
 });
 
 describe('Tabs', () => {
