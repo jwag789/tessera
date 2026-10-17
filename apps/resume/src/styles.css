@@ -19,6 +19,8 @@ body { background: var(--bg); color: var(--ink); font-family: var(--font-sans); 
 
 /* Resumes */
 .f-alert-body { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+.f-link-fill { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-2); }
+.f-link-fill > .ts-field, .f-link-fill > :first-child { align-self: stretch; }
 .f-dialog-text { margin: 0; color: var(--ink-muted); }
 .f-resume-card { cursor: pointer; }
 .f-card-actions { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); width: 100%; }

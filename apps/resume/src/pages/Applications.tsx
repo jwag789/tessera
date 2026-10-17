@@ -7,6 +7,7 @@ import { go } from '../route';
 import { MatchPanel, SentVersion } from '../Tailor';
 import { FollowUps } from '../FollowUps';
 import { matchPosting, tailor } from '../match';
+import { PROVIDER_LABEL, fetchJob, parseJobLink } from '../jobLink';
 
 const blank = (): Application => ({ id: uid(), company: '', role: '', status: 'saved', appliedOn: null, resumeId: null, link: '', notes: '' });
 const statusOf = (s: Status) => STATUSES.find((x) => x.id === s)!;
@@ -104,6 +105,28 @@ function ApplicationDrawer({ app, isNew, onClose }: { app: Application | null; i
   const set = (patch: Partial<Application>) => setDraft((d) => ({ ...d, ...patch }));
   const missing = !draft.company.trim();
 
+  // Fill in from a link to the posting. Only empty fields are filled, so nothing typed is lost.
+  const [filling, setFilling] = useState<'idle' | 'loading' | 'failed'>('idle');
+  useEffect(() => setFilling('idle'), [app, draft.link]);
+  const linkRef = parseJobLink(draft.link);
+  const fillFromLink = async () => {
+    setFilling('loading');
+    try {
+      const job = await fetchJob(draft.link);
+      setDraft((d) => ({
+        ...d,
+        company: d.company.trim() ? d.company : job.company,
+        role: d.role.trim() ? d.role : job.role,
+        posting: d.posting?.trim() ? d.posting : job.posting,
+        notes: d.notes.trim() || !job.location ? d.notes : `Location: ${job.location}`
+      }));
+      setFilling('idle');
+      toast({ title: 'Filled in from the posting', description: [job.role, job.company].filter(Boolean).join(' at '), icon: 'success' });
+    } catch {
+      setFilling('failed');
+    }
+  };
+
   const save = () => {
     setTried(true);
     if (missing) return;
@@ -170,6 +193,32 @@ function ApplicationDrawer({ app, isNew, onClose }: { app: Application | null; i
               save();
             }}
           >
+            <div className="f-link-fill">
+              <TextField
+                label="Link to the posting"
+                type="url"
+                icon="external"
+                placeholder="https://"
+                hint={draft.link ? undefined : 'Paste a Greenhouse, Lever or Ashby link to fill in the rest.'}
+                value={draft.link}
+                onChange={(e) => set({ link: e.target.value })}
+              />
+              {linkRef && (
+                <Button variant="secondary" iconLeft={<Icon name="sparkle" />} loading={filling === 'loading'} onClick={fillFromLink}>
+                  Fill in from {PROVIDER_LABEL[linkRef.provider]}
+                </Button>
+              )}
+            </div>
+            {filling === 'failed' && (
+              <Alert tone="warning" title="Couldn’t read that posting from here">
+                <span className="f-alert-body">
+                  Some job sites don’t let other websites load their ads. Open the posting, copy the text, and paste it under Match.
+                  <Button size="sm" variant="secondary" onClick={() => setTab('match')}>
+                    Paste it under Match
+                  </Button>
+                </span>
+              </Alert>
+            )}
             <div className="f-row">
           <TextField label="Next step" placeholder="e.g. Interview with the design team" value={draft.nextStep?.label ?? ''} onChange={(e) => set({ nextStep: e.target.value || draft.nextStep?.date ? { date: draft.nextStep?.date ?? '', label: e.target.value } : null })} />
           <DatePicker label="When" value={fromIsoDay(draft.nextStep?.date || null)} onChange={(d) => set({ nextStep: { label: draft.nextStep?.label || 'Next step', date: toIsoDay(d) } })} placeholder="Pick a date" />
@@ -194,7 +243,6 @@ function ApplicationDrawer({ app, isNew, onClose }: { app: Application | null; i
               onChange={(v) => set({ resumeId: v === 'none' ? null : v })}
               options={[{ value: 'none', label: 'None yet' }, ...resumes.map((r) => ({ value: r.id, label: r.name }))]}
             />
-            <TextField label="Link to the posting" type="url" icon="external" placeholder="https://" value={draft.link} onChange={(e) => set({ link: e.target.value })} />
             <Textarea label="Notes" hint="Contacts, interview dates, what they asked." autoResize value={draft.notes} onChange={(e) => set({ notes: e.target.value })} />
           </form>
             )
