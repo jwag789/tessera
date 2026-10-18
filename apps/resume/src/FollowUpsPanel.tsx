@@ -1,6 +1,6 @@
 // Above the applications table: jobs that have gone quiet, and what's coming up on a calendar.
 import { useState } from 'react';
-import { Avatar, Button, Calendar } from '@tessera/react';
+import { Avatar, Button, Calendar } from '@tessera-design/react';
 import { addDays, nudges, upcoming } from './followups';
 import { formatDay, fromIsoDay, toIsoDay, useStore } from './store';
 import type { Application } from './store';

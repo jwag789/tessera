@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Alert, Button, Card, Skeleton, Dialog, DropdownMenu, EmptyState, Grid, Icon, RadioGroup, TextField, useToast } from '@tessera/react';
+import { Alert, Button, Card, Skeleton, Dialog, DropdownMenu, EmptyState, Grid, Icon, RadioGroup, TextField, useToast } from '@tessera-design/react';
 import { ScaledPaper } from '../ScaledPaper';
 import { TEMPLATES, blankResume, uid, useStore } from '../store';
 import type { Resume, TemplateId } from '../store';

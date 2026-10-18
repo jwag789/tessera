@@ -1,8 +1,8 @@
 import { Component, useEffect, useRef, useState } from 'react';
 import type { ReactNode } from 'react';
-import { Alert, Avatar, Badge, Button, Card, Icon, Mosaic, Progress, SegmentedControl, Switch, Checkbox, Table, TextField, ThemeProvider, Toast, iconNames, useTheme, useToast } from '@tessera/react';
-import { themes } from '@tessera/tokens';
-import { tokens } from '@tessera/tokens';
+import { Alert, Avatar, Badge, Button, Card, Icon, Mosaic, Progress, SegmentedControl, Switch, Checkbox, Table, TextField, ThemeProvider, Toast, iconNames, useTheme, useToast } from '@tessera-design/react';
+import { themes } from '@tessera-design/tokens';
+import { tokens } from '@tessera-design/tokens';
 import { Cover } from './Cover';
 import { Showcase } from './Showcase';
 import { DEMOS } from './demos';
@@ -190,16 +190,16 @@ export function StartPage() {
     <div className="d-page">
       <Head eyebrow="Overview" title="Getting started" lead={brandIntro} />
       <H2>Install</H2>
-      <Code label="Terminal" src="npm install @tessera/react @tessera/tokens" />
+      <Code label="Terminal" src="npm install @tessera-design/react @tessera-design/tokens" />
       <Alert tone="info" title="Not on npm yet">
         Tessera 0.1 isn’t published. Until it is, clone the repo and run <code>npm run build:packages</code>, then install from <code>packages/react</code> with a file path.
       </Alert>
       <H2>Use it</H2>
       <Code
         label="main.tsx"
-        src={`import '@tessera/react/styles.css'; // tokens + component styles
-import '@tessera/react/fonts.css';  // optional: the three Google Fonts
-import { Button, Card, ToastProvider } from '@tessera/react';
+        src={`import '@tessera-design/react/styles.css'; // tokens + component styles
+import '@tessera-design/react/fonts.css';  // optional: the three Google Fonts
+import { Button, Card, ToastProvider } from '@tessera-design/react';
 
 export function App() {
   return (
@@ -213,7 +213,7 @@ export function App() {
 }`}
       />
       <H2>Tokens without React</H2>
-      <Md src={'Every color, size and duration is a CSS variable from `@tessera/tokens/tokens.css`, and the same values are importable as data: `import { tokens, cssVar } from "@tessera/tokens"`. Style your own UI with `var(--surface)`, `var(--ink)`, `var(--lapis)` and it follows the theme with everything else.'} />
+      <Md src={'Every color, size and duration is a CSS variable from `@tessera-design/tokens/tokens.css`, and the same values are importable as data: `import { tokens, cssVar } from "@tessera-design/tokens"`. Style your own UI with `var(--surface)`, `var(--ink)`, `var(--lapis)` and it follows the theme with everything else.'} />
       <H2>Themes</H2>
       <Md src={'Light is the default. Dark follows the reader’s system setting, and `data-theme="dark"` or `data-theme="light"` on `<html>` forces either one.'} />
       <H2>Principles</H2>
@@ -346,9 +346,9 @@ export function ThemesPage() {
       <H2>Use a theme in your app</H2>
       <Code
         label="main.tsx"
-        src={`import '@tessera/react/styles.css';
-import '@tessera/react/themes/cartridge.css';       // the theme's tokens and treatments
-import '@tessera/react/themes/cartridge-fonts.css'; // its fonts (every theme but Tessera)
+        src={`import '@tessera-design/react/styles.css';
+import '@tessera-design/react/themes/cartridge.css';       // the theme's tokens and treatments
+import '@tessera-design/react/themes/cartridge-fonts.css'; // its fonts (every theme but Tessera)
 
 <ThemeProvider defaultBrand="cartridge" storageKey="theme">
   <App />

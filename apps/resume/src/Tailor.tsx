@@ -2,7 +2,7 @@
 // sent version an application keeps.
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { Alert, Badge, Button, Icon, Progress, Select } from '@tessera/react';
+import { Alert, Badge, Button, Icon, Progress, Select } from '@tessera-design/react';
 import { matchPosting } from './match';
 import type { Match } from './match';
 import { Paper } from './Paper';

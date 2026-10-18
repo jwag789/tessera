@@ -1,5 +1,5 @@
 {
-  "name": "@tessera/tokens",
+  "name": "@tessera-design/tokens",
   "version": "0.2.0",
   "description": "Design tokens for the Tessera design system: colors for light and dark, type, space, radius, shadow and motion.",
   "license": "MIT",

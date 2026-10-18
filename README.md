@@ -30,8 +30,8 @@
 
 | Path | What it is |
 | --- | --- |
-| [`packages/tokens`](packages/tokens) | `@tessera/tokens`: `tokens.json` and theme packs, built into CSS variables for both modes and a typed JS export |
-| [`packages/react`](packages/react) | `@tessera/react`: the components, one stylesheet, theme treatments and the shared positioning layer |
+| [`packages/tokens`](packages/tokens) | `@tessera-design/tokens`: `tokens.json` and theme packs, built into CSS variables for both modes and a typed JS export |
+| [`packages/react`](packages/react) | `@tessera-design/react`: the components, one stylesheet, theme treatments and the shared positioning layer |
 | [`apps/docs`](apps/docs) | The docs site: a live example, usage, guidelines and a generated props table for every component |
 | [`apps/resume`](apps/resume) | Folio, the demo app |
 
@@ -40,15 +40,15 @@ It's one npm workspace, so the docs and Folio build against the component source
 ## Use it
 
 ```bash
-npm install @tessera/react @tessera/tokens
+npm install @tessera-design/react @tessera-design/tokens
 ```
 
 > Not published to npm yet. Until it is, run `npm run build:packages` here and install `packages/react` and `packages/tokens` by path.
 
 ```tsx
-import '@tessera/react/styles.css'; // tokens + component styles
-import '@tessera/react/fonts.css';  // optional: Bricolage Grotesque, Instrument Sans, JetBrains Mono
-import { Button, Card, ToastProvider } from '@tessera/react';
+import '@tessera-design/react/styles.css'; // tokens + component styles
+import '@tessera-design/react/fonts.css';  // optional: Bricolage Grotesque, Instrument Sans, JetBrains Mono
+import { Button, Card, ToastProvider } from '@tessera-design/react';
 
 export function App() {
   return (
@@ -75,8 +75,8 @@ Tessera ships four themes, each in light and dark:
 Import a theme's CSS and pick it with `ThemeProvider`:
 
 ```tsx
-import '@tessera/react/themes/cartridge.css';
-import '@tessera/react/themes/cartridge-fonts.css';
+import '@tessera-design/react/themes/cartridge.css';
+import '@tessera-design/react/themes/cartridge-fonts.css';
 
 <ThemeProvider defaultBrand="cartridge" storageKey="theme"><App /></ThemeProvider>
 ```
@@ -124,7 +124,7 @@ Tokens live in `packages/tokens/tokens.json`; edit them there and rebuild. Compo
 
 ### Releasing
 
-Changes to the packages get a changeset: run `npx changeset`, choose the bump and write one changelog line. `@tessera/tokens` and `@tessera/react` always release together at the same version.
+Changes to the packages get a changeset: run `npx changeset`, choose the bump and write one changelog line. `@tessera-design/tokens` and `@tessera-design/react` always release together at the same version.
 
 Releases are automated by `.github/workflows/release.yml`. When changesets land on `main`, it opens a **Version packages** pull request that bumps versions and writes the CHANGELOGs; merging that pull request typechecks, tests, builds and publishes both packages to npm with [provenance](https://docs.npmjs.com/generating-provenance-statements). It needs an npm automation token in the `NPM_TOKEN` repository secret.
 

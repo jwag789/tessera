@@ -1,6 +1,6 @@
 // Back up and restore: everything lives in this browser, so this is the only safety net.
 import { useState } from 'react';
-import { Alert, Button, Dialog, FileDropzone, Icon, useToast } from '@tessera/react';
+import { Alert, Button, Dialog, FileDropzone, Icon, useToast } from '@tessera-design/react';
 import { downloadBackup, parseBackup, useStore } from './store';
 import type { Data } from './store';
 

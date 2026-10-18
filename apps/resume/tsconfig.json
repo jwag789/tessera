@@ -6,10 +6,10 @@
       "vitest/globals"
     ],
     "paths": {
-      "@tessera/react": [
+      "@tessera-design/react": [
         "../../packages/react/src/index.ts"
       ],
-      "@tessera/react/themes/*": [
+      "@tessera-design/react/themes/*": [
         "../../packages/react/src/themes/*"
       ]
     }

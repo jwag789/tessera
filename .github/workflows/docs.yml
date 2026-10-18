@@ -25,11 +25,11 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build:packages
-      - run: npm run build -w @tessera/docs
+      - run: npm run build -w @tessera-design/docs
         env:
           DOCS_BASE: /${{ github.event.repository.name }}/
       # Folio rides along at /<repo>/folio/. Its Supabase settings come from apps/resume/.env.production.
-      - run: npm run build -w @tessera/resume
+      - run: npm run build -w @tessera-design/resume
         env:
           APP_BASE: /${{ github.event.repository.name }}/folio/
       - run: cp -r apps/resume/dist apps/docs/dist/folio

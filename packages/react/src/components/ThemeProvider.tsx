@@ -48,7 +48,7 @@ export interface ThemeProviderProps {
   defaultTheme?: ThemeMode;
   onThemeChange?: (theme: ThemeMode) => void;
   /**
-   * Theme pack, set as `data-brand`. Load its CSS first: `import '@tessera/react/themes/cartridge.css'`.
+   * Theme pack, set as `data-brand`. Load its CSS first: `import '@tessera-design/react/themes/cartridge.css'`.
    * `tessera` (default) is the base look and needs no extra CSS.
    */
   brand?: string;

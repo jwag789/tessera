@@ -9,14 +9,14 @@
     "apps/resume"
   ],
   "scripts": {
-    "build": "npm run build -w @tessera/tokens && npm run build -w @tessera/react && npm run build -w @tessera/docs && npm run build -w @tessera/resume",
-    "build:packages": "npm run build -w @tessera/tokens && npm run build -w @tessera/react",
-    "dev": "npm run build -w @tessera/tokens && npm run dev -w @tessera/docs",
-    "test": "npm run build -w @tessera/tokens && npm run test -w @tessera/react && npm run test -w @tessera/resume",
-    "typecheck": "npm run build -w @tessera/tokens && npm run typecheck -w @tessera/react && npm run typecheck -w @tessera/docs && npm run typecheck -w @tessera/resume",
-    "size": "npm run size -w @tessera/react",
+    "build": "npm run build -w @tessera-design/tokens && npm run build -w @tessera-design/react && npm run build -w @tessera-design/docs && npm run build -w @tessera-design/resume",
+    "build:packages": "npm run build -w @tessera-design/tokens && npm run build -w @tessera-design/react",
+    "dev": "npm run build -w @tessera-design/tokens && npm run dev -w @tessera-design/docs",
+    "test": "npm run build -w @tessera-design/tokens && npm run test -w @tessera-design/react && npm run test -w @tessera-design/resume",
+    "typecheck": "npm run build -w @tessera-design/tokens && npm run typecheck -w @tessera-design/react && npm run typecheck -w @tessera-design/docs && npm run typecheck -w @tessera-design/resume",
+    "size": "npm run size -w @tessera-design/react",
     "changeset": "changeset",
-    "dev:resume": "npm run build -w @tessera/tokens && npm run dev -w @tessera/resume",
+    "dev:resume": "npm run build -w @tessera-design/tokens && npm run dev -w @tessera-design/resume",
     "release": "npm run build:packages && changeset publish"
   },
   "devDependencies": {

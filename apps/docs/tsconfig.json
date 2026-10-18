@@ -3,8 +3,8 @@
   "compilerOptions": {
     "types": ["vite/client"],
     "paths": {
-      "@tessera/react": ["../../packages/react/src/index.ts"],
-      "@tessera/react/themes/*": ["../../packages/react/src/themes/*"]
+      "@tessera-design/react": ["../../packages/react/src/index.ts"],
+      "@tessera-design/react/themes/*": ["../../packages/react/src/themes/*"]
     }
   },
   "include": ["src"]

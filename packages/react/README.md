@@ -1,4 +1,4 @@
-# @tessera/react
+# @tessera-design/react
 
 React components for **Tessera**, a tile-built design system: 40 typed, accessible components, four themes in light and dark, and motion that lands with a small bounce.
 
@@ -7,17 +7,17 @@ React components for **Tessera**, a tile-built design system: 40 typed, accessib
 ## Install
 
 ```bash
-npm install @tessera/react
+npm install @tessera-design/react
 ```
 
-React 18.2 or newer is a peer dependency. `@tessera/tokens` comes along as a dependency.
+React 18.2 or newer is a peer dependency. `@tessera-design/tokens` comes along as a dependency.
 
 ## Use
 
 ```tsx
-import '@tessera/react/styles.css'; // design tokens + component styles, one file
-import '@tessera/react/fonts.css';  // optional: Bricolage Grotesque, Instrument Sans, JetBrains Mono from Google Fonts
-import { Button, Card, ThemeProvider, ToastProvider } from '@tessera/react';
+import '@tessera-design/react/styles.css'; // design tokens + component styles, one file
+import '@tessera-design/react/fonts.css';  // optional: Bricolage Grotesque, Instrument Sans, JetBrains Mono from Google Fonts
+import { Button, Card, ThemeProvider, ToastProvider } from '@tessera-design/react';
 
 export function App() {
   return (
@@ -39,8 +39,8 @@ The bundle is ESM and CommonJS with TypeScript types, and starts with `"use clie
 Each theme works in light and dark mode. Load a theme's CSS, then pick it with `ThemeProvider`:
 
 ```tsx
-import '@tessera/react/themes/cartridge.css';
-import '@tessera/react/themes/cartridge-fonts.css';
+import '@tessera-design/react/themes/cartridge.css';
+import '@tessera-design/react/themes/cartridge-fonts.css';
 
 <ThemeProvider defaultBrand="cartridge" storageKey="theme">…</ThemeProvider>
 ```

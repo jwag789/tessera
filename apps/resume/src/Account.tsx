@@ -1,6 +1,6 @@
 // Signing in, the account menu, what the save indicator says, and the first-sign-in upload offer.
 import { useState } from 'react';
-import { Alert, Avatar, Badge, Button, Dialog, DropdownMenu, Icon, Spinner, TextField } from '@tessera/react';
+import { Alert, Avatar, Badge, Button, Dialog, DropdownMenu, Icon, Spinner, TextField } from '@tessera-design/react';
 import { sendMagicLink } from './cloud';
 import { useStore } from './store';
 import type { Data } from './store';

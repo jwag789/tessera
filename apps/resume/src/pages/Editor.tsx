@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import type { ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import { Accordion, Breadcrumbs, Button, Checkbox, EmptyState, Icon, Progress, Select, Tabs, TagInput, TextField, Textarea, Tooltip, useToast } from '@tessera/react';
+import { Accordion, Breadcrumbs, Button, Checkbox, EmptyState, Icon, Progress, Select, Tabs, TagInput, TextField, Textarea, Tooltip, useToast } from '@tessera-design/react';
 import { Paper } from '../Paper';
 import { SaveStatus } from '../Account';
 import { EditorMatch } from '../Tailor';

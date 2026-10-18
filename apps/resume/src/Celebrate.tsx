@@ -1,6 +1,6 @@
 // A burst of tiles in the theme's four colors when a job reaches Offer. Reduced motion gets the toast only.
 import { useEffect, useState } from 'react';
-import { useToast } from '@tessera/react';
+import { useToast } from '@tessera-design/react';
 
 const TILES = 36;
 

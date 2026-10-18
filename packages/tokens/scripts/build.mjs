@@ -169,7 +169,7 @@ ${indent([...tDark, 'color-scheme: dark;'], 2)}
 writeFileSync(
   join(out, 'index.js'),
   readFileSync(join(out, 'index.js'), 'utf8') +
-    `\n/** Theme packs: import '@tessera/tokens/themes/<name>.css' and set data-brand="<name>". */\nexport const themes = ${JSON.stringify([{ name: 'tessera', label: tokens.name, description: 'The default: bold lapis with one saffron tile out of place.', fonts: null }, ...themeMeta], null, 2)};\n`
+    `\n/** Theme packs: import '@tessera-design/tokens/themes/<name>.css' and set data-brand="<name>". */\nexport const themes = ${JSON.stringify([{ name: 'tessera', label: tokens.name, description: 'The default: bold lapis with one saffron tile out of place.', fonts: null }, ...themeMeta], null, 2)};\n`
 );
 writeFileSync(
   join(out, 'index.d.ts'),

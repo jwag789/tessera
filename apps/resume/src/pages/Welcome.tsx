@@ -1,8 +1,8 @@
 // What Folio is, for someone arriving for the first time: the pitch, what's different, the themes, and the
 // promises. Everything on it is the real app (the sample resume, the real matcher, live theme previews).
-import { Badge, Button, Card, Icon, Mosaic, Progress, ThemeProvider, useTheme } from '@tessera/react';
-import type { IconName } from '@tessera/react';
-import { themes } from '@tessera/tokens';
+import { Badge, Button, Card, Icon, Mosaic, Progress, ThemeProvider, useTheme } from '@tessera-design/react';
+import type { IconName } from '@tessera-design/react';
+import { themes } from '@tessera-design/tokens';
 import { ScaledPaper } from '../ScaledPaper';
 import { matchPosting } from '../match';
 import { SAMPLE_POSTING, SAMPLE_RESUME } from '../store';

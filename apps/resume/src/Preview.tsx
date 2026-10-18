@@ -1,6 +1,6 @@
 // The editor's preview: the page (does it fit on one?) and what an applicant-tracking system reads from it.
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { Alert, Badge, Button, Icon, Popover, Slider, Switch, Tabs, useToast } from '@tessera/react';
+import { Alert, Badge, Button, Icon, Popover, Slider, Switch, Tabs, useToast } from '@tessera-design/react';
 import { Paper } from './Paper';
 import { PAGE_H, PAGE_W, ScaledPaper } from './ScaledPaper';
 import type { Resume } from './store';

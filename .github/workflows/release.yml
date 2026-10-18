@@ -1,6 +1,6 @@
 name: Release
 
-# Publishes @tessera/tokens and @tessera/react to npm with provenance.
+# Publishes @tessera-design/tokens and @tessera-design/react to npm with provenance.
 # - Pending changesets on main: opens (or updates) a "Version packages" PR. Merging it publishes.
 # - No pending changesets and an unpublished version in package.json: publishes it.
 # Needs an npm automation token in the NPM_TOKEN secret. Without it, this job only leaves a notice.
@@ -48,4 +48,4 @@ jobs:
           NPM_CONFIG_PROVENANCE: true
       - name: No token yet
         if: env.HAS_NPM_TOKEN != 'true'
-        run: echo "::notice title=Not published::Add an npm automation token as the NPM_TOKEN repository secret to publish @tessera/tokens and @tessera/react."
+        run: echo "::notice title=Not published::Add an npm automation token as the NPM_TOKEN repository secret to publish @tessera-design/tokens and @tessera-design/react."

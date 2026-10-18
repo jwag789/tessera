@@ -77,7 +77,7 @@ describe('theme packs', () => {
   it.each(themes.map((t) => t.name))('%s has scoped component treatments and is listed', async (name) => {
     const css = readFileSync(join(__dirname, '../src/themes', `${name}.css`), 'utf8');
     expect(css).toContain(`@scope ([data-brand="${name}"]) to ([data-brand]:not([data-brand="${name}"]))`);
-    const { themes: listed } = await import('@tessera/tokens');
+    const { themes: listed } = await import('@tessera-design/tokens');
     expect(listed.map((t) => t.name)).toContain(name);
   });
 

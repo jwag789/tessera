@@ -8,10 +8,10 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@tessera/react/styles.css': fileURLToPath(new URL('../../packages/react/src/styles.css', import.meta.url)),
-      '@tessera/react/fonts.css': fileURLToPath(new URL('../../packages/react/src/fonts.css', import.meta.url)),
-      '@tessera/react/themes': fileURLToPath(new URL('../../packages/react/src/themes', import.meta.url)),
-      '@tessera/react': fileURLToPath(new URL('../../packages/react/src/index.ts', import.meta.url))
+      '@tessera-design/react/styles.css': fileURLToPath(new URL('../../packages/react/src/styles.css', import.meta.url)),
+      '@tessera-design/react/fonts.css': fileURLToPath(new URL('../../packages/react/src/fonts.css', import.meta.url)),
+      '@tessera-design/react/themes': fileURLToPath(new URL('../../packages/react/src/themes', import.meta.url)),
+      '@tessera-design/react': fileURLToPath(new URL('../../packages/react/src/index.ts', import.meta.url))
     }
   }
 });

@@ -4,8 +4,8 @@
   "commit": false,
   "fixed": [
     [
-      "@tessera/tokens",
-      "@tessera/react"
+      "@tessera-design/tokens",
+      "@tessera-design/react"
     ]
   ],
   "linked": [],
@@ -13,7 +13,7 @@
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
   "ignore": [
-    "@tessera/docs"
+    "@tessera-design/docs"
   ],
   "privatePackages": {
     "version": false,

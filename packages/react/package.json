@@ -1,5 +1,5 @@
 {
-  "name": "@tessera/react",
+  "name": "@tessera-design/react",
   "version": "0.2.0",
   "description": "React components for the Tessera design system.",
   "license": "MIT",
@@ -59,7 +59,7 @@
     "react-dom": ">=18.2.0"
   },
   "dependencies": {
-    "@tessera/tokens": "^0.2.0"
+    "@tessera-design/tokens": "^0.2.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "6.6.3",

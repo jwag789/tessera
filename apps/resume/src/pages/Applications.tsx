@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Alert, Avatar, Badge, Button, Combobox, DatePicker, Drawer, EmptyState, Icon, Popover, Select, Stepper, Table, Tabs, TextField, Textarea, useToast } from '@tessera/react';
-import type { TableColumn } from '@tessera/react';
+import { Alert, Avatar, Badge, Button, Combobox, DatePicker, Drawer, EmptyState, Icon, Popover, Select, Stepper, Table, Tabs, TextField, Textarea, useToast } from '@tessera-design/react';
+import type { TableColumn } from '@tessera-design/react';
 import { STATUSES, formatDay, fromIsoDay, toIsoDay, uid, useStore } from '../store';
 import type { Application, Status } from '../store';
 import { go } from '../route';

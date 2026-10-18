@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
-import { Avatar, Badge, Button, Card, Icon, Mosaic, Progress, Skeleton, Toast } from '@tessera/react';
+import { Avatar, Badge, Button, Card, Icon, Mosaic, Progress, Skeleton, Toast } from '@tessera-design/react';
 
 function Words({ text, start }: { text: string; start: number }) {
   return (
@@ -60,7 +60,7 @@ export function Showcase({ componentCount }: { componentCount: number }) {
           </Button>
         </div>
         <span className="sc-install">
-          $ npm i <b>@tessera/react</b>
+          $ npm i <b>@tessera-design/react</b>
         </span>
       </div>
       <div className="sc-art">

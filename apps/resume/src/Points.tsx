@@ -1,7 +1,7 @@
 // The achievement lines under one job: each with coach hints, linked to the bank or written just here.
 import { useLayoutEffect, useRef, useState } from 'react';
-import { Badge, Button, DropdownMenu, Icon, Popover, TextField, Tooltip } from '@tessera/react';
-import type { MenuItem } from '@tessera/react';
+import { Badge, Button, DropdownMenu, Icon, Popover, TextField, Tooltip } from '@tessera-design/react';
+import type { MenuItem } from '@tessera-design/react';
 import { coach } from './coach';
 import { uid, useStore } from './store';
 import type { Point } from './store';

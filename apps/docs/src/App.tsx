@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { ComponentType } from 'react';
-import { Badge, Button, CommandPalette, Icon, SegmentedControl, Select, SidebarNav, ThemeProvider, ToastProvider, useHotkey, useTheme } from '@tessera/react';
-import { themes } from '@tessera/tokens';
-import type { Command, SidebarItem } from '@tessera/react';
+import { Badge, Button, CommandPalette, Icon, SegmentedControl, Select, SidebarNav, ThemeProvider, ToastProvider, useHotkey, useTheme } from '@tessera-design/react';
+import { themes } from '@tessera-design/tokens';
+import type { Command, SidebarItem } from '@tessera-design/react';
 import { DEMOS } from './demos';
 import type { Demo } from './demos';
 import { FOLIO_URL, A11yPage, BrandPage, ThemesPage, ColorPage, ComponentPage, ElevationPage, IconsPage, MotionPage, ShowcasePage, SpacePage, StartPage, TypePage, VoicePage } from './pages';

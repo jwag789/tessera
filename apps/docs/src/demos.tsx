@@ -50,7 +50,7 @@ import {
   Toast,
   Tooltip,
   useToast
-} from '@tessera/react';
+} from '@tessera-design/react';
 
 export interface Demo {
   name: string;
@@ -701,7 +701,7 @@ export const DEMOS: Demo[] = [
     isNew: true,
     props: ['ThemeProvider'],
     render: () => <ThemeDemo />,
-    snippet: 'import "@tessera/react/themes/cartridge.css";\n\n<ThemeProvider defaultTheme="system" defaultBrand="cartridge" storageKey="theme">\n  <App />\n</ThemeProvider>\n\nconst { theme, resolvedTheme, setTheme, brand, setBrand } = useTheme();'
+    snippet: 'import "@tessera-design/react/themes/cartridge.css";\n\n<ThemeProvider defaultTheme="system" defaultBrand="cartridge" storageKey="theme">\n  <App />\n</ThemeProvider>\n\nconst { theme, resolvedTheme, setTheme, brand, setBrand } = useTheme();'
   },
   {
     name: 'Mosaic',

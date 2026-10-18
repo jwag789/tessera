@@ -1,5 +1,5 @@
 {
-  "name": "@tessera/resume",
+  "name": "@tessera-design/resume",
   "version": "0.1.0",
   "private": true,
   "description": "Folio: a resume builder and job tracker built on Tessera.",
@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "2.45.4",
-    "@tessera/react": "0.2.0",
-    "@tessera/tokens": "0.2.0",
+    "@tessera-design/react": "0.2.0",
+    "@tessera-design/tokens": "0.2.0",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Badge, Button, CommandPalette, DropdownMenu, Icon, Navbar, ThemeProvider, ToastProvider, useHotkey, useTheme } from '@tessera/react';
-import type { Command, MenuItem } from '@tessera/react';
-import { themes } from '@tessera/tokens';
+import { Badge, Button, CommandPalette, DropdownMenu, Icon, Navbar, ThemeProvider, ToastProvider, useHotkey, useTheme } from '@tessera-design/react';
+import type { Command, MenuItem } from '@tessera-design/react';
+import { themes } from '@tessera-design/tokens';
 import { StoreProvider, useStore } from './store';
 import { go, useRoute } from './route';
 import { ResumesPage } from './pages/Resumes';
