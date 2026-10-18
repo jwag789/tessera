@@ -190,10 +190,12 @@ export function StartPage() {
     <div className="d-page">
       <Head eyebrow="Overview" title="Getting started" lead={brandIntro} />
       <H2>Install</H2>
-      <Code label="Terminal" src="npm install @tessera-design/react @tessera-design/tokens" />
-      <Alert tone="info" title="Not on npm yet">
-        Tessera 0.1 isn’t published. Until it is, clone the repo and run <code>npm run build:packages</code>, then install from <code>packages/react</code> with a file path.
-      </Alert>
+      <Code label="Terminal" src="npm install @tessera-design/react" />
+      <Md
+        src={
+          'The React package brings [`@tessera-design/tokens`](https://www.npmjs.com/package/@tessera-design/tokens) with it. Install the tokens on their own to use the CSS variables without React. Both are on npm ([`@tessera-design/react`](https://www.npmjs.com/package/@tessera-design/react)) and published from GitHub Actions with provenance.'
+        }
+      />
       <H2>Use it</H2>
       <Code
         label="main.tsx"

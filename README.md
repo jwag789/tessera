@@ -4,6 +4,7 @@
 
 [**Docs**](https://jwag789.github.io/tessera/) · [**Folio demo app**](https://jwag789.github.io/tessera/folio/) · [**Themes**](https://jwag789.github.io/tessera/#themes) · [Getting started](https://jwag789.github.io/tessera/#start)
 
+[![npm](https://img.shields.io/npm/v/@tessera-design/react?label=npm&color=2633e8)](https://www.npmjs.com/package/@tessera-design/react)
 [![CI](https://github.com/jwag789/tessera/actions/workflows/ci.yml/badge.svg)](https://github.com/jwag789/tessera/actions/workflows/ci.yml)
 [![Docs](https://github.com/jwag789/tessera/actions/workflows/docs.yml/badge.svg)](https://jwag789.github.io/tessera/)
 ![TypeScript](https://img.shields.io/badge/TypeScript-strict-2633e8)
@@ -40,10 +41,10 @@ It's one npm workspace, so the docs and Folio build against the component source
 ## Use it
 
 ```bash
-npm install @tessera-design/react @tessera-design/tokens
+npm install @tessera-design/react
 ```
 
-> Not published to npm yet. Until it is, run `npm run build:packages` here and install `packages/react` and `packages/tokens` by path.
+[`@tessera-design/react`](https://www.npmjs.com/package/@tessera-design/react) brings [`@tessera-design/tokens`](https://www.npmjs.com/package/@tessera-design/tokens) with it; install the tokens on their own to use the CSS variables without React. Both are published from GitHub Actions with [npm provenance](https://docs.npmjs.com/generating-provenance-statements).
 
 ```tsx
 import '@tessera-design/react/styles.css'; // tokens + component styles
