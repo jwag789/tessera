@@ -1,11 +1,11 @@
 {
   "name": "cartridge",
   "label": "Cartridge",
-  "description": "Late-90s console: a charcoal plastic shell with light labels on top, four button colors (green, red, blue, yellow), chunky keys that press down.",
-  "fonts": "https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800&display=swap",
+  "description": "Late-90s 64-bit console: a charcoal shell with cartridge labels, the controller's A, B, C and Start keys in blue, green, yellow and red, chunky title lettering with an extruded edge, see-through text boxes, and a checkerboard floor fading into distance fog.",
+  "fonts": "https://fonts.googleapis.com/css2?family=Titan+One&family=Nunito:wght@400;600;700;800;900&display=swap",
   "type": {
     "families": {
-      "display": "\"Lilita One\", \"Arial Rounded MT Bold\", \"Helvetica Neue\", sans-serif",
+      "display": "\"Titan One\", \"Arial Rounded MT Bold\", \"Helvetica Neue\", sans-serif",
       "sans": "Nunito, ui-rounded, \"SF Pro Rounded\", system-ui, sans-serif"
     }
   },
@@ -70,43 +70,43 @@
       {
         "name": "lapis",
         "value": {
-          "light": "#52d273",
-          "dark": "#52d273"
+          "light": "#8aa2ff",
+          "dark": "#8aa2ff"
         }
       },
       {
         "name": "lapis-hover",
         "value": {
-          "light": "#74e08f",
-          "dark": "#74e08f"
+          "light": "#a9bbff",
+          "dark": "#a9bbff"
         }
       },
       {
         "name": "lapis-soft",
         "value": {
-          "light": "#1f3d28",
-          "dark": "#1b3423"
+          "light": "#262b4d",
+          "dark": "#1e2240"
         }
       },
       {
         "name": "lapis-deep",
         "value": {
-          "light": "#17692f",
-          "dark": "#17692f"
+          "light": "#2747c9",
+          "dark": "#2747c9"
         }
       },
       {
         "name": "lapis-glow",
         "value": {
-          "light": "rgba(82, 210, 115, 0.32)",
-          "dark": "rgba(82, 210, 115, 0.3)"
+          "light": "rgba(138, 162, 255, 0.36)",
+          "dark": "rgba(138, 162, 255, 0.32)"
         }
       },
       {
         "name": "on-lapis",
         "value": {
-          "light": "#0e1a11",
-          "dark": "#0e1a11"
+          "light": "#0b1240",
+          "dark": "#0b1240"
         }
       },
       {
@@ -147,15 +147,15 @@
       {
         "name": "success",
         "value": {
-          "light": "#4fd8b0",
-          "dark": "#4fd8b0"
+          "light": "#5bd87b",
+          "dark": "#5bd87b"
         }
       },
       {
         "name": "success-soft",
         "value": {
-          "light": "#143a30",
-          "dark": "#11322a"
+          "light": "#1f3d28",
+          "dark": "#1b3423"
         }
       },
       {
@@ -189,22 +189,22 @@
       {
         "name": "inverse-accent",
         "value": {
-          "light": "#187233",
-          "dark": "#187233"
+          "light": "#2747c9",
+          "dark": "#2747c9"
         }
       },
       {
         "name": "focus",
         "value": {
-          "light": "#7ea6ff",
-          "dark": "#7ea6ff"
+          "light": "#ffc72c",
+          "dark": "#ffc72c"
         }
       },
       {
         "name": "link",
         "value": {
-          "light": "#7ea6ff",
-          "dark": "#7ea6ff"
+          "light": "#8aa2ff",
+          "dark": "#8aa2ff"
         }
       },
       {
@@ -220,15 +220,15 @@
       },
       {
         "name": "tile-1",
-        "value": "#3cba5c"
+        "value": "#2fa84f"
       },
       {
         "name": "tile-2",
-        "value": "#cc2d25"
+        "value": "#d42a20"
       },
       {
         "name": "tile-3",
-        "value": "#2f6be0"
+        "value": "#2f55e0"
       },
       {
         "name": "tile-4",
@@ -286,43 +286,43 @@
       {
         "name": "label-lapis",
         "value": {
-          "light": "#187233",
-          "dark": "#52d273"
+          "light": "#2747c9",
+          "dark": "#8aa2ff"
         }
       },
       {
         "name": "label-lapis-hover",
         "value": {
-          "light": "#125c28",
-          "dark": "#74e08f"
+          "light": "#1d379e",
+          "dark": "#a9bbff"
         }
       },
       {
         "name": "label-lapis-soft",
         "value": {
-          "light": "#d5efdb",
-          "dark": "#1f3d28"
+          "light": "#dde3ff",
+          "dark": "#262b4d"
         }
       },
       {
         "name": "label-on-lapis",
         "value": {
           "light": "#ffffff",
-          "dark": "#0e1a11"
+          "dark": "#0b1240"
         }
       },
       {
         "name": "label-success",
         "value": {
-          "light": "#0b7158",
-          "dark": "#4fd8b0"
+          "light": "#16702f",
+          "dark": "#5bd87b"
         }
       },
       {
         "name": "label-success-soft",
         "value": {
-          "light": "#d3f2e8",
-          "dark": "#143a30"
+          "light": "#d5efdb",
+          "dark": "#1f3d28"
         }
       },
       {
@@ -363,23 +363,55 @@
       {
         "name": "label-inverse-accent",
         "value": {
-          "light": "#52d273",
-          "dark": "#187233"
+          "light": "#8aa2ff",
+          "dark": "#2747c9"
         }
       },
       {
         "name": "label-focus",
         "value": {
-          "light": "#2350c8",
-          "dark": "#7ea6ff"
+          "light": "#2747c9",
+          "dark": "#ffc72c"
         }
       },
       {
         "name": "label-link",
         "value": {
-          "light": "#2350c8",
-          "dark": "#7ea6ff"
+          "light": "#2747c9",
+          "dark": "#8aa2ff"
         }
+      },
+      {
+        "name": "key-a",
+        "value": "#2747c9"
+      },
+      {
+        "name": "on-key-a",
+        "value": "#ffffff"
+      },
+      {
+        "name": "key-b",
+        "value": "#1a8036"
+      },
+      {
+        "name": "on-key-b",
+        "value": "#ffffff"
+      },
+      {
+        "name": "key-c",
+        "value": "#ffc72c"
+      },
+      {
+        "name": "on-key-c",
+        "value": "#1a1608"
+      },
+      {
+        "name": "key-start",
+        "value": "#d42a20"
+      },
+      {
+        "name": "on-key-start",
+        "value": "#ffffff"
       }
     ]
   },
@@ -433,8 +465,8 @@
       {
         "name": "shadow-glow",
         "value": {
-          "light": "0 4px 0 0 #17692f",
-          "dark": "0 4px 0 0 #17692f"
+          "light": "0 4px 0 0 #172b80",
+          "dark": "0 4px 0 0 #172b80"
         }
       },
       {

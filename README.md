@@ -69,7 +69,7 @@ The bundle starts with `"use client"`, so it works from React Server Components 
 Tessera ships six themes, each in light and dark:
 
 - **Tessera** (the default)
-- **Cartridge:** charcoal plastic with light labels, four button colors, chunky keys that press down
+- **Cartridge:** a late-90s 64-bit console, with A, B, C and Start keys, gold extruded titles, see-through text boxes and a checkerboard floor fading into fog
 - **Polygon:** matte grey plastic, dark recessed panels, hard bevels and pixel headings
 - **Gloop:** 90s kids-TV, with slime green and orange, thick outlines, and everything a bit tilted
 - **Shonen:** a manga page, black ink on newsprint with one red spot color, with comic panels, screentone, speech bubbles and focus lines

@@ -36,7 +36,7 @@ const PROMISES = [
 const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop', 'shonen', 'jelly'];
 const THEME_PITCH: Record<string, string> = {
   tessera: 'Bold and clean, for focused work.',
-  cartridge: 'Charcoal plastic and four bright buttons.',
+  cartridge: 'Blow on it, slot it in, press Start.',
   polygon: 'Grey plastic, pixel type, hard edges.',
   gloop: 'Slime green and orange. Job hunting, but fun.',
   shonen: 'Black ink and screentone. Your job hunt, the training arc.',

@@ -254,7 +254,7 @@ a { color: var(--link); }
 .d-theme-dot-polygon { --c1: #3fae6a; --c2: #e0464e; --c3: #4a7fe0; --c4: #ee6aae; border-radius: 0; box-shadow: inset 1px 1px 0 rgba(255, 255, 255, .5), inset -1px -1px 0 rgba(0, 0, 0, .4), 0 0 0 1px #33363e; }
 .d-theme-dot-shonen { background: radial-gradient(circle, #111111 1.2px, transparent 1.6px) 0 0 / 4px 4px, linear-gradient(135deg, #ffffff 0 50%, #d4141c 50%); border-radius: 0; box-shadow: 0 0 0 2px #111111; }
 .d-theme-dot-jelly { background: radial-gradient(circle at 35% 28%, #ffffff 0 14%, transparent 34%), linear-gradient(135deg, #1fa8e8, #9d63f5 50%, #ff5fa8); border-radius: 50%; box-shadow: inset 0 -2px 3px rgba(0, 0, 0, .2), 0 1px 3px rgba(0, 0, 0, .25); }
-.d-theme-dot-cartridge { --c1: #3cba5c; --c2: #cc2d25; --c3: #ffc72c; --c4: #2f6be0; border-radius: 50%; box-shadow: 0 0 0 2px #2e2d33; }
+.d-theme-dot-cartridge { --c1: #d42a20; --c2: #ffc72c; --c3: #2fa84f; --c4: #2f55e0; border-radius: 50%; box-shadow: 0 0 0 2px #2e2d33; }
 .ts-opt-icon:has(.d-theme-dot) { background: none; }
 .d-theme-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
 .d-themes { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); align-items: start; }
@@ -270,25 +270,35 @@ a { color: var(--link); }
 .d-sample-row { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
 .d-sample .ts-mosaic { border-radius: var(--radius-lg); }
 
-/* Theme-aware chrome. The mark takes each theme's colors; Cartridge gets its four buttons and big Lilita One headings. */
+/* Theme-aware chrome. The mark takes each theme's colors; Cartridge gets its four keys and gold, extruded Titan One titles. */
 .d-mark rect { fill: var(--lapis); }
 .d-mark .d-odd { fill: var(--saffron); }
 @scope ([data-brand="cartridge"]) to ([data-brand]:not([data-brand="cartridge"])) {
-  :scope .d-mark rect:nth-child(1) { fill: var(--tile-1); }
-  :scope .d-mark rect:nth-child(2) { fill: var(--tile-2); }
-  :scope .d-mark rect:nth-child(3) { fill: var(--tile-3); }
-  :scope .d-mark .d-odd { fill: var(--tile-4); }
-  :scope .d-brand-name { font-weight: 400; font-size: 25px; letter-spacing: .01em; }
-  :scope .d-title { font-weight: 400; font-size: 76px; line-height: .95; letter-spacing: .005em; text-shadow: 0 5px 0 var(--surface-sunken); }
-  :scope .d-h2 { font-weight: 400; font-size: 34px; line-height: 38px; letter-spacing: .01em; text-shadow: 0 3px 0 var(--surface-sunken); }
+  :scope .d-mark rect:nth-child(1) { fill: var(--tile-2); }
+  :scope .d-mark rect:nth-child(2) { fill: var(--tile-4); }
+  :scope .d-mark rect:nth-child(3) { fill: var(--tile-1); }
+  :scope .d-mark .d-odd { fill: var(--tile-3); }
+  :scope .d-brand-name { font-weight: 400; font-size: 24px; letter-spacing: .01em; }
+  /* Page titles are game-title lettering: gold fill, extruded edge. */
+  :scope :is(.d-title, .d-h2, .sc-h .sc-w:not(.sc-tile)) {
+    background: var(--ct-title); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 0 var(--ct-extrude)) drop-shadow(0 2px 0 var(--ct-extrude)) drop-shadow(0 2px 0 var(--ct-extrude));
+  }
+  :scope .d-title { font-weight: 400; font-size: 72px; line-height: 1; letter-spacing: .01em; }
+  :scope .d-h2 { font-weight: 400; font-size: 32px; line-height: 38px; letter-spacing: .01em; }
+  :scope .d-h2 small { -webkit-text-fill-color: var(--ink-muted); }
+  :scope .sc-h { font-weight: 400; font-size: 62px; line-height: 1.04; letter-spacing: .01em; }
+  :scope .sc-tile { color: var(--on-key-c); }
+  :scope .sc-tile::before { background: radial-gradient(130% 150% at 50% 0%, #ffe07a, var(--key-c) 55%); box-shadow: inset 0 3px 0 rgba(255, 255, 255, .45), 0 6px 0 0 var(--saffron-deep); }
   :scope :is(.d-md h3, .d-tilelink b, .lay-head b) { font-weight: 400; letter-spacing: .01em; }
-  :scope .d-md h3 { font-size: 22px; line-height: 28px; }
-  :scope .d-tilelink b { font-size: 23px; line-height: 28px; }
-  :scope .d-theme-head h2 { font-weight: 400; font-size: 32px; letter-spacing: .01em; }
-  :scope .d-eyebrow::before { width: auto; height: 10px; aspect-ratio: 4; border-radius: 5px; box-shadow: none; background: linear-gradient(90deg, var(--tile-1) 0 25%, var(--tile-2) 0 50%, var(--tile-3) 0 75%, var(--tile-4) 0); }
+  :scope .d-md h3 { font-size: 21px; line-height: 28px; }
+  :scope .d-tilelink b { font-size: 22px; line-height: 28px; }
+  :scope .d-theme-head h2 { font-weight: 400; font-size: 30px; letter-spacing: .01em; }
+  :scope .d-eyebrow::before { width: auto; height: 10px; aspect-ratio: 4; border-radius: 5px; box-shadow: none; background: linear-gradient(90deg, var(--tile-2) 0 25%, var(--tile-4) 0 50%, var(--tile-1) 0 75%, var(--tile-3) 0); }
   :scope .d-top { border-bottom: 0; box-shadow: inset 0 -4px 0 0 var(--surface-sunken); }
-  :scope .d-top::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: linear-gradient(90deg, var(--tile-1) 0 25%, var(--tile-2) 0 50%, var(--tile-3) 0 75%, var(--tile-4) 0); }
+  :scope .d-top::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: linear-gradient(90deg, var(--tile-2) 0 25%, var(--tile-4) 0 50%, var(--tile-1) 0 75%, var(--tile-3) 0); }
   :scope .d-side { border-right: 0; box-shadow: inset -4px 0 0 0 var(--surface-sunken); }
+  /* Stages are cartridges: grip ridges along the top edge. */
   :scope .d-stage { border: 0; box-shadow: inset 0 2px 0 rgba(255, 255, 255, .4), 0 5px 0 0 rgba(0, 0, 0, .45); background-image: radial-gradient(var(--line) 1.2px, transparent 1.4px); }
   :scope .d-stage-bar { border-bottom-color: var(--surface-sunken); }
   :scope .d-code { border: 0; box-shadow: inset 0 3px 0 0 rgba(0, 0, 0, .35); }
@@ -296,7 +306,8 @@ a { color: var(--link); }
   :scope .d-tilelink:hover { transform: translateY(-3px); box-shadow: 0 7px 0 0 var(--surface-sunken); }
   :scope .d-theme-col { border-width: 0; }
   @media (max-width: 900px) {
-    :scope .d-title { font-size: 54px; }
+    :scope .d-title { font-size: 52px; }
+    :scope .sc-h { font-size: 46px; }
   }
 }
 @scope ([data-brand="polygon"]) to ([data-brand]:not([data-brand="polygon"])) {

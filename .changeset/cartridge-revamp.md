@@ -1,0 +1,6 @@
+---
+'@tessera-design/react': minor
+'@tessera-design/tokens': minor
+---
+
+**Cartridge** is now a late-90s 64-bit console all the way through, not just a charcoal palette. The keys follow the controller: primary is the blue A key, danger is the red Start key (it rumbles when pressed), the tile key is the yellow C key, all domed and lit from above. Big titles are Titan One with a gold fill and an extruded edge. Dialogs, popovers, toasts and tooltips are see-through text boxes, toasts wait on a blinking red arrow, and dialogs zoom in out of the fog. A featured card is a cartridge with grip ridges across the top. The page sits on a checkerboard floor that fades into distance fog; progress is a magic meter, the slider thumb is an analog stick, the switch is the power slider, accent badges are coins and avatars are shaded spheres. The accent moves from green to A-key blue, and new `key-a`, `key-b`, `key-c` and `key-start` tokens (with `on-*` pairs) hold the controller colors. Display type changes from Lilita One to Titan One, so reload `themes/cartridge-fonts.css`.
