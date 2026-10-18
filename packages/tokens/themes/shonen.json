@@ -1,0 +1,324 @@
+{
+  "name": "shonen",
+  "label": "Shonen",
+  "description": "90s anime: Saturday-morning blue, yellow and red by day, Unit-01 purple and green by night. Cel-shaded keys, speed lines, a battle text box and an HP bar.",
+  "fonts": "https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=Shippori+Mincho+B1:wght@800&display=swap",
+  "type": {
+    "families": {
+      "display": "\"Dela Gothic One\", \"Arial Black\", Impact, sans-serif",
+      "sans": "\"M PLUS Rounded 1c\", ui-rounded, \"SF Pro Rounded\", system-ui, sans-serif"
+    }
+  },
+  "color": {
+    "tokens": [
+      {
+        "name": "bg",
+        "value": {
+          "light": "#eef5ff",
+          "dark": "#140b24"
+        }
+      },
+      {
+        "name": "surface",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#1f1236"
+        }
+      },
+      {
+        "name": "surface-sunken",
+        "value": {
+          "light": "#dde9f9",
+          "dark": "#0c0618"
+        }
+      },
+      {
+        "name": "line",
+        "value": {
+          "light": "#c3d3ea",
+          "dark": "#3b2763"
+        }
+      },
+      {
+        "name": "line-strong",
+        "value": {
+          "light": "#56607e",
+          "dark": "#9b87cc"
+        }
+      },
+      {
+        "name": "ink",
+        "value": {
+          "light": "#15112b",
+          "dark": "#f3eeff"
+        }
+      },
+      {
+        "name": "ink-muted",
+        "value": {
+          "light": "#474d68",
+          "dark": "#c3b6e3"
+        }
+      },
+      {
+        "name": "lapis",
+        "value": {
+          "light": "#2148c9",
+          "dark": "#9be15d"
+        }
+      },
+      {
+        "name": "lapis-hover",
+        "value": {
+          "light": "#1a39a3",
+          "dark": "#b6ee84"
+        }
+      },
+      {
+        "name": "lapis-soft",
+        "value": {
+          "light": "#dfe7ff",
+          "dark": "#22301f"
+        }
+      },
+      {
+        "name": "lapis-deep",
+        "value": {
+          "light": "#142e85",
+          "dark": "#2f6a14"
+        }
+      },
+      {
+        "name": "lapis-glow",
+        "value": {
+          "light": "rgba(33, 72, 201, 0.3)",
+          "dark": "rgba(155, 225, 93, 0.32)"
+        }
+      },
+      {
+        "name": "on-lapis",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#10081e"
+        }
+      },
+      {
+        "name": "on-lapis-deep",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#ffffff"
+        }
+      },
+      {
+        "name": "saffron",
+        "value": {
+          "light": "#ffcc1a",
+          "dark": "#ff8a1f"
+        }
+      },
+      {
+        "name": "saffron-deep",
+        "value": {
+          "light": "#e8a800",
+          "dark": "#e06a00"
+        }
+      },
+      {
+        "name": "saffron-soft",
+        "value": {
+          "light": "#fff2bf",
+          "dark": "#3d2412"
+        }
+      },
+      {
+        "name": "on-saffron",
+        "value": {
+          "light": "#15112b",
+          "dark": "#10081e"
+        }
+      },
+      {
+        "name": "success",
+        "value": {
+          "light": "#1d7a2c",
+          "dark": "#5fe0a0"
+        }
+      },
+      {
+        "name": "success-soft",
+        "value": {
+          "light": "#dcf5d8",
+          "dark": "#133326"
+        }
+      },
+      {
+        "name": "warning",
+        "value": {
+          "light": "#8a4b00",
+          "dark": "#ffb347"
+        }
+      },
+      {
+        "name": "danger",
+        "value": {
+          "light": "#c8102e",
+          "dark": "#ff5d6c"
+        }
+      },
+      {
+        "name": "danger-soft",
+        "value": {
+          "light": "#ffe0e5",
+          "dark": "#43142a"
+        }
+      },
+      {
+        "name": "on-danger",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#10081e"
+        }
+      },
+      {
+        "name": "inverse-accent",
+        "value": {
+          "light": "#ffcc1a",
+          "dark": "#5a23b0"
+        }
+      },
+      {
+        "name": "overlay",
+        "value": {
+          "light": "rgba(21, 17, 43, 0.62)",
+          "dark": "rgba(5, 2, 12, 0.74)"
+        }
+      },
+      {
+        "name": "tile-ground",
+        "value": {
+          "light": "#142057",
+          "dark": "#0c0618"
+        }
+      },
+      {
+        "name": "tile-1",
+        "value": {
+          "light": "#e3350d",
+          "dark": "#7a3fd1"
+        }
+      },
+      {
+        "name": "tile-2",
+        "value": {
+          "light": "#ffcb05",
+          "dark": "#9be15d"
+        }
+      },
+      {
+        "name": "tile-3",
+        "value": {
+          "light": "#2a75bb",
+          "dark": "#ff8a1f"
+        }
+      },
+      {
+        "name": "tile-4",
+        "value": {
+          "light": "#ff8a00",
+          "dark": "#e3350d"
+        }
+      },
+      {
+        "name": "bar",
+        "value": {
+          "light": "#d7261e",
+          "dark": "#0a0514"
+        }
+      },
+      {
+        "name": "on-bar",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#f3eeff"
+        }
+      },
+      {
+        "name": "bar-seam",
+        "value": {
+          "light": "#15112b",
+          "dark": "#ff8a1f"
+        }
+      }
+    ]
+  },
+  "radius": {
+    "tokens": [
+      {
+        "name": "radius-xs",
+        "value": "3px"
+      },
+      {
+        "name": "radius-sm",
+        "value": "6px"
+      },
+      {
+        "name": "radius-md",
+        "value": "8px"
+      },
+      {
+        "name": "radius-lg",
+        "value": "10px"
+      },
+      {
+        "name": "radius-xl",
+        "value": "16px"
+      }
+    ]
+  },
+  "shadow": {
+    "tokens": [
+      {
+        "name": "shadow-sm",
+        "value": {
+          "light": "2px 2px 0 0 #15112b",
+          "dark": "2px 2px 0 0 #05020c"
+        }
+      },
+      {
+        "name": "shadow-md",
+        "value": {
+          "light": "4px 4px 0 0 #15112b",
+          "dark": "4px 4px 0 0 #05020c"
+        }
+      },
+      {
+        "name": "shadow-lg",
+        "value": {
+          "light": "8px 8px 0 0 #15112b",
+          "dark": "8px 8px 0 0 #05020c"
+        }
+      },
+      {
+        "name": "shadow-glow",
+        "value": {
+          "light": "3px 3px 0 0 #15112b",
+          "dark": "3px 3px 0 0 #05020c"
+        }
+      },
+      {
+        "name": "shadow-tile",
+        "value": {
+          "light": "4px 4px 0 0 #15112b",
+          "dark": "4px 4px 0 0 #9be15d"
+        }
+      },
+      {
+        "name": "shadow-tile-lg",
+        "value": {
+          "light": "7px 7px 0 0 #15112b",
+          "dark": "7px 7px 0 0 #9be15d"
+        }
+      }
+    ]
+  }
+}

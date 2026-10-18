@@ -257,12 +257,13 @@ export function BrandPage() {
 
 /* ---------- themes ---------- */
 
-const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop'];
+const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop', 'shonen'];
 const THEME_NOTES: Record<string, string[]> = {
   tessera: ['Saturated lapis with one saffron tile', 'Tight corners, hard offset shadow', 'Bricolage Grotesque headings'],
   cartridge: ['Charcoal shell with light labels, in both modes', 'Green, red, blue and yellow keys that press down', 'Big Lilita One headings over Nunito'],
   polygon: ['Matte grey plastic with dark recessed panels', 'Hard 1-2px bevels, a menu cursor on the selection', 'Silkscreen pixel headings, Space Mono labels'],
-  gloop: ['Slime green and orange, with a splash of blue and purple', 'Thick outlines, clashing shadows, everything a bit tilted', 'Luckiest Guy lettering over Fredoka']
+  gloop: ['Slime green and orange, with a splash of blue and purple', 'Thick outlines, clashing shadows, everything a bit tilted', 'Luckiest Guy lettering over Fredoka'],
+  shonen: ['Saturday-morning blue, yellow and red; Unit-01 purple and green after dark', 'Cel-shaded keys, speed lines, a battle text box, an HP bar', 'Dela Gothic One by day, a heavy mincho by night']
 };
 
 function ThemeSample({ name }: { name: string }) {
@@ -312,7 +313,7 @@ export function ThemesPage() {
       <Head
         eyebrow="Overview"
         title="Themes"
-        lead="One set of components, four looks. Each theme is a token pack plus a few component treatments, in light and dark. Compare them here, then switch the whole site with Use this theme."
+        lead="One set of components, five looks. Each theme is a token pack plus a few component treatments, in light and dark. Compare them here, then switch the whole site with Use this theme."
       />
       <div className="d-theme-bar">
         <SegmentedControl label="Mode for the comparison" size="sm" options={[{ value: 'system', label: 'System' }, { value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }]} value={theme} onChange={(v) => setTheme(v as typeof theme)} />

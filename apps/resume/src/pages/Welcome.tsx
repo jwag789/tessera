@@ -33,12 +33,13 @@ const PROMISES = [
   { title: 'Your data is yours', body: 'Download everything as a file any time, and take it with you.' }
 ];
 
-const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop'];
+const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop', 'shonen'];
 const THEME_PITCH: Record<string, string> = {
   tessera: 'Bold and clean, for focused work.',
   cartridge: 'Charcoal plastic and four bright buttons.',
   polygon: 'Grey plastic, pixel type, hard edges.',
-  gloop: 'Slime green and orange. Job hunting, but fun.'
+  gloop: 'Slime green and orange. Job hunting, but fun.',
+  shonen: 'Cel-shaded 90s anime. Your job hunt, the training arc.'
 };
 
 function ThemeCard({ name, label }: { name: string; label: string }) {
