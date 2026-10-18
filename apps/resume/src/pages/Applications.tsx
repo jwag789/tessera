@@ -5,7 +5,7 @@ import { STATUSES, formatDay, fromIsoDay, toIsoDay, uid, useStore } from '../sto
 import type { Application, Status } from '../store';
 import { go } from '../route';
 import { MatchPanel, SentVersion } from '../Tailor';
-import { FollowUps } from '../FollowUps';
+import { FollowUps } from '../FollowUpsPanel';
 import { matchPosting, tailor } from '../match';
 import { PROVIDER_LABEL, fetchJob, parseJobLink } from '../jobLink';
 
