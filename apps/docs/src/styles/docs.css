@@ -302,8 +302,12 @@ a { color: var(--link); }
   :scope .d-stage { border: 0; box-shadow: inset 0 2px 0 rgba(255, 255, 255, .4), 0 5px 0 0 rgba(0, 0, 0, .45); background-image: radial-gradient(var(--line) 1.2px, transparent 1.4px); }
   :scope .d-stage-bar { border-bottom-color: var(--surface-sunken); }
   :scope .d-code { border: 0; box-shadow: inset 0 3px 0 0 rgba(0, 0, 0, .35); }
-  :scope .d-tilelink { border: 0; box-shadow: 0 4px 0 0 var(--surface-sunken); }
-  :scope .d-tilelink:hover { transform: translateY(-3px); box-shadow: 0 7px 0 0 var(--surface-sunken); }
+  /* Tile links are cartridges too. */
+  :scope .d-tilelink { border: 9px solid transparent; border-top-width: 24px; border-radius: 16px; background: linear-gradient(180deg, color-mix(in srgb, var(--d-panel) 90%, #ffffff), var(--d-panel) 40%) padding-box, var(--ct-ridges) 50% 0 / calc(100% - 28px) 15px no-repeat border-box, var(--ct-plastic) border-box; box-shadow: inset 0 2px 4px rgba(0, 0, 0, .35), 0 5px 0 0 rgba(0, 0, 0, .45); }
+  :scope .d-tilelink:hover { transform: perspective(800px) rotateX(7deg) translateY(-4px); box-shadow: inset 0 2px 4px rgba(0, 0, 0, .35), 0 9px 0 0 rgba(0, 0, 0, .45); }
+  /* Eyebrows are HUD lettering: white with a hard shadow. */
+  :scope .d-eyebrow { font: 400 15px/20px var(--font-display); letter-spacing: .06em; color: #ffffff; text-shadow: 2px 2px 0 #000000; }
+  :scope .ts-card .d-eyebrow { color: var(--ink-muted); text-shadow: none; }
   :scope .d-theme-col { border-width: 0; }
   @media (max-width: 900px) {
     :scope .d-title { font-size: 52px; }

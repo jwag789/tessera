@@ -5,6 +5,7 @@
    distance fog. Dialogs zoom in out of the fog. Scoped to [data-brand="cartridge"]. */
 @keyframes ct-fog-in { from { opacity: 0; transform: perspective(900px) translateZ(-240px) rotateX(10deg); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
 @keyframes ct-next { 50% { transform: translateY(3px); opacity: .35; } }
+@keyframes ct-lock { 50% { outline-offset: 6px; outline-color: color-mix(in srgb, var(--focus) 55%, transparent); } }
 @keyframes ct-rumble { 0%, 100% { transform: translate(0, 4px); } 20% { transform: translate(-2px, 4px); } 40% { transform: translate(2px, 5px); } 60% { transform: translate(-1px, 4px); } 80% { transform: translate(1px, 5px); } }
 
 /* Scoped so a nested area with a different data-brand keeps its own look. */
@@ -40,14 +41,16 @@
     /* Text boxes: see-through, nearly black, with a soft light rim. */
     --ct-box: rgba(14, 14, 24, .86);
     --ct-box-rim: inset 0 0 0 2px rgba(255, 255, 255, .16), inset 0 2px 0 rgba(255, 255, 255, .12);
-    --ct-ridges: repeating-linear-gradient(90deg, #4b4a53 0 3px, #26252b 3px 7px);
-    --ct-check-a: #38373f;
-    --ct-check-b: #28272d;
+    --ct-plastic: #45444c;
+    --ct-ridge-hi: #56555e;
+    --ct-ridge-lo: #2b2a30;
+    --ct-check-a: #3c3b43;
+    --ct-check-b: #27262c;
     --ct-fog: rgba(175, 175, 205, .16);
   }
-  :scope[data-theme="dark"] { --ct-check-a: #1f1e24; --ct-check-b: #141317; --ct-fog: rgba(140, 140, 180, .1); }
+  :scope[data-theme="dark"] { --ct-plastic: #26252b; --ct-ridge-hi: #34333a; --ct-ridge-lo: #151418; --ct-check-a: #222127; --ct-check-b: #131216; --ct-fog: rgba(140, 140, 180, .1); }
   @media (prefers-color-scheme: dark) {
-    :scope:not([data-theme="light"]) { --ct-check-a: #1f1e24; --ct-check-b: #141317; --ct-fog: rgba(140, 140, 180, .1); }
+    :scope:not([data-theme="light"]) { --ct-plastic: #26252b; --ct-ridge-hi: #34333a; --ct-ridge-lo: #151418; --ct-check-a: #222127; --ct-check-b: #131216; --ct-fog: rgba(140, 140, 180, .1); }
   }
 
   /* Labels. The page ground is the charcoal shell in both modes, so the base tokens describe the shell.
@@ -109,10 +112,12 @@
     --link: var(--shell-link);
   }
 
+  :scope, :scope * { --ct-ridges: repeating-linear-gradient(90deg, var(--ct-ridge-hi) 0 3px, var(--ct-ridge-lo) 3px 7px); }
+
   /* The ground: a checkerboard floor running off into distance fog. */
   :scope body { background: radial-gradient(120% 55% at 50% 100%, var(--ct-fog), transparent 70%) fixed, var(--bg); }
   :scope body::before {
-    content: ""; position: fixed; left: -60%; right: -60%; bottom: 0; height: 60vh; z-index: -1; pointer-events: none;
+    content: ""; position: fixed; left: -60%; right: -60%; bottom: 0; height: 72vh; z-index: -1; pointer-events: none;
     background: repeating-conic-gradient(var(--ct-check-a) 0 25%, var(--ct-check-b) 0 50%) 50% 100% / 120px 120px;
     transform: perspective(420px) rotateX(64deg); transform-origin: 50% 100%;
     -webkit-mask: linear-gradient(to top, #000, transparent 80%); mask: linear-gradient(to top, #000, transparent 80%);
@@ -153,6 +158,19 @@
   :scope .ts-btn:active:not([disabled]) { transform: translateY(4px); box-shadow: 0 0 0 0 transparent; }
   :scope .ts-btn-danger:active:not([disabled]) { animation: ct-rumble 90ms linear 3; }
   :scope .ts-btn::after { display: none; }
+  /* Game prompts: a round A, B or C sits in front of the label (not when the key already shows an icon or a spinner). */
+  :scope .ts-btn { --ct-glyph: "A"; --ct-glyph-ink: var(--key-a); --ct-glyph-bg: radial-gradient(circle at 40% 30%, #ffffff, #dfe4f5); --ct-glyph-size: 20px; }
+  :scope .ts-btn-secondary { --ct-glyph: "B"; --ct-glyph-ink: #ffffff; --ct-glyph-bg: radial-gradient(circle at 40% 30%, color-mix(in srgb, var(--key-b) 70%, #ffffff), var(--key-b)); }
+  :scope .ts-btn-tile { --ct-glyph: "C"; --ct-glyph-ink: var(--key-c); --ct-glyph-bg: radial-gradient(circle at 40% 30%, #3a3940, #121115); }
+  :scope .ts-btn-lg { --ct-glyph-size: 24px; }
+  :scope :is(.ts-btn-primary, .ts-btn-secondary, .ts-btn-tile):not(.ts-btn-sm):not(:has(> .ts-spin, > svg))::before {
+    content: var(--ct-glyph); display: inline-grid; place-items: center; flex: none; width: var(--ct-glyph-size); height: var(--ct-glyph-size); margin-left: -4px; border-radius: 50%;
+    font: 400 calc(var(--ct-glyph-size) * .6)/1 var(--font-display); color: var(--ct-glyph-ink); background: var(--ct-glyph-bg);
+    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .18), 0 1px 0 rgba(0, 0, 0, .3);
+  }
+
+  /* Focus is a lock-on: a yellow outline that breathes. */
+  :scope :is(.ts-focus, .ts-btn, .ts-tab, .ts-card-link):focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; animation: ct-lock 1.1s ease-in-out infinite; }
 
   /* Shell parts: navbar and sidebar are raised charcoal, with the four colors as a stripe. The current page is the A key. */
   :scope .ts-navbar { background: var(--shell-raised); border-bottom: 0; box-shadow: inset 0 -4px 0 0 var(--surface-sunken); position: relative; }
@@ -169,13 +187,22 @@
   :scope .ts-side-link[aria-current="page"] :is(.ts-icon, .ts-side-badge) { color: var(--on-key-a); }
   :scope .ts-side-link[aria-current="page"] .ts-side-badge { background: rgba(255, 255, 255, .2); }
 
-  /* Labels: lit from above (a soft Gouraud ramp), thick extruded edges. A featured card is a whole cartridge:
-     grip ridges along the top over the four-color stripe, then the label. */
-  :scope .ts-card { border: 0; background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 80%, #ffffff), var(--surface) 38%, color-mix(in srgb, var(--surface) 95%, #000000)); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 5px 0 0 rgba(0, 0, 0, .45); }
-  :scope .ts-card-tile { padding-top: calc(var(--space-6) + 30px); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 6px 0 0 rgba(0, 0, 0, .5); }
-  :scope .ts-card-tile::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 30px; background: linear-gradient(90deg, var(--tile-2) 0 25%, var(--tile-4) 0 50%, var(--tile-1) 0 75%, var(--tile-3) 0) bottom / 100% 6px no-repeat, var(--ct-ridges); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .18); }
-  :scope .ts-card-tile.ts-card-interactive:hover { transform: translateY(-3px); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 9px 0 0 rgba(0, 0, 0, .5); }
-  :scope .ts-card-interactive:not(.ts-card-tile):hover { transform: translateY(-3px); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 8px 0 0 rgba(0, 0, 0, .45); }
+  /* Cards are cartridges: a plastic shell with grip ridges across the top and the label set into it, lit from above.
+     Interactive ones tip toward you on hover, like picking one up. A featured card's label gets the four-color stripe. */
+  :scope .ts-card {
+    border: 9px solid transparent; border-top-width: 24px; border-radius: 16px;
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--surface) 82%, #ffffff), var(--surface) 38%, color-mix(in srgb, var(--surface) 95%, #000000)) padding-box,
+      linear-gradient(180deg, rgba(255, 255, 255, .14), transparent 40%) border-box,
+      var(--ct-ridges) 50% 0 / calc(100% - 28px) 15px no-repeat border-box,
+      var(--ct-plastic) border-box;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, .3), 0 5px 0 0 rgba(0, 0, 0, .45), 0 10px 18px rgba(0, 0, 0, .25);
+  }
+  :scope .ts-card-interactive { transition: transform var(--duration-base) var(--ease-out), box-shadow var(--duration-base); }
+  :scope .ts-card-interactive:hover { transform: perspective(800px) rotateX(7deg) translateY(-4px); box-shadow: inset 0 2px 4px rgba(0, 0, 0, .3), 0 9px 0 0 rgba(0, 0, 0, .45), 0 18px 26px rgba(0, 0, 0, .3); }
+  :scope .ts-card-tile { padding-top: calc(var(--space-6) + 8px); }
+  :scope .ts-card-tile::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 8px; background: linear-gradient(90deg, var(--tile-2) 0 25%, var(--tile-4) 0 50%, var(--tile-1) 0 75%, var(--tile-3) 0); }
+  :scope .ts-card-tile.ts-card-interactive:hover { transform: perspective(800px) rotateX(7deg) translateY(-4px); }
   :scope :is(.ts-cmd, .ts-menu, .ts-sel-list, .ts-side-flyout) { border: 0; }
 
   /* Text boxes: dialogs, popovers, toasts and tooltips are dark see-through glass with a light rim. Dialogs zoom
@@ -240,10 +267,13 @@
   :scope .ts-avatar[data-hue="2"] { --ct-ball: var(--key-b); }
   :scope .ts-avatar[data-hue="3"] { --ct-ball: var(--key-c); color: #1a1608; text-shadow: none; }
 
-  /* Mosaic: low-poly blocks, lit from the top left with hard bevels. */
+  /* Mosaic: low-poly blocks, lit from the top left with hard bevels. On its own it's a stage floor tipped back in
+     perspective, each tile a raised block. */
+  :scope .ts-mosaic:not(:has(.ts-mosaic-content)) { overflow: visible; background: transparent; transform: perspective(1100px) rotateX(52deg) rotateZ(-14deg) scale(.86); transform-origin: 50% 60%; transform-style: preserve-3d; }
+  :scope .ts-mosaic:not(:has(.ts-mosaic-content)) .ts-mosaic-tile { box-shadow: inset 3px 3px 0 rgba(255, 255, 255, .3), inset -3px -3px 0 rgba(0, 0, 0, .3), 0 6px 0 0 color-mix(in srgb, currentColor 0%, rgba(0, 0, 0, .55)), 0 10px 12px rgba(0, 0, 0, .35); }
   :scope .ts-mosaic-tile { border-radius: 4px; background-image: linear-gradient(135deg, rgba(255, 255, 255, .28), transparent 45%, rgba(0, 0, 0, .22)); box-shadow: inset 3px 3px 0 rgba(255, 255, 255, .3), inset -3px -3px 0 rgba(0, 0, 0, .3), 0 3px 0 0 rgba(0, 0, 0, .45); }
 
   @media (prefers-reduced-motion: reduce) {
-    :scope :is(.ts-dialog, .ts-btn-danger:active), :scope .ts-toast::after { animation: none; }
+    :scope :is(.ts-dialog, .ts-btn-danger:active, .ts-focus, .ts-btn, .ts-tab, .ts-card-link), :scope .ts-toast::after { animation: none; }
   }
 }
