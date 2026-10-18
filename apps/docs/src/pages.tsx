@@ -265,7 +265,7 @@ const THEME_NOTES: Record<string, string[]> = {
   gloop: ['Slime green and orange, with a splash of blue and purple', 'Thick outlines, clashing shadows, everything a bit tilted', 'Luckiest Guy lettering over Fredoka'],
   shonen: ['A manga page: black ink, newsprint and one red, inverted after dark', 'Comic panels, screentone, speech bubbles, focus lines, ゴゴゴ and ドン!', 'Bangers lettering over Zen Kaku Gothic New'],
   jelly: ['Y2K candy plastic in iMac flavors, smoked after dark', 'See-through glossy surfaces, gel keys that squash, Tamagotchi LCD fields and toasts', 'Comfortaa over Quicksand, DotGothic16 on the LCD'],
-  neon: ['80s after dark: a synthwave sun over a glowing grid, pastel by day', 'A red neon outlined title, arcade keys that light up, CRT terminal fields', 'Christmas lights on the navbar, a power meter, VHS color fringing']
+  neon: ['Tron: a black grid world lit in cyan, with orange for the other side', 'Glowing Orbitron titles, HUD brackets, terminal fields, identity-disc avatars', 'Light-cycle trails on the bars and progress; the white grid by day']
 };
 
 function ThemeSample({ name }: { name: string }) {

@@ -1,12 +1,13 @@
 {
   "name": "neon",
   "label": "Neon",
-  "description": "80s after dark: a synthwave sunset over a glowing grid, a red neon title in an outlined serif, arcade-lettered keys that light up, CRT terminal fields, a string of Christmas lights, a power meter for progress and VHS color fringing. Daylight is the same night in pastel.",
-  "fonts": "https://fonts.googleapis.com/css2?family=Merriweather:wght@700;900&family=Audiowide&family=VT323&family=Barlow:wght@400;500;600;700&display=swap",
+  "description": "Tron: a black grid world lit in cyan, with orange for the other side. Glowing Orbitron titles, light-cycle trails along the navbar, sidebar and progress bars, HUD corner brackets on panels, identity-disc avatars, terminal fields in phosphor cyan and a grid floor running to a glowing horizon. Daylight is the white grid.",
+  "fonts": "https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;900&family=Oxanium:wght@400;500;600;700&family=Share+Tech+Mono&display=swap",
   "type": {
     "families": {
-      "display": "Merriweather, \"ITC Benguiat\", Georgia, serif",
-      "sans": "Barlow, \"Helvetica Neue\", Arial, sans-serif"
+      "display": "Orbitron, \"Eurostile\", \"Arial Black\", sans-serif",
+      "sans": "Oxanium, \"Segoe UI\", system-ui, sans-serif",
+      "mono": "\"Share Tech Mono\", ui-monospace, \"SF Mono\", monospace"
     }
   },
   "color": {
@@ -14,92 +15,92 @@
       {
         "name": "bg",
         "value": {
-          "light": "#f7edff",
-          "dark": "#0d0221"
+          "light": "#eef6f8",
+          "dark": "#02060c"
         }
       },
       {
         "name": "surface",
         "value": {
           "light": "#ffffff",
-          "dark": "#1a0b33"
+          "dark": "#061520"
         }
       },
       {
         "name": "surface-sunken",
         "value": {
-          "light": "#efe1fb",
-          "dark": "#07010f"
+          "light": "#e1eef2",
+          "dark": "#01040a"
         }
       },
       {
         "name": "line",
         "value": {
-          "light": "#e2cff3",
-          "dark": "#36215e"
+          "light": "#c4dbe2",
+          "dark": "#0f3446"
         }
       },
       {
         "name": "line-strong",
         "value": {
-          "light": "#8b6aae",
-          "dark": "#8e70c8"
+          "light": "#5c8796",
+          "dark": "#2f8aa1"
         }
       },
       {
         "name": "ink",
         "value": {
-          "light": "#1d0b38",
-          "dark": "#f7ecff"
+          "light": "#04161e",
+          "dark": "#e6fbff"
         }
       },
       {
         "name": "ink-muted",
         "value": {
-          "light": "#57447a",
-          "dark": "#c3b1e0"
+          "light": "#3b5c68",
+          "dark": "#8db7c4"
         }
       },
       {
         "name": "lapis",
         "value": {
-          "light": "#b8127a",
-          "dark": "#ff4fae"
+          "light": "#00707f",
+          "dark": "#00e5ff"
         }
       },
       {
         "name": "lapis-hover",
         "value": {
-          "light": "#940e62",
-          "dark": "#ff7cc3"
+          "light": "#005766",
+          "dark": "#6ff6ff"
         }
       },
       {
         "name": "lapis-soft",
         "value": {
-          "light": "#fbe1f1",
-          "dark": "#3a0d3c"
+          "light": "#d4f2f6",
+          "dark": "#032a33"
         }
       },
       {
         "name": "lapis-deep",
         "value": {
-          "light": "#7a0b51",
-          "dark": "#b8127a"
+          "light": "#004f5c",
+          "dark": "#00798c"
         }
       },
       {
         "name": "lapis-glow",
         "value": {
-          "light": "rgba(184, 18, 122, 0.25)",
-          "dark": "rgba(255, 79, 174, 0.5)"
+          "light": "rgba(0, 112, 127, 0.25)",
+          "dark": "rgba(0, 229, 255, 0.5)"
         }
       },
       {
         "name": "on-lapis",
         "value": {
           "light": "#ffffff",
-          "dark": "#1a0010"
+          "dark": "#001318"
         }
       },
       {
@@ -112,128 +113,128 @@
       {
         "name": "saffron",
         "value": {
-          "light": "#ffb627",
-          "dark": "#ffc93c"
+          "light": "#ff9a1f",
+          "dark": "#ff9a1f"
         }
       },
       {
         "name": "saffron-deep",
         "value": {
-          "light": "#e8700c",
-          "dark": "#ff7a1a"
+          "light": "#c25e00",
+          "dark": "#c25e00"
         }
       },
       {
         "name": "saffron-soft",
         "value": {
-          "light": "#fff0d1",
-          "dark": "#3a2608"
+          "light": "#fff0dc",
+          "dark": "#2e1a05"
         }
       },
       {
         "name": "on-saffron",
         "value": {
-          "light": "#1d0b38",
+          "light": "#1a0b00",
           "dark": "#1a0b00"
         }
       },
       {
         "name": "success",
         "value": {
-          "light": "#00737c",
-          "dark": "#2de2e6"
+          "light": "#087a52",
+          "dark": "#5cffa8"
         }
       },
       {
         "name": "success-soft",
         "value": {
-          "light": "#d8f5f6",
-          "dark": "#0a2c38"
+          "light": "#d9f5e8",
+          "dark": "#05291b"
         }
       },
       {
         "name": "warning",
         "value": {
           "light": "#8a5200",
-          "dark": "#ffc93c"
+          "dark": "#ffb24d"
         }
       },
       {
         "name": "danger",
         "value": {
-          "light": "#c4162a",
-          "dark": "#ff5468"
+          "light": "#bf3a10",
+          "dark": "#ff6a3d"
         }
       },
       {
         "name": "danger-soft",
         "value": {
-          "light": "#fde2e6",
-          "dark": "#3a0c18"
+          "light": "#fde6dc",
+          "dark": "#33100a"
         }
       },
       {
         "name": "on-danger",
         "value": {
           "light": "#ffffff",
-          "dark": "#1a0004"
+          "dark": "#1a0500"
         }
       },
       {
         "name": "inverse-accent",
         "value": {
-          "light": "#ff8fd0",
-          "dark": "#a0106a"
+          "light": "#6ff6ff",
+          "dark": "#005766"
         }
       },
       {
         "name": "focus",
         "value": {
-          "light": "#00737c",
-          "dark": "#2de2e6"
+          "light": "#00707f",
+          "dark": "#00e5ff"
         }
       },
       {
         "name": "link",
         "value": {
-          "light": "#00737c",
-          "dark": "#2de2e6"
+          "light": "#00707f",
+          "dark": "#6ff6ff"
         }
       },
       {
         "name": "overlay",
         "value": {
-          "light": "rgba(29, 11, 56, 0.55)",
-          "dark": "rgba(5, 0, 15, 0.78)"
+          "light": "rgba(4, 22, 30, 0.5)",
+          "dark": "rgba(0, 3, 8, 0.78)"
         }
       },
       {
         "name": "tile-ground",
-        "value": "#0d0221"
+        "value": "#02060c"
       },
       {
         "name": "tile-1",
-        "value": "#ff4fae"
+        "value": "#00e5ff"
       },
       {
         "name": "tile-2",
-        "value": "#2de2e6"
+        "value": "#ff9a1f"
       },
       {
         "name": "tile-3",
-        "value": "#9d5cff"
+        "value": "#0a7f99"
       },
       {
         "name": "tile-4",
-        "value": "#ffc93c"
+        "value": "#e6fbff"
       },
       {
         "name": "crt",
-        "value": "#06010d"
+        "value": "#010a10"
       },
       {
         "name": "crt-ink",
-        "value": "#3df2f5"
+        "value": "#6ff6ff"
       }
     ]
   },
@@ -241,23 +242,23 @@
     "tokens": [
       {
         "name": "radius-xs",
-        "value": "3px"
+        "value": "2px"
       },
       {
         "name": "radius-sm",
-        "value": "5px"
+        "value": "3px"
       },
       {
         "name": "radius-md",
-        "value": "8px"
+        "value": "4px"
       },
       {
         "name": "radius-lg",
-        "value": "12px"
+        "value": "6px"
       },
       {
         "name": "radius-xl",
-        "value": "16px"
+        "value": "8px"
       }
     ]
   },
@@ -266,43 +267,43 @@
       {
         "name": "shadow-sm",
         "value": {
-          "light": "0 1px 2px rgba(60, 20, 110, 0.12)",
-          "dark": "0 0 0 1px rgba(157, 92, 255, 0.25), 0 2px 8px rgba(0, 0, 0, 0.5)"
+          "light": "0 1px 2px rgba(4, 22, 30, 0.12)",
+          "dark": "0 0 0 1px rgba(0, 229, 255, 0.18), 0 2px 8px rgba(0, 0, 0, 0.6)"
         }
       },
       {
         "name": "shadow-md",
         "value": {
-          "light": "0 6px 20px rgba(120, 40, 160, 0.16)",
-          "dark": "0 0 0 1px rgba(157, 92, 255, 0.3), 0 8px 28px rgba(0, 0, 0, 0.6), 0 0 24px rgba(157, 92, 255, 0.18)"
+          "light": "0 6px 18px rgba(4, 40, 52, 0.14)",
+          "dark": "0 0 0 1px rgba(0, 229, 255, 0.22), 0 8px 28px rgba(0, 0, 0, 0.7), 0 0 22px rgba(0, 229, 255, 0.1)"
         }
       },
       {
         "name": "shadow-lg",
         "value": {
-          "light": "0 18px 48px rgba(120, 40, 160, 0.24)",
-          "dark": "0 0 0 1px rgba(157, 92, 255, 0.35), 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(255, 79, 174, 0.2)"
+          "light": "0 16px 44px rgba(4, 40, 52, 0.2)",
+          "dark": "0 0 0 1px rgba(0, 229, 255, 0.3), 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 229, 255, 0.15)"
         }
       },
       {
         "name": "shadow-glow",
         "value": {
-          "light": "0 0 0 0 transparent, 0 6px 18px rgba(184, 18, 122, 0.3)",
-          "dark": "0 0 12px rgba(255, 79, 174, 0.65), 0 0 28px rgba(255, 79, 174, 0.35)"
+          "light": "0 4px 14px rgba(0, 112, 127, 0.3)",
+          "dark": "0 0 10px rgba(0, 229, 255, 0.7), 0 0 26px rgba(0, 229, 255, 0.35)"
         }
       },
       {
         "name": "shadow-tile",
         "value": {
-          "light": "0 0 0 2px #1d0b38, 4px 4px 0 0 #ff4fae",
-          "dark": "0 0 0 1px #2de2e6, 0 0 16px rgba(45, 226, 230, 0.45)"
+          "light": "0 0 0 1.5px #ff9a1f, 0 4px 14px rgba(255, 154, 31, 0.25)",
+          "dark": "0 0 0 1px #ff9a1f, 0 0 16px rgba(255, 154, 31, 0.45)"
         }
       },
       {
         "name": "shadow-tile-lg",
         "value": {
-          "light": "0 0 0 2px #1d0b38, 7px 7px 0 0 #ff4fae",
-          "dark": "0 0 0 1px #2de2e6, 0 0 28px rgba(45, 226, 230, 0.6)"
+          "light": "0 0 0 1.5px #ff9a1f, 0 8px 24px rgba(255, 154, 31, 0.35)",
+          "dark": "0 0 0 1px #ff9a1f, 0 0 28px rgba(255, 154, 31, 0.6)"
         }
       }
     ]

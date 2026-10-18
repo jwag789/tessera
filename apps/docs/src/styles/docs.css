@@ -255,7 +255,7 @@ a { color: var(--link); }
 .d-theme-dot-shonen { background: radial-gradient(circle, #111111 1.2px, transparent 1.6px) 0 0 / 4px 4px, linear-gradient(135deg, #ffffff 0 50%, #d4141c 50%); border-radius: 0; box-shadow: 0 0 0 2px #111111; }
 .d-theme-dot-jelly { background: radial-gradient(circle at 35% 28%, #ffffff 0 14%, transparent 34%), linear-gradient(135deg, #1fa8e8, #9d63f5 50%, #ff5fa8); border-radius: 50%; box-shadow: inset 0 -2px 3px rgba(0, 0, 0, .2), 0 1px 3px rgba(0, 0, 0, .25); }
 .d-theme-dot-cartridge { --c1: #cc2d25; --c2: #2f6be0; --c3: #ffc72c; --c4: #3cba5c; border-radius: 4px; background: radial-gradient(ellipse at 50% 20%, rgba(255, 255, 255, .45), transparent 65%), conic-gradient(var(--c1) 0 25%, var(--c2) 0 50%, var(--c3) 0 75%, var(--c4) 0); box-shadow: 0 0 0 2px #4c4b53, 0 2px 0 2px #2e2d33; }
-.d-theme-dot-neon { background: linear-gradient(180deg, #ffe45c 0 22%, #ff9a3c 38%, #ff4fae 54%, #1d0436 55%), repeating-linear-gradient(90deg, #ff4fae 0 1px, transparent 1px 5px); background-blend-mode: normal; border-radius: 50%; box-shadow: 0 0 0 1.5px #ff4fae, 0 0 6px rgba(255, 79, 174, .8); }
+.d-theme-dot-neon { background: radial-gradient(circle, #02060c 0 38%, #00e5ff 40% 50%, #02060c 52% 64%, #00e5ff 66% 74%, #02060c 76%); border-radius: 50%; box-shadow: 0 0 0 1px #00e5ff, 0 0 6px rgba(0, 229, 255, .8); }
 .ts-opt-icon:has(.d-theme-dot) { background: none; }
 .d-theme-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
 .d-themes { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); align-items: start; }
@@ -336,35 +336,39 @@ a { color: var(--link); }
 @scope ([data-brand="neon"]) to ([data-brand]:not([data-brand="neon"])) {
   :scope .d-mark rect:nth-child(1) { fill: var(--tile-1); }
   :scope .d-mark rect:nth-child(2) { fill: var(--tile-3); }
-  :scope .d-mark rect:nth-child(3) { fill: var(--tile-2); }
-  :scope .d-mark .d-odd { fill: var(--tile-4); }
+  :scope .d-mark rect:nth-child(3) { fill: var(--tile-1); }
+  :scope .d-mark .d-odd { fill: var(--tile-2); }
   :scope .d-mark { filter: drop-shadow(0 0 4px color-mix(in srgb, var(--tile-1) var(--nn-glow), transparent)); }
-  :scope .d-brand-name { font-weight: 900; letter-spacing: -.01em; }
-  /* Big titles: the red neon outline. */
-  :scope :is(.d-title, .sc-w:not(.sc-tile)) { font-weight: 900; letter-spacing: -.01em; color: var(--nn-title-fill); -webkit-text-stroke: 2px var(--nn-title-stroke); paint-order: stroke fill; text-shadow: var(--nn-title-halo); }
-  :scope .d-title { font-size: 60px; line-height: 1.05; }
-  :scope .sc-h { font-weight: 900; font-size: 62px; line-height: 1.08; letter-spacing: -.01em; }
-  :scope .d-h2 { font-weight: 900; letter-spacing: -.01em; color: var(--nn-title-stroke); text-shadow: 0 0 14px color-mix(in srgb, var(--nn-title-stroke) calc(var(--nn-glow) * .7), transparent); }
-  :scope .d-h2 small { text-shadow: none; }
-  :scope :is(.d-md h3, .d-tilelink b, .lay-head b, .d-theme-head h2) { font-weight: 900; letter-spacing: -.01em; }
-  :scope .d-eyebrow { font-family: var(--nn-arcade); letter-spacing: .1em; }
-  :scope .d-eyebrow::before { width: 7px; height: 9px; border-radius: 50% 50% 45% 45%; background: #ff3b4a; box-shadow: 0 0 6px 1px rgba(255, 59, 74, .75); }
-  /* The sidebar hangs a string of chasing lights across its top. */
-  :scope :is(.d-side, .d-top) { background: color-mix(in srgb, var(--surface) 84%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
-  :scope .d-side { border-right: 0; box-shadow: 1px 0 0 var(--nn-cyan), 0 0 14px color-mix(in srgb, var(--nn-cyan) calc(var(--nn-glow) * .5), transparent); padding-top: 10px; box-sizing: border-box; }
-  :scope .d-top { border-bottom: 0; box-shadow: 0 1px 0 var(--lapis), 0 0 14px color-mix(in srgb, var(--lapis) calc(var(--nn-glow) * .5), transparent); }
-  :scope :is(.d-side, .d-top)::before { content: ""; position: absolute; left: 0; right: 0; top: -3px; height: 16px; background: var(--nn-lights); pointer-events: none; animation: nn-chase 1.4s steps(1) infinite; z-index: 1; }
-  :scope .d-stage { border-color: var(--nn-edge); background-image: linear-gradient(color-mix(in srgb, var(--nn-grid) 30%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--nn-grid) 30%, transparent) 1px, transparent 1px); background-size: 24px 24px; }
+  :scope .d-brand-name { font-weight: 900; text-transform: uppercase; letter-spacing: .14em; font-size: 18px; }
+  /* Big titles: white-hot Orbitron capitals with a cyan glow, sliced through the middle. */
+  :scope :is(.d-title, .sc-w:not(.sc-tile)) { font-weight: 900; text-transform: uppercase; letter-spacing: .08em; background: linear-gradient(180deg, var(--nn-title) 0 53%, transparent 53% 59%, var(--nn-title) 59%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: var(--nn-title-glow); }
+  :scope .d-title { font-size: 50px; line-height: 1.1; }
+  :scope .sc-h { font-weight: 900; font-size: 50px; line-height: 1.12; letter-spacing: .06em; text-transform: uppercase; }
+  :scope .sc-tile { text-transform: uppercase; }
+  :scope .d-h2 { font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: 22px; color: var(--lapis); text-shadow: 0 0 12px color-mix(in srgb, var(--lapis) calc(var(--nn-glow) * .6), transparent); }
+  :scope .d-h2 small { text-shadow: none; text-transform: none; letter-spacing: 0; }
+  :scope :is(.d-md h3, .d-tilelink b, .lay-head b, .d-theme-head h2) { font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+  :scope .d-tilelink b { font-size: 15px; }
+  :scope .d-theme-head h2 { font-size: 20px; }
+  :scope .d-eyebrow { font-family: var(--font-display); letter-spacing: .14em; font-size: 10.5px; }
+  :scope .d-eyebrow::before { width: 6px; height: 6px; border-radius: 0; rotate: 45deg; background: var(--saffron); box-shadow: 0 0 6px var(--saffron); }
+  /* Glass bars; a light-cycle trail runs down the sidebar's edge. */
+  :scope :is(.d-side, .d-top) { background: color-mix(in srgb, var(--surface) 86%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  :scope .d-side { border-right: 0; box-shadow: 1px 0 0 color-mix(in srgb, var(--nn-trail) 55%, transparent); }
+  :scope .d-side::after { content: ""; position: absolute; top: 0; bottom: 0; right: -1px; width: 2px; pointer-events: none; background: linear-gradient(180deg, transparent, var(--nn-trail) 70%, #ffffff) no-repeat 0 0 / 100% 30%; filter: drop-shadow(0 0 4px var(--nn-trail)); animation: nn-run-y 4s linear infinite; }
+  :scope .d-top { border-bottom: 0; box-shadow: 0 1px 0 color-mix(in srgb, var(--nn-trail) 55%, transparent); }
+  :scope .d-stage { border-color: var(--nn-edge); border-radius: var(--radius-lg); background-image: linear-gradient(color-mix(in srgb, var(--lapis) 12%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, var(--lapis) 12%, transparent) 1px, transparent 1px); background-size: 24px 24px; }
   :scope :is(.d-code, .d-tilelink, .d-theme-col) { border-color: var(--nn-edge); }
-  :scope .d-tilelink { background: color-mix(in srgb, var(--d-panel) 86%, transparent); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
-  :scope .d-tilelink:hover { transform: translateY(-3px); border-color: var(--nn-cyan); box-shadow: 0 0 18px color-mix(in srgb, var(--nn-cyan) calc(var(--nn-glow) * .6), transparent); }
-  :scope .d-tilelink em { font-family: var(--nn-arcade); letter-spacing: .1em; }
+  :scope .d-tilelink { position: relative; background: color-mix(in srgb, var(--d-panel) 88%, transparent); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  :scope .d-tilelink::before { content: ""; position: absolute; top: -1px; left: -1px; width: 14px; height: 14px; border: solid var(--lapis); border-width: 2px 0 0 2px; filter: drop-shadow(0 0 3px var(--lapis)); pointer-events: none; }
+  :scope .d-tilelink:hover { transform: translateY(-2px); border-color: var(--lapis); box-shadow: 0 0 18px color-mix(in srgb, var(--lapis) calc(var(--nn-glow) * .6), transparent); }
+  :scope .d-tilelink em { font-family: var(--font-display); letter-spacing: .12em; font-size: 10px; }
   @media (max-width: 900px) {
-    :scope .d-title { font-size: 42px; }
-    :scope .sc-h { font-size: 44px; }
+    :scope .d-title { font-size: 34px; }
+    :scope .sc-h { font-size: 34px; }
   }
   @media (prefers-reduced-motion: reduce) {
-    :scope :is(.d-side, .d-top)::before { animation: none; }
+    :scope .d-side::after { animation: none; }
   }
 }
 @keyframes d-blink { 50% { opacity: 0; } }

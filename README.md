@@ -74,7 +74,7 @@ Tessera ships seven themes, each in light and dark:
 - **Gloop:** 90s kids-TV, with slime green and orange, thick outlines, and everything a bit tilted
 - **Shonen:** a manga page, black ink on newsprint with one red spot color, with comic panels, screentone, speech bubbles and focus lines
 - **Jelly:** Y2K candy plastic, see-through and glossy in iMac flavors, with gel keys, Tamagotchi LCD fields and a heart meter
-- **Neon:** the 80s after dark, with a synthwave sun over a glowing grid, a red neon outlined title, arcade keys that light up, CRT terminal fields and a string of Christmas lights
+- **Neon:** Tron, a black grid world lit in cyan with orange for the other side, glowing Orbitron titles, HUD corner brackets, light-cycle trails, terminal fields and identity-disc avatars
 
 Import a theme's CSS and pick it with `ThemeProvider`:
 

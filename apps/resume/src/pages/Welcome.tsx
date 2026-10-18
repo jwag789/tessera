@@ -41,7 +41,7 @@ const THEME_PITCH: Record<string, string> = {
   gloop: 'Slime green and orange. Job hunting, but fun.',
   shonen: 'Black ink and screentone. Your job hunt, the training arc.',
   jelly: 'See-through candy plastic. Feed your job hunt, keep it happy.',
-  neon: 'Neon, arcade type and a CRT. Something strange is hiring.'
+  neon: 'Tron. Light cycles, a glowing grid. Enter the job market.'
 };
 
 function ThemeCard({ name, label }: { name: string; label: string }) {
