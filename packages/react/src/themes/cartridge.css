@@ -1,6 +1,13 @@
-/* Cartridge: component treatments the tokens can't express. A charcoal plastic shell with light labels
-   stuck on top, keys in four button colors with an extruded edge that press down, chunky Lilita One
-   headings. Scoped to [data-brand="cartridge"]. */
+/* Cartridge: component treatments the tokens can't express. Nintendo 64. The page is the charcoal controller;
+   cards are cartridges, a label set into grey plastic with grip ridges across the top (the featured one is the
+   gold one). Keys are the controller's buttons: A blue for primary, Start red for danger, C yellow for the
+   accent, all domed and pressing down. Display headings are Mario 64 title lettering, gold and extruded.
+   Dialogs, menus, popovers, tooltips and toasts are Zelda text boxes with a blinking arrow; progress is the
+   magic meter, switches are the power slider with its red light, mosaic tiles are the logo's shaded cubes.
+   Scoped to [data-brand="cartridge"]. */
+@keyframes n64-next { 0%, 100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 3px); } }
+@keyframes n64-box-in { from { opacity: 0; transform: scale(.6, .2); } 60% { opacity: 1; transform: scale(1.03, 1.02); } to { opacity: 1; transform: none; } }
+
 /* Scoped so a nested area with a different data-brand keeps its own look. */
 @scope ([data-brand="cartridge"]) to ([data-brand]:not([data-brand="cartridge"])) {
   :scope {
@@ -26,13 +33,39 @@
     --shell-inverse-accent: var(--inverse-accent);
     --shell-focus: var(--focus);
     --shell-link: var(--link);
+    /* Hardware. Cartridge plastic and its grip ridges, the gold cart, the controller buttons, the text box. */
+    --n64-cart: #4c4b53;
+    --n64-ridge: repeating-linear-gradient(180deg, rgba(255, 255, 255, .16) 0 2px, rgba(0, 0, 0, .28) 2px 4px);
+    --n64-gold: linear-gradient(180deg, #f6d66b, #c99a1f 55%, #8d6a0c);
+    --n64-gold-edge: #6e5208;
+    --n64-a: #2456d6;
+    --n64-a-edge: #163a96;
+    --n64-start: #c8231b;
+    --n64-start-edge: #7d130e;
+    --n64-dome: radial-gradient(ellipse 80% 70% at 50% 18%, rgba(255, 255, 255, .42), rgba(255, 255, 255, 0) 70%);
+    --n64-box: linear-gradient(180deg, rgba(30, 33, 62, .95), rgba(9, 10, 22, .95));
+    --n64-title: linear-gradient(180deg, #fff6b8 0%, #ffd23f 42%, #f2901d 100%);
+    --n64-title-depth: drop-shadow(0 2px 0 #8a4100) drop-shadow(0 2px 0 #4a2200) drop-shadow(0 5px 6px rgba(0, 0, 0, .45));
+  }
+  :scope[data-theme="dark"] { --n64-cart: #3c3b43; }
+  @media (prefers-color-scheme: dark) {
+    :scope:not([data-theme="light"]) { --n64-cart: #3c3b43; }
+  }
+
+  /* The ground: the controller's matte charcoal, lit from above. */
+  :scope body {
+    background:
+      radial-gradient(ellipse 90% 60% at 50% -10%, rgba(255, 255, 255, .07), transparent 70%),
+      radial-gradient(rgba(255, 255, 255, .035) 1px, transparent 1.2px) 0 0 / 5px 5px,
+      var(--bg);
+    background-attachment: fixed;
   }
 
   /* Labels. The page ground is the charcoal shell in both modes, so the base tokens describe the shell.
      Anything painted with --surface is a label: it re-declares the palette, so text, links and tints
      inside it are tuned for the label (dark on light in light mode). Add data-surface="label" to make
      your own panel a label. */
-  :scope :is([data-surface="label"], .ts-btn-secondary, .ts-input, .ts-sel-trigger, .ts-sel-list, .ts-card, .ts-table-wrap, .ts-dialog, .ts-popover, .ts-menu, .ts-accordion, .ts-page-step, .ts-navbar-toggle, .ts-sidebar-toggle, .ts-side-flyout, .ts-cmd, .ts-cal-nav, .ts-empty, .ts-number, .ts-tags, .ts-drop, .ts-file, .ts-drawer, .ts-step-marker, .ts-check-box, .ts-radio-dot) {
+  :scope :is([data-surface="label"], .ts-btn-secondary, .ts-input, .ts-sel-trigger, .ts-card, .ts-table-wrap, .ts-accordion, .ts-page-step, .ts-navbar-toggle, .ts-sidebar-toggle, .ts-cal-nav, .ts-empty, .ts-number, .ts-tags, .ts-drop, .ts-file, .ts-drawer, .ts-step-marker, .ts-check-box, .ts-radio-dot) {
     --bg: var(--label-bg);
     --surface: var(--label-surface);
     --surface-sunken: var(--label-surface-sunken);
@@ -58,8 +91,8 @@
     color: var(--ink);
   }
 
-  /* Shell parts (navbar, sidebar) are charcoal wherever they sit, even inside a label. */
-  :scope :is(.ts-navbar, .ts-sidebar) {
+  /* Shell parts (navbar, sidebar) and text boxes are the dark palette wherever they sit, even inside a label. */
+  :scope :is(.ts-navbar, .ts-sidebar, .ts-dialog, .ts-popover, .ts-menu, .ts-sel-list, .ts-cmd, .ts-side-flyout, .ts-toast, .ts-tooltip) {
     --bg: var(--shell-bg);
     --surface-sunken: var(--shell-surface-sunken);
     --line: var(--shell-line);
@@ -82,96 +115,150 @@
     --link: var(--shell-link);
   }
 
-  /* Display type: Lilita One, bigger, with a hard extruded shadow on the shell. */
+  /* Display type: Lilita One, big. On the shell, display headings are Mario 64 title lettering: a gold
+     gradient with a chunky extrusion. On a label they stay ink, with a small extruded edge. */
   :scope :is(.ts-card-title, .ts-dialog-title, .ts-popover-title, .ts-empty-title, .ts-cal-title, .ts-navbar-brand) { font-weight: 400; letter-spacing: .01em; }
-  :scope .ts-card-title { font-size: 26px; line-height: 30px; }
-  :scope .ts-dialog-title { font-size: 28px; line-height: 32px; }
+  :scope .ts-card-title { font-size: 26px; line-height: 30px; text-shadow: 0 2px 0 var(--line); }
+  :scope .ts-dialog-title { font-size: 28px; line-height: 32px; color: var(--saffron); text-shadow: 0 2px 0 #6b4a00; }
   :scope .ts-navbar-brand { font-size: 23px; }
   :scope :is(.display-2xl, .display-xl, .display-lg, .heading-lg, .heading-md) { font-weight: 400; letter-spacing: .005em; }
+  :scope :is(.display-2xl, .display-xl, .display-lg) { background: var(--n64-title); -webkit-background-clip: text; background-clip: text; color: transparent; filter: var(--n64-title-depth); }
+  :scope :is([data-surface="label"], .ts-card, .ts-drawer, .ts-empty) :is(.display-2xl, .display-xl, .display-lg) { background: none; color: var(--ink); filter: none; text-shadow: 0 3px 0 var(--line); }
   :scope .display-2xl { font-size: 84px; }
   :scope .display-xl { font-size: 64px; }
   :scope .display-lg { font-size: 46px; }
   :scope .heading-lg { font-size: 32px; }
   :scope .heading-md { font-size: 25px; }
 
-  /* Keys: a solid bottom edge instead of a glow; pressing pushes the key into it. Each color gets its own edge. */
-  :scope .ts-btn { font-weight: 800; border-width: 2px; transition: transform var(--duration-instant) var(--ease-out), box-shadow var(--duration-instant) var(--ease-out), background var(--duration-fast); }
-  :scope .ts-btn-primary { box-shadow: inset 0 2px 0 rgba(255, 255, 255, .3), 0 4px 0 0 var(--lapis-deep); }
-  :scope .ts-btn-primary:hover:not([disabled]) { transform: translateY(-1px); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .3), 0 5px 0 0 var(--lapis-deep); }
-  :scope .ts-btn-secondary { border-color: transparent; box-shadow: inset 0 2px 0 rgba(255, 255, 255, .5), 0 4px 0 0 color-mix(in srgb, var(--surface) 55%, #000); }
-  :scope .ts-btn-secondary:hover:not([disabled]) { transform: translateY(-1px); border-color: transparent; box-shadow: inset 0 2px 0 rgba(255, 255, 255, .5), 0 5px 0 0 color-mix(in srgb, var(--surface) 55%, #000); }
+  /* Keys are controller buttons: domed, glossy on top, with a solid edge underneath. Pressing pushes the key
+     into it. A blue for primary, Start red for danger, C yellow for the accent, grey plastic labels otherwise. */
+  :scope .ts-btn { font-weight: 800; border: 0; letter-spacing: .01em; transition: transform var(--duration-instant) var(--ease-out), box-shadow var(--duration-instant) var(--ease-out), filter var(--duration-fast); }
+  :scope .ts-btn-primary { background: var(--n64-dome), var(--n64-a); color: #ffffff; text-shadow: 0 1px 0 rgba(0, 0, 0, .35); box-shadow: inset 0 -3px 4px rgba(0, 0, 0, .25), 0 4px 0 0 var(--n64-a-edge); }
+  :scope .ts-btn-danger { background: var(--n64-dome), var(--n64-start); color: #ffffff; text-shadow: 0 1px 0 rgba(0, 0, 0, .35); box-shadow: inset 0 -3px 4px rgba(0, 0, 0, .25), 0 4px 0 0 var(--n64-start-edge); }
+  :scope .ts-btn-tile { background: var(--n64-dome), var(--saffron); color: var(--on-saffron); box-shadow: inset 0 -3px 4px rgba(0, 0, 0, .18), 0 4px 0 0 var(--saffron-deep); }
+  :scope .ts-btn-secondary { background: linear-gradient(180deg, rgba(255, 255, 255, .5), rgba(255, 255, 255, 0) 55%), var(--surface); box-shadow: inset 0 -3px 4px rgba(0, 0, 0, .12), 0 4px 0 0 color-mix(in srgb, var(--surface) 55%, #000); }
+  :scope :is(.ts-btn-primary, .ts-btn-danger, .ts-btn-tile, .ts-btn-secondary):hover:not([disabled]) { transform: translateY(-1px); filter: brightness(1.08); }
+  :scope .ts-btn-primary:hover:not([disabled]) { background: var(--n64-dome), var(--n64-a); box-shadow: inset 0 -3px 4px rgba(0, 0, 0, .25), 0 5px 0 0 var(--n64-a-edge); }
+  :scope .ts-btn-danger:hover:not([disabled]) { box-shadow: inset 0 -3px 4px rgba(0, 0, 0, .25), 0 5px 0 0 var(--n64-start-edge); }
+  :scope .ts-btn-tile:hover:not([disabled]) { box-shadow: inset 0 -3px 4px rgba(0, 0, 0, .18), 0 5px 0 0 var(--saffron-deep); }
+  :scope .ts-btn-secondary:hover:not([disabled]) { box-shadow: inset 0 -3px 4px rgba(0, 0, 0, .12), 0 5px 0 0 color-mix(in srgb, var(--surface) 55%, #000); }
   :scope .ts-btn-ghost:hover:not([disabled]) { background: var(--shell-raised); }
-  :scope .ts-btn-danger { box-shadow: inset 0 2px 0 rgba(255, 255, 255, .25), 0 4px 0 0 color-mix(in srgb, var(--danger) 50%, #000); }
-  :scope .ts-btn-tile { border-color: transparent; box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 4px 0 0 var(--saffron-deep); }
-  :scope .ts-btn-tile:hover:not([disabled]) { transform: translateY(-2px); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 6px 0 0 var(--saffron-deep); }
-  :scope .ts-btn:active:not([disabled]) { transform: translateY(4px); box-shadow: 0 0 0 0 transparent; }
+  :scope .ts-btn:active:not([disabled]) { transform: translateY(4px); box-shadow: inset 0 3px 5px rgba(0, 0, 0, .35); filter: none; }
   :scope .ts-btn-primary::after, :scope .ts-btn-tile::after { display: none; }
 
   /* Shell parts: navbar and sidebar are raised charcoal plastic, with the four colors as a stripe. */
-  :scope .ts-navbar { background: var(--shell-raised); border-bottom: 0; box-shadow: inset 0 -4px 0 0 var(--surface-sunken); position: relative; }
-  :scope .ts-navbar::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: linear-gradient(90deg, var(--tile-1) 0 25%, var(--tile-2) 0 50%, var(--tile-3) 0 75%, var(--tile-4) 0); }
+  :scope .ts-navbar { background: linear-gradient(180deg, rgba(255, 255, 255, .06), transparent), var(--shell-raised); border-bottom: 0; box-shadow: inset 0 -4px 0 0 var(--surface-sunken); position: relative; }
+  :scope .ts-navbar::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px; background: linear-gradient(90deg, var(--tile-2) 0 25%, var(--tile-3) 0 50%, var(--tile-1) 0 75%, var(--tile-4) 0); }
   :scope .ts-navlink:hover, :scope .ts-side-link:hover { background: var(--line); }
   :scope .ts-navlink[aria-current="page"]::after { height: 4px; bottom: -12px; border-radius: 2px; }
-  :scope .ts-navbar-links .ts-navlink:nth-child(4n + 1)[aria-current="page"]::after { background: var(--tile-1); }
-  :scope .ts-navbar-links .ts-navlink:nth-child(4n + 2)[aria-current="page"]::after { background: var(--tile-2); }
-  :scope .ts-navbar-links .ts-navlink:nth-child(4n + 3)[aria-current="page"]::after { background: var(--tile-3); }
+  :scope .ts-navbar-links .ts-navlink:nth-child(4n + 1)[aria-current="page"]::after { background: var(--tile-2); }
+  :scope .ts-navbar-links .ts-navlink:nth-child(4n + 2)[aria-current="page"]::after { background: var(--tile-3); }
+  :scope .ts-navbar-links .ts-navlink:nth-child(4n + 3)[aria-current="page"]::after { background: var(--tile-1); }
   :scope .ts-navbar-links .ts-navlink:nth-child(4n + 4)[aria-current="page"]::after { background: var(--tile-4); }
-  :scope .ts-sidebar { background: var(--shell-raised); border-right-color: var(--surface-sunken); }
+  :scope .ts-sidebar { background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .03)), var(--shell-raised); border-right-color: var(--surface-sunken); }
+  /* Section titles get a little domed button each. */
   :scope .ts-side-title { display: flex; align-items: center; gap: 8px; color: var(--ink); }
-  :scope .ts-side-title::before { content: ""; width: 10px; height: 10px; border-radius: 50%; flex: none; background: var(--tile-1); box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .3); }
-  :scope .ts-sidebar-body > .ts-side-title:nth-of-type(4n + 2)::before { background: var(--tile-2); }
-  :scope .ts-sidebar-body > .ts-side-title:nth-of-type(4n + 3)::before { background: var(--tile-3); }
-  :scope .ts-sidebar-body > .ts-side-title:nth-of-type(4n + 4)::before { background: var(--tile-4); }
-  :scope .ts-side-link[aria-current="page"] { background: var(--lapis); color: var(--on-lapis); box-shadow: 0 3px 0 0 var(--lapis-deep); font-weight: 800; }
-  :scope .ts-side-link[aria-current="page"] .ts-side-badge { background: var(--on-lapis); color: var(--lapis); }
+  :scope .ts-side-title::before { content: ""; width: 11px; height: 11px; border-radius: 50%; flex: none; background: var(--n64-dome), var(--tile-2); box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .3); }
+  :scope .ts-sidebar-body > .ts-side-title:nth-of-type(4n + 2)::before { background: var(--n64-dome), var(--tile-3); }
+  :scope .ts-sidebar-body > .ts-side-title:nth-of-type(4n + 3)::before { background: var(--n64-dome), var(--tile-1); }
+  :scope .ts-sidebar-body > .ts-side-title:nth-of-type(4n + 4)::before { background: var(--n64-dome), var(--tile-4); }
+  :scope .ts-side-link[aria-current="page"] { background: var(--n64-dome), var(--n64-a); color: #ffffff; box-shadow: 0 3px 0 0 var(--n64-a-edge); font-weight: 800; }
+  :scope .ts-side-link[aria-current="page"] .ts-icon { color: #ffffff; }
+  :scope .ts-side-link[aria-current="page"] .ts-side-badge { background: #ffffff; color: var(--n64-a); }
 
-  /* Labels: thick outlines, extruded edges. Featured cards get the four-color stripe across the top. */
-  :scope .ts-card { border: 0; box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 5px 0 0 rgba(0, 0, 0, .45); }
-  :scope .ts-card-tile { border: 0; padding-top: calc(var(--space-6) + 8px); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 6px 0 0 rgba(0, 0, 0, .5); }
-  :scope .ts-card-tile::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 8px; background: linear-gradient(90deg, var(--tile-1) 0 25%, var(--tile-2) 0 50%, var(--tile-3) 0 75%, var(--tile-4) 0); }
-  :scope .ts-card-tile.ts-card-interactive:hover { transform: translateY(-3px); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 9px 0 0 rgba(0, 0, 0, .5); }
-  :scope .ts-card-interactive:not(.ts-card-tile):hover { transform: translateY(-3px); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 8px 0 0 rgba(0, 0, 0, .45); }
-  :scope :is(.ts-dialog, .ts-cmd, .ts-popover, .ts-menu, .ts-sel-list, .ts-side-flyout) { border: 0; }
+  /* Cards are cartridges: the label sits in grey plastic, with grip ridges across the top. Rounded at the top,
+     squarer at the bottom, like the real thing. The featured card is the gold one. */
+  :scope .ts-card {
+    border: 0; border-radius: 16px 16px 6px 6px; padding-top: calc(var(--space-6) + 14px);
+    background: var(--n64-ridge) top / 100% 14px no-repeat, linear-gradient(var(--n64-cart), var(--n64-cart)) top / 100% 14px no-repeat, var(--surface);
+    box-shadow: 0 0 0 5px var(--n64-cart), 0 0 0 6px rgba(0, 0, 0, .35), 0 9px 0 1px rgba(0, 0, 0, .4);
+  }
+  :scope .ts-card-tile { background: var(--n64-ridge) top / 100% 14px no-repeat, var(--n64-gold) top / 100% 14px no-repeat, var(--surface); box-shadow: 0 0 0 5px #c99a1f, 0 0 0 6px var(--n64-gold-edge), 0 9px 0 1px var(--n64-gold-edge); }
+  :scope .ts-card-interactive:hover { transform: translateY(-4px); }
+  :scope .ts-card-interactive:not(.ts-card-tile):hover { box-shadow: 0 0 0 5px var(--n64-cart), 0 0 0 6px rgba(0, 0, 0, .35), 0 13px 0 1px rgba(0, 0, 0, .4); }
+  :scope .ts-card-tile.ts-card-interactive:hover { border: 0; box-shadow: 0 0 0 5px #c99a1f, 0 0 0 6px var(--n64-gold-edge), 0 13px 0 1px var(--n64-gold-edge); }
 
-  /* Recessed inputs: a darker top edge, like a slot in the shell. */
+  /* Text boxes, like Ocarina of Time and Mario 64: dark see-through navy, rounded, white type. Dialogs open
+     the way a text box does and blink the green "next" arrow at the bottom. */
+  :scope :is(.ts-dialog, .ts-popover, .ts-menu, .ts-sel-list, .ts-cmd, .ts-side-flyout) {
+    background: var(--n64-box); color: var(--ink); border: 0; border-radius: 18px;
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .1), inset 0 2px 0 rgba(255, 255, 255, .12), 0 12px 32px rgba(0, 0, 0, .5);
+  }
+  :scope .ts-dialog { position: relative; border-radius: 22px; animation-name: n64-box-in; animation-timing-function: var(--ease-out); }
+  :scope .ts-dialog::after { content: ""; position: absolute; left: 50%; bottom: 7px; border: 8px solid transparent; border-bottom: 0; border-top: 10px solid var(--success); filter: drop-shadow(0 1px 0 rgba(0, 0, 0, .6)); animation: n64-next .8s steps(2, jump-none) infinite; }
+  :scope .ts-dialog-body { color: var(--ink); }
+  /* The menu cursor: a lit A-blue bar on the current row. */
+  :scope :is(.ts-menu-item-active, .ts-opt-active) { background: linear-gradient(90deg, var(--n64-a), color-mix(in srgb, var(--n64-a) 30%, transparent)); color: #ffffff; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25); }
+  :scope :is(.ts-menu-item-active, .ts-opt-active) :is(.ts-icon, .ts-kbd) { color: #ffffff; }
+  :scope .ts-opt-selected.ts-opt-active { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), inset 0 0 0 2px var(--saffron); }
+  :scope .ts-overlay { backdrop-filter: none; -webkit-backdrop-filter: none; }
+  /* Tooltips: a small text box. */
+  :scope .ts-tooltip { --ink: #14162c; --bg: var(--shell-ink); border-radius: 8px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14), 0 4px 10px rgba(0, 0, 0, .4); }
+  /* Toasts: an item-get text box. Yellow title, magic-green timer. */
+  :scope .ts-toast { background: var(--n64-box); color: var(--ink); border-radius: 18px; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .1), 0 12px 28px rgba(0, 0, 0, .5); }
+  :scope .ts-toast:not(.ts-toast-leaving) { animation-name: n64-box-in; animation-timing-function: var(--ease-out); }
+  :scope .ts-toast-title { color: var(--saffron); font-weight: 800; }
+  :scope .ts-toast > .ts-icon { color: var(--success); }
+  :scope .ts-toast-action { color: var(--lapis); }
+  :scope .ts-toast-timer { height: 3px; background: linear-gradient(90deg, #2fbf3a, #8dff8a); }
+
+  /* Fields: recessed slots in the label, a darker top edge. */
   :scope .ts-input, :scope .ts-sel-trigger, :scope .ts-tags, :scope .ts-number { border-width: 2px; box-shadow: inset 0 3px 0 0 var(--line); }
   :scope .ts-input:focus-visible, :scope .ts-sel-open .ts-sel-trigger { box-shadow: inset 0 3px 0 0 var(--line), 0 0 0 4px var(--lapis-glow); }
 
-  /* Pills and round controls in the button colors. */
+  /* Small controls: domed buttons. A checked box or radio is an A button. */
   :scope .ts-badge { border-radius: var(--radius-full); padding-inline: 10px; font-weight: 800; }
-  :scope .ts-badge-accent { box-shadow: 0 2px 0 0 var(--saffron-deep); }
+  :scope .ts-badge-accent { background: var(--n64-dome), var(--saffron); box-shadow: 0 2px 0 0 var(--saffron-deep); }
   :scope .ts-check-box { border-width: 2px; border-radius: 6px; }
+  :scope .ts-check input:is(:checked, :indeterminate) + .ts-check-box { background: var(--n64-dome), var(--lapis); box-shadow: 0 2px 0 0 color-mix(in srgb, var(--lapis) 55%, #000); }
   :scope .ts-radio-dot { border-width: 2px; }
-  :scope .ts-switch-track { background: var(--surface-sunken); box-shadow: inset 0 2px 0 rgba(0, 0, 0, .35), 0 0 0 2px var(--line-strong); }
-  :scope .ts-switch input:checked + .ts-switch-track { background: var(--lapis); box-shadow: inset 0 2px 0 rgba(0, 0, 0, .2), 0 0 0 2px var(--lapis-deep); }
+  :scope .ts-radio-dot::after { width: 12px; height: 12px; background: var(--n64-dome), var(--lapis); box-shadow: inset 0 -1px 2px rgba(0, 0, 0, .35); }
+
+  /* Switches are the console's power slider: a ridged grey slider in a dark slot, and the red light comes on. */
+  :scope .ts-switch-track { border-radius: 7px; background: #141317; box-shadow: inset 0 3px 4px rgba(0, 0, 0, .6), 0 0 0 2px var(--line-strong); }
+  :scope .ts-switch-track::before { content: ""; position: absolute; left: 9px; top: 50%; width: 7px; height: 7px; margin-top: -3.5px; border-radius: 50%; background: #4a1512; transition: background var(--duration-base), box-shadow var(--duration-base); }
+  :scope .ts-switch-track::after { border-radius: 4px; background: repeating-linear-gradient(90deg, #b9b7c0 0 2px, #7d7b85 2px 4px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 2px 0 #2a292e; }
+  :scope .ts-switch input:checked + .ts-switch-track { background: #141317; box-shadow: inset 0 3px 4px rgba(0, 0, 0, .6), 0 0 0 2px var(--lapis); }
+  :scope .ts-switch input:checked + .ts-switch-track::before { background: #ff3b30; box-shadow: 0 0 6px 1px rgba(255, 59, 48, .8); }
+
   :scope .ts-tab { font-weight: 800; }
-  :scope .ts-tab-ink { height: 4px; border-radius: 4px 4px 0 0; }
-  :scope .ts-tablist:has(> .ts-tab:nth-of-type(4n + 2)[aria-selected="true"]) .ts-tab-ink { background: var(--tile-2); }
-  :scope .ts-tablist:has(> .ts-tab:nth-of-type(4n + 3)[aria-selected="true"]) .ts-tab-ink { background: var(--tile-3); }
+  :scope .ts-tab-ink { height: 4px; border-radius: 4px 4px 0 0; background: var(--tile-2); }
+  :scope .ts-tablist:has(> .ts-tab:nth-of-type(4n + 2)[aria-selected="true"]) .ts-tab-ink { background: var(--tile-3); }
+  :scope .ts-tablist:has(> .ts-tab:nth-of-type(4n + 3)[aria-selected="true"]) .ts-tab-ink { background: var(--tile-1); }
   :scope .ts-tablist:has(> .ts-tab:nth-of-type(4n + 4)[aria-selected="true"]) .ts-tab-ink { background: var(--tile-4); }
+  /* The segmented control's thumb is a C button. */
   :scope .ts-segctl { background: var(--surface-sunken); box-shadow: inset 0 2px 0 rgba(0, 0, 0, .35); }
-  :scope .ts-segctl-ink { background: var(--saffron); box-shadow: inset 0 2px 0 rgba(255, 255, 255, .45), 0 2px 0 0 var(--saffron-deep); }
+  :scope .ts-segctl-ink { background: var(--n64-dome), var(--saffron); box-shadow: 0 2px 0 0 var(--saffron-deep); }
   :scope .ts-segctl-on, :scope .ts-segctl-on:hover { color: var(--on-saffron); font-weight: 800; }
-  :scope .ts-page-current { box-shadow: 0 3px 0 0 var(--lapis-deep); }
-  :scope .ts-day-selected { box-shadow: 0 3px 0 0 var(--lapis-deep); }
-  :scope .ts-step-current .ts-step-marker { border-color: transparent; box-shadow: 0 3px 0 0 var(--saffron-deep); }
-  :scope .ts-progress-track { height: 12px; border-radius: var(--radius-full); background: var(--surface-sunken); box-shadow: inset 0 2px 0 rgba(0, 0, 0, .3); }
-  :scope .ts-progress-bar { border-radius: var(--radius-full); background: linear-gradient(90deg, var(--tile-1), var(--tile-3)); }
+  :scope :is(.ts-page-current, .ts-day-selected) { background: var(--n64-dome), var(--n64-a); color: #ffffff; box-shadow: 0 3px 0 0 var(--n64-a-edge); }
+  :scope .ts-step-current .ts-step-marker { border-color: transparent; background: var(--n64-dome), var(--saffron); box-shadow: 0 3px 0 0 var(--saffron-deep); }
+
+  /* Progress is the magic meter: a green bar in a dark track with a light frame. */
+  :scope .ts-progress-track { height: 14px; border-radius: var(--radius-full); background: #0b0b10; box-shadow: 0 0 0 2px var(--line-strong), inset 0 2px 3px rgba(0, 0, 0, .6); padding: 2px; box-sizing: border-box; }
+  :scope .ts-progress-bar { border-radius: var(--radius-full); background: linear-gradient(180deg, #a6ffa0, #34c43f 50%, #1b8a26); animation: none; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5); }
+  :scope .ts-progress-segmented .ts-progress-track { padding: 0; box-shadow: none; background: none; }
 
   /* The four button colors take turns in the segmented progress, the spinner and avatars. */
-  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 1)::after { background: var(--tile-1); }
-  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 2)::after { background: var(--tile-2); }
-  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 3)::after { background: var(--tile-3); }
-  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 4)::after { background: var(--tile-4); }
-  :scope .ts-spinner i:nth-child(1) { color: var(--tile-1); }
-  :scope .ts-spinner i:nth-child(2) { color: var(--tile-2); }
-  :scope .ts-spinner i:nth-child(3) { color: var(--tile-3); }
+  :scope .ts-progress-segmented .ts-seg { box-shadow: inset 0 2px 0 rgba(0, 0, 0, .3); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 1)::after { background: var(--n64-dome), var(--tile-2); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 2)::after { background: var(--n64-dome), var(--tile-3); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 3)::after { background: var(--n64-dome), var(--tile-1); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 4)::after { background: var(--n64-dome), var(--tile-4); }
+  :scope .ts-spinner i:nth-child(1) { color: var(--tile-2); }
+  :scope .ts-spinner i:nth-child(2) { color: var(--tile-3); }
+  :scope .ts-spinner i:nth-child(3) { color: var(--tile-1); }
   :scope .ts-spinner i:nth-child(4) { color: var(--tile-4); }
-  :scope .ts-avatar { background: var(--tile-3); color: #ffffff; }
-  :scope .ts-avatar:nth-child(4n + 2) { background: var(--tile-2); }
-  :scope .ts-avatar:nth-child(4n + 3) { background: var(--tile-1); color: #0e1a11; }
-  :scope .ts-avatar:nth-child(4n + 4) { background: var(--tile-4); color: #1a1608; }
+  /* Avatars are face buttons: A blue, B green, C yellow, Start red. */
+  :scope .ts-avatar { background: var(--n64-dome), var(--n64-a); color: #ffffff; box-shadow: inset 0 -3px 4px rgba(0, 0, 0, .3); font-weight: 800; }
+  :scope .ts-avatar[data-hue="1"] { background: var(--n64-dome), var(--tile-1); color: #0e1a11; }
+  :scope .ts-avatar[data-hue="2"] { background: var(--n64-dome), var(--tile-4); color: #1a1608; }
+  :scope .ts-avatar[data-hue="3"] { background: var(--n64-dome), var(--n64-start); color: #ffffff; }
 
-  /* Mosaic: chunkier tiles with an extruded edge. */
-  :scope .ts-mosaic-tile { border-radius: 6px; box-shadow: inset 0 2px 0 rgba(255, 255, 255, .25), 0 3px 0 0 rgba(0, 0, 0, .45); }
+  /* Mosaic: the logo's cubes, shaded with a light top-left face and a dark bottom-right one. */
+  :scope .ts-mosaic-tile { border-radius: 4px; background-image: linear-gradient(135deg, rgba(255, 255, 255, .38), rgba(255, 255, 255, 0) 42%, rgba(0, 0, 0, 0) 58%, rgba(0, 0, 0, .32)); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .2), 2px 3px 0 0 rgba(0, 0, 0, .45); }
+
+  @media (prefers-reduced-motion: reduce) {
+    :scope :is(.ts-dialog, .ts-toast), :scope .ts-dialog::after { animation: none; }
+    :scope .ts-dialog::after { transform: translateX(-50%); }
+  }
 }

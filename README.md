@@ -69,7 +69,7 @@ The bundle starts with `"use client"`, so it works from React Server Components 
 Tessera ships six themes, each in light and dark:
 
 - **Tessera** (the default)
-- **Cartridge:** charcoal plastic with light labels, four button colors, chunky keys that press down
+- **Cartridge:** Nintendo 64. Charcoal controller plastic, cards as cartridges (the featured one is gold), A, C and Start buttons as keys, Mario 64 title lettering, Zelda text boxes for dialogs, menus and toasts, a magic meter and a power slider
 - **Polygon:** matte grey plastic, dark recessed panels, hard bevels and pixel headings
 - **Gloop:** 90s kids-TV, with slime green and orange, thick outlines, and everything a bit tilted
 - **Shonen:** a manga page, black ink on newsprint with one red spot color, with comic panels, screentone, speech bubbles and focus lines

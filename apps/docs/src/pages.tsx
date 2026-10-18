@@ -260,7 +260,7 @@ export function BrandPage() {
 const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop', 'shonen', 'jelly'];
 const THEME_NOTES: Record<string, string[]> = {
   tessera: ['Saturated lapis with one saffron tile', 'Tight corners, hard offset shadow', 'Bricolage Grotesque headings'],
-  cartridge: ['Charcoal shell with light labels, in both modes', 'Green, red, blue and yellow keys that press down', 'Big Lilita One headings over Nunito'],
+  cartridge: ['Charcoal controller plastic, cards as cartridges with grip ridges', 'A, B, C and Start buttons as keys; a power slider for switches', 'Mario 64 title lettering, Zelda text boxes, a magic meter'],
   polygon: ['Matte grey plastic with dark recessed panels', 'Hard 1-2px bevels, a menu cursor on the selection', 'Silkscreen pixel headings, Space Mono labels'],
   gloop: ['Slime green and orange, with a splash of blue and purple', 'Thick outlines, clashing shadows, everything a bit tilted', 'Luckiest Guy lettering over Fredoka'],
   shonen: ['A manga page: black ink, newsprint and one red, inverted after dark', 'Comic panels, screentone, speech bubbles, focus lines, ゴゴゴ and ドン!', 'Bangers lettering over Zen Kaku Gothic New'],
@@ -361,7 +361,7 @@ import '@tessera-design/react/themes/cartridge-fonts.css'; // its fonts (every t
       <H2>Make your own</H2>
       <Md
         src={
-          'A theme is a JSON file in `packages/tokens/themes/` that overrides any subset of tokens (colors for light and dark, radii, shadows, font families) and, optionally, a stylesheet in `packages/react/src/themes/` for what tokens can’t express. The build turns it into one CSS file scoped to `[data-brand="name"]`, so themes can sit side by side on one page, as they do above. A theme can also give surfaces their own palette with `label-*` tokens, the way Cartridge puts light labels on a charcoal shell and Polygon sets dark panels into grey plastic. The shipped themes meet 4.5:1 for text in both modes, on the page and inside surfaces, and `packages/react/test/themes.test.ts` checks it.'
+          'A theme is a JSON file in `packages/tokens/themes/` that overrides any subset of tokens (colors for light and dark, radii, shadows, font families) and, optionally, a stylesheet in `packages/react/src/themes/` for what tokens can’t express. The build turns it into one CSS file scoped to `[data-brand="name"]`, so themes can sit side by side on one page, as they do above. A theme can also give surfaces their own palette with `label-*` tokens, the way Cartridge puts cartridge labels on a charcoal controller and Polygon sets dark panels into grey plastic. The shipped themes meet 4.5:1 for text in both modes, on the page and inside surfaces, and `packages/react/test/themes.test.ts` checks it.'
         }
       />
     </div>

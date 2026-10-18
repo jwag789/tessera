@@ -1,7 +1,7 @@
 {
   "name": "cartridge",
   "label": "Cartridge",
-  "description": "Late-90s console: a charcoal plastic shell with light labels on top, four button colors (green, red, blue, yellow), chunky keys that press down.",
+  "description": "Nintendo 64: the charcoal controller as the page, cartridge labels with grip ridges on top, A, B, C and Start buttons as keys, Mario 64 title lettering, Zelda text boxes with a blinking arrow, a magic meter for progress and a power slider for switches.",
   "fonts": "https://fonts.googleapis.com/css2?family=Lilita+One&family=Nunito:wght@400;600;700;800&display=swap",
   "type": {
     "families": {
@@ -70,43 +70,43 @@
       {
         "name": "lapis",
         "value": {
-          "light": "#52d273",
-          "dark": "#52d273"
+          "light": "#7aa2ff",
+          "dark": "#7aa2ff"
         }
       },
       {
         "name": "lapis-hover",
         "value": {
-          "light": "#74e08f",
-          "dark": "#74e08f"
+          "light": "#9ab8ff",
+          "dark": "#9ab8ff"
         }
       },
       {
         "name": "lapis-soft",
         "value": {
-          "light": "#1f3d28",
-          "dark": "#1b3423"
+          "light": "#1d2a4a",
+          "dark": "#18233f"
         }
       },
       {
         "name": "lapis-deep",
         "value": {
-          "light": "#17692f",
-          "dark": "#17692f"
+          "light": "#2456d6",
+          "dark": "#2456d6"
         }
       },
       {
         "name": "lapis-glow",
         "value": {
-          "light": "rgba(82, 210, 115, 0.32)",
-          "dark": "rgba(82, 210, 115, 0.3)"
+          "light": "rgba(122, 162, 255, 0.34)",
+          "dark": "rgba(122, 162, 255, 0.3)"
         }
       },
       {
         "name": "on-lapis",
         "value": {
-          "light": "#0e1a11",
-          "dark": "#0e1a11"
+          "light": "#0a1433",
+          "dark": "#0a1433"
         }
       },
       {
@@ -147,15 +147,15 @@
       {
         "name": "success",
         "value": {
-          "light": "#4fd8b0",
-          "dark": "#4fd8b0"
+          "light": "#52d273",
+          "dark": "#52d273"
         }
       },
       {
         "name": "success-soft",
         "value": {
-          "light": "#143a30",
-          "dark": "#11322a"
+          "light": "#1f3d28",
+          "dark": "#1b3423"
         }
       },
       {
@@ -189,22 +189,22 @@
       {
         "name": "inverse-accent",
         "value": {
-          "light": "#187233",
-          "dark": "#187233"
+          "light": "#1d4fc4",
+          "dark": "#1d4fc4"
         }
       },
       {
         "name": "focus",
         "value": {
-          "light": "#7ea6ff",
-          "dark": "#7ea6ff"
+          "light": "#ffd23f",
+          "dark": "#ffd23f"
         }
       },
       {
         "name": "link",
         "value": {
-          "light": "#7ea6ff",
-          "dark": "#7ea6ff"
+          "light": "#9ab8ff",
+          "dark": "#9ab8ff"
         }
       },
       {
@@ -286,43 +286,43 @@
       {
         "name": "label-lapis",
         "value": {
-          "light": "#187233",
-          "dark": "#52d273"
+          "light": "#2350c8",
+          "dark": "#7aa2ff"
         }
       },
       {
         "name": "label-lapis-hover",
         "value": {
-          "light": "#125c28",
-          "dark": "#74e08f"
+          "light": "#1a3f9e",
+          "dark": "#9ab8ff"
         }
       },
       {
         "name": "label-lapis-soft",
         "value": {
-          "light": "#d5efdb",
-          "dark": "#1f3d28"
+          "light": "#dbe5fb",
+          "dark": "#1d2a4a"
         }
       },
       {
         "name": "label-on-lapis",
         "value": {
           "light": "#ffffff",
-          "dark": "#0e1a11"
+          "dark": "#0a1433"
         }
       },
       {
         "name": "label-success",
         "value": {
-          "light": "#0b7158",
-          "dark": "#4fd8b0"
+          "light": "#187233",
+          "dark": "#52d273"
         }
       },
       {
         "name": "label-success-soft",
         "value": {
-          "light": "#d3f2e8",
-          "dark": "#143a30"
+          "light": "#d5efdb",
+          "dark": "#1f3d28"
         }
       },
       {
@@ -363,22 +363,22 @@
       {
         "name": "label-inverse-accent",
         "value": {
-          "light": "#52d273",
-          "dark": "#187233"
+          "light": "#7aa2ff",
+          "dark": "#1d4fc4"
         }
       },
       {
         "name": "label-focus",
         "value": {
-          "light": "#2350c8",
-          "dark": "#7ea6ff"
+          "light": "#8a5a00",
+          "dark": "#ffd23f"
         }
       },
       {
         "name": "label-link",
         "value": {
           "light": "#2350c8",
-          "dark": "#7ea6ff"
+          "dark": "#9ab8ff"
         }
       }
     ]
@@ -433,8 +433,8 @@
       {
         "name": "shadow-glow",
         "value": {
-          "light": "0 4px 0 0 #17692f",
-          "dark": "0 4px 0 0 #17692f"
+          "light": "0 4px 0 0 #163a96",
+          "dark": "0 4px 0 0 #163a96"
         }
       },
       {
