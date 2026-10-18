@@ -1,5 +1,11 @@
 # @tessera-design/tokens
 
+## 0.2.1
+
+### Patch Changes
+
+- Republish under a new version: `@tessera-design/tokens` 0.2.0 was held in npm's staging during the first release and never went live, so 0.2.1 is the first complete release of both packages. No code changes.
+
 ## 0.2.0
 
 ### Minor Changes
