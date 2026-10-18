@@ -5,7 +5,7 @@ import { themes } from '@tessera/tokens';
 import type { Command, SidebarItem } from '@tessera/react';
 import { DEMOS } from './demos';
 import type { Demo } from './demos';
-import { A11yPage, BrandPage, ThemesPage, ColorPage, ComponentPage, ElevationPage, IconsPage, MotionPage, ShowcasePage, SpacePage, StartPage, TypePage, VoicePage } from './pages';
+import { FOLIO_URL, A11yPage, BrandPage, ThemesPage, ColorPage, ComponentPage, ElevationPage, IconsPage, MotionPage, ShowcasePage, SpacePage, StartPage, TypePage, VoicePage } from './pages';
 
 interface Route {
   id: string;
@@ -106,11 +106,18 @@ function Shell() {
       list.push({ label: r.title, href: `#${r.id}`, icon: r.icon, active: r.id === route.id, badge: r.demo?.isNew ? 'New' : undefined });
       map.set(r.section, list);
     }
+    // Folio isn't a docs page; it sits at the end of Overview as an outbound link.
+    if (!needle || 'folio demo app resume'.includes(needle)) {
+      const overview = map.get('Overview') ?? [];
+      overview.push({ label: 'Folio demo app', href: FOLIO_URL, icon: 'external', badge: 'App' });
+      map.set('Overview', overview);
+    }
     return [...map].map(([title, items]) => ({ title, items }));
-  }, [visible, route.id]);
+  }, [visible, route.id, needle]);
 
   const commands: Command[] = useMemo(
     () => [
+      { id: 'folio', label: 'Open Folio, the demo app', group: 'Overview', icon: 'external', keywords: ['resume', 'job tracker', 'example', 'demo'], onRun: () => (location.href = FOLIO_URL) },
       ...ROUTES.map((r) => ({
         id: r.id,
         label: r.title,

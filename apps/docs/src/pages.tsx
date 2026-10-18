@@ -131,6 +131,38 @@ function Scaled({ w, h, children }: { w: number; h: number; children: (replayKey
 
 /* ---------- overview ---------- */
 
+/** Folio ships with the docs at <base>/folio/; the dev server only serves the docs, so point at the live copy there. */
+export const FOLIO_URL = import.meta.env.DEV ? 'https://jwag789.github.io/tessera/folio/' : `${import.meta.env.BASE_URL}folio/`;
+
+function FolioBanner() {
+  return (
+    <section className="ts-card d-folio" aria-labelledby="folio-title">
+      <div className="d-folio-text">
+        <div className="d-eyebrow">Built with Tessera</div>
+        <h2 id="folio-title" className="ts-card-title d-folio-title">
+          Folio: a resume builder and job tracker
+        </h2>
+        <p className="ts-card-body d-folio-lead">A real app made only from these components and themes. Tailor your resume to each job, keep the exact version you sent, and get reminded when to follow up. Nothing to sign up for.</p>
+        <div className="d-folio-actions">
+          <a className="ts-btn ts-btn-tile ts-btn-lg" href={FOLIO_URL}>
+            Open Folio
+            <span className="ts-icon-end">
+              <Icon name="arrow" />
+            </span>
+          </a>
+          <a className="ts-btn ts-btn-ghost ts-btn-lg" href="https://github.com/jwag789/tessera/tree/main/apps/resume" target="_blank" rel="noreferrer">
+            Read the source
+            <Icon name="external" />
+          </a>
+        </div>
+      </div>
+      <a className="d-folio-shot" href={FOLIO_URL} tabIndex={-1} aria-hidden="true">
+        <img src={`${import.meta.env.BASE_URL}folio-preview.jpg`} alt="" width={960} height={600} loading="lazy" />
+      </a>
+    </section>
+  );
+}
+
 export function ShowcasePage() {
   return (
     <div className="d-page d-page-wide">
@@ -142,6 +174,7 @@ export function ShowcasePage() {
         <TileLink to="motion" kicker="Foundations" title="Motion playground" text="Race the four easing curves side by side." />
         <TileLink to="c-CommandPalette" kicker="New" title="Command palette" text="Press ⌘K anywhere in these docs." />
       </div>
+      <FolioBanner />
       <H2 note={`${DEMOS.length} components, each with a live example`}>Components</H2>
       <div className="d-grid">
         {DEMOS.map((d) => (

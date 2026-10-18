@@ -1,18 +1,41 @@
 # Tessera
 
-A bold, tile-built design system and React component library. Tight corners, a 4px grid, lapis blue with one saffron tile out of place, and motion that lands with a small bounce.
+**A tile-built design system and React component library, and Folio, a real app built on it.**
 
-- **40+ React components**, typed, tested and keyboard-accessible: from Button and Select to Command palette, Date picker, Data table and Drawer, plus layout primitives.
-- **Design tokens** for color (light and dark), type, space, radius, shadow and motion, as CSS variables and as data.
-- **A docs site** with a live example and guidelines for every component.
+[**Docs**](https://jwag789.github.io/tessera/) · [**Folio demo app**](https://jwag789.github.io/tessera/folio/) · [**Themes**](https://jwag789.github.io/tessera/#themes) · [Getting started](https://jwag789.github.io/tessera/#start)
 
-## Packages
+[![CI](https://github.com/jwag789/tessera/actions/workflows/ci.yml/badge.svg)](https://github.com/jwag789/tessera/actions/workflows/ci.yml)
+[![Docs](https://github.com/jwag789/tessera/actions/workflows/docs.yml/badge.svg)](https://jwag789.github.io/tessera/)
+![TypeScript](https://img.shields.io/badge/TypeScript-strict-2633e8)
+![License: MIT](https://img.shields.io/badge/license-MIT-ffb020)
 
-| Package | What it is |
+[![Tessera's four themes side by side: Tessera, Cartridge, Polygon and Gloop](.github/assets/themes.jpg)](https://jwag789.github.io/tessera/#themes)
+
+- **40 React components**, typed, tested and keyboard-accessible: from Button and Select to Command palette, Date picker, Data table and Drawer, plus layout primitives.
+- **Four themes** (Tessera, Cartridge, Polygon and Gloop), each in light and dark, built from one set of design tokens. Switch them live in the docs.
+- **154 tests**, with axe accessibility checks on every component, strict TypeScript, and a bundle size budget enforced in CI.
+- **Folio**, a resume builder and job tracker that uses nearly every component, to show the system holding up in a real product.
+
+## Folio: the system in a real app
+
+[![Folio: tailor your resume to every job and remember exactly what you sent](.github/assets/folio.jpg)](https://jwag789.github.io/tessera/folio/)
+
+[**Open Folio**](https://jwag789.github.io/tessera/folio/) and press **Try it with a sample**. No sign-up; everything stays in your browser.
+
+- **Tailors your resume to each job:** paste a posting and see which of its skills your resume shows and which it misses, then make a tailored copy in one click.
+- **Remembers what you sent:** every application keeps the exact page that went out, with follow-up reminders and a coming-up calendar.
+- **Built only from Tessera:** the editor, tracker, command palette, toasts, dialogs and every theme come from the library. The source is in [`apps/resume`](apps/resume); optional sign-in and saving use Supabase ([setup](apps/resume/SETUP.md)).
+
+## What's in the repo
+
+| Path | What it is |
 | --- | --- |
-| [`@tessera/tokens`](packages/tokens) | `tokens.json` built into `tokens.css` (CSS variables for both themes plus type classes) and a typed JS export |
-| [`@tessera/react`](packages/react) | The components, one stylesheet, and the shared positioning layer |
-| [`apps/docs`](apps/docs) | The documentation site (Vite + React), built from the component source |
+| [`packages/tokens`](packages/tokens) | `@tessera/tokens`: `tokens.json` and theme packs, built into CSS variables for both modes and a typed JS export |
+| [`packages/react`](packages/react) | `@tessera/react`: the components, one stylesheet, theme treatments and the shared positioning layer |
+| [`apps/docs`](apps/docs) | The docs site: a live example, usage, guidelines and a generated props table for every component |
+| [`apps/resume`](apps/resume) | Folio, the demo app |
+
+It's one npm workspace, so the docs and Folio build against the component source, and a change to a component shows up in both.
 
 ## Use it
 
@@ -38,9 +61,18 @@ export function App() {
 }
 ```
 
+The bundle starts with `"use client"`, so it works from React Server Components in the Next.js App Router.
+
 ### Themes
 
-Tessera ships four themes, each in light and dark: **Tessera** (the default), **Cartridge** (charcoal plastic with light labels, four button colors, chunky keys that press down) and **Polygon** (matte grey plastic, dark recessed panels, hard bevels and pixel headings) and **Gloop** (90s kids-TV: slime green and orange, thick outlines, everything a bit tilted). Import a theme's CSS and pick it with `ThemeProvider`:
+Tessera ships four themes, each in light and dark:
+
+- **Tessera** (the default)
+- **Cartridge:** charcoal plastic with light labels, four button colors, chunky keys that press down
+- **Polygon:** matte grey plastic, dark recessed panels, hard bevels and pixel headings
+- **Gloop:** 90s kids-TV, with slime green and orange, thick outlines, and everything a bit tilted
+
+Import a theme's CSS and pick it with `ThemeProvider`:
 
 ```tsx
 import '@tessera/react/themes/cartridge.css';
@@ -49,13 +81,9 @@ import '@tessera/react/themes/cartridge-fonts.css';
 <ThemeProvider defaultBrand="cartridge" storageKey="theme"><App /></ThemeProvider>
 ```
 
-A theme is a token file in `packages/tokens/themes/` plus optional component treatments in `packages/react/src/themes/`, built into one CSS file scoped to `[data-brand="name"]`.
+A theme is a token file in `packages/tokens/themes/` plus optional component treatments in `packages/react/src/themes/`, built into one CSS file scoped to `[data-brand="name"]`. Treatments use CSS `@scope`, so themes can sit side by side on one page.
 
-Dark mode follows the system setting. Wrap the app in `<ThemeProvider storageKey="theme">` to let people choose and remember it, override tokens (`tokens={{ lapis: '#0f766e' }}`), or theme one subtree with `scope="local"`. Without React, set `data-theme="dark"` or `"light"` on any element.
-
-`apps/resume` is **Folio**, a resume builder and job tracker built on the library, with every theme: it tailors your resume to every job and remembers exactly what you sent. Run it with `npm run dev:resume`; it is published with the docs at `/tessera/folio/`. Sign-in and server saving use a free Supabase project, see [apps/resume/SETUP.md](apps/resume/SETUP.md).
-
-The bundle starts with `"use client"`, so it works from React Server Components in the Next.js App Router.
+Dark mode follows the system setting. `ThemeProvider` lets people choose and remember it (`storageKey`), override tokens (`tokens={{ lapis: '#0f766e' }}`), or theme one subtree (`scope="local"`). Without React, set `data-theme` and `data-brand` on any element.
 
 ## Components
 
@@ -69,7 +97,7 @@ The bundle starts with `"use client"`, so it works from React Server Components 
 | Status | Badge, Avatar (+ AvatarGroup), Kbd |
 | Feedback | Alert, Toast (+ ToastProvider, `useToast`), Progress, Skeleton, Spinner, EmptyState |
 | Overlays | Dialog, Drawer, Popover (+ Floating), Tooltip |
-| Theming | ThemeProvider (+ `useTheme`), themes: Tessera, Cartridge, Polygon, Gloop |
+| Theming | ThemeProvider (+ `useTheme`) |
 | Brand | Mosaic, Icon |
 
 Popover, DropdownMenu, DatePicker and Tooltip share one positioning layer (`Floating`): portal, flip when there's no room, shift to stay on screen, follow scroll and resize, and animate in from the side they open on.
@@ -78,11 +106,12 @@ Popover, DropdownMenu, DatePicker and Tooltip share one positioning layer (`Floa
 
 ```bash
 npm install
-npm run dev        # docs at http://localhost:5174, live against the component source
-npm test           # behavior tests and axe accessibility checks (Vitest + Testing Library)
+npm run dev          # docs at http://localhost:5174, live against the component source
+npm run dev:resume   # Folio at http://localhost:5173
+npm test             # library and Folio tests, including axe accessibility checks
 npm run typecheck
-npm run build      # tokens, then the React package, then the docs
-npm run size       # gzipped bundle size against the budget in packages/react/package.json
+npm run build        # tokens, the React package, the docs and Folio
+npm run size         # gzipped bundle size against the budget in packages/react/package.json
 ```
 
 Tokens live in `packages/tokens/tokens.json`; edit them there and rebuild. Component styles are in `packages/react/src/styles.css` and use only token variables. Each component's guidelines are in `apps/docs/src/content/<Component>.md`, and its live example and usage snippet are in `apps/docs/src/demos.tsx`. The props tables are generated from the TypeScript types (`apps/docs/scripts/gen-props.mjs`), so documenting a prop means writing a `/** comment */` on it.
@@ -91,16 +120,16 @@ Tokens live in `packages/tokens/tokens.json`; edit them there and rebuild. Compo
 
 - **Accessibility:** every component runs through axe-core in `packages/react/test/a11y.test.tsx`. Keyboard behavior (menus, comboboxes, the date grid, focus traps) is covered by the behavior tests.
 - **Bundle size:** CI fails if the gzipped JS or CSS grows past its budget.
-- **Types:** strict TypeScript across packages and docs.
+- **Types:** strict TypeScript across the packages, the docs and Folio.
 
 ### Releasing
 
 Changes to the packages get a changeset: run `npx changeset`, choose the bump and write one changelog line. `npx changeset version` applies pending changesets to versions and CHANGELOGs; `npx changeset publish` publishes. `@tessera/tokens` and `@tessera/react` always release together.
 
-## Deploy the docs
+## Deploy
 
-`.github/workflows/docs.yml` builds the docs and publishes them to GitHub Pages on every push to `main`. Turn on Pages with "GitHub Actions" as the source in the repository settings. `ci.yml` runs typecheck, tests and the build on every push and pull request.
+`.github/workflows/docs.yml` builds the docs and Folio and publishes both to GitHub Pages on every push to `main`: the docs at `/tessera/`, Folio at `/tessera/folio/`. `ci.yml` runs typecheck, tests, the build and the size check on every push and pull request.
 
 ## License
 
-MIT
+MIT © Justin Wagner

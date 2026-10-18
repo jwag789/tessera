@@ -355,3 +355,15 @@ a { color: var(--link); }
     :scope .d-title { font-size: 50px; }
   }
 }
+
+/* Folio banner on the Showcase */
+.d-folio.ts-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: var(--space-8); align-items: center; padding: var(--space-8); }
+.d-folio-text { display: flex; flex-direction: column; gap: var(--space-3); min-width: 0; }
+.d-folio-title.ts-card-title { font-size: 34px; line-height: 1.05; text-wrap: balance; }
+.d-folio-lead.ts-card-body { margin: 0; font-size: 16px; line-height: 25px; max-width: 46ch; }
+.d-folio-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-2); }
+.d-folio-actions .ts-btn { text-decoration: none; }
+.d-folio-shot { display: block; border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-lg); transform: rotate(1.5deg); transition: transform var(--duration-slow) var(--ease-spring); }
+.d-folio-shot:hover { transform: rotate(0deg) translateY(-4px); }
+.d-folio-shot img { display: block; width: 100%; height: auto; }
+@media (max-width: 900px) { .d-folio.ts-card { grid-template-columns: minmax(0, 1fr); padding: var(--space-6); } .d-folio-shot { transform: none; } }
