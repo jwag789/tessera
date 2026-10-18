@@ -1,159 +1,177 @@
-/* Shonen: component treatments the tokens can't express. 90s anime on a Saturday morning in light mode (pale sky,
-   blue, yellow and red, manga screentone) and late at night in dark mode (Unit-01 purple, acid green and warning
-   orange, a hex grid, and heavy mincho title cards). Cel-shaded keys with hard two-tone shading and a glint, a key
-   that powers up, speed lines behind dialogs, a battle text box for toasts and an HP bar for progress.
-   Scoped to [data-brand="shonen"]. */
-@keyframes shonen-aura { 0%, 100% { box-shadow: 4px 4px 0 0 var(--sh-line), 0 0 0 3px color-mix(in srgb, var(--saffron) 55%, transparent), 0 0 18px 4px color-mix(in srgb, var(--saffron) 60%, transparent); } 50% { box-shadow: 4px 4px 0 0 var(--sh-line), 0 0 0 5px color-mix(in srgb, var(--saffron) 35%, transparent), 0 0 28px 9px color-mix(in srgb, var(--saffron) 45%, transparent); } }
+/* Shonen: component treatments the tokens can't express. A manga page: black ink on newsprint with one red spot
+   color, and in dark mode the same page inverted, white ink on black. Screentone stands in for every grey, cards
+   are panels with heavy borders, tooltips and toasts are speech bubbles, popovers are narration boxes, dialogs
+   land on focus lines over a desaturated page, and the big key rumbles ゴゴゴ on hover and hits ドン! when pressed.
+   All line art is var(--ink), so dark mode inverts on its own. Scoped to [data-brand="shonen"]. */
 @keyframes shonen-impact { 0%, 100% { translate: 0 0; } 20% { translate: -3px 1px; } 40% { translate: 3px -2px; } 60% { translate: -2px 2px; } 80% { translate: 1px -1px; } }
-@keyframes shonen-smash { 0% { opacity: 0; transform: scale(1.18); filter: blur(4px); } 60% { opacity: 1; transform: scale(.98); filter: none; } 100% { transform: none; } }
-@keyframes shonen-swipe { 0% { opacity: 0; transform: translateX(48px) skewX(-14deg); } 70% { opacity: 1; transform: translateX(-4px) skewX(2deg); } 100% { transform: none; } }
-@keyframes shonen-blink { 50% { opacity: 0; } }
+@keyframes shonen-slam { 0% { opacity: 0; transform: scale(1.22) rotate(-1.5deg); } 55% { opacity: 1; transform: scale(.97) rotate(.4deg); } 100% { transform: none; } }
+@keyframes shonen-bubble { 0% { opacity: 0; transform: scale(.7) rotate(-3deg); } 60% { opacity: 1; transform: scale(1.04) rotate(.5deg); } 100% { transform: none; } }
+@keyframes shonen-menace { 0% { opacity: 0; translate: 0 8px; } 25% { opacity: 1; } 100% { opacity: 0; translate: 6px -16px; } }
+@keyframes shonen-don { 0% { opacity: 0; transform: scale(.3) rotate(-14deg); } 60% { opacity: 1; transform: scale(1.2) rotate(-8deg); } 100% { opacity: 1; transform: scale(1) rotate(-8deg); } }
 
 /* Scoped so a nested area with a different data-brand keeps its own look. */
 @scope ([data-brand="shonen"]) to ([data-brand]:not([data-brand="shonen"])) {
   :scope {
     font-synthesis: none;
-    /* Line art is always black; panel edges lift to purple at night so they still read on the dark ground. */
-    --sh-line: #15112b;
-    --sh-edge: #15112b;
-    --sh-outline: 2.5px solid var(--sh-edge);
+    --sh-line: 3px solid var(--ink);
+    --sh-thin: 2px solid var(--ink);
     --sh-slant: polygon(7px 0, 100% 0, calc(100% - 7px) 100%, 0 100%);
-    --sh-serif: "Shippori Mincho B1", "Hiragino Mincho ProN", "Times New Roman", serif;
-    /* Light: a fade of screentone from the top of the page. */
-    --sh-ground: linear-gradient(170deg, transparent 0 8%, var(--bg) 48%), radial-gradient(circle, color-mix(in srgb, var(--lapis) 22%, transparent) 1.3px, transparent 1.6px) 0 0 / 7px 7px;
+    /* Sound effects are lettered in a heavy Japanese gothic. */
+    --sh-sfx: "Dela Gothic One", "Arial Black", sans-serif;
   }
-  /* Dark: NERV after hours. Mincho title cards, purple edges, a hex grid. */
-  :scope[data-theme="dark"] {
-    --sh-line: #05020c;
-    --sh-edge: #5a3f94;
-    --font-display: var(--sh-serif);
-    --sh-ground: linear-gradient(170deg, transparent 0 10%, var(--bg) 55%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='48' viewBox='0 0 28 48'%3E%3Cpath d='M14 0L28 8V24L14 32L0 24V8ZM14 32V48' fill='none' stroke='%239be15d' stroke-opacity='.14' stroke-width='1'/%3E%3C/svg%3E") 0 0 / 28px 48px;
+  /* Screentone: halftone dots in the ink color, light and dense. Declared on every element so the dots follow
+     the ink wherever it changes. */
+  :scope, :scope * {
+    --sh-tone: radial-gradient(circle, color-mix(in srgb, var(--ink) 30%, transparent) 1.1px, transparent 1.5px) 0 0 / 5px 5px;
+    --sh-tone-dense: radial-gradient(circle, color-mix(in srgb, var(--ink) 55%, transparent) 1.6px, transparent 2px) 0 0 / 5px 5px;
   }
-  @media (prefers-color-scheme: dark) {
-    :scope:not([data-theme="light"]) {
-      --sh-line: #05020c;
-      --sh-edge: #5a3f94;
-      --font-display: var(--sh-serif);
-      --sh-ground: linear-gradient(170deg, transparent 0 10%, var(--bg) 55%), url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='48' viewBox='0 0 28 48'%3E%3Cpath d='M14 0L28 8V24L14 32L0 24V8ZM14 32V48' fill='none' stroke='%239be15d' stroke-opacity='.14' stroke-width='1'/%3E%3C/svg%3E") 0 0 / 28px 48px;
-    }
-  }
-  :scope body { background: var(--sh-ground), var(--bg); background-attachment: fixed; }
 
-  /* Title lettering: heavy gothic by day, heavy mincho by night. */
-  :scope :is(.ts-card-title, .ts-dialog-title, .ts-popover-title, .ts-empty-title, .ts-cal-title, .ts-navbar-brand) { font-weight: 400; letter-spacing: .01em; }
-  :scope :is(.display-2xl, .display-xl, .display-lg, .heading-lg, .heading-md) { font-weight: 400; letter-spacing: .01em; }
-  :scope .ts-dialog-title { font-size: 24px; line-height: 30px; }
+  /* Lettering: Bangers for titles and keys, all caps the way manga is lettered. */
+  :scope :is(.ts-card-title, .ts-dialog-title, .ts-popover-title, .ts-empty-title, .ts-cal-title, .ts-navbar-brand) { font-weight: 400; letter-spacing: .03em; }
+  :scope :is(.display-2xl, .display-xl, .display-lg, .heading-lg, .heading-md) { font-weight: 400; letter-spacing: .02em; }
+  :scope .ts-card-title { font-size: 24px; line-height: 28px; }
+  :scope .ts-dialog-title { font-size: 30px; line-height: 34px; }
 
-  /* Keys: black line art and cel shading, a lighter top and a hard shade along the bottom, with a glint. */
-  :scope .ts-btn { font-weight: 800; border: 2.5px solid var(--sh-line); transition: transform var(--duration-fast) var(--ease-snap), box-shadow var(--duration-fast) var(--ease-out), background var(--duration-fast); }
-  :scope :is(.ts-btn-primary, .ts-btn-danger, .ts-btn-tile) {
-    --sh-fill: var(--lapis);
-    background:
-      radial-gradient(ellipse 4px 2px at 8px 6px, rgba(255, 255, 255, .9) 90%, transparent) no-repeat,
-      linear-gradient(172deg, color-mix(in srgb, #ffffff 20%, var(--sh-fill)) 0 48%, var(--sh-fill) 48% 100%);
-    box-shadow: inset 0 -4px 0 0 color-mix(in srgb, var(--sh-fill) 72%, #000000), 3px 3px 0 0 var(--sh-line);
-  }
-  :scope .ts-btn-danger { --sh-fill: var(--danger); }
-  :scope .ts-btn-tile { --sh-fill: var(--saffron); color: var(--on-saffron); border-radius: var(--radius-sm); }
-  :scope :is(.ts-btn-primary, .ts-btn-danger):hover:not([disabled]) { --sh-fill: var(--lapis-hover); filter: none; transform: translate(-2px, -2px); box-shadow: inset 0 -4px 0 0 color-mix(in srgb, var(--sh-fill) 72%, #000000), 5px 5px 0 0 var(--sh-line); }
-  :scope .ts-btn-danger:hover:not([disabled]) { --sh-fill: var(--danger); }
-  /* The tile key powers up: a flickering aura. */
-  :scope .ts-btn-tile:hover:not([disabled]) { transform: translate(-2px, -2px); animation: shonen-aura .5s ease-in-out infinite; }
-  :scope .ts-btn-secondary { border-color: var(--sh-line); box-shadow: inset 0 -3px 0 0 var(--surface-sunken), 3px 3px 0 0 var(--sh-line); }
-  :scope .ts-btn-secondary:hover:not([disabled]) { border-color: var(--sh-line); transform: translate(-2px, -2px); box-shadow: inset 0 -3px 0 0 var(--surface-sunken), 5px 5px 0 0 var(--lapis); }
+  /* Keys: square, inked, lettered. Primary is solid ink, the big key is the red spot color. */
+  :scope .ts-btn { font: 400 17px/20px var(--font-display); letter-spacing: .06em; border: var(--sh-thin); border-radius: 0; transition: transform var(--duration-fast) var(--ease-snap), box-shadow var(--duration-fast) var(--ease-out), background var(--duration-fast); }
+  :scope .ts-btn-sm { font-size: 15px; }
+  :scope .ts-btn-lg { font-size: 20px; }
+  :scope .ts-btn-primary::after { display: none; }
+  :scope :is(.ts-btn-primary, .ts-btn-danger, .ts-btn-tile) { box-shadow: 3px 3px 0 0 var(--saffron); }
+  :scope :is(.ts-btn-primary, .ts-btn-danger):hover:not([disabled]) { filter: none; transform: translate(-2px, -2px); box-shadow: 5px 5px 0 0 var(--saffron); }
+  :scope .ts-btn-danger { box-shadow: 3px 3px 0 0 var(--ink); }
+  :scope .ts-btn-danger:hover:not([disabled]) { box-shadow: 5px 5px 0 0 var(--ink); }
+  :scope .ts-btn-secondary { background: var(--surface); border-color: var(--ink); color: var(--ink); }
+  :scope .ts-btn-secondary:hover:not([disabled]) { border-color: var(--ink); background: var(--sh-tone), var(--surface); transform: translate(-2px, -2px); box-shadow: 3px 3px 0 0 var(--ink); }
   :scope .ts-btn-ghost { border-color: transparent; }
-  :scope .ts-btn:active:not([disabled]) { transform: translate(3px, 3px); box-shadow: inset 0 3px 0 0 rgba(0, 0, 0, .2); animation: none; transition-duration: var(--duration-instant); }
-  :scope .ts-btn-primary::after, :scope .ts-btn-tile::after { display: none; }
+  :scope .ts-btn-ghost:hover:not([disabled]) { background: var(--sh-tone), transparent; }
+  :scope .ts-btn:active:not([disabled]) { transform: translate(3px, 3px); box-shadow: none; transition-duration: var(--duration-instant); }
 
-  /* Surfaces: manga panels with a hard shadow. Interactive cards take a hit when hovered. */
-  :scope .ts-card { border: var(--sh-outline); box-shadow: 5px 5px 0 0 var(--sh-line); }
-  /* Featured cards: a corner of screentone. */
-  :scope .ts-card-tile { background: linear-gradient(225deg, transparent, var(--surface) 38%) no-repeat, radial-gradient(circle, color-mix(in srgb, var(--saffron) 70%, transparent) 1.4px, transparent 1.7px) 0 0 / 7px 7px, var(--surface); }
-  :scope .ts-card-tile, :scope .ts-card-tile.ts-card-interactive:hover { border-color: var(--sh-edge); box-shadow: 5px 5px 0 0 var(--lapis); }
-  :scope .ts-card-interactive:hover { transform: none; animation: shonen-impact .28s linear; }
-  :scope :is(.ts-table-wrap, .ts-accordion, .ts-drop, .ts-file) { border: var(--sh-outline); box-shadow: 4px 4px 0 0 var(--sh-line); }
-  :scope :is(.ts-dialog, .ts-cmd, .ts-drawer) { border: 3px solid var(--sh-edge); box-shadow: 8px 8px 0 0 var(--sh-line); }
-  :scope .ts-dialog { animation-name: shonen-smash; }
-  :scope :is(.ts-popover, .ts-menu, .ts-sel-list, .ts-side-flyout) { border: var(--sh-outline); box-shadow: 4px 4px 0 0 var(--sh-line); }
-  :scope :is(.ts-input, .ts-sel-trigger, .ts-tags, .ts-number) { border: 2px solid var(--sh-edge); }
-  :scope :is(.ts-input, .ts-sel-trigger, .ts-tags, .ts-number):hover { border-color: var(--lapis); }
-  :scope :is(.ts-input:focus-visible, .ts-tags:focus-within), :scope .ts-sel-open .ts-sel-trigger { border-color: var(--sh-edge); box-shadow: 3px 3px 0 0 var(--lapis); }
+  /* The big key: red, inked, and loud. A menacing ゴゴゴ rises off it on hover; pressing it hits ドン!. */
+  :scope .ts-btn-tile { overflow: visible; background: var(--saffron); color: var(--on-saffron); border-color: var(--ink); box-shadow: 4px 4px 0 0 var(--ink); }
+  :scope .ts-btn-tile:hover:not([disabled]) { background: var(--saffron); transform: translate(-2px, -2px); box-shadow: 6px 6px 0 0 var(--ink); }
+  :scope .ts-btn-tile:active:not([disabled]) { background: var(--saffron); }
+  :scope .ts-btn-tile::after {
+    display: block; content: "ゴ ゴ ゴ"; position: absolute; inset: auto auto calc(100% - 4px) calc(100% - 10px); z-index: 1; width: auto; background: none; transform: none;
+    font: 400 19px/1 var(--sh-sfx); letter-spacing: -.1em; color: var(--ink); white-space: nowrap; pointer-events: none; opacity: 0; rotate: -10deg;
+  }
+  :scope .ts-btn-tile:hover:not([disabled])::after { animation: shonen-menace 1.1s ease-out infinite; }
+  :scope .ts-btn-tile:active:not([disabled])::after { content: "ドン!"; font-size: 22px; letter-spacing: 0; color: var(--saffron); -webkit-text-stroke: 5px var(--ink); paint-order: stroke fill; animation: shonen-don .18s var(--ease-out) forwards; }
 
-  /* Speed lines behind dialogs, clearing toward the middle. */
+  /* Surfaces: comic panels. Heavy borders, square corners, no drop shadow; the gutters do the separating. */
+  :scope .ts-card { border: var(--sh-line); border-radius: 0; box-shadow: none; }
+  :scope .ts-card-tile { background: linear-gradient(215deg, transparent 0%, var(--surface) 48%) no-repeat, var(--sh-tone-dense), var(--surface); }
+  :scope .ts-card-tile, :scope .ts-card-tile.ts-card-interactive:hover { border-color: var(--ink); box-shadow: 5px 5px 0 0 var(--saffron); }
+  :scope .ts-card-interactive:hover { transform: none; box-shadow: 4px 4px 0 0 var(--ink); animation: shonen-impact .28s linear; }
+  :scope .ts-card-eyebrow { color: var(--saffron); font-weight: 900; }
+  :scope :is(.ts-table-wrap, .ts-accordion, .ts-file, .ts-alert) { border: var(--sh-thin); border-radius: 0; box-shadow: none; }
+  :scope .ts-drop { border: 2.5px dashed var(--ink); border-radius: 0; }
+  :scope .ts-empty { border: 2.5px dashed var(--ink); border-radius: 0; background: repeating-conic-gradient(from 0deg at 50% 0, color-mix(in srgb, var(--ink) 8%, transparent) 0 1.5deg, transparent 1.5deg 6deg), var(--surface); }
+  :scope :is(.ts-input, .ts-sel-trigger, .ts-tags, .ts-number) { border: var(--sh-thin); border-radius: 0; }
+  :scope :is(.ts-input, .ts-sel-trigger, .ts-tags, .ts-number):hover { border-color: var(--ink); }
+  :scope :is(.ts-input:focus-visible, .ts-tags:focus-within), :scope .ts-sel-open .ts-sel-trigger { border-color: var(--ink); box-shadow: 3px 3px 0 0 var(--saffron); }
+  :scope .ts-skeleton { border-radius: 0; background: var(--sh-tone), var(--surface-sunken); animation: none; }
+
+  /* Dialogs land on focus lines, over a page drained to black and white. */
+  :scope .ts-overlay { backdrop-filter: grayscale(1) blur(1px); -webkit-backdrop-filter: grayscale(1) blur(1px); }
   :scope .ts-overlay:not(.ts-cmd-overlay, .ts-drawer-overlay) { isolation: isolate; }
   :scope .ts-overlay:not(.ts-cmd-overlay, .ts-drawer-overlay)::before {
     content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-    background: repeating-conic-gradient(from 3deg, rgba(255, 255, 255, .16) 0 .7deg, transparent .7deg 2.9deg, rgba(255, 255, 255, .1) 2.9deg 3.3deg, transparent 3.3deg 7deg);
-    -webkit-mask: radial-gradient(closest-side, transparent 45%, #000 100%); mask: radial-gradient(closest-side, transparent 45%, #000 100%);
-    -webkit-mask-size: 140% 140%; mask-size: 140% 140%; -webkit-mask-position: center; mask-position: center;
+    background: repeating-conic-gradient(from 1deg, var(--ink) 0 .5deg, transparent .5deg 2.6deg, var(--ink) 2.6deg 2.8deg, transparent 2.8deg 4.4deg, var(--ink) 4.4deg 5.3deg, transparent 5.3deg 7deg);
+    -webkit-mask: radial-gradient(closest-side, transparent 52%, #000 115%) center / 150% 150% no-repeat; mask: radial-gradient(closest-side, transparent 52%, #000 115%) center / 150% 150% no-repeat;
   }
-  /* Empty states get a dramatic reveal of their own. */
-  :scope .ts-empty { border: 2.5px dashed var(--sh-edge); background: repeating-conic-gradient(from 0deg at 50% 0, color-mix(in srgb, var(--lapis) 9%, transparent) 0 2deg, transparent 2deg 7deg), var(--surface); }
+  :scope :is(.ts-dialog, .ts-cmd, .ts-drawer) { border: 4px solid var(--ink); border-radius: 0; box-shadow: none; }
+  :scope .ts-dialog { animation-name: shonen-slam; }
 
-  /* Navbar: a red lid by day and a black bar by night, with the seam (hazard stripes after dark) along the bottom. */
-  :scope .ts-navbar { position: relative; background: var(--bar); border-bottom: 0; color: var(--on-bar); --ink: var(--on-bar); --ink-muted: var(--on-bar); --line-strong: var(--on-bar); --surface: rgba(255, 255, 255, .12); --surface-sunken: rgba(255, 255, 255, .2); --lapis: var(--saffron); --lapis-hover: var(--saffron); --on-lapis: var(--on-saffron); }
-  :scope .ts-navbar::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 6px; pointer-events: none; z-index: 1; background: repeating-linear-gradient(-45deg, var(--bar-seam) 0 10px, #05020c 10px 20px); }
-  :scope .ts-navbar-brand { font-size: 21px; }
-  :scope .ts-navlink { font-weight: 700; color: var(--on-bar); }
-  :scope .ts-navlink:hover { background: rgba(255, 255, 255, .16); color: var(--on-bar); }
-  :scope .ts-navlink[aria-current="page"] { background: var(--saffron); color: var(--on-saffron); border-radius: 0; clip-path: var(--sh-slant); padding-inline: 16px; }
+  /* Popovers and menus are narration boxes. */
+  :scope :is(.ts-popover, .ts-menu, .ts-sel-list, .ts-side-flyout) { border: var(--sh-thin); border-radius: 0; box-shadow: 4px 4px 0 0 var(--ink); }
+  :scope .ts-menu-item-active { background: var(--ink); color: var(--bg); }
+  :scope .ts-menu-item-active :is(.ts-icon, .ts-kbd) { color: var(--bg); }
+
+  /* Tooltips are speech bubbles: white, inked, with an outlined tail toward what they describe. */
+  :scope .ts-tooltip { background: var(--surface); color: var(--ink); border: var(--sh-thin); border-radius: 999px; padding: 5px 12px; font-weight: 700; }
+  :scope .ts-tooltip::before { content: ""; position: absolute; border: 8px solid transparent; }
+  :scope .ts-tooltip::after { border-width: 6px; }
+  :scope .ts-tooltip[data-side="top"]::before { top: 100%; left: 50%; margin-left: -8px; border-top-color: var(--ink); }
+  :scope .ts-tooltip[data-side="top"]::after { top: calc(100% - 1px); margin-left: -6px; border-top-color: var(--surface); }
+  :scope .ts-tooltip[data-side="bottom"]::before { bottom: 100%; left: 50%; margin-left: -8px; border-bottom-color: var(--ink); }
+  :scope .ts-tooltip[data-side="bottom"]::after { bottom: calc(100% - 1px); margin-left: -6px; border-bottom-color: var(--surface); }
+  :scope .ts-tooltip[data-side="left"]::before { left: 100%; top: 50%; margin-top: -8px; border-left-color: var(--ink); }
+  :scope .ts-tooltip[data-side="left"]::after { left: calc(100% - 1px); margin-top: -6px; border-left-color: var(--surface); }
+  :scope .ts-tooltip[data-side="right"]::before { right: 100%; top: 50%; margin-top: -8px; border-right-color: var(--ink); }
+  :scope .ts-tooltip[data-side="right"]::after { right: calc(100% - 1px); margin-top: -6px; border-right-color: var(--surface); }
+
+  /* Toasts are speech bubbles too, with a tail off the bottom left. */
+  :scope .ts-toast { overflow: visible; background: var(--surface); color: var(--ink); border: var(--sh-line); border-radius: 30px; box-shadow: none; padding: var(--space-3) var(--space-5) var(--space-4); }
+  :scope .ts-toast:not(.ts-toast-leaving) { animation-name: shonen-bubble; animation-timing-function: var(--ease-out); }
+  :scope .ts-toast::before { content: ""; position: absolute; left: 34px; top: 100%; border: 11px solid transparent; border-top: 18px solid var(--ink); border-left-width: 4px; rotate: 18deg; transform-origin: top; }
+  :scope .ts-toast::after { content: ""; position: absolute; left: 36px; top: calc(100% - 3px); border: 7px solid transparent; border-top: 13px solid var(--surface); border-left-width: 2px; rotate: 18deg; transform-origin: top; }
+  :scope .ts-toast-title { font: 400 18px/22px var(--font-display); letter-spacing: .04em; }
+  :scope .ts-toast > .ts-icon { color: var(--saffron); }
+  :scope .ts-toast-action { color: var(--ink); font-weight: 900; text-decoration: underline; text-decoration-color: var(--saffron); text-decoration-thickness: 3px; text-underline-offset: 3px; }
+  :scope .ts-toast-timer { left: 26px; right: 26px; width: auto; bottom: 6px; height: 3px; background: var(--saffron); }
+
+  /* Navbar: a panel border along the top of the page. The current page is a slash of ink. */
+  :scope .ts-navbar { background: var(--surface); border-bottom: var(--sh-line); }
+  :scope .ts-navbar-brand { font-size: 26px; }
+  :scope .ts-navlink { font-weight: 900; }
+  :scope .ts-navlink:hover { background: var(--sh-tone), transparent; color: var(--ink); }
+  :scope .ts-navlink[aria-current="page"] { background: var(--ink); color: var(--bg); border-radius: 0; clip-path: var(--sh-slant); padding-inline: 16px; }
   :scope .ts-navlink[aria-current="page"]::after { display: none; }
-  :scope .ts-navbar .ts-btn { border-color: #05020c; }
 
-  /* Sidebar: section titles in lettering, the current page on a slash of color. */
-  :scope .ts-sidebar { border-right: var(--sh-outline); }
-  :scope .ts-side-title { font: 400 13px/18px var(--font-display); letter-spacing: .06em; color: var(--lapis); }
-  :scope .ts-side-link { position: relative; isolation: isolate; font-weight: 700; }
-  :scope .ts-side-link[aria-current="page"] { background: none; color: var(--on-lapis); font-weight: 800; }
-  :scope .ts-side-link[aria-current="page"]::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--lapis); clip-path: var(--sh-slant); }
+  /* Sidebar: section titles lettered in red, the current page on a slash of ink. */
+  :scope .ts-sidebar { border-right: var(--sh-line); }
+  :scope .ts-side-title { font: 400 17px/20px var(--font-display); letter-spacing: .07em; color: var(--saffron); }
+  :scope .ts-side-link { position: relative; isolation: isolate; font-weight: 700; border-radius: 0; }
+  :scope .ts-side-link:hover { background: var(--sh-tone), transparent; }
+  :scope .ts-side-link[aria-current="page"] { background: none; color: var(--bg); font-weight: 900; }
+  :scope .ts-side-link[aria-current="page"]::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--ink); clip-path: var(--sh-slant); }
   :scope .ts-side-link[aria-current="page"] .ts-side-badge { background: var(--saffron); color: var(--on-saffron); }
-  :scope .ts-sidebar-toggle { border: 2px solid var(--sh-edge); }
+  :scope .ts-sidebar-toggle { border: var(--sh-thin); border-radius: 0; }
 
-  /* Slashes, line art and the four colors on the small stuff. */
-  :scope .ts-badge { border-radius: 0; clip-path: var(--sh-slant); padding-inline: 12px; font-weight: 800; }
-  :scope .ts-badge-accent { box-shadow: none; }
-  :scope .ts-tag { border-radius: 0; clip-path: polygon(6px 0, 100% 0, calc(100% - 6px) 100%, 0 100%); padding-left: 12px; padding-right: 6px; }
-  :scope .ts-check-box { border: 2px solid var(--sh-edge); border-radius: 4px; }
-  :scope .ts-check input:checked + .ts-check-box, :scope .ts-check input:indeterminate + .ts-check-box { border-color: var(--sh-line); }
-  :scope .ts-radio-dot { border: 2px solid var(--sh-edge); }
-  :scope .ts-switch-track { background: var(--surface-sunken); box-shadow: inset 0 0 0 2px var(--sh-edge); }
-  :scope .ts-switch-track::after { box-shadow: 0 0 0 2px var(--sh-line), inset 0 -3px 0 0 #c9d4e8; }
-  :scope .ts-switch input:checked + .ts-switch-track { background: var(--lapis); box-shadow: inset 0 0 0 2px var(--sh-line); }
-  :scope .ts-tab { font-weight: 700; }
-  :scope .ts-tab-ink { height: 6px; bottom: -3px; border-radius: 0; background: linear-gradient(90deg, var(--lapis) 0 78%, var(--saffron) 78%); clip-path: polygon(5px 0, 100% 0, calc(100% - 5px) 100%, 0 100%); }
-  :scope .ts-segctl { border: 2px solid var(--sh-edge); }
-  :scope .ts-segctl-ink { background: var(--saffron); border-radius: calc(var(--radius-md) - 3px); box-shadow: inset 0 -3px 0 0 var(--saffron-deep), 0 0 0 2px var(--sh-line); }
-  :scope .ts-segctl-on, :scope .ts-segctl-on:hover { color: var(--on-saffron); }
-  :scope :is(.ts-page-current, .ts-day-selected) { box-shadow: inset 0 -3px 0 0 var(--lapis-deep), 2px 2px 0 0 var(--sh-line); }
-  :scope .ts-step-current .ts-step-marker { border-color: var(--sh-line); box-shadow: inset 0 -3px 0 0 var(--saffron-deep), 2px 2px 0 0 var(--sh-line); }
-  /* Progress is an HP bar: a framed track and a cel-shaded green bar. */
-  :scope .ts-progress-track { height: 14px; padding: 2px; box-sizing: border-box; border: 2.5px solid var(--sh-edge); border-radius: var(--radius-full); background: var(--surface); }
-  :scope .ts-progress-bar { border-radius: var(--radius-full); background: linear-gradient(#a6f59a 0 32%, #3ccf4e 32% 72%, #22a336 72%); animation: none; }
-  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 1)::after { background: var(--tile-1); }
-  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 2)::after { background: var(--tile-2); }
-  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 3)::after { background: var(--tile-3); }
-  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 4)::after { background: var(--tile-4); }
-  :scope .ts-spinner i:nth-child(1) { color: var(--tile-1); }
-  :scope .ts-spinner i:nth-child(2) { color: var(--tile-2); }
-  :scope .ts-spinner i:nth-child(3) { color: var(--tile-3); }
-  :scope .ts-spinner i:nth-child(4) { color: var(--tile-4); }
-  /* Avatars: white initials with a black outline, like on-screen lettering, on the four colors. */
-  :scope .ts-avatar { border: 2px solid var(--sh-line); background: var(--tile-1); color: #ffffff; font-family: var(--font-display); font-weight: 400; -webkit-text-stroke: 3px #15112b; paint-order: stroke fill; }
-  :scope .ts-avatar[data-hue="1"] { background: var(--tile-2); color: #ffffff; }
-  :scope .ts-avatar[data-hue="2"] { background: var(--tile-3); color: #ffffff; }
-  :scope .ts-avatar[data-hue="3"] { background: var(--tile-4); color: #ffffff; }
-  :scope .ts-mosaic-tile { box-shadow: inset 0 -4px 0 0 rgba(0, 0, 0, .22), inset 3px 3px 0 0 rgba(255, 255, 255, .3); }
+  /* Small stuff: square, inked, and stamped in red when it matters. */
+  :scope .ts-badge { border: 1.5px solid var(--ink); border-radius: 0; font-weight: 900; text-transform: uppercase; letter-spacing: .04em; }
+  :scope .ts-badge-accent { background: var(--saffron); color: var(--on-saffron); box-shadow: 2px 2px 0 0 var(--ink); rotate: -4deg; }
+  :scope .ts-tag { border-radius: 0; border: 1.5px solid var(--ink); }
+  :scope .ts-check-box { border: var(--sh-thin); border-radius: 0; }
+  :scope .ts-check input:checked + .ts-check-box, :scope .ts-check input:indeterminate + .ts-check-box { background: var(--ink); border-color: var(--ink); }
+  :scope .ts-check input:checked + .ts-check-box path { stroke: var(--bg); }
+  :scope .ts-radio-dot { border: var(--sh-thin); }
+  :scope .ts-switch-track { background: var(--sh-tone), var(--surface); box-shadow: inset 0 0 0 2px var(--ink); border-radius: 0; }
+  :scope .ts-switch-track::after { border-radius: 0; background: var(--surface); box-shadow: 0 0 0 2px var(--ink); }
+  :scope .ts-switch input:checked + .ts-switch-track { background: var(--ink); }
+  :scope .ts-tab { font-weight: 900; }
+  /* The tab marker is a red brush stroke, thick at one end and tapering off. */
+  :scope .ts-tab-ink { height: 6px; bottom: -3px; border-radius: 0; background: var(--saffron); clip-path: polygon(0 30%, 100% 0, 97% 100%, 3% 85%); }
+  :scope .ts-segctl { border: var(--sh-thin); border-radius: 0; }
+  :scope .ts-segctl-ink { background: var(--ink); border-radius: 0; box-shadow: none; }
+  :scope .ts-segctl-on, :scope .ts-segctl-on:hover { color: var(--bg); }
+  :scope :is(.ts-page-current, .ts-day-selected) { border-radius: 0; box-shadow: 2px 2px 0 0 var(--saffron); }
+  :scope .ts-step-marker { border-radius: 0; }
+  :scope .ts-step-current .ts-step-marker { background: var(--saffron); color: var(--on-saffron); border-color: var(--ink); box-shadow: 2px 2px 0 0 var(--ink); }
 
-  /* Toasts are a battle text box: a double frame and a blinking arrow, swiping in from the side. */
-  :scope .ts-toast { background: var(--surface); color: var(--ink); border: 6px double var(--sh-edge); border-radius: var(--radius-md); box-shadow: 4px 4px 0 0 var(--sh-line); padding-right: var(--space-6); }
-  :scope .ts-toast:not(.ts-toast-leaving) { animation-name: shonen-swipe; animation-timing-function: var(--ease-out); }
-  :scope .ts-toast::after { content: "\25BC"; position: absolute; right: 8px; bottom: 5px; font-size: 9px; line-height: 1; color: var(--danger); animation: shonen-blink 1s steps(1) infinite; }
-  :scope .ts-toast > .ts-icon, :scope .ts-toast-action { color: var(--lapis); }
-  :scope .ts-toast-timer { background: var(--lapis); }
-  :scope .ts-tooltip { border-radius: var(--radius-xs); }
+  /* Progress: an inked frame over screentone, filled with solid ink and speed lines racing through it. */
+  :scope .ts-progress-track { height: 14px; border: var(--sh-thin); border-radius: 0; background: var(--sh-tone), var(--surface); box-sizing: border-box; }
+  :scope .ts-progress-bar { border-radius: 0; background-color: var(--ink); background-image: repeating-linear-gradient(90deg, transparent 0 10px, color-mix(in srgb, var(--bg) 45%, transparent) 10px 12px); background-size: 24px 100%; }
+  :scope .ts-progress-segmented .ts-seg::after { background: var(--ink); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(3n)::after { background: var(--saffron); }
+  :scope .ts-spinner i { color: var(--ink); }
+  :scope .ts-spinner i:nth-child(2n) { color: var(--saffron); }
+
+  /* Avatars: inked circles in screentone, solid ink or red, lettered in Bangers. */
+  :scope .ts-avatar { border: var(--sh-thin); background: var(--sh-tone), var(--surface); color: var(--ink); font: 400 17px/1 var(--font-display); letter-spacing: .04em; }
+  :scope .ts-avatar[data-hue="1"] { background: var(--saffron); color: var(--on-saffron); }
+  :scope .ts-avatar[data-hue="2"] { background: var(--ink); color: var(--bg); }
+  :scope .ts-avatar[data-hue="3"] { background: var(--sh-tone-dense), var(--surface); }
+
+  /* The mosaic: inked tiles in ink, red, screentone and paper. */
+  :scope .ts-mosaic .ts-mosaic-tile { border-radius: 0; box-shadow: inset 0 0 0 2px var(--tile-ground); }
+  :scope .ts-mosaic .ts-mosaic-tile[data-c="2"] { background: var(--sh-tone-dense), var(--tile-4); }
+  :scope .ts-mosaic .ts-mosaic-tile[data-c="4"] { box-shadow: inset 0 0 0 2px var(--tile-ground), 3px 3px 0 0 var(--ink); }
 
   @media (prefers-reduced-motion: reduce) {
-    :scope :is(.ts-card-interactive:hover, .ts-dialog, .ts-toast, .ts-toast::after, .ts-btn-tile:hover) { animation: none; }
+    :scope :is(.ts-card-interactive:hover, .ts-dialog, .ts-toast) { animation: none; }
+    :scope .ts-btn-tile:is(:hover, :active):not([disabled])::after { animation: none; opacity: 0; }
     :scope .ts-btn:hover:not([disabled]), :scope .ts-btn:active:not([disabled]) { transform: none; }
   }
 }

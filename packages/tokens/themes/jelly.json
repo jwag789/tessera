@@ -1,0 +1,317 @@
+{
+  "name": "jelly",
+  "label": "Jelly",
+  "description": "Y2K candy plastic: see-through, glossy surfaces in iMac flavors over a bubbly pinstriped ground, gel pill keys that wobble when pressed, Tamagotchi LCD fields and toasts, egg avatars and a heart meter. Smoked plastic that glows after dark.",
+  "fonts": "https://fonts.googleapis.com/css2?family=Comfortaa:wght@600;700&family=DotGothic16&family=Quicksand:wght@400;500;600;700&display=swap",
+  "type": {
+    "families": {
+      "display": "Comfortaa, \"Varela Round\", ui-rounded, system-ui, sans-serif",
+      "sans": "Quicksand, ui-rounded, \"SF Pro Rounded\", system-ui, sans-serif"
+    }
+  },
+  "color": {
+    "tokens": [
+      {
+        "name": "bg",
+        "value": {
+          "light": "#e8f2fd",
+          "dark": "#0c0f1c"
+        }
+      },
+      {
+        "name": "surface",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#18203a"
+        }
+      },
+      {
+        "name": "surface-sunken",
+        "value": {
+          "light": "#d9e7f7",
+          "dark": "#070a14"
+        }
+      },
+      {
+        "name": "line",
+        "value": {
+          "light": "#bcd0ea",
+          "dark": "#2b3658"
+        }
+      },
+      {
+        "name": "line-strong",
+        "value": {
+          "light": "#5f7aa3",
+          "dark": "#7083b3"
+        }
+      },
+      {
+        "name": "ink",
+        "value": {
+          "light": "#14213d",
+          "dark": "#eef4ff"
+        }
+      },
+      {
+        "name": "ink-muted",
+        "value": {
+          "light": "#43567a",
+          "dark": "#a9b6d6"
+        }
+      },
+      {
+        "name": "lapis",
+        "value": {
+          "light": "#0864bb",
+          "dark": "#5cc8ff"
+        }
+      },
+      {
+        "name": "lapis-hover",
+        "value": {
+          "light": "#06529b",
+          "dark": "#8ad8ff"
+        }
+      },
+      {
+        "name": "lapis-soft",
+        "value": {
+          "light": "#d6e9fb",
+          "dark": "#11304a"
+        }
+      },
+      {
+        "name": "lapis-deep",
+        "value": {
+          "light": "#063f7a",
+          "dark": "#0a5c9a"
+        }
+      },
+      {
+        "name": "lapis-glow",
+        "value": {
+          "light": "rgba(8, 100, 187, 0.28)",
+          "dark": "rgba(92, 200, 255, 0.35)"
+        }
+      },
+      {
+        "name": "on-lapis",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#06111f"
+        }
+      },
+      {
+        "name": "on-lapis-deep",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#ffffff"
+        }
+      },
+      {
+        "name": "saffron",
+        "value": {
+          "light": "#ff5fa8",
+          "dark": "#ff7ab8"
+        }
+      },
+      {
+        "name": "saffron-deep",
+        "value": {
+          "light": "#e03c8a",
+          "dark": "#e04d94"
+        }
+      },
+      {
+        "name": "saffron-soft",
+        "value": {
+          "light": "#ffe0ef",
+          "dark": "#3a1428"
+        }
+      },
+      {
+        "name": "on-saffron",
+        "value": {
+          "light": "#14213d",
+          "dark": "#0c0f1c"
+        }
+      },
+      {
+        "name": "success",
+        "value": {
+          "light": "#0b7448",
+          "dark": "#5fe0a0"
+        }
+      },
+      {
+        "name": "success-soft",
+        "value": {
+          "light": "#d8f5e6",
+          "dark": "#0f2e22"
+        }
+      },
+      {
+        "name": "warning",
+        "value": {
+          "light": "#8a4f00",
+          "dark": "#ffc36b"
+        }
+      },
+      {
+        "name": "danger",
+        "value": {
+          "light": "#c4213a",
+          "dark": "#ff7d8f"
+        }
+      },
+      {
+        "name": "danger-soft",
+        "value": {
+          "light": "#ffe1e6",
+          "dark": "#3a1420"
+        }
+      },
+      {
+        "name": "on-danger",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#0c0f1c"
+        }
+      },
+      {
+        "name": "inverse-accent",
+        "value": {
+          "light": "#7fd8ff",
+          "dark": "#0a5c9a"
+        }
+      },
+      {
+        "name": "overlay",
+        "value": {
+          "light": "rgba(20, 33, 61, 0.38)",
+          "dark": "rgba(3, 5, 12, 0.62)"
+        }
+      },
+      {
+        "name": "tile-ground",
+        "value": {
+          "light": "#cfe3f7",
+          "dark": "#070a14"
+        }
+      },
+      {
+        "name": "tile-1",
+        "value": {
+          "light": "#1fa8e8",
+          "dark": "#29b6f6"
+        }
+      },
+      {
+        "name": "tile-2",
+        "value": {
+          "light": "#ff5fa8",
+          "dark": "#ff7ab8"
+        }
+      },
+      {
+        "name": "tile-3",
+        "value": {
+          "light": "#9d63f5",
+          "dark": "#b388ff"
+        }
+      },
+      {
+        "name": "tile-4",
+        "value": {
+          "light": "#6fd65c",
+          "dark": "#8cf07a"
+        }
+      },
+      {
+        "name": "lcd",
+        "value": {
+          "light": "#bcc8a4",
+          "dark": "#132414"
+        }
+      },
+      {
+        "name": "lcd-ink",
+        "value": {
+          "light": "#1f2a17",
+          "dark": "#9dff8a"
+        }
+      }
+    ]
+  },
+  "radius": {
+    "tokens": [
+      {
+        "name": "radius-xs",
+        "value": "8px"
+      },
+      {
+        "name": "radius-sm",
+        "value": "12px"
+      },
+      {
+        "name": "radius-md",
+        "value": "16px"
+      },
+      {
+        "name": "radius-lg",
+        "value": "22px"
+      },
+      {
+        "name": "radius-xl",
+        "value": "30px"
+      }
+    ]
+  },
+  "shadow": {
+    "tokens": [
+      {
+        "name": "shadow-sm",
+        "value": {
+          "light": "0 2px 6px rgba(10, 60, 120, 0.16)",
+          "dark": "0 2px 6px rgba(0, 0, 0, 0.5)"
+        }
+      },
+      {
+        "name": "shadow-md",
+        "value": {
+          "light": "0 8px 22px rgba(10, 60, 120, 0.18)",
+          "dark": "0 8px 22px rgba(0, 0, 0, 0.55)"
+        }
+      },
+      {
+        "name": "shadow-lg",
+        "value": {
+          "light": "0 22px 48px rgba(10, 60, 120, 0.26)",
+          "dark": "0 22px 48px rgba(0, 0, 0, 0.6)"
+        }
+      },
+      {
+        "name": "shadow-glow",
+        "value": {
+          "light": "0 0 0 4px rgba(8, 100, 187, 0.25)",
+          "dark": "0 0 0 4px rgba(92, 200, 255, 0.3)"
+        }
+      },
+      {
+        "name": "shadow-tile",
+        "value": {
+          "light": "0 8px 20px rgba(255, 95, 168, 0.45)",
+          "dark": "0 8px 22px rgba(255, 122, 184, 0.4)"
+        }
+      },
+      {
+        "name": "shadow-tile-lg",
+        "value": {
+          "light": "0 14px 30px rgba(255, 95, 168, 0.5)",
+          "dark": "0 14px 32px rgba(255, 122, 184, 0.45)"
+        }
+      }
+    ]
+  }
+}

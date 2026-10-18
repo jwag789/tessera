@@ -52,6 +52,7 @@ import '@tessera-design/react/themes/cartridge-fonts.css';
 | Polygon | `themes/polygon.css`, `themes/polygon-fonts.css` |
 | Gloop | `themes/gloop.css`, `themes/gloop-fonts.css` |
 | Shonen | `themes/shonen.css`, `themes/shonen-fonts.css` |
+| Jelly | `themes/jelly.css`, `themes/jelly-fonts.css` |
 
 Dark mode follows the system unless the user picks one; `useTheme()` reads and changes both the mode and the theme.
 

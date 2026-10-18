@@ -13,7 +13,7 @@
 [![Tessera's four themes side by side: Tessera, Cartridge, Polygon and Gloop](.github/assets/themes.jpg)](https://jwag789.github.io/tessera/#themes)
 
 - **40 React components**, typed, tested and keyboard-accessible: from Button and Select to Command palette, Date picker, Data table and Drawer, plus layout primitives.
-- **Five themes** (Tessera, Cartridge, Polygon, Gloop and Shonen), each in light and dark, built from one set of design tokens. Switch them live in the docs.
+- **Six themes** (Tessera, Cartridge, Polygon, Gloop, Shonen and Jelly), each in light and dark, built from one set of design tokens. Switch them live in the docs.
 - **154 tests**, with axe accessibility checks on every component, strict TypeScript, and a bundle size budget enforced in CI.
 - **Folio**, a resume builder and job tracker that uses nearly every component, to show the system holding up in a real product.
 
@@ -66,13 +66,14 @@ The bundle starts with `"use client"`, so it works from React Server Components 
 
 ### Themes
 
-Tessera ships five themes, each in light and dark:
+Tessera ships six themes, each in light and dark:
 
 - **Tessera** (the default)
 - **Cartridge:** charcoal plastic with light labels, four button colors, chunky keys that press down
 - **Polygon:** matte grey plastic, dark recessed panels, hard bevels and pixel headings
 - **Gloop:** 90s kids-TV, with slime green and orange, thick outlines, and everything a bit tilted
-- **Shonen:** 90s anime, Saturday-morning blue, yellow and red by day and Unit-01 purple and green by night, with cel-shaded keys, speed lines and an HP bar
+- **Shonen:** a manga page, black ink on newsprint with one red spot color, with comic panels, screentone, speech bubbles and focus lines
+- **Jelly:** Y2K candy plastic, see-through and glossy in iMac flavors, with gel keys, Tamagotchi LCD fields and a heart meter
 
 Import a theme's CSS and pick it with `ThemeProvider`:
 

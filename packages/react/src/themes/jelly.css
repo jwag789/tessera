@@ -1,0 +1,178 @@
+/* Jelly: component treatments the tokens can't express. Y2K candy plastic: see-through, glossy surfaces tinted in
+   iMac flavors over a bubbly, pinstriped ground; gel pill keys with a highlight that squash when pressed and spring
+   back; Tamagotchi LCD fields and toasts in a dot-matrix face; egg-shaped avatars; a heart meter for progress.
+   After dark it's the same toy in smoked plastic, with a backlit green LCD. Scoped to [data-brand="jelly"]. */
+@keyframes jelly-in { 0% { opacity: 0; transform: scale(.86) translateY(12px); } 60% { opacity: 1; transform: scale(1.03, .98); } 80% { transform: scale(.99, 1.01); } 100% { transform: none; } }
+@keyframes jelly-wobble { 0%, 100% { transform: none; } 30% { transform: scale(1.03, .97); } 60% { transform: scale(.985, 1.02); } }
+@keyframes jelly-beep { 50% { opacity: .25; } }
+
+/* Scoped so a nested area with a different data-brand keeps its own look. */
+@scope ([data-brand="jelly"]) to ([data-brand]:not([data-brand="jelly"])) {
+  :scope {
+    font-synthesis: none;
+    --jl-pixel: "DotGothic16", ui-monospace, monospace;
+    /* Plastic: the surface color, partly see-through, with a gloss across the top. */
+    --jl-alpha: 58%;
+    --jl-shine: rgba(255, 255, 255, .7);
+    --jl-rim: inset 0 1px 0 rgba(255, 255, 255, .95), inset 0 -1px 0 rgba(255, 255, 255, .4);
+    --jl-edge: 1px solid rgba(120, 160, 210, .45);
+    --jl-pinstripe: rgba(255, 255, 255, .55);
+    --jl-bubble: 32%;
+    --jl-base: #ffffff;
+  }
+  /* After dark: smoked plastic, a dimmer gloss and a glow in the bubbles. */
+  :scope[data-theme="dark"] { --jl-alpha: 62%; --jl-shine: rgba(255, 255, 255, .16); --jl-rim: inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 -1px 0 rgba(255, 255, 255, .06); --jl-edge: 1px solid rgba(140, 170, 255, .22); --jl-pinstripe: rgba(255, 255, 255, .025); --jl-bubble: 22%; --jl-base: #18203a; }
+  @media (prefers-color-scheme: dark) {
+    :scope:not([data-theme="light"]) { --jl-alpha: 62%; --jl-shine: rgba(255, 255, 255, .16); --jl-rim: inset 0 1px 0 rgba(255, 255, 255, .22), inset 0 -1px 0 rgba(255, 255, 255, .06); --jl-edge: 1px solid rgba(140, 170, 255, .22); --jl-pinstripe: rgba(255, 255, 255, .025); --jl-bubble: 22%; --jl-base: #18203a; }
+  }
+  /* Recomputed per element, so a tinted panel's plastic follows its own surface. */
+  :scope, :scope * {
+    --jl-plastic: color-mix(in srgb, var(--surface) var(--jl-alpha), transparent);
+    --jl-gloss: linear-gradient(180deg, var(--jl-shine) 0, transparent 46%);
+  }
+
+  /* The ground: Aqua pinstripes over big soft bubbles of candy color, so the see-through plastic has something to show. */
+  :scope body {
+    background:
+      repeating-linear-gradient(0deg, var(--jl-pinstripe) 0 1px, transparent 1px 4px),
+      radial-gradient(circle at 12% 18%, color-mix(in srgb, var(--tile-1) var(--jl-bubble), transparent) 0 14vmax, transparent 22vmax),
+      radial-gradient(circle at 88% 12%, color-mix(in srgb, var(--tile-2) var(--jl-bubble), transparent) 0 10vmax, transparent 18vmax),
+      radial-gradient(circle at 78% 82%, color-mix(in srgb, var(--tile-3) var(--jl-bubble), transparent) 0 13vmax, transparent 22vmax),
+      radial-gradient(circle at 22% 88%, color-mix(in srgb, var(--tile-4) var(--jl-bubble), transparent) 0 9vmax, transparent 17vmax),
+      var(--bg);
+    background-attachment: fixed;
+  }
+
+  /* Rounded, friendly lettering. */
+  :scope :is(.ts-card-title, .ts-dialog-title, .ts-popover-title, .ts-empty-title, .ts-cal-title, .ts-navbar-brand) { font-weight: 700; letter-spacing: -.02em; }
+  :scope :is(.display-2xl, .display-xl, .display-lg, .heading-lg, .heading-md) { font-weight: 700; letter-spacing: -.03em; }
+  :scope :is(.ts-btn, .ts-badge, .ts-tab, .ts-navlink, .ts-side-link, .ts-segctl-item) { font-weight: 700; }
+
+  /* Plastic surfaces: see-through, blurred, glossy along the top, with a bright rim. */
+  :scope :is(.ts-card, .ts-dialog, .ts-drawer, .ts-cmd, .ts-popover, .ts-menu, .ts-sel-list, .ts-side-flyout, .ts-table-wrap, .ts-accordion, .ts-empty, .ts-file, .ts-alert, .ts-navbar, .ts-sidebar, .ts-textarea) {
+    background: var(--jl-gloss) no-repeat, var(--jl-plastic);
+    border: var(--jl-edge);
+    box-shadow: var(--jl-rim), var(--shadow-md);
+    backdrop-filter: blur(16px) saturate(1.7);
+    -webkit-backdrop-filter: blur(16px) saturate(1.7);
+  }
+  :scope :is(.ts-card, .ts-table-wrap, .ts-accordion, .ts-empty, .ts-file) { border-radius: var(--radius-xl); }
+  /* Cards come in iMac flavors: blueberry, strawberry, grape, lime. */
+  :scope .ts-card { --surface: color-mix(in srgb, var(--tile-1) 18%, var(--jl-base, #ffffff)); }
+  :scope .ts-card:nth-child(4n + 2) { --surface: color-mix(in srgb, var(--tile-2) 18%, var(--jl-base, #ffffff)); }
+  :scope .ts-card:nth-child(4n + 3) { --surface: color-mix(in srgb, var(--tile-3) 18%, var(--jl-base, #ffffff)); }
+  :scope .ts-card:nth-child(4n + 4) { --surface: color-mix(in srgb, var(--tile-4) 20%, var(--jl-base, #ffffff)); }
+  :scope .ts-card-tile { --surface: color-mix(in srgb, var(--saffron) 26%, var(--jl-base, #ffffff)); box-shadow: var(--jl-rim), var(--shadow-tile); }
+  :scope .ts-card-interactive { transition: transform var(--duration-base) cubic-bezier(.34, 1.7, .5, 1), box-shadow var(--duration-base); }
+  :scope .ts-card-interactive:hover { transform: translateY(-4px) scale(1.01); box-shadow: var(--jl-rim), var(--shadow-lg); }
+  :scope .ts-dialog { border-radius: 32px; animation-name: jelly-in; animation-timing-function: var(--ease-out); }
+  :scope :is(.ts-popover, .ts-menu, .ts-sel-list, .ts-side-flyout, .ts-cmd) { border-radius: var(--radius-lg); }
+  :scope .ts-overlay { backdrop-filter: blur(10px) saturate(1.4); -webkit-backdrop-filter: blur(10px) saturate(1.4); }
+  :scope .ts-menu-item-active { background: linear-gradient(180deg, rgba(255, 255, 255, .45), transparent 50%), var(--lapis); color: var(--on-lapis); border-radius: var(--radius-sm); }
+  :scope .ts-menu-item-active :is(.ts-icon, .ts-kbd) { color: var(--on-lapis); }
+
+  /* Keys: gel pills. A highlight sits in the top half; pressing squashes the key, letting go springs it back. */
+  :scope .ts-btn { border-radius: 999px; border: 1px solid rgba(0, 0, 0, .12); transition: transform .5s cubic-bezier(.34, 1.9, .5, 1), box-shadow var(--duration-fast), filter var(--duration-fast); }
+  :scope :is(.ts-btn-primary, .ts-btn-danger, .ts-btn-tile, .ts-btn-secondary) { --jl-key: var(--lapis); background: linear-gradient(180deg, color-mix(in srgb, var(--jl-key) 72%, #ffffff), var(--jl-key) 55%, color-mix(in srgb, var(--jl-key) 82%, #000000)); box-shadow: inset 0 -3px 6px color-mix(in srgb, #ffffff 35%, transparent), 0 4px 12px color-mix(in srgb, var(--jl-key) 40%, transparent); }
+  :scope .ts-btn-danger { --jl-key: var(--danger); }
+  :scope .ts-btn-tile { --jl-key: var(--saffron); color: var(--on-saffron); }
+  :scope .ts-btn-secondary { --jl-key: var(--surface); color: var(--ink); border-color: var(--jl-edge-color, rgba(120, 160, 210, .5)); background: var(--jl-plastic); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: var(--jl-rim), var(--shadow-sm); }
+  :scope :is(.ts-btn-primary, .ts-btn-danger, .ts-btn-tile, .ts-btn-secondary)::after {
+    display: block; content: ""; position: absolute; inset: 2px 12% auto; height: 46%; width: auto; border-radius: 999px; transform: none; animation: none; transition: none;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .8), rgba(255, 255, 255, .12));
+  }
+  /* Clear keys catch less light than colored ones. */
+  :scope .ts-btn-secondary::after { background: linear-gradient(180deg, var(--jl-shine), transparent); }
+  :scope :is(.ts-btn-primary, .ts-btn-danger, .ts-btn-tile, .ts-btn-secondary):hover:not([disabled]) { transform: translateY(-1px); filter: brightness(1.06) saturate(1.1); }
+  :scope .ts-btn-secondary:hover:not([disabled]) { border-color: rgba(120, 160, 210, .7); }
+  :scope .ts-btn-tile:hover:not([disabled]) { background: linear-gradient(180deg, color-mix(in srgb, var(--jl-key) 72%, #ffffff), var(--jl-key) 55%, color-mix(in srgb, var(--jl-key) 82%, #000000)); box-shadow: inset 0 -3px 6px rgba(255, 255, 255, .35), var(--shadow-tile-lg); }
+  :scope .ts-btn-ghost { border-color: transparent; }
+  :scope .ts-btn-ghost:hover:not([disabled]) { background: color-mix(in srgb, var(--lapis) 12%, transparent); }
+  :scope .ts-btn:active:not([disabled]) { transform: scale(1.06, .86); transition: transform 60ms ease-out; }
+
+  /* Fields are Tamagotchi screens: a grey-green LCD set into the plastic, in a dot-matrix face. */
+  :scope :is(.ts-input:not(.ts-textarea), .ts-sel-trigger, .ts-tags, .ts-number) {
+    background: linear-gradient(180deg, rgba(0, 0, 0, .06), transparent 30%), var(--lcd);
+    color: var(--lcd-ink); font-family: var(--jl-pixel); letter-spacing: .02em;
+    border: 3px solid var(--jl-bezel, color-mix(in srgb, var(--surface) 80%, var(--lapis))); border-radius: 14px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, .28), var(--jl-rim);
+  }
+  :scope :is(.ts-input:not(.ts-textarea), .ts-sel-trigger, .ts-tags, .ts-number) :is(input, .ts-icon, .ts-sel-value) { color: var(--lcd-ink); font-family: inherit; }
+  :scope .ts-input:not(.ts-textarea)::placeholder, :scope .ts-tags input::placeholder { color: color-mix(in srgb, var(--lcd-ink) 60%, var(--lcd)); }
+  :scope .ts-textarea { border-radius: var(--radius-lg); color: var(--ink); }
+  :scope :is(.ts-input, .ts-sel-trigger, .ts-tags, .ts-number):hover { border-color: color-mix(in srgb, var(--surface) 55%, var(--lapis)); }
+  :scope :is(.ts-input:focus-visible, .ts-tags:focus-within), :scope .ts-sel-open .ts-sel-trigger { border-color: var(--lapis); box-shadow: inset 0 2px 5px rgba(0, 0, 0, .28), 0 0 0 4px var(--lapis-glow); }
+
+  /* Navbar and sidebar: frosted plastic. The current page is a gel pill. */
+  :scope .ts-navbar { border-width: 0 0 1px; box-shadow: var(--jl-rim), var(--shadow-sm); }
+  :scope .ts-sidebar { border-width: 0 1px 0 0; box-shadow: var(--jl-rim); }
+  :scope :is(.ts-navlink, .ts-side-link) { border-radius: 999px; }
+  :scope :is(.ts-navlink, .ts-side-link):hover { background: color-mix(in srgb, var(--lapis) 12%, transparent); }
+  :scope :is(.ts-navlink, .ts-side-link)[aria-current="page"] { position: relative; isolation: isolate; color: var(--on-lapis); background: linear-gradient(180deg, color-mix(in srgb, var(--lapis) 70%, #ffffff), var(--lapis) 55%); box-shadow: inset 0 -2px 4px rgba(255, 255, 255, .35), 0 3px 10px color-mix(in srgb, var(--lapis) 40%, transparent); }
+  :scope :is(.ts-navlink, .ts-side-link)[aria-current="page"]::after { content: ""; position: absolute; inset: 2px 14px auto; height: 42%; border-radius: 999px; background: linear-gradient(180deg, rgba(255, 255, 255, .7), rgba(255, 255, 255, .08)); z-index: -1; bottom: auto; width: auto; }
+  :scope .ts-side-link[aria-current="page"] .ts-side-badge { background: var(--on-lapis); color: var(--lapis); }
+  /* Section titles get a candy dot in each flavor. */
+  :scope .ts-side-title { color: var(--ink-muted); }
+  :scope .ts-side-title::before { content: ""; display: inline-block; width: 10px; height: 10px; margin-right: 8px; vertical-align: -1px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #ffffff 0 18%, var(--tile-1) 60%); box-shadow: 0 1px 3px rgba(0, 0, 0, .2); }
+  :scope .ts-sidebar-body > .ts-side-title:nth-of-type(4n + 2)::before { background: radial-gradient(circle at 35% 30%, #ffffff 0 18%, var(--tile-2) 60%); }
+  :scope .ts-sidebar-body > .ts-side-title:nth-of-type(4n + 3)::before { background: radial-gradient(circle at 35% 30%, #ffffff 0 18%, var(--tile-3) 60%); }
+  :scope .ts-sidebar-body > .ts-side-title:nth-of-type(4n + 4)::before { background: radial-gradient(circle at 35% 30%, #ffffff 0 18%, var(--tile-4) 60%); }
+
+  /* Small stuff: candy. */
+  :scope .ts-badge { border-radius: 999px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7), 0 1px 3px rgba(0, 0, 0, .12); }
+  :scope .ts-badge-accent { background: linear-gradient(180deg, color-mix(in srgb, var(--saffron) 65%, #ffffff), var(--saffron) 60%); color: var(--on-saffron); }
+  :scope .ts-tag { border-radius: 999px; }
+  :scope .ts-check-box { border-radius: 8px; border: 1px solid rgba(120, 160, 210, .7); background: linear-gradient(180deg, rgba(255, 255, 255, .8), rgba(255, 255, 255, .2)), var(--surface-sunken); box-shadow: inset 0 1px 3px rgba(0, 0, 0, .15); }
+  :scope .ts-check input:checked + .ts-check-box, :scope .ts-check input:indeterminate + .ts-check-box { background: linear-gradient(180deg, rgba(255, 255, 255, .6), transparent 55%), var(--lapis); border-color: rgba(0, 0, 0, .15); box-shadow: 0 2px 6px var(--lapis-glow); }
+  :scope .ts-radio-dot { border: 1px solid rgba(120, 160, 210, .7); background: linear-gradient(180deg, rgba(255, 255, 255, .8), rgba(255, 255, 255, .2)), var(--surface-sunken); box-shadow: inset 0 1px 3px rgba(0, 0, 0, .15); }
+  :scope .ts-switch-track { background: linear-gradient(180deg, rgba(0, 0, 0, .1), transparent 50%), var(--surface-sunken); box-shadow: inset 0 1px 3px rgba(0, 0, 0, .22); }
+  :scope .ts-switch-track::after { background: radial-gradient(circle at 38% 30%, #ffffff 0 22%, #eef3fa 45%, #c3d0e2 100%); box-shadow: 0 2px 4px rgba(0, 0, 0, .25); }
+  :scope .ts-switch input:checked + .ts-switch-track { background: linear-gradient(180deg, rgba(255, 255, 255, .45), transparent 55%), var(--lapis); }
+  :scope .ts-tab-ink { height: 5px; bottom: -2px; border-radius: 999px; background: linear-gradient(180deg, color-mix(in srgb, var(--lapis) 55%, #ffffff), var(--lapis)); box-shadow: 0 1px 4px var(--lapis-glow); }
+  :scope .ts-segctl { border-radius: 999px; background: linear-gradient(180deg, rgba(0, 0, 0, .06), transparent 50%), var(--surface-sunken); box-shadow: inset 0 1px 3px rgba(0, 0, 0, .15); }
+  :scope .ts-segctl-ink { border-radius: 999px; background: linear-gradient(180deg, rgba(255, 255, 255, .55), transparent 55%), var(--lapis); box-shadow: 0 2px 6px var(--lapis-glow); }
+  :scope .ts-segctl-on, :scope .ts-segctl-on:hover { color: var(--on-lapis); }
+  :scope :is(.ts-page-current, .ts-day-selected) { border-radius: 999px; background: linear-gradient(180deg, rgba(255, 255, 255, .45), transparent 55%), var(--lapis); box-shadow: 0 2px 6px var(--lapis-glow); }
+  :scope .ts-step-current .ts-step-marker { background: linear-gradient(180deg, rgba(255, 255, 255, .5), transparent 55%), var(--saffron); color: var(--on-saffron); border-color: transparent; box-shadow: 0 2px 8px color-mix(in srgb, var(--saffron) 45%, transparent); }
+  :scope .ts-tooltip { border-radius: 999px; padding-inline: 12px; }
+
+  /* Progress is a Tamagotchi heart meter on the LCD. */
+  :scope .ts-progress-track { height: 20px; padding: 3px 5px; box-sizing: border-box; border-radius: 10px; background: var(--lcd); box-shadow: inset 0 2px 4px rgba(0, 0, 0, .28), 0 0 0 2px color-mix(in srgb, var(--surface) 80%, var(--lapis)); }
+  :scope .ts-progress-bar {
+    border-radius: 0; animation: none; background: var(--lcd-ink);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='14' viewBox='0 0 16 14'%3E%3Cpath d='M8 13L2 7A3.4 3.4 0 0 1 8 2.6A3.4 3.4 0 0 1 14 7Z'/%3E%3C/svg%3E") left center / 16px 14px repeat-x;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='14' viewBox='0 0 16 14'%3E%3Cpath d='M8 13L2 7A3.4 3.4 0 0 1 8 2.6A3.4 3.4 0 0 1 14 7Z'/%3E%3C/svg%3E") left center / 16px 14px repeat-x;
+  }
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 1)::after { background: var(--tile-1); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 2)::after { background: var(--tile-2); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 3)::after { background: var(--tile-3); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 4)::after { background: var(--tile-4); }
+  :scope .ts-spinner i:nth-child(1) { color: var(--tile-1); }
+  :scope .ts-spinner i:nth-child(2) { color: var(--tile-2); }
+  :scope .ts-spinner i:nth-child(3) { color: var(--tile-3); }
+  :scope .ts-spinner i:nth-child(4) { color: var(--tile-4); }
+
+  /* Avatars are eggs, in candy colors with a shine. */
+  :scope .ts-avatar { --jl-egg: var(--tile-1); border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%; background: radial-gradient(ellipse at 35% 25%, rgba(255, 255, 255, .85) 0 12%, transparent 30%), linear-gradient(180deg, color-mix(in srgb, var(--jl-egg) 55%, #ffffff), var(--jl-egg)); color: #14213d; box-shadow: inset 0 -3px 6px rgba(0, 0, 0, .12), 0 2px 6px rgba(0, 0, 0, .15); }
+  :scope .ts-avatar[data-hue="1"] { --jl-egg: var(--tile-2); }
+  :scope .ts-avatar[data-hue="2"] { --jl-egg: var(--tile-3); }
+  :scope .ts-avatar[data-hue="3"] { --jl-egg: var(--tile-4); }
+
+  /* Toasts pop up on a Tamagotchi: an LCD screen in a candy shell, with a beeping icon. */
+  :scope .ts-toast { background: linear-gradient(180deg, rgba(0, 0, 0, .06), transparent 30%), var(--lcd); color: var(--lcd-ink); font-family: var(--jl-pixel); border: 7px solid color-mix(in srgb, var(--saffron) 80%, #ffffff); border-radius: 28px; box-shadow: inset 0 2px 6px rgba(0, 0, 0, .3), 0 0 0 1px rgba(0, 0, 0, .08), 0 12px 28px color-mix(in srgb, var(--saffron) 40%, transparent); }
+  :scope .ts-toast:not(.ts-toast-leaving) { animation-name: jelly-in; animation-timing-function: var(--ease-out); }
+  :scope .ts-toast-title { font-weight: 400; }
+  :scope .ts-toast > .ts-icon { color: var(--lcd-ink); animation: jelly-beep 1s steps(1) 3; }
+  :scope :is(.ts-toast-action, .ts-toast .ts-close) { color: var(--lcd-ink); font-family: var(--jl-pixel); font-weight: 400; text-decoration: underline; text-underline-offset: 3px; }
+  :scope .ts-toast-timer { background: var(--lcd-ink); height: 3px; }
+
+  /* The mosaic: gummy candy cubes. */
+  :scope .ts-mosaic { border-radius: var(--radius-xl); }
+  :scope .ts-mosaic .ts-mosaic-tile { border-radius: 32%; box-shadow: inset 0 -4px 6px rgba(0, 0, 0, .18), inset 0 3px 3px rgba(255, 255, 255, .55); }
+  :scope .ts-mosaic .ts-mosaic-tile[data-c="4"] { box-shadow: inset 0 -4px 6px rgba(0, 0, 0, .18), inset 0 3px 3px rgba(255, 255, 255, .55), var(--shadow-tile); }
+
+  @media (prefers-reduced-motion: reduce) {
+    :scope :is(.ts-dialog, .ts-toast, .ts-toast > .ts-icon) { animation: none; }
+    :scope :is(.ts-btn, .ts-card-interactive):is(:hover, :active):not([disabled]) { transform: none; }
+  }
+}
