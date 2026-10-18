@@ -2,10 +2,21 @@
   "$schema": "https://unpkg.com/@changesets/config@3.0.4/schema.json",
   "changelog": "@changesets/cli/changelog",
   "commit": false,
-  "fixed": [["@tessera/tokens", "@tessera/react"]],
+  "fixed": [
+    [
+      "@tessera/tokens",
+      "@tessera/react"
+    ]
+  ],
   "linked": [],
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["@tessera/docs"]
+  "ignore": [
+    "@tessera/docs"
+  ],
+  "privatePackages": {
+    "version": false,
+    "tag": false
+  }
 }

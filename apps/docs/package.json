@@ -11,8 +11,8 @@
     "typecheck": "npm run props && tsc --noEmit"
   },
   "dependencies": {
-    "@tessera/react": "0.1.0",
-    "@tessera/tokens": "0.1.0",
+    "@tessera/react": "0.2.0",
+    "@tessera/tokens": "0.2.0",
     "marked": "14.1.4",
     "react": "18.3.1",
     "react-dom": "18.3.1"

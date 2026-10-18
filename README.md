@@ -124,7 +124,9 @@ Tokens live in `packages/tokens/tokens.json`; edit them there and rebuild. Compo
 
 ### Releasing
 
-Changes to the packages get a changeset: run `npx changeset`, choose the bump and write one changelog line. `npx changeset version` applies pending changesets to versions and CHANGELOGs; `npx changeset publish` publishes. `@tessera/tokens` and `@tessera/react` always release together.
+Changes to the packages get a changeset: run `npx changeset`, choose the bump and write one changelog line. `@tessera/tokens` and `@tessera/react` always release together at the same version.
+
+Releases are automated by `.github/workflows/release.yml`. When changesets land on `main`, it opens a **Version packages** pull request that bumps versions and writes the CHANGELOGs; merging that pull request typechecks, tests, builds and publishes both packages to npm with [provenance](https://docs.npmjs.com/generating-provenance-statements). It needs an npm automation token in the `NPM_TOKEN` repository secret.
 
 ## Deploy
 

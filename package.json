@@ -16,7 +16,8 @@
     "typecheck": "npm run build -w @tessera/tokens && npm run typecheck -w @tessera/react && npm run typecheck -w @tessera/docs && npm run typecheck -w @tessera/resume",
     "size": "npm run size -w @tessera/react",
     "changeset": "changeset",
-    "dev:resume": "npm run build -w @tessera/tokens && npm run dev -w @tessera/resume"
+    "dev:resume": "npm run build -w @tessera/tokens && npm run dev -w @tessera/resume",
+    "release": "npm run build:packages && changeset publish"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.10",

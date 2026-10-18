@@ -1,8 +1,30 @@
 {
   "name": "@tessera/react",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "React components for the Tessera design system.",
   "license": "MIT",
+  "author": "Justin Wagner",
+  "homepage": "https://jwag789.github.io/tessera/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwag789/tessera.git",
+    "directory": "packages/react"
+  },
+  "bugs": {
+    "url": "https://github.com/jwag789/tessera/issues"
+  },
+  "keywords": [
+    "react",
+    "design-system",
+    "component-library",
+    "ui",
+    "accessibility",
+    "a11y",
+    "dark-mode",
+    "theming",
+    "typescript",
+    "tessera"
+  ],
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -18,7 +40,9 @@
     "./themes/*": "./dist/themes/*"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "LICENSE"
   ],
   "sideEffects": [
     "*.css"
@@ -35,7 +59,7 @@
     "react-dom": ">=18.2.0"
   },
   "dependencies": {
-    "@tessera/tokens": "0.1.0"
+    "@tessera/tokens": "^0.2.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "6.6.3",
@@ -53,5 +77,9 @@
   "sizeBudgets": {
     "dist/index.js": 32768,
     "dist/styles.css": 14336
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }
