@@ -13,7 +13,7 @@
 [![Tessera's four themes side by side: Tessera, Cartridge, Polygon and Gloop](.github/assets/themes.jpg)](https://jwag789.github.io/tessera/#themes)
 
 - **40 React components**, typed, tested and keyboard-accessible: from Button and Select to Command palette, Date picker, Data table and Drawer, plus layout primitives.
-- **Six themes** (Tessera, Cartridge, Polygon, Gloop, Shonen and Jelly), each in light and dark, built from one set of design tokens. Switch them live in the docs.
+- **Seven themes** (Tessera, Cartridge, Polygon, Gloop, Shonen, Jelly and Neon), each in light and dark, built from one set of design tokens. Switch them live in the docs.
 - **154 tests**, with axe accessibility checks on every component, strict TypeScript, and a bundle size budget enforced in CI.
 - **Folio**, a resume builder and job tracker that uses nearly every component, to show the system holding up in a real product.
 
@@ -66,7 +66,7 @@ The bundle starts with `"use client"`, so it works from React Server Components 
 
 ### Themes
 
-Tessera ships six themes, each in light and dark:
+Tessera ships seven themes, each in light and dark:
 
 - **Tessera** (the default)
 - **Cartridge:** Nintendo 64. Charcoal controller plastic, cards as cartridges (the featured one is gold), A, C and Start buttons as keys, Mario 64 title lettering, Zelda text boxes for dialogs, menus and toasts, a magic meter and a power slider
@@ -74,6 +74,7 @@ Tessera ships six themes, each in light and dark:
 - **Gloop:** 90s kids-TV, with slime green and orange, thick outlines, and everything a bit tilted
 - **Shonen:** a manga page, black ink on newsprint with one red spot color, with comic panels, screentone, speech bubbles and focus lines
 - **Jelly:** Y2K candy plastic, see-through and glossy in iMac flavors, with gel keys, Tamagotchi LCD fields and a heart meter
+- **Neon:** the 80s after dark, with a synthwave sun over a glowing grid, a red neon outlined title, arcade keys that light up, CRT terminal fields and a string of Christmas lights
 
 Import a theme's CSS and pick it with `ThemeProvider`:
 

@@ -257,14 +257,15 @@ export function BrandPage() {
 
 /* ---------- themes ---------- */
 
-const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop', 'shonen', 'jelly'];
+const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop', 'shonen', 'jelly', 'neon'];
 const THEME_NOTES: Record<string, string[]> = {
   tessera: ['Saturated lapis with one saffron tile', 'Tight corners, hard offset shadow', 'Bricolage Grotesque headings'],
   cartridge: ['Charcoal controller plastic, cards as cartridges with grip ridges', 'A, B, C and Start buttons as keys; a power slider for switches', 'Mario 64 title lettering, Zelda text boxes, a magic meter'],
   polygon: ['Matte grey plastic with dark recessed panels', 'Hard 1-2px bevels, a menu cursor on the selection', 'Silkscreen pixel headings, Space Mono labels'],
   gloop: ['Slime green and orange, with a splash of blue and purple', 'Thick outlines, clashing shadows, everything a bit tilted', 'Luckiest Guy lettering over Fredoka'],
   shonen: ['A manga page: black ink, newsprint and one red, inverted after dark', 'Comic panels, screentone, speech bubbles, focus lines, ゴゴゴ and ドン!', 'Bangers lettering over Zen Kaku Gothic New'],
-  jelly: ['Y2K candy plastic in iMac flavors, smoked after dark', 'See-through glossy surfaces, gel keys that squash, Tamagotchi LCD fields and toasts', 'Comfortaa over Quicksand, DotGothic16 on the LCD']
+  jelly: ['Y2K candy plastic in iMac flavors, smoked after dark', 'See-through glossy surfaces, gel keys that squash, Tamagotchi LCD fields and toasts', 'Comfortaa over Quicksand, DotGothic16 on the LCD'],
+  neon: ['80s after dark: a synthwave sun over a glowing grid, pastel by day', 'A red neon outlined title, arcade keys that light up, CRT terminal fields', 'Christmas lights on the navbar, a power meter, VHS color fringing']
 };
 
 function ThemeSample({ name }: { name: string }) {
@@ -314,7 +315,7 @@ export function ThemesPage() {
       <Head
         eyebrow="Overview"
         title="Themes"
-        lead="One set of components, six looks. Each theme is a token pack plus a few component treatments, in light and dark. Compare them here, then switch the whole site with Use this theme."
+        lead="One set of components, seven looks. Each theme is a token pack plus a few component treatments, in light and dark. Compare them here, then switch the whole site with Use this theme."
       />
       <div className="d-theme-bar">
         <SegmentedControl label="Mode for the comparison" size="sm" options={[{ value: 'system', label: 'System' }, { value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }]} value={theme} onChange={(v) => setTheme(v as typeof theme)} />
