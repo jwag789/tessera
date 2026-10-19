@@ -1,0 +1,203 @@
+/* Clay: component treatments the tokens can't express. Playdough and claymation. Every surface is a soft, matte lump
+   of modelling clay: lit clay grain, the odd fingerprint, lumpy hand-rolled corners, a highlight on the top-left
+   shoulder and a shade underneath. Play-Doh colors on warm putty, or dark plasticine after dark, with a few clay
+   balls left lying around the edges of the page. Titles are fat Fredoka pressed out of red clay; keys are colored
+   lumps that wobble on hover and squish when pressed; fields, switches and progress are grooves pressed into the
+   clay; the featured card is a yellow slab on a red one; progress is a rolled two-tone snake, steps are beads and
+   the spinner is four balls bouncing with squash and stretch. Scoped to [data-brand="clay"]. */
+@keyframes cl-wobble { 0% { scale: 1; } 30% { scale: 1.06 .94; } 55% { scale: .97 1.04; } 75% { scale: 1.02 .99; } 100% { scale: 1.02; } }
+@keyframes cl-plop { 0% { scale: .6 .5; opacity: 0; } 55% { scale: 1.04 .96; opacity: 1; } 75% { scale: .98 1.03; } 100% { scale: 1; } }
+@keyframes cl-roll { from { background-position: 0 0, 0 0; } to { background-position: 0 0, 40px 0; } }
+@keyframes cl-bounce { 0%, 100% { translate: 0 0; scale: 1.25 .75; } 15% { scale: .9 1.1; } 50% { translate: 0 -55%; scale: 1; } 85% { scale: .92 1.08; } }
+
+/* Scoped so a nested area with a different data-brand keeps its own look. */
+@scope ([data-brand="clay"]) to ([data-brand]:not([data-brand="clay"])) {
+  :scope {
+    font-synthesis: none;
+    /* Clay grain: turbulence lit from the top left, mapped so flat clay is white and only the dents and ridges show. */
+    --cl-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='c' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.022' numOctaves='3' seed='7' stitchTiles='stitch'/%3E%3CfeDiffuseLighting lighting-color='%23fff' surfaceScale='2.4'%3E%3CfeDistantLight azimuth='225' elevation='55'/%3E%3C/feDiffuseLighting%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='.55' intercept='.55'/%3E%3CfeFuncG type='linear' slope='.55' intercept='.55'/%3E%3CfeFuncB type='linear' slope='.55' intercept='.55'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23c)'/%3E%3C/svg%3E");
+    /* A thumbprint, pressed in. */
+    --cl-print: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='56' viewBox='0 0 48 56'%3E%3Cg fill='none' stroke='%23000' stroke-opacity='.09' stroke-width='1.5' stroke-linecap='round' stroke-dasharray='22 3 14 4'%3E%3Cellipse cx='24' cy='29' rx='3' ry='4'/%3E%3Cellipse cx='24' cy='29' rx='7' ry='9'/%3E%3Cellipse cx='24' cy='29' rx='11' ry='14'/%3E%3Cellipse cx='24' cy='29' rx='15' ry='19'/%3E%3Cellipse cx='24' cy='29' rx='19' ry='24'/%3E%3Cellipse cx='23' cy='29' rx='22.5' ry='27'/%3E%3C/g%3E%3C/svg%3E");
+    /* Hand-rolled corners: never quite even. */
+    --cl-blob: 26px 34px 24px 32px / 32px 24px 34px 26px;
+    --cl-lump: 20px 26px 22px 28px / 26px 20px 28px 22px;
+    /* Shading for a colored lump: a lit shoulder, a shaded belly, a soft cast shadow. */
+    --cl-lit: inset 3px 4px 6px rgba(255, 255, 255, .42);
+    --cl-shade: inset -3px -5px 8px rgba(0, 0, 0, .2);
+    --cl-cast: 0 6px 12px rgba(90, 60, 30, .22);
+    /* A groove pressed into the clay. */
+    --cl-groove: inset 3px 4px 7px rgba(90, 60, 30, .2), inset -2px -2px 4px rgba(255, 255, 255, .8);
+    --cl-title: #e8433a;
+    --cl-title-deep: #a92d25;
+    --cl-ball-alpha: 1;
+  }
+  /* After dark: plasticine under a lamp. */
+  :scope[data-theme="dark"] {
+    --cl-print: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='56' viewBox='0 0 48 56'%3E%3Cg fill='none' stroke='%23fff' stroke-opacity='.06' stroke-width='1.5' stroke-linecap='round' stroke-dasharray='22 3 14 4'%3E%3Cellipse cx='24' cy='29' rx='3' ry='4'/%3E%3Cellipse cx='24' cy='29' rx='7' ry='9'/%3E%3Cellipse cx='24' cy='29' rx='11' ry='14'/%3E%3Cellipse cx='24' cy='29' rx='15' ry='19'/%3E%3Cellipse cx='24' cy='29' rx='19' ry='24'/%3E%3Cellipse cx='23' cy='29' rx='22.5' ry='27'/%3E%3C/g%3E%3C/svg%3E");
+    --cl-cast: 0 6px 12px rgba(0, 0, 0, .5); --cl-groove: inset 3px 4px 7px rgba(0, 0, 0, .5), inset -2px -2px 4px rgba(255, 255, 255, .05);
+    --cl-title: #ff7a70; --cl-title-deep: #9c241d; --cl-ball-alpha: .75;
+  }
+  @media (prefers-color-scheme: dark) {
+    :scope:not([data-theme="light"]) {
+      --cl-print: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='56' viewBox='0 0 48 56'%3E%3Cg fill='none' stroke='%23fff' stroke-opacity='.06' stroke-width='1.5' stroke-linecap='round' stroke-dasharray='22 3 14 4'%3E%3Cellipse cx='24' cy='29' rx='3' ry='4'/%3E%3Cellipse cx='24' cy='29' rx='7' ry='9'/%3E%3Cellipse cx='24' cy='29' rx='11' ry='14'/%3E%3Cellipse cx='24' cy='29' rx='15' ry='19'/%3E%3Cellipse cx='24' cy='29' rx='19' ry='24'/%3E%3Cellipse cx='23' cy='29' rx='22.5' ry='27'/%3E%3C/g%3E%3C/svg%3E");
+      --cl-cast: 0 6px 12px rgba(0, 0, 0, .5); --cl-groove: inset 3px 4px 7px rgba(0, 0, 0, .5), inset -2px -2px 4px rgba(255, 255, 255, .05);
+      --cl-title: #ff7a70; --cl-title-deep: #9c241d; --cl-ball-alpha: .75;
+    }
+  }
+
+  /* The ground: a putty work mat with clay grain, and a few balls of clay left lying around the edges. */
+  :scope body { background: var(--cl-grain), var(--bg); background-blend-mode: multiply; background-attachment: fixed; }
+  :scope body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: var(--cl-ball-alpha);
+    background:
+      radial-gradient(circle 13px at calc(100% - 66px) 58px, rgba(255, 255, 255, .55), transparent),
+      radial-gradient(circle 46px at calc(100% - 46px) 78px, #ff6b61 0, #e8433a 55%, #b8302a 96%, transparent 100%),
+      radial-gradient(ellipse 52px 14px at calc(100% - 40px) 128px, rgba(60, 30, 10, .18), transparent),
+      radial-gradient(circle 8px at calc(100% - 138px) calc(100% - 92px), rgba(255, 255, 255, .55), transparent),
+      radial-gradient(circle 24px at calc(100% - 128px) calc(100% - 80px), #4d86f0 0, #2f6fe4 55%, #1f50b0 96%, transparent 100%),
+      radial-gradient(circle 10px at calc(100% - 52px) calc(100% - 46px), rgba(255, 255, 255, .5), transparent),
+      radial-gradient(ellipse 54px 34px at calc(100% - 30px) calc(100% - 24px), #ffd45c 0, #ffc93c 55%, #d99e12 96%, transparent 100%),
+      radial-gradient(circle 6px at calc(100% - 28px) calc(100% - 150px), rgba(255, 255, 255, .5), transparent),
+      radial-gradient(circle 16px at calc(100% - 22px) calc(100% - 144px), #52c584 0, #3bb273 55%, #278a55 96%, transparent 100%);
+  }
+
+  /* Type: fat Fredoka, the big titles pressed out of red clay and standing up off the page. */
+  :scope :is(.display-2xl, .display-xl, .display-lg) {
+    font-weight: 700; letter-spacing: -.01em; color: var(--cl-title);
+    text-shadow: 0 1px 0 var(--cl-title-deep), 0 2px 0 var(--cl-title-deep), 0 3px 0 var(--cl-title-deep), 0 4px 0 var(--cl-title-deep), 0 9px 12px rgba(60, 30, 10, .22);
+  }
+  :scope :is(.heading-lg, .heading-md) { font-weight: 600; letter-spacing: -.005em; }
+  :scope :is(.ts-card-title, .ts-dialog-title, .ts-popover-title, .ts-empty-title, .ts-cal-title, .ts-navbar-brand) { font-weight: 600; letter-spacing: 0; }
+  :scope :is(.ts-btn, .ts-tab, .ts-segctl-item, .ts-badge) { font-family: var(--font-display); font-weight: 600; letter-spacing: .01em; }
+  :scope .ts-btn { font-size: 15.5px; }
+
+  /* Keys: colored lumps of clay. They wobble when you hover and squish flat when you press. */
+  :scope .ts-btn { border: 0; border-radius: var(--cl-lump); transition: scale var(--duration-fast) cubic-bezier(.34, 1.56, .64, 1), translate var(--duration-fast) cubic-bezier(.34, 1.56, .64, 1), box-shadow var(--duration-fast), background-color var(--duration-fast); }
+  :scope :is(.ts-btn-primary, .ts-btn-secondary, .ts-btn-tile, .ts-btn-danger) { background-image: var(--cl-grain); background-blend-mode: multiply; box-shadow: var(--cl-lit), var(--cl-shade), var(--cl-cast); }
+  :scope .ts-btn-primary { background-color: var(--lapis); color: var(--on-lapis); }
+  :scope .ts-btn-primary:hover:not([disabled]) { background-color: var(--lapis-hover); }
+  :scope .ts-btn-secondary { background-color: var(--surface); color: var(--ink); box-shadow: inset 3px 4px 6px rgba(255, 255, 255, .7), inset -3px -5px 8px rgba(90, 60, 30, .14), var(--cl-cast); }
+  :scope .ts-btn-secondary:hover:not([disabled]) { background-color: var(--surface); color: var(--ink); }
+  :scope .ts-btn-tile { background-color: var(--saffron); color: var(--on-saffron); }
+  :scope .ts-btn-danger { background-color: var(--danger); color: var(--on-danger); }
+  :scope :is(.ts-btn-primary, .ts-btn-secondary, .ts-btn-tile, .ts-btn-danger):hover:not([disabled]) { transform: none; translate: 0 -2px; animation: cl-wobble .45s ease-out both; box-shadow: var(--cl-lit), var(--cl-shade), 0 10px 18px rgba(90, 60, 30, .24); }
+  :scope .ts-btn-ghost { border-radius: var(--cl-lump); }
+  :scope .ts-btn-ghost:hover:not([disabled]) { background: var(--surface-sunken); box-shadow: var(--cl-groove); }
+  :scope .ts-btn:active:not([disabled]) { animation: none; translate: 0 2px; scale: 1.08 .86; box-shadow: var(--cl-lit), var(--cl-shade), 0 2px 4px rgba(90, 60, 30, .2); }
+  :scope :is(.ts-btn-primary, .ts-btn-tile)::after { display: none; }
+
+  /* Panels: slabs of putty, rolled out by hand, with clay grain and a thumbprint near the corner. */
+  :scope :is(.ts-card, .ts-empty, .ts-table-wrap, .ts-accordion, .ts-file) {
+    border: 0; border-radius: var(--cl-blob); box-shadow: var(--shadow-md);
+    background: var(--cl-print) right 16px bottom 14px / 44px 52px no-repeat, var(--cl-grain), var(--surface); background-blend-mode: normal, multiply, normal;
+  }
+  :scope .ts-card-interactive:hover { transform: none; translate: 0 -4px; rotate: -.6deg; box-shadow: var(--shadow-lg); }
+  :scope .ts-card-interactive:active { scale: 1.02 .97; }
+  /* The featured card is a slab of yellow clay pressed onto a red one. */
+  :scope .ts-card-tile {
+    --surface: #ffd24f; --surface-sunken: #f2bd2e; --ink: #2a1d10; --ink-muted: #5a4318; --line: rgba(42, 29, 16, .18); --line-strong: #6e5420;
+    --lapis: #1a3fa3; --lapis-hover: #13308a; --lapis-soft: #fff0b8; --on-lapis: #ffffff; --link: #1a3fa3; --focus: #1a3fa3;
+    color: var(--ink); box-shadow: inset 4px 5px 9px rgba(255, 255, 255, .5), inset -5px -7px 12px rgba(160, 100, 0, .25), var(--shadow-tile);
+  }
+  :scope .ts-card-tile.ts-card-interactive:hover { transform: none; translate: 0 -4px; box-shadow: inset 4px 5px 9px rgba(255, 255, 255, .5), inset -5px -7px 12px rgba(160, 100, 0, .25), var(--shadow-tile-lg); }
+  /* Motif tiles are little balls of clay in every color. */
+  :scope .ts-card-motif span { border-radius: 50%; background: var(--tile-2); box-shadow: inset 1.5px 2px 2px rgba(255, 255, 255, .5), inset -1.5px -2px 3px rgba(0, 0, 0, .25); }
+  :scope .ts-card-motif span:nth-child(3n) { background: var(--tile-1); }
+  :scope .ts-card-motif span:nth-child(3n + 2) { background: var(--tile-3); }
+  :scope .ts-card-motif span.ts-odd { background: var(--clay-purple); }
+
+  /* Floating slabs: the same putty, plopped down. */
+  :scope :is(.ts-dialog, .ts-popover, .ts-menu, .ts-sel-list, .ts-cmd, .ts-side-flyout, .ts-drawer) {
+    border: 0; border-radius: var(--cl-blob); box-shadow: var(--shadow-lg);
+    background: var(--cl-grain), var(--surface); background-blend-mode: multiply;
+  }
+  :scope :is(.ts-dialog, .ts-cmd) { animation-name: cl-plop; animation-duration: .45s; animation-timing-function: ease-out; }
+  /* The active item is a little lump of blue clay. */
+  :scope :is(.ts-menu-item-active, .ts-opt-active) { background: var(--lapis-soft); color: var(--ink); border-radius: var(--cl-lump); box-shadow: inset 2px 3px 4px rgba(255, 255, 255, .5), inset -2px -3px 5px rgba(36, 86, 214, .18); }
+  :scope :is(.ts-menu-item-active, .ts-opt-active) .ts-icon { color: var(--lapis); }
+  :scope .ts-opt-selected { background: var(--lapis-soft); color: var(--lapis); }
+
+  /* Fields: wells pressed into the clay with a thumb. */
+  :scope :is(.ts-input, .ts-sel-trigger, .ts-tags, .ts-number) { border: 0; border-radius: var(--cl-lump); background: var(--surface-sunken); box-shadow: var(--cl-groove); }
+  :scope :is(.ts-input, .ts-sel-trigger, .ts-tags, .ts-number):hover { box-shadow: var(--cl-groove), 0 0 0 2px var(--line); }
+  :scope :is(.ts-input:focus-visible, .ts-input:focus-within, .ts-tags:focus-within, .ts-number:focus-within), :scope .ts-sel-open .ts-sel-trigger { box-shadow: var(--cl-groove), 0 0 0 3px var(--lapis); }
+
+  /* Shell: a putty slab across the top with a soft lumpy underside; the sidebar is rolled out down the side. */
+  :scope .ts-navbar { border: 0; border-radius: 0 0 28px 34px / 0 0 22px 26px; background: var(--cl-grain), var(--surface); background-blend-mode: multiply; box-shadow: inset 0 -5px 8px rgba(90, 60, 30, .08), 0 6px 14px rgba(90, 60, 30, .14); }
+  :scope .ts-navlink[aria-current="page"]::after { height: 6px; border-radius: 4px 6px 5px 3px; background: var(--tile-1); box-shadow: inset 1px 1.5px 1px rgba(255, 255, 255, .45), inset -1px -1.5px 2px rgba(0, 0, 0, .25); }
+  :scope .ts-sidebar { border: 0; background: var(--cl-grain), var(--surface); background-blend-mode: multiply; box-shadow: inset -5px 0 8px rgba(90, 60, 30, .08), 4px 0 12px rgba(90, 60, 30, .1); }
+  :scope .ts-side-link { border-radius: var(--cl-lump); }
+  :scope .ts-side-link:hover { background: var(--surface-sunken); box-shadow: var(--cl-groove); }
+  :scope .ts-side-link[aria-current="page"] { background: var(--lapis-soft); color: var(--ink); font-weight: 700; box-shadow: inset 2px 3px 4px rgba(255, 255, 255, .5), inset -2px -3px 5px rgba(36, 86, 214, .2), 0 2px 5px rgba(36, 86, 214, .15); }
+  :scope .ts-side-link[aria-current="page"] .ts-icon { color: var(--lapis); }
+  :scope .ts-side-title { font-family: var(--font-display); font-weight: 600; }
+
+  /* Small bits: badges are rolled pills, avatars are balls of clay with a thumbprint. */
+  :scope .ts-badge { border-radius: 999px; box-shadow: inset 1.5px 2px 3px rgba(255, 255, 255, .5), inset -1.5px -2px 3px rgba(0, 0, 0, .1); }
+  :scope .ts-badge-accent { box-shadow: inset 1.5px 2px 3px rgba(255, 255, 255, .5), inset -1.5px -2px 3px rgba(160, 100, 0, .3), 0 2px 4px rgba(90, 60, 30, .2); }
+  :scope .ts-avatar {
+    --cl-ball: var(--tile-1); color: #ffffff; font-family: var(--font-display); font-weight: 700; text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
+    background: var(--cl-print) 70% 80% / 70% auto no-repeat, var(--cl-ball);
+    box-shadow: inset 3px 4px 5px rgba(255, 255, 255, .4), inset -3px -4px 6px rgba(0, 0, 0, .28), 0 3px 6px rgba(90, 60, 30, .25);
+  }
+  :scope .ts-avatar[data-hue="1"] { --cl-ball: var(--tile-2); }
+  :scope .ts-avatar[data-hue="2"] { --cl-ball: var(--clay-purple); }
+  :scope .ts-avatar[data-hue="3"] { --cl-ball: #2f9a5f; }
+
+  /* Controls: little pellets and grooves. */
+  :scope :is(.ts-check-box, .ts-radio-dot) { border: 0; background: var(--surface-sunken); box-shadow: var(--cl-groove); }
+  :scope .ts-check-box { border-radius: 7px 9px 6px 8px; }
+  :scope .ts-check input:is(:checked, :indeterminate) + .ts-check-box { background: var(--lapis); box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .45), inset -2px -3px 4px rgba(0, 0, 0, .25), 0 2px 4px rgba(36, 86, 214, .3); }
+  :scope .ts-radio input:checked + .ts-radio-dot { background: var(--surface-sunken); }
+  :scope .ts-radio input:checked + .ts-radio-dot::after { background: var(--lapis); box-shadow: inset 1px 1.5px 2px rgba(255, 255, 255, .5), inset -1px -1.5px 2px rgba(0, 0, 0, .3); }
+  :scope .ts-switch-track { background: var(--surface-sunken); box-shadow: var(--cl-groove); }
+  :scope .ts-switch-track::after { background: radial-gradient(circle at 35% 30%, #fffdf8, #f4ebdf 60%, #d9c9b4); box-shadow: inset -1px -2px 3px rgba(90, 60, 30, .2), 0 2px 4px rgba(90, 60, 30, .3); }
+  :scope .ts-switch input:checked + .ts-switch-track { background: var(--tile-3); box-shadow: inset 3px 4px 6px rgba(0, 60, 20, .3), inset -2px -2px 4px rgba(255, 255, 255, .25); }
+  :scope .ts-tab-ink { height: 6px; border-radius: 4px 6px 5px 3px; background: var(--lapis); box-shadow: inset 1px 1.5px 1px rgba(255, 255, 255, .45), inset -1px -1.5px 2px rgba(0, 0, 0, .25); }
+  :scope .ts-segctl { border: 0; border-radius: var(--cl-lump); background: var(--surface-sunken); box-shadow: var(--cl-groove); }
+  :scope .ts-segctl-ink { border-radius: var(--cl-lump); background: var(--surface); box-shadow: inset 2px 3px 4px rgba(255, 255, 255, .7), inset -2px -3px 5px rgba(90, 60, 30, .14), 0 3px 6px rgba(90, 60, 30, .2); }
+  :scope :is(.ts-page-current, .ts-day-selected) { border-radius: 50%; box-shadow: var(--cl-lit), var(--cl-shade), 0 3px 6px rgba(36, 86, 214, .3); }
+  :scope .ts-step-marker { border-radius: 50%; }
+  :scope .ts-kbd { border-radius: 7px; box-shadow: inset 1px 1.5px 2px rgba(255, 255, 255, .6), inset -1px -2px 2px rgba(90, 60, 30, .15), 0 1px 2px rgba(90, 60, 30, .2); }
+
+  /* Progress: a rolled two-tone clay snake lying in a groove. Steps are beads in every color. */
+  :scope .ts-progress-track { height: 16px; border-radius: 999px; background: var(--surface-sunken); box-shadow: var(--cl-groove); padding: 2px; box-sizing: border-box; }
+  :scope .ts-progress-bar {
+    border-radius: 999px; animation: cl-roll 1.2s linear infinite;
+    background: linear-gradient(180deg, rgba(255, 255, 255, .4), transparent 45%, rgba(0, 0, 0, .18)), repeating-linear-gradient(-55deg, var(--lapis) 0 10px, color-mix(in srgb, var(--lapis) 70%, #ffffff) 10px 20px);
+    box-shadow: 0 2px 3px rgba(0, 0, 0, .2);
+  }
+  :scope .ts-progress-success .ts-progress-bar { animation: none; background: linear-gradient(180deg, rgba(255, 255, 255, .4), transparent 45%, rgba(0, 0, 0, .18)), var(--tile-3); }
+  :scope .ts-progress-segmented .ts-progress-track { padding: 0; height: 16px; background: none; box-shadow: none; }
+  :scope .ts-progress-segmented .ts-seg { border-radius: 999px; background: var(--surface-sunken); box-shadow: var(--cl-groove); }
+  :scope .ts-progress-segmented .ts-seg::after { border-radius: 999px; background: var(--tile-2); box-shadow: inset 2px 2px 3px rgba(255, 255, 255, .45), inset -2px -3px 4px rgba(0, 0, 0, .25); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 2)::after { background: var(--tile-1); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 3)::after { background: var(--tile-3); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n)::after { background: var(--clay-purple); }
+  :scope .ts-progress-segmented .ts-seg-current::after { background: var(--saffron); }
+
+  /* The spinner: four balls of clay bouncing in turn, squashing when they land. */
+  :scope .ts-spinner { overflow: visible; }
+  :scope .ts-spinner i { border-radius: 50%; opacity: 1; transform-origin: 50% 100%; animation: cl-bounce .9s ease-in-out infinite; box-shadow: inset 1px 1.5px 1.5px rgba(255, 255, 255, .5), inset -1px -1.5px 2px rgba(0, 0, 0, .3); }
+  :scope .ts-spinner i:nth-child(1) { color: var(--tile-1); }
+  :scope .ts-spinner i:nth-child(2) { color: var(--tile-4); animation-delay: -.68s; }
+  :scope .ts-spinner i:nth-child(3) { color: var(--tile-2); animation-delay: -.23s; }
+  :scope .ts-spinner i:nth-child(4) { color: var(--tile-3); animation-delay: -.45s; }
+
+  /* Toasts and tooltips: dark plasticine. */
+  :scope :is(.ts-toast, .ts-tooltip) { box-shadow: inset 3px 4px 6px rgba(255, 255, 255, .14), inset -3px -4px 7px rgba(0, 0, 0, .35), var(--shadow-md); }
+  :scope .ts-toast { border-radius: var(--cl-blob); animation-name: cl-plop; }
+  :scope .ts-tooltip { border-radius: 10px 13px 9px 12px; font-family: var(--font-display); font-weight: 500; }
+  :scope .ts-toast-timer { height: 4px; border-radius: 2px; background: var(--tile-4); }
+
+  /* The mosaic: a board of clay balls. */
+  :scope .ts-mosaic { border-radius: var(--cl-blob); box-shadow: var(--cl-groove); }
+  :scope .ts-mosaic .ts-mosaic-tile { border-radius: 42% 50% 46% 54% / 50% 44% 54% 46%; box-shadow: inset 2px 3px 4px rgba(255, 255, 255, .4), inset -2px -3px 5px rgba(0, 0, 0, .3); }
+
+  @media (prefers-reduced-motion: reduce) {
+    :scope :is(.ts-btn-primary, .ts-btn-secondary, .ts-btn-tile, .ts-btn-danger):hover:not([disabled]) { animation: none; }
+    :scope :is(.ts-dialog, .ts-cmd, .ts-toast) { animation-name: none; }
+    :scope .ts-progress-bar { animation: none; }
+    :scope .ts-spinner i { animation-duration: 2.4s; }
+  }
+}
