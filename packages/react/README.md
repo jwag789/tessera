@@ -54,7 +54,6 @@ import '@tessera-design/react/themes/cartridge-fonts.css';
 | Shonen | `themes/shonen.css`, `themes/shonen-fonts.css` |
 | Jelly | `themes/jelly.css`, `themes/jelly-fonts.css` |
 | Neon | `themes/neon.css`, `themes/neon-fonts.css` |
-| Jersey | `themes/jersey.css`, `themes/jersey-fonts.css` |
 | Static | `themes/static.css`, `themes/static-fonts.css` |
 
 Dark mode follows the system unless the user picks one; `useTheme()` reads and changes both the mode and the theme.
