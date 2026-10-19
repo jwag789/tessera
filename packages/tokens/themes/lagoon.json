@@ -1,0 +1,315 @@
+{
+  "name": "lagoon",
+  "label": "Lagoon",
+  "description": "A PS2-era JRPG island, after Final Fantasy X and Chrono Cross. By day a sunlit beach under a big sky; after dark the night tide under the moon, with pyreflies drifting up. Menus, dialogs, tooltips and toasts are classic blue menu windows with a silver edge, and the pointing hand marks the active item. Cinzel titles, sea-glass keys that glint, cards with a wave along the foot, elemental-orb avatars and spinner, an ATB gauge for progress and a pearl on the switch.",
+  "fonts": "https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=M+PLUS+Rounded+1c:wght@400;500;700;800&family=M+PLUS+1+Code:wght@400;500;700&display=swap",
+  "type": {
+    "families": {
+      "display": "Cinzel, \"Trajan Pro\", Georgia, serif",
+      "sans": "\"M PLUS Rounded 1c\", \"Hiragino Maru Gothic ProN\", system-ui, sans-serif",
+      "mono": "\"M PLUS 1 Code\", ui-monospace, \"SF Mono\", Menlo, monospace"
+    }
+  },
+  "color": {
+    "tokens": [
+      {
+        "name": "bg",
+        "value": {
+          "light": "#eef6f4",
+          "dark": "#071428"
+        }
+      },
+      {
+        "name": "surface",
+        "value": {
+          "light": "#fffdf7",
+          "dark": "#0f2342"
+        }
+      },
+      {
+        "name": "surface-sunken",
+        "value": {
+          "light": "#dcefed",
+          "dark": "#050d1c"
+        }
+      },
+      {
+        "name": "line",
+        "value": {
+          "light": "#c3dfdc",
+          "dark": "#1f3a5f"
+        }
+      },
+      {
+        "name": "line-strong",
+        "value": {
+          "light": "#5f8e90",
+          "dark": "#5f84b0"
+        }
+      },
+      {
+        "name": "ink",
+        "value": {
+          "light": "#0b2238",
+          "dark": "#eaf4ff"
+        }
+      },
+      {
+        "name": "ink-muted",
+        "value": {
+          "light": "#3d5868",
+          "dark": "#a6bbd3"
+        }
+      },
+      {
+        "name": "lapis",
+        "value": {
+          "light": "#086a88",
+          "dark": "#5fd8e8"
+        }
+      },
+      {
+        "name": "lapis-hover",
+        "value": {
+          "light": "#06536b",
+          "dark": "#8ce6f0"
+        }
+      },
+      {
+        "name": "lapis-soft",
+        "value": {
+          "light": "#d3eef2",
+          "dark": "#0f3446"
+        }
+      },
+      {
+        "name": "lapis-deep",
+        "value": {
+          "light": "#0b3a6b",
+          "dark": "#1f5aa6"
+        }
+      },
+      {
+        "name": "lapis-glow",
+        "value": {
+          "light": "rgba(8, 106, 136, 0.3)",
+          "dark": "rgba(95, 216, 232, 0.35)"
+        }
+      },
+      {
+        "name": "on-lapis",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#04202a"
+        }
+      },
+      {
+        "name": "on-lapis-deep",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#ffffff"
+        }
+      },
+      {
+        "name": "saffron",
+        "value": {
+          "light": "#ff8a5c",
+          "dark": "#ffa06e"
+        }
+      },
+      {
+        "name": "saffron-deep",
+        "value": {
+          "light": "#e0653a",
+          "dark": "#e07a45"
+        }
+      },
+      {
+        "name": "saffron-soft",
+        "value": {
+          "light": "#ffe7d8",
+          "dark": "#3a2010"
+        }
+      },
+      {
+        "name": "on-saffron",
+        "value": {
+          "light": "#2a0f04",
+          "dark": "#2a0f04"
+        }
+      },
+      {
+        "name": "success",
+        "value": {
+          "light": "#1a7547",
+          "dark": "#6fe0a0"
+        }
+      },
+      {
+        "name": "success-soft",
+        "value": {
+          "light": "#d8f1e2",
+          "dark": "#0d2e20"
+        }
+      },
+      {
+        "name": "warning",
+        "value": {
+          "light": "#8a5200",
+          "dark": "#ffc46b"
+        }
+      },
+      {
+        "name": "danger",
+        "value": {
+          "light": "#bf2438",
+          "dark": "#ff8a95"
+        }
+      },
+      {
+        "name": "danger-soft",
+        "value": {
+          "light": "#fde3e5",
+          "dark": "#3a1218"
+        }
+      },
+      {
+        "name": "on-danger",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#2a0508"
+        }
+      },
+      {
+        "name": "inverse-accent",
+        "value": {
+          "light": "#7fe3ff",
+          "dark": "#086a88"
+        }
+      },
+      {
+        "name": "focus",
+        "value": {
+          "light": "#086a88",
+          "dark": "#5fd8e8"
+        }
+      },
+      {
+        "name": "link",
+        "value": {
+          "light": "#086a88",
+          "dark": "#8ce6f0"
+        }
+      },
+      {
+        "name": "overlay",
+        "value": {
+          "light": "rgba(5, 20, 45, 0.55)",
+          "dark": "rgba(0, 4, 12, 0.72)"
+        }
+      },
+      {
+        "name": "tile-ground",
+        "value": "#0b3a6b"
+      },
+      {
+        "name": "tile-1",
+        "value": "#138fb0"
+      },
+      {
+        "name": "tile-2",
+        "value": "#0d6a8f"
+      },
+      {
+        "name": "tile-3",
+        "value": "#3fc4d6"
+      },
+      {
+        "name": "tile-4",
+        "value": "#f4e6c4"
+      },
+      {
+        "name": "window",
+        "value": "#2f56a8"
+      },
+      {
+        "name": "window-deep",
+        "value": "#0c1f5c"
+      },
+      {
+        "name": "pyrefly",
+        "value": "#b8ffe9"
+      }
+    ]
+  },
+  "radius": {
+    "tokens": [
+      {
+        "name": "radius-xs",
+        "value": "4px"
+      },
+      {
+        "name": "radius-sm",
+        "value": "7px"
+      },
+      {
+        "name": "radius-md",
+        "value": "11px"
+      },
+      {
+        "name": "radius-lg",
+        "value": "16px"
+      },
+      {
+        "name": "radius-xl",
+        "value": "22px"
+      }
+    ]
+  },
+  "shadow": {
+    "tokens": [
+      {
+        "name": "shadow-sm",
+        "value": {
+          "light": "0 1px 3px rgba(11, 58, 107, 0.12)",
+          "dark": "0 1px 3px rgba(0, 0, 0, 0.6)"
+        }
+      },
+      {
+        "name": "shadow-md",
+        "value": {
+          "light": "0 6px 18px -4px rgba(11, 58, 107, 0.2)",
+          "dark": "0 8px 22px -4px rgba(0, 0, 0, 0.65)"
+        }
+      },
+      {
+        "name": "shadow-lg",
+        "value": {
+          "light": "0 18px 44px -8px rgba(11, 58, 107, 0.32)",
+          "dark": "0 22px 50px -8px rgba(0, 0, 0, 0.75)"
+        }
+      },
+      {
+        "name": "shadow-glow",
+        "value": {
+          "light": "0 8px 20px -8px rgba(8, 106, 136, 0.6)",
+          "dark": "0 0 18px -2px rgba(95, 216, 232, 0.45)"
+        }
+      },
+      {
+        "name": "shadow-tile",
+        "value": {
+          "light": "0 8px 22px -6px rgba(224, 101, 58, 0.55)",
+          "dark": "0 0 22px -4px rgba(255, 160, 110, 0.5)"
+        }
+      },
+      {
+        "name": "shadow-tile-lg",
+        "value": {
+          "light": "0 14px 32px -8px rgba(224, 101, 58, 0.6)",
+          "dark": "0 0 32px -2px rgba(255, 160, 110, 0.6)"
+        }
+      }
+    ]
+  }
+}

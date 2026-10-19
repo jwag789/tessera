@@ -257,6 +257,7 @@ a { color: var(--link); }
 .d-theme-dot-cartridge { --c1: #cc2d25; --c2: #2f6be0; --c3: #ffc72c; --c4: #3cba5c; border-radius: 4px; background: radial-gradient(ellipse at 50% 20%, rgba(255, 255, 255, .45), transparent 65%), conic-gradient(var(--c1) 0 25%, var(--c2) 0 50%, var(--c3) 0 75%, var(--c4) 0); box-shadow: 0 0 0 2px #4c4b53, 0 2px 0 2px #2e2d33; }
 .d-theme-dot-neon { background: radial-gradient(circle, #02060c 0 38%, #00e5ff 40% 50%, #02060c 52% 64%, #00e5ff 66% 74%, #02060c 76%); border-radius: 50%; box-shadow: 0 0 0 1px #00e5ff, 0 0 6px rgba(0, 229, 255, .8); }
 .d-theme-dot-static { background: radial-gradient(circle at 60% 40%, #ff4a3d 0 30%, rgba(255, 74, 61, .4) 45%, transparent 60%), #161412; border-radius: 1px; box-shadow: 0 0 0 1.5px #161412; rotate: -4deg; }
+.d-theme-dot-lagoon { background: radial-gradient(circle at 50% 56%, #fff6c8 0 16%, rgba(255, 210, 122, .6) 22%, transparent 30%), linear-gradient(180deg, #8fd6f0 0 56%, #138fb0 56% 76%, #f1e1b8 76%); border-radius: 50%; box-shadow: 0 0 0 1.5px #0b3a6b, inset 0 0 0 1px rgba(255, 255, 255, .5); }
 .ts-opt-icon:has(.d-theme-dot) { background: none; }
 .d-theme-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
 .d-themes { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); align-items: start; }
@@ -401,6 +402,36 @@ a { color: var(--link); }
   :scope .d-code { border-radius: 2px; }
   @media (max-width: 900px) {
     :scope :is(.d-title, .sc-h) { font-size: 52px; }
+  }
+}
+@scope ([data-brand="lagoon"]) to ([data-brand]:not([data-brand="lagoon"])) {
+  :scope .d-mark rect:nth-child(1) { fill: var(--tile-1); }
+  :scope .d-mark rect:nth-child(2) { fill: var(--tile-3); }
+  :scope .d-mark rect:nth-child(3) { fill: var(--tile-2); }
+  :scope .d-mark .d-odd { fill: var(--saffron); }
+  :scope .d-mark rect { rx: 9px; }
+  :scope .d-brand-name { font-weight: 700; letter-spacing: .04em; font-size: 22px; }
+  /* Big titles: Cinzel capitals, set like a JRPG logo. */
+  :scope :is(.d-title, .sc-w:not(.sc-tile)) { font-weight: 700; letter-spacing: .02em; color: var(--lg-title); text-shadow: var(--lg-title-shadow); }
+  :scope .d-title { font-size: 60px; line-height: 1.08; }
+  :scope .sc-h { font-weight: 700; font-size: 64px; line-height: 1.04; letter-spacing: .01em; }
+  :scope .d-h2 { font-weight: 700; letter-spacing: .03em; color: var(--lg-title); }
+  :scope :is(.d-md h3, .d-tilelink b, .lay-head b, .d-theme-head h2) { font-weight: 700; letter-spacing: .03em; }
+  :scope .d-eyebrow { color: var(--lapis); font-weight: 800; letter-spacing: .1em; }
+  :scope .d-eyebrow::before { width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle at 34% 28%, #ffffff 0 18%, var(--saffron) 60%); box-shadow: 0 0 6px color-mix(in srgb, var(--saffron) 60%, transparent); }
+  /* Bars: frosted, so the sky and the sea show through. */
+  :scope :is(.d-side, .d-top) { background: color-mix(in srgb, var(--surface) 82%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  :scope .d-side { border-right: 1px solid var(--line); }
+  :scope .d-top { border-bottom: 1px solid var(--line); }
+  /* Link tiles: a sunlit panel with a swell along the foot, like the cards. */
+  :scope .d-tilelink { position: relative; overflow: hidden; border: 0; border-radius: var(--radius-lg); background: linear-gradient(180deg, color-mix(in srgb, var(--lapis-soft) 50%, var(--surface)), var(--surface) 64px); box-shadow: inset 0 0 0 1px var(--line), var(--shadow-sm); }
+  :scope .d-tilelink::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 10px; pointer-events: none; background: var(--lg-shallows); opacity: .7; -webkit-mask: var(--lg-wave-fill) 0 100% / 36px 10px repeat-x; mask: var(--lg-wave-fill) 0 100% / 36px 10px repeat-x; }
+  :scope .d-tilelink:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px var(--lapis), var(--shadow-md); }
+  :scope .d-stage { border-radius: var(--radius-lg); }
+  :scope .d-code { border-radius: var(--radius-md); }
+  @media (max-width: 900px) {
+    :scope .d-title { font-size: 40px; }
+    :scope .sc-h { font-size: 42px; }
   }
 }
 @keyframes d-blink { 50% { opacity: 0; } }

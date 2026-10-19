@@ -1,0 +1,213 @@
+/* Lagoon: component treatments the tokens can't express. A PS2-era JRPG island, after Final Fantasy X and Chrono
+   Cross. By day a sunlit beach: a big sky, the sun high on the right, clouds, sand along the foot of the page. After
+   dark the night tide under the moon, stars out and pyreflies drifting up. Menus, dialogs, popovers, tooltips and
+   toasts are the classic blue menu window with a silver edge and drop-shadowed white text, and a white glove points
+   at the active item. Cards are sun-bleached panels with a lagoon wave along the foot (a sunset on the featured one);
+   keys are polished sea glass that glints; the tab underline is a wave; avatars and the spinner are elemental orbs;
+   progress is an ATB gauge; the switch thumb is a pearl.
+   Scoped to [data-brand="lagoon"]. */
+@keyframes lg-rise { to { background-position: 0 -520px, 140px -380px, 60px -300px; } }
+@keyframes lg-point { from { translate: -2px 0; } to { translate: 2px 0; } }
+@keyframes lg-orb { 0%, 100% { transform: scale(.62); opacity: .55; } 50% { transform: scale(1); opacity: 1; } }
+
+/* Scoped so a nested area with a different data-brand keeps its own look. */
+@scope ([data-brand="lagoon"]) to ([data-brand]:not([data-brand="lagoon"])) {
+  :scope {
+    font-synthesis: none;
+    /* The menu window: a blue gradient, a silver edge inside a dark rim. */
+    --lg-window: linear-gradient(180deg, var(--window) 0%, #1f418f 42%, var(--window-deep) 100%);
+    --lg-window-edge: 0 0 0 1px #081236, inset 0 0 0 2px #dfe7f7, inset 0 0 0 3px rgba(8, 18, 54, .55), inset 0 4px 10px rgba(255, 255, 255, .12);
+    /* The pointing glove. */
+    --lg-hand: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Cg stroke='%2314204a' stroke-width='1.2' stroke-linejoin='round'%3E%3Crect x='.8' y='4.5' width='4' height='8' rx='1' fill='%23b9c6e6'/%3E%3Cpath fill='%23fff' d='M4.5 4.5h4l2-2h11.5a1.9 1.9 0 0 1 0 3.8H12v7.2a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 13.5z'/%3E%3Cpath fill='%23fff' d='M12 6.3h3.6a1.45 1.45 0 0 1 0 2.9H12M12 9.2h2.6a1.5 1.5 0 0 1 0 3H12'/%3E%3C/g%3E%3C/svg%3E");
+    /* Waves, as masks: a line for the tab underline, a filled swell for the foot of a card. */
+    --lg-wave-line: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='6'%3E%3Cpath d='M0 3q4-3 8 0t8 0' fill='none' stroke='%23000' stroke-width='2.6'/%3E%3C/svg%3E");
+    --lg-wave-fill: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='14'%3E%3Cpath d='M0 7q12-7 24 0t24 0V14H0z'/%3E%3C/svg%3E");
+    /* Day: the sun high on the right, a few clouds, the sky fading into foam, sand along the foot. */
+    --lg-ground:
+      radial-gradient(circle at 88% 5%, #fffdf0 0 4vmin, rgba(255, 240, 190, .6) 6vmin, rgba(255, 236, 170, 0) 26vmin),
+      radial-gradient(ellipse 15vmin 4vmin at 18% 11%, rgba(255, 255, 255, .9), transparent 70%),
+      radial-gradient(ellipse 9vmin 3vmin at 25% 8%, rgba(255, 255, 255, .85), transparent 70%),
+      radial-gradient(ellipse 20vmin 5vmin at 62% 16%, rgba(255, 255, 255, .6), transparent 70%),
+      linear-gradient(180deg, #9fd8f0 0, #cdebf5 24vh, rgba(238, 246, 244, 0) 50vh),
+      linear-gradient(0deg, #f0e2c0 0, rgba(240, 226, 192, .6) 5vh, rgba(240, 226, 192, 0) 16vh);
+    --lg-flies-alpha: 0;
+    --lg-title: #0b3a6b;
+    --lg-title-shadow: 0 2px 0 rgba(255, 255, 255, .85), 0 8px 22px rgba(8, 106, 136, .28);
+    --lg-strip: linear-gradient(180deg, #0e7299, #0a4f7a);
+    --lg-strip-edge: #0a4f7a;
+    --lg-shallows: #7fd6e3;
+    --lg-foam: #ffffff;
+  }
+  /* After dark: the night tide. The moon, a field of stars, the sea glowing at the foot. */
+  :scope[data-theme="dark"] {
+    --lg-ground:
+      radial-gradient(circle at 84% 9%, #fdfbea 0 3.2vmin, rgba(220, 235, 255, .35) 3.6vmin, rgba(160, 200, 255, .08) 14vmin, transparent 30vmin),
+      radial-gradient(circle at 20% 30%, rgba(255, 255, 255, .8) 0 1px, transparent 1.5px) 0 0 / 230px 190px,
+      radial-gradient(circle at 70% 60%, rgba(255, 255, 255, .55) 0 1px, transparent 1.5px) 0 0 / 170px 150px,
+      radial-gradient(circle at 40% 80%, rgba(200, 230, 255, .5) 0 .8px, transparent 1.3px) 0 0 / 110px 130px,
+      linear-gradient(180deg, #0b2147 0, rgba(7, 20, 40, 0) 55vh),
+      linear-gradient(0deg, rgba(24, 96, 120, .45) 0, rgba(24, 96, 120, 0) 22vh);
+    --lg-flies-alpha: .85;
+    --lg-title: #eaf4ff;
+    --lg-title-shadow: 0 2px 0 rgba(0, 0, 0, .5), 0 0 22px rgba(95, 216, 232, .45);
+    --lg-strip: linear-gradient(180deg, #0c2a52, #071a38);
+    --lg-strip-edge: #071a38;
+    --lg-shallows: #1f6b86;
+    --lg-foam: #9fe8f2;
+  }
+  @media (prefers-color-scheme: dark) {
+    :scope:not([data-theme="light"]) {
+      --lg-ground:
+        radial-gradient(circle at 84% 9%, #fdfbea 0 3.2vmin, rgba(220, 235, 255, .35) 3.6vmin, rgba(160, 200, 255, .08) 14vmin, transparent 30vmin),
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, .8) 0 1px, transparent 1.5px) 0 0 / 230px 190px,
+        radial-gradient(circle at 70% 60%, rgba(255, 255, 255, .55) 0 1px, transparent 1.5px) 0 0 / 170px 150px,
+        radial-gradient(circle at 40% 80%, rgba(200, 230, 255, .5) 0 .8px, transparent 1.3px) 0 0 / 110px 130px,
+        linear-gradient(180deg, #0b2147 0, rgba(7, 20, 40, 0) 55vh),
+        linear-gradient(0deg, rgba(24, 96, 120, .45) 0, rgba(24, 96, 120, 0) 22vh);
+      --lg-flies-alpha: .85;
+      --lg-title: #eaf4ff;
+      --lg-title-shadow: 0 2px 0 rgba(0, 0, 0, .5), 0 0 22px rgba(95, 216, 232, .45);
+      --lg-strip: linear-gradient(180deg, #0c2a52, #071a38);
+      --lg-strip-edge: #071a38;
+      --lg-shallows: #1f6b86;
+      --lg-foam: #9fe8f2;
+    }
+  }
+  :scope body { background: var(--lg-ground), var(--bg); background-attachment: fixed; }
+  /* Pyreflies, after dark: soft green-white lights rising slowly, behind the page. */
+  :scope body::after {
+    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: var(--lg-flies-alpha);
+    background:
+      radial-gradient(circle at 12% 18%, #ffffff 0 1.5px, rgba(184, 255, 233, .5) 2.5px, transparent 9px),
+      radial-gradient(circle at 34% 62%, #ffffff 0 1.2px, rgba(184, 255, 233, .45) 2px, transparent 7px),
+      radial-gradient(circle at 78% 40%, var(--pyrefly) 0 1px, rgba(184, 255, 233, .4) 2px, transparent 6px);
+    background-size: 420px 520px, 300px 380px, 260px 300px;
+    animation: lg-rise 46s linear infinite;
+  }
+
+  /* Type: Cinzel capitals for titles, the way a JRPG logo is set. Navy in the sun, moonlit after dark. */
+  :scope :is(.display-2xl, .display-xl, .display-lg, .heading-lg, .heading-md) { font-weight: 700; letter-spacing: .02em; color: var(--lg-title); text-shadow: var(--lg-title-shadow); }
+  :scope :is(.ts-card-title, .ts-dialog-title, .ts-popover-title, .ts-empty-title, .ts-cal-title, .ts-navbar-brand) { font-weight: 700; letter-spacing: .03em; }
+  :scope :is(.ts-btn, .ts-tab, .ts-segctl-item) { font-weight: 700; }
+
+  /* Keys: polished sea glass. A gloss across the top; the built-in glint sweeps across on hover. */
+  :scope .ts-btn { border-radius: var(--radius-md); }
+  :scope .ts-btn-primary { background: linear-gradient(180deg, color-mix(in srgb, var(--lapis) 82%, #ffffff) 0, var(--lapis) 50%, color-mix(in srgb, var(--lapis) 86%, #000000) 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -2px 0 rgba(0, 0, 0, .16), var(--shadow-glow); }
+  :scope .ts-btn-primary:hover:not([disabled]) { background: linear-gradient(180deg, color-mix(in srgb, var(--lapis-hover) 82%, #ffffff) 0, var(--lapis-hover) 50%, color-mix(in srgb, var(--lapis-hover) 86%, #000000) 100%); }
+  :scope .ts-btn-secondary { border-width: 1.5px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .6), var(--shadow-sm); }
+  :scope .ts-btn-tile { border: 0; background: linear-gradient(180deg, #ffc49a 0, var(--saffron) 50%, var(--saffron-deep) 100%); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), inset 0 -2px 0 rgba(0, 0, 0, .14), var(--shadow-tile); }
+  :scope .ts-btn-tile:hover:not([disabled]) { transform: translateY(-2px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .55), inset 0 -2px 0 rgba(0, 0, 0, .14), var(--shadow-tile-lg); }
+  :scope .ts-btn-tile:active:not([disabled]) { transform: translateY(1px); box-shadow: inset 0 2px 4px rgba(0, 0, 0, .2); }
+  :scope .ts-btn-primary::after, :scope .ts-btn-tile::after { background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .6), transparent); }
+
+  /* Cards: sun-bleached panels with a lagoon swell along the foot. */
+  :scope :is(.ts-card, .ts-empty) { border-radius: var(--radius-lg); }
+  :scope .ts-card { border: 0; background: linear-gradient(180deg, color-mix(in srgb, var(--lapis-soft) 50%, var(--surface)) 0, var(--surface) 72px); box-shadow: inset 0 0 0 1px var(--line), var(--shadow-md); padding-bottom: calc(var(--space-6) + 6px); }
+  :scope .ts-card::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 14px; pointer-events: none;
+    background: linear-gradient(180deg, var(--lg-foam) 0 2px, var(--lg-shallows) 3px, color-mix(in srgb, var(--lg-shallows) 60%, var(--lapis)) 100%);
+    -webkit-mask: var(--lg-wave-fill) 0 100% / 48px 14px repeat-x; mask: var(--lg-wave-fill) 0 100% / 48px 14px repeat-x; opacity: .75;
+  }
+  :scope .ts-card-interactive:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px var(--line), var(--shadow-lg); border-color: transparent; }
+  /* The featured card catches the sunset: a coral-to-violet rim and the sun on the water. */
+  :scope .ts-card-tile { border: 2px solid transparent; background: linear-gradient(180deg, color-mix(in srgb, var(--saffron-soft) 70%, var(--surface)) 0, var(--surface) 80px) padding-box, linear-gradient(135deg, #ffd27a, #ff8a5c 35%, #ff6f91 65%, #7a6cff) border-box; box-shadow: var(--shadow-tile); }
+  :scope .ts-card-tile::after { --lg-shallows: #ffb27f; --lg-foam: #fff1c9; }
+  :scope .ts-card-tile.ts-card-interactive:hover { transform: translateY(-4px); box-shadow: var(--shadow-tile-lg); border-color: transparent; }
+  :scope .ts-card-motif span { border-radius: 50%; }
+  :scope .ts-empty { border-color: var(--lapis); border-width: 1.5px; background: color-mix(in srgb, var(--surface) 80%, transparent); }
+
+  /* Menu windows: menus, lists, popovers, dialogs, the command palette, tooltips and toasts. Blue gradient, silver
+     edge, white text with a drop shadow, the same by day and after dark. */
+  :scope :is(.ts-dialog, .ts-popover, .ts-menu, .ts-sel-list, .ts-cmd, .ts-side-flyout, .ts-toast, .ts-tooltip) {
+    --ink: #ffffff; --ink-muted: #d2ddf4; --bg: var(--window-deep); --surface: #13296e; --surface-sunken: #0a1a4e; --line: rgba(223, 231, 247, .24); --line-strong: #a9bce4;
+    --lapis: #8fe9ff; --lapis-hover: #b8f2ff; --lapis-soft: rgba(143, 233, 255, .16); --on-lapis: #071a3a; --link: #8fe9ff; --focus: #ffe58a;
+    --success: #8ff0b8; --warning: #ffd27a; --danger: #ffa3ab; --danger-soft: rgba(255, 120, 130, .2); --on-danger: #2a0508; --inverse-accent: #ffe58a;
+    background: var(--lg-window); color: var(--ink); border: 0; box-shadow: var(--lg-window-edge), var(--shadow-lg);
+  }
+  :scope :is(.ts-dialog, .ts-cmd) { border-radius: var(--radius-md); }
+  :scope :is(.ts-popover, .ts-menu, .ts-sel-list, .ts-side-flyout) { border-radius: var(--radius-sm); }
+  :scope :is(.ts-dialog-title, .ts-popover-title, .ts-menu-item, .ts-opt, .ts-toast, .ts-tooltip) { text-shadow: 1px 1px 0 rgba(4, 10, 40, .6); }
+  :scope :is(.ts-menu-label) { color: #ffe58a; }
+  /* The pointing glove marks the active item, bobbing the way a menu cursor does. */
+  :scope :is(.ts-menu-item, .ts-opt) { position: relative; padding-left: 30px; }
+  :scope :is(.ts-menu-item-active, .ts-opt-active) { background: linear-gradient(90deg, rgba(143, 233, 255, .24), rgba(143, 233, 255, .04)); color: var(--ink); }
+  :scope :is(.ts-menu-item-active, .ts-opt-active)::before { content: ""; position: absolute; left: 3px; top: 50%; width: 24px; height: 16px; margin-top: -8px; background: var(--lg-hand) center / contain no-repeat; filter: drop-shadow(1px 1px 0 rgba(4, 10, 40, .5)); animation: lg-point .5s ease-in-out infinite alternate; pointer-events: none; }
+  :scope .ts-menu-item-active .ts-icon { color: var(--lapis); }
+  :scope .ts-menu-item-danger.ts-menu-item-active { background: linear-gradient(90deg, rgba(255, 120, 130, .28), rgba(255, 120, 130, .04)); }
+  :scope .ts-opt-selected { background: none; color: var(--lapis); }
+  :scope .ts-opt-selected.ts-opt-active { box-shadow: none; background: linear-gradient(90deg, rgba(143, 233, 255, .24), rgba(143, 233, 255, .04)); }
+
+  /* Tooltips are a small window; the arrow is the silver edge. */
+  :scope .ts-tooltip { border-radius: var(--radius-xs); font-weight: 700; }
+  :scope .ts-tooltip[data-side="top"]::after { border-top-color: #dfe7f7; }
+  :scope .ts-tooltip[data-side="bottom"]::after { border-bottom-color: #dfe7f7; }
+  :scope .ts-tooltip[data-side="left"]::after { border-left-color: #dfe7f7; }
+  :scope .ts-tooltip[data-side="right"]::after { border-right-color: #dfe7f7; }
+
+  /* Toasts are a message window: an item found, in gold. */
+  :scope .ts-toast { border-radius: var(--radius-sm); padding: var(--space-3) var(--space-4) calc(var(--space-3) + 3px); }
+  :scope .ts-toast-title { font-family: var(--font-display); font-weight: 700; letter-spacing: .03em; }
+  :scope .ts-toast > .ts-icon { color: #ffe58a; }
+  :scope .ts-toast-timer { left: 3px; right: 3px; bottom: 3px; width: auto; height: 2px; background: linear-gradient(90deg, #ffe58a, #8fe9ff); }
+
+  /* Fields: rounded, a soft lagoon glow on focus. */
+  :scope :is(.ts-input, .ts-sel-trigger, .ts-tags, .ts-number) { border-radius: var(--radius-sm); }
+
+  /* Shell: a shallow-sea strip with a foam scallop along its foot. */
+  :scope .ts-navbar { position: relative; border-bottom: 0; background: var(--lg-strip); --ink: #ffffff; --ink-muted: #d4ecf5; --lapis: #b8f2ff; --lapis-hover: #dcf9ff; --on-lapis: #071a3a; --link: #ffffff; --line: rgba(255, 255, 255, .25); color: var(--ink); }
+  :scope .ts-navbar::after { content: ""; position: absolute; left: 0; right: 0; bottom: -8px; height: 9px; pointer-events: none; background: radial-gradient(circle at 18px -11px, var(--lg-strip-edge) 17px, var(--lg-foam) 17.5px 19px, transparent 19.5px) 0 0 / 36px 9px repeat-x; }
+  :scope .ts-sidebar { border-right: 1px solid var(--line); }
+  :scope .ts-side-link[aria-current="page"] { background: linear-gradient(90deg, var(--lapis-soft), transparent); color: var(--lapis); font-weight: 700; box-shadow: inset 3px 0 0 var(--saffron); }
+  :scope .ts-side-title { font-family: var(--font-display); font-weight: 700; letter-spacing: .06em; }
+
+  /* Tabs: the underline is a wave. */
+  :scope .ts-tab-ink { height: 6px; bottom: -3px; border-radius: 0; background: var(--lapis); -webkit-mask: var(--lg-wave-line) 0 50% / 16px 6px repeat-x; mask: var(--lg-wave-line) 0 50% / 16px 6px repeat-x; }
+  :scope .ts-segctl { border-radius: var(--radius-full); }
+  :scope .ts-segctl-ink { border-radius: var(--radius-full); background: linear-gradient(180deg, #ffffff, var(--surface)); box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .08), var(--shadow-sm), 0 0 0 1px var(--line); }
+  :scope[data-theme="dark"] .ts-segctl-ink { background: linear-gradient(180deg, #23406b, var(--surface)); }
+  @media (prefers-color-scheme: dark) { :scope:not([data-theme="light"]) .ts-segctl-ink { background: linear-gradient(180deg, #23406b, var(--surface)); } }
+  :scope .ts-segctl-item { border-radius: var(--radius-full); }
+
+  /* Controls: rounded checks, a glossy orb in the radio, a pearl on the switch. */
+  :scope .ts-check-box { border-radius: var(--radius-xs); }
+  :scope .ts-check input:checked + .ts-check-box { background: linear-gradient(180deg, color-mix(in srgb, var(--lapis) 80%, #ffffff), var(--lapis)); }
+  :scope .ts-radio-dot::after { background: radial-gradient(circle at 35% 30%, #ffffff 0 18%, var(--lapis) 60%); }
+  :scope .ts-switch input:checked + .ts-switch-track { background: linear-gradient(180deg, color-mix(in srgb, var(--lapis) 75%, #ffffff), var(--lapis)); }
+  :scope .ts-switch-track::after { background: radial-gradient(circle at 34% 28%, #ffffff 0 22%, #f4eef8 40%, #dce8f4 66%, #b9c8dc 100%); box-shadow: 0 1px 3px rgba(0, 0, 0, .3), inset 0 -1px 2px rgba(122, 108, 255, .2); }
+
+  /* Badges: little glossy pills. Keys on the keyboard are rounded capsules. */
+  :scope .ts-badge { border-radius: var(--radius-full); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45); }
+  :scope .ts-kbd { border-radius: var(--radius-full); padding: 0 7px; }
+
+  /* Avatars are elemental orbs: water, fire, wind and earth. */
+  :scope .ts-avatar {
+    --lg-orb: #1f6fd1; color: #ffffff; text-shadow: 0 1px 1px rgba(0, 0, 0, .45); font-weight: 800;
+    background: radial-gradient(circle at 34% 26%, rgba(255, 255, 255, .85) 0 9%, rgba(255, 255, 255, 0) 32%), radial-gradient(circle at 50% 62%, var(--lg-orb) 34%, color-mix(in srgb, var(--lg-orb) 55%, #000000) 100%);
+    box-shadow: inset 0 -2px 4px rgba(0, 0, 0, .3), 0 2px 6px -1px color-mix(in srgb, var(--lg-orb) 60%, transparent);
+  }
+  :scope .ts-avatar[data-hue="1"] { --lg-orb: #cc3a2c; }
+  :scope .ts-avatar[data-hue="2"] { --lg-orb: #22803d; }
+  :scope .ts-avatar[data-hue="3"] { --lg-orb: #e0b11c; color: #2a1d00; text-shadow: 0 1px 0 rgba(255, 255, 255, .4); }
+
+  /* Progress is an ATB gauge: a dark trough with a silver rim, the bar filling with light. */
+  :scope .ts-progress-track { height: 12px; padding: 2px; box-sizing: border-box; border-radius: var(--radius-full); background: linear-gradient(180deg, #081236, #16296a); box-shadow: inset 0 0 0 1px #c9d6f2, 0 1px 0 rgba(255, 255, 255, .4); }
+  :scope .ts-progress-bar { border-radius: var(--radius-full); animation: none; background: linear-gradient(180deg, rgba(255, 255, 255, .7) 0 30%, rgba(255, 255, 255, 0) 60%), linear-gradient(90deg, #2fb7d4, #8ff0ff 70%, #fff3b8); box-shadow: 0 0 6px rgba(143, 240, 255, .6); }
+  :scope .ts-progress-segmented .ts-progress-track { padding: 0; background: none; box-shadow: none; }
+  :scope .ts-progress-segmented .ts-seg { border-radius: var(--radius-full); }
+
+  /* The spinner: four elemental orbs pulsing in turn. */
+  :scope .ts-spinner { gap: 16%; }
+  :scope .ts-spinner i { --lg-orb: #1f6fd1; border-radius: 50%; opacity: 1; background: radial-gradient(circle at 34% 28%, #ffffff 0 14%, rgba(255, 255, 255, 0) 40%), var(--lg-orb); animation-name: lg-orb; animation-duration: 1s; animation-timing-function: ease-in-out; }
+  :scope .ts-spinner i:nth-child(2) { --lg-orb: #cc3a2c; }
+  :scope .ts-spinner i:nth-child(3) { --lg-orb: #e0b11c; }
+  :scope .ts-spinner i:nth-child(4) { --lg-orb: #22a04a; }
+
+  /* The mosaic: sea glass, worn round. */
+  :scope .ts-mosaic .ts-mosaic-tile { border-radius: 32%; box-shadow: inset 0 2px 0 rgba(255, 255, 255, .3), inset 0 -2px 0 rgba(0, 0, 0, .15); }
+
+  @media (prefers-reduced-motion: reduce) {
+    :scope body::after { animation: none; }
+    :scope :is(.ts-menu-item-active, .ts-opt-active)::before { animation: none; }
+    :scope .ts-spinner i { animation: none; transform: scale(.85); }
+  }
+}
