@@ -1,0 +1,310 @@
+{
+  "name": "jersey",
+  "label": "Jersey",
+  "description": "90s pro sports, expansion-team era: teal, purple and black with a basketball orange. Varsity block lettering with a two-color twill outline, trading-card panels with a nameplate and a holo-foil featured card, mesh keys in broadcast italics, stitched patch badges and avatars, and a dot-matrix scoreboard for toasts and progress. Hardwood by day, the arena after dark.",
+  "fonts": "https://fonts.googleapis.com/css2?family=Graduate&family=Barlow+Semi+Condensed:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&family=Doto:wght@800&display=swap",
+  "type": {
+    "families": {
+      "display": "Graduate, \"Varsity\", \"Rockwell\", serif",
+      "sans": "\"Barlow Semi Condensed\", \"Arial Narrow\", system-ui, sans-serif"
+    }
+  },
+  "color": {
+    "tokens": [
+      {
+        "name": "bg",
+        "value": {
+          "light": "#f1dfbb",
+          "dark": "#0f0b16"
+        }
+      },
+      {
+        "name": "surface",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#1c1528"
+        }
+      },
+      {
+        "name": "surface-sunken",
+        "value": {
+          "light": "#eee4d2",
+          "dark": "#08060c"
+        }
+      },
+      {
+        "name": "line",
+        "value": {
+          "light": "#dcc9a6",
+          "dark": "#33284a"
+        }
+      },
+      {
+        "name": "line-strong",
+        "value": {
+          "light": "#7f6a48",
+          "dark": "#7c6b9c"
+        }
+      },
+      {
+        "name": "ink",
+        "value": {
+          "light": "#1a1023",
+          "dark": "#f4f0fa"
+        }
+      },
+      {
+        "name": "ink-muted",
+        "value": {
+          "light": "#4f4359",
+          "dark": "#b8aecb"
+        }
+      },
+      {
+        "name": "lapis",
+        "value": {
+          "light": "#006b73",
+          "dark": "#2fd3dc"
+        }
+      },
+      {
+        "name": "lapis-hover",
+        "value": {
+          "light": "#00545a",
+          "dark": "#6ee3ea"
+        }
+      },
+      {
+        "name": "lapis-soft",
+        "value": {
+          "light": "#d3eeef",
+          "dark": "#0d3236"
+        }
+      },
+      {
+        "name": "lapis-deep",
+        "value": {
+          "light": "#3d1a78",
+          "dark": "#5b2bb0"
+        }
+      },
+      {
+        "name": "lapis-glow",
+        "value": {
+          "light": "rgba(0, 107, 115, 0.25)",
+          "dark": "rgba(47, 211, 220, 0.35)"
+        }
+      },
+      {
+        "name": "on-lapis",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#06191b"
+        }
+      },
+      {
+        "name": "on-lapis-deep",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#ffffff"
+        }
+      },
+      {
+        "name": "saffron",
+        "value": {
+          "light": "#f26b1d",
+          "dark": "#ff7a2a"
+        }
+      },
+      {
+        "name": "saffron-deep",
+        "value": {
+          "light": "#a8430a",
+          "dark": "#c4520f"
+        }
+      },
+      {
+        "name": "saffron-soft",
+        "value": {
+          "light": "#fde3d0",
+          "dark": "#3a1a08"
+        }
+      },
+      {
+        "name": "on-saffron",
+        "value": {
+          "light": "#1a0b00",
+          "dark": "#1a0b00"
+        }
+      },
+      {
+        "name": "success",
+        "value": {
+          "light": "#11704a",
+          "dark": "#4cd890"
+        }
+      },
+      {
+        "name": "success-soft",
+        "value": {
+          "light": "#d6f2e4",
+          "dark": "#0b2e1e"
+        }
+      },
+      {
+        "name": "warning",
+        "value": {
+          "light": "#8a4f00",
+          "dark": "#ffb24d"
+        }
+      },
+      {
+        "name": "danger",
+        "value": {
+          "light": "#b8232b",
+          "dark": "#ff6b6b"
+        }
+      },
+      {
+        "name": "danger-soft",
+        "value": {
+          "light": "#fbe0e1",
+          "dark": "#3a1012"
+        }
+      },
+      {
+        "name": "on-danger",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#1a0405"
+        }
+      },
+      {
+        "name": "inverse-accent",
+        "value": {
+          "light": "#5ee0e8",
+          "dark": "#3d1a78"
+        }
+      },
+      {
+        "name": "focus",
+        "value": {
+          "light": "#3d1a78",
+          "dark": "#2fd3dc"
+        }
+      },
+      {
+        "name": "link",
+        "value": {
+          "light": "#006b73",
+          "dark": "#6ee3ea"
+        }
+      },
+      {
+        "name": "overlay",
+        "value": {
+          "light": "rgba(26, 16, 35, 0.55)",
+          "dark": "rgba(4, 2, 8, 0.75)"
+        }
+      },
+      {
+        "name": "tile-ground",
+        "value": "#1a1023"
+      },
+      {
+        "name": "tile-1",
+        "value": "#00a3ad"
+      },
+      {
+        "name": "tile-2",
+        "value": "#4b2a85"
+      },
+      {
+        "name": "tile-3",
+        "value": "#111111"
+      },
+      {
+        "name": "tile-4",
+        "value": "#f26b1d"
+      },
+      {
+        "name": "board",
+        "value": "#050505"
+      },
+      {
+        "name": "bulb",
+        "value": "#ffb000"
+      }
+    ]
+  },
+  "radius": {
+    "tokens": [
+      {
+        "name": "radius-xs",
+        "value": "2px"
+      },
+      {
+        "name": "radius-sm",
+        "value": "4px"
+      },
+      {
+        "name": "radius-md",
+        "value": "6px"
+      },
+      {
+        "name": "radius-lg",
+        "value": "10px"
+      },
+      {
+        "name": "radius-xl",
+        "value": "14px"
+      }
+    ]
+  },
+  "shadow": {
+    "tokens": [
+      {
+        "name": "shadow-sm",
+        "value": {
+          "light": "0 1px 2px rgba(26, 16, 35, 0.18)",
+          "dark": "0 1px 2px rgba(0, 0, 0, 0.6)"
+        }
+      },
+      {
+        "name": "shadow-md",
+        "value": {
+          "light": "0 6px 16px rgba(60, 30, 10, 0.18)",
+          "dark": "0 8px 22px rgba(0, 0, 0, 0.6)"
+        }
+      },
+      {
+        "name": "shadow-lg",
+        "value": {
+          "light": "0 16px 40px rgba(60, 30, 10, 0.28)",
+          "dark": "0 22px 50px rgba(0, 0, 0, 0.75)"
+        }
+      },
+      {
+        "name": "shadow-glow",
+        "value": {
+          "light": "3px 3px 0 0 #3d1a78",
+          "dark": "3px 3px 0 0 #5b2bb0"
+        }
+      },
+      {
+        "name": "shadow-tile",
+        "value": {
+          "light": "5px 5px 0 0 #3d1a78",
+          "dark": "5px 5px 0 0 #5b2bb0"
+        }
+      },
+      {
+        "name": "shadow-tile-lg",
+        "value": {
+          "light": "8px 8px 0 0 #3d1a78",
+          "dark": "8px 8px 0 0 #5b2bb0"
+        }
+      }
+    ]
+  }
+}

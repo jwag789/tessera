@@ -9,7 +9,7 @@ interface ThemeContextValue {
   /** What is showing right now. */
   resolvedTheme: 'light' | 'dark';
   setTheme: (theme: ThemeMode) => void;
-  /** The theme pack in use, e.g. "tessera", "cartridge", "polygon", "gloop", "shonen", "jelly", "neon". */
+  /** The theme pack in use, e.g. "tessera", "cartridge", "polygon", "gloop", "shonen", "jelly", "neon", "jersey", "static". */
   brand: string;
   setBrand: (brand: string) => void;
 }

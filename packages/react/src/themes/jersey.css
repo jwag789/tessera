@@ -1,0 +1,154 @@
+/* Jersey: component treatments the tokens can't express. 90s pro sports, expansion-team era: teal, purple and black
+   with a basketball orange. Big titles are varsity block letters in tackle twill (a teal fill, a purple outline and a
+   purple drop). Panels are trading cards: a white frame, a thin team-color rule, a diagonal team stripe in the corner,
+   the title on a slanted nameplate, and a holo-foil sheen on the featured card. Keys are mesh in broadcast italics,
+   badges and avatars are stitched patches, toasts, tooltips and progress are a dot-matrix scoreboard. Hardwood by day,
+   the arena after dark. Scoped to [data-brand="jersey"]. */
+@keyframes jy-foil { from { background-position: 0% 50%; } to { background-position: 100% 50%; } }
+@keyframes jy-buzzer { 0%, 100% { filter: none; } 50% { filter: brightness(1.35); } }
+
+/* Scoped so a nested area with a different data-brand keeps its own look. */
+@scope ([data-brand="jersey"]) to ([data-brand]:not([data-brand="jersey"])) {
+  :scope {
+    font-synthesis: none;
+    --jy-board-face: Doto, ui-monospace, monospace;
+    /* Hardwood: maple boards, a court line painted across. */
+    --jy-ground:
+      radial-gradient(circle at 104% 108%, transparent 0 21vmax, color-mix(in srgb, var(--lapis) 40%, transparent) 21vmax calc(21vmax + 5px), transparent calc(21vmax + 6px)),
+      repeating-linear-gradient(90deg, rgba(120, 70, 20, .07) 0 1px, transparent 1px 58px),
+      repeating-linear-gradient(90deg, transparent 0 116px, rgba(255, 240, 210, .35) 116px 174px),
+      repeating-linear-gradient(180deg, transparent 0 380px, rgba(120, 70, 20, .06) 380px 381px);
+    --jy-frame: #ffffff;
+    --jy-mesh: rgba(0, 0, 0, .1);
+    --jy-twill-fill: var(--lapis);
+    --jy-twill: #3d1a78;
+    --jy-nameplate: #3d1a78;
+  }
+  /* The arena after dark: black mesh, a spotlight from the rafters. */
+  :scope[data-theme="dark"] {
+    --jy-ground: radial-gradient(ellipse 60% 40% at 50% -5%, rgba(47, 211, 220, .12), transparent 70%), radial-gradient(rgba(255, 255, 255, .04) 1.2px, transparent 1.6px) 0 0 / 6px 6px;
+    --jy-frame: #2b2340; --jy-mesh: rgba(0, 0, 0, .18); --jy-twill-fill: #2fd3dc; --jy-twill: #5b2bb0; --jy-nameplate: #5b2bb0;
+  }
+  @media (prefers-color-scheme: dark) {
+    :scope:not([data-theme="light"]) {
+      --jy-ground: radial-gradient(ellipse 60% 40% at 50% -5%, rgba(47, 211, 220, .12), transparent 70%), radial-gradient(rgba(255, 255, 255, .04) 1.2px, transparent 1.6px) 0 0 / 6px 6px;
+      --jy-frame: #2b2340; --jy-mesh: rgba(0, 0, 0, .18); --jy-twill-fill: #2fd3dc; --jy-twill: #5b2bb0; --jy-nameplate: #5b2bb0;
+    }
+  }
+  :scope body { background: var(--jy-ground), var(--bg); background-attachment: fixed; }
+
+  /* Big titles: varsity block in tackle twill. */
+  :scope :is(.display-2xl, .display-xl, .display-lg, .heading-lg) {
+    font-weight: 400; text-transform: uppercase; letter-spacing: .02em;
+    color: var(--jy-twill-fill); -webkit-text-stroke: 5px var(--jy-twill); paint-order: stroke fill; text-shadow: 4px 4px 0 var(--jy-twill);
+  }
+  :scope .heading-md { font-weight: 400; text-transform: uppercase; }
+  /* Broadcast italics for everything you press or scan. */
+  :scope :is(.ts-btn, .ts-badge, .ts-tab, .ts-segctl-item, .ts-side-title, .ts-card-eyebrow) { font-family: var(--font-sans); font-style: italic; font-weight: 800; text-transform: uppercase; letter-spacing: .04em; }
+  :scope .ts-btn { font-size: 15px; }
+  :scope .ts-card-eyebrow { font-size: 12px; color: var(--lapis); }
+  :scope .ts-side-title { font-size: 12px; }
+  :scope :is(.ts-dialog-title, .ts-popover-title, .ts-empty-title, .ts-cal-title, .ts-navbar-brand) { font-weight: 400; text-transform: uppercase; letter-spacing: .02em; }
+
+  /* Keys: jersey mesh. A team color, a pinhole mesh, a twill edge in the second color. Pressing drives the key into it. */
+  :scope .ts-btn { border-radius: var(--radius-sm); transition: transform var(--duration-instant) var(--ease-out), box-shadow var(--duration-instant), filter var(--duration-fast); }
+  :scope :is(.ts-btn-primary, .ts-btn-tile, .ts-btn-danger) { background-image: radial-gradient(var(--jy-mesh) 1px, transparent 1.4px); background-size: 4px 4px; }
+  :scope .ts-btn-primary { background-color: var(--lapis); color: var(--on-lapis); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .35), 3px 3px 0 0 var(--jy-twill); }
+  :scope .ts-btn-primary:hover:not([disabled]) { background-color: var(--lapis-hover); transform: translate(-1px, -1px); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .35), 4px 4px 0 0 var(--jy-twill); }
+  :scope .ts-btn-tile { border: 0; background-color: var(--saffron); color: var(--on-saffron); box-shadow: inset 0 0 0 2px rgba(0, 0, 0, .2), 4px 4px 0 0 var(--ink); }
+  :scope .ts-btn-tile:hover:not([disabled]) { transform: translate(-2px, -2px); box-shadow: inset 0 0 0 2px rgba(0, 0, 0, .2), 6px 6px 0 0 var(--ink); }
+  :scope .ts-btn-danger { box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .3), 3px 3px 0 0 var(--ink); }
+  :scope .ts-btn-secondary { border: 2px solid var(--ink); background: var(--surface); box-shadow: 3px 3px 0 0 var(--lapis); }
+  :scope .ts-btn-secondary:hover:not([disabled]) { border-color: var(--ink); transform: translate(-1px, -1px); box-shadow: 4px 4px 0 0 var(--lapis); }
+  :scope .ts-btn:active:not([disabled]) { transform: translate(3px, 3px); box-shadow: 0 0 0 0 transparent; }
+  :scope :is(.ts-btn-primary, .ts-btn-tile)::after { display: none; }
+
+  /* Panels are trading cards: a frame, a thin team-color rule, a team stripe across the corner. */
+  :scope :is(.ts-card, .ts-dialog) { border: 0; border-radius: var(--radius-lg); background: var(--surface); box-shadow: inset 0 0 0 7px var(--jy-frame), inset 0 0 0 9px var(--lapis), var(--shadow-md); }
+  :scope .ts-card::before { content: ""; position: absolute; top: 0; right: 0; width: 120px; height: 120px; pointer-events: none; background: linear-gradient(225deg, transparent 0 22px, var(--tile-1) 22px 34px, var(--jy-twill) 34px 44px, var(--tile-3) 44px 50px, transparent 50px); }
+  :scope .ts-card-motif { z-index: 1; }
+  /* The title sits on a slanted nameplate. */
+  :scope :is(.ts-card-title, .ts-dialog-title) {
+    align-self: flex-start; font-weight: 400; text-transform: uppercase; letter-spacing: .03em; font-size: 19px; line-height: 24px;
+    color: #ffffff; background: var(--jy-nameplate); padding: 5px 16px 4px 12px; margin-left: -4px;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 10px) 100%, 0 100%); box-shadow: inset 0 -3px 0 var(--tile-1);
+  }
+  :scope .ts-dialog { position: relative; padding: calc(var(--space-6) + 4px); }
+  :scope .ts-dialog-title { font-size: 20px; }
+  /* The featured card is the rare one: holo foil that shifts under the light. */
+  :scope .ts-card-tile { box-shadow: inset 0 0 0 7px var(--jy-frame), inset 0 0 0 9px var(--saffron), var(--shadow-tile); }
+  :scope .ts-card-tile::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit; mix-blend-mode: overlay; opacity: .55;
+    background: linear-gradient(115deg, transparent 20%, #ff6ec7 32%, #ffe066 40%, #6effc4 48%, #6ec8ff 56%, #c56eff 64%, transparent 76%) 0 50% / 300% 100%;
+    transition: opacity var(--duration-base);
+  }
+  :scope .ts-card-tile:hover::after { opacity: .8; animation: jy-foil 1.2s ease-in-out infinite alternate; }
+  :scope .ts-card-interactive:hover { transform: translate(-2px, -3px) rotate(-.4deg); box-shadow: inset 0 0 0 7px var(--jy-frame), inset 0 0 0 9px var(--lapis), var(--shadow-lg); }
+  :scope .ts-card-tile.ts-card-interactive:hover { transform: translate(-3px, -3px) rotate(-.4deg); box-shadow: inset 0 0 0 7px var(--jy-frame), inset 0 0 0 9px var(--saffron), var(--shadow-tile-lg); }
+
+  /* Shell: Starter-jacket stripes. Teal, purple and black run along the navbar's bottom edge and the sidebar's right edge. */
+  :scope .ts-navbar { position: relative; border-bottom: 0; }
+  :scope .ts-navbar::after { content: ""; position: absolute; left: 0; right: 0; bottom: -9px; height: 9px; pointer-events: none; background: linear-gradient(180deg, var(--tile-1) 0 3px, var(--tile-2) 3px 6px, var(--tile-3) 6px 9px); }
+  :scope .ts-sidebar { border-right: 0; box-shadow: inset -3px 0 0 var(--tile-3), inset -6px 0 0 var(--tile-2), inset -9px 0 0 var(--tile-1); }
+  :scope .ts-navlink[aria-current="page"]::after { height: 4px; background: var(--saffron); }
+  :scope .ts-side-link[aria-current="page"] { background: var(--lapis); color: var(--on-lapis); font-weight: 700; box-shadow: 3px 3px 0 0 var(--jy-twill); }
+  :scope .ts-side-link[aria-current="page"] .ts-icon { color: var(--on-lapis); }
+  /* Section titles get a little basketball. */
+  :scope .ts-side-title { display: flex; align-items: center; gap: 8px; }
+  :scope .ts-side-title::before { content: ""; width: 11px; height: 11px; border-radius: 50%; flex: none; background: radial-gradient(circle at 50% 50%, transparent 0 4px, #3a1a05 4px 5px, transparent 5px) -5px 0 / 11px 11px, linear-gradient(90deg, transparent 5px, #3a1a05 5px 6px, transparent 6px), linear-gradient(0deg, transparent 5px, #3a1a05 5px 6px, transparent 6px), var(--saffron); }
+
+  /* Small stuff: stitched patches. */
+  :scope .ts-badge { border-radius: var(--radius-xs); outline: 1.5px dashed color-mix(in srgb, currentColor 45%, transparent); outline-offset: -3px; padding-inline: 9px; }
+  :scope .ts-badge-accent { background: var(--saffron); color: var(--on-saffron); }
+  :scope .ts-avatar { --jy-patch: var(--tile-1); background: var(--jy-patch); color: #ffffff; font-family: var(--font-display); font-weight: 400; outline: 1.5px dashed rgba(255, 255, 255, .75); outline-offset: -4px; box-shadow: 0 0 0 2px var(--jy-frame), 0 0 0 3px var(--line-strong); }
+  :scope .ts-avatar[data-hue="0"] { color: #002326; }
+  :scope .ts-avatar[data-hue="1"] { --jy-patch: var(--tile-2); }
+  :scope .ts-avatar[data-hue="2"] { --jy-patch: var(--tile-4); color: #1a0b00; }
+  :scope .ts-avatar[data-hue="3"] { --jy-patch: var(--tile-3); }
+  :scope .ts-check-box { border-width: 2px; border-radius: var(--radius-xs); }
+  :scope .ts-switch-track { box-shadow: inset 0 0 0 2px var(--ink); background: var(--surface-sunken); }
+  :scope .ts-switch-track::after { box-shadow: 0 0 0 2px var(--ink); }
+  :scope .ts-switch input:checked + .ts-switch-track { background: var(--lapis); }
+  /* Tabs, segmented and pages: paint on the court. */
+  :scope .ts-tab-ink { height: 4px; background: var(--saffron); transform-origin: left; }
+  :scope .ts-segctl { border-radius: var(--radius-sm); box-shadow: inset 0 0 0 2px var(--line); }
+  :scope .ts-segctl-ink { background: var(--lapis); border-radius: var(--radius-xs); box-shadow: 2px 2px 0 0 var(--jy-twill); }
+  :scope .ts-segctl-on, :scope .ts-segctl-on:hover { color: var(--on-lapis); }
+  :scope :is(.ts-page-current, .ts-day-selected) { box-shadow: 2px 2px 0 var(--jy-twill); }
+  :scope .ts-step-current .ts-step-marker { background: var(--saffron); color: var(--on-saffron); border-color: var(--ink); }
+
+  /* The scoreboard: black panel, amber bulbs. Toasts, tooltips and progress run on it. */
+  :scope :is(.ts-toast, .ts-tooltip) { --ink: var(--board); --bg: var(--bulb); }
+  :scope .ts-toast { background: radial-gradient(rgba(255, 255, 255, .06) 1px, transparent 1.4px) 0 0 / 4px 4px, var(--board); color: var(--bulb); border-radius: var(--radius-sm); box-shadow: inset 0 0 0 2px #2a2a2a, 0 0 0 3px var(--saffron), var(--shadow-lg); font-weight: 600; }
+  :scope .ts-toast-title { font-family: var(--jy-board-face); font-weight: 800; font-size: 18px; letter-spacing: .06em; text-transform: uppercase; text-shadow: 0 0 6px rgba(255, 176, 0, .7); animation: jy-buzzer .5s steps(1) 2; }
+  :scope .ts-toast > .ts-icon { color: var(--bulb); }
+  :scope .ts-toast-action { color: #ffffff; font-style: italic; font-weight: 800; text-transform: uppercase; }
+  :scope .ts-toast-timer { background: var(--saffron); height: 3px; }
+  :scope .ts-tooltip { font-family: var(--jy-board-face); font-weight: 800; font-size: 13px; letter-spacing: .05em; text-transform: uppercase; text-shadow: 0 0 5px rgba(255, 176, 0, .6); }
+  :scope .ts-progress-track { height: 16px; padding: 3px; box-sizing: border-box; border-radius: var(--radius-xs); background: var(--board); box-shadow: inset 0 0 0 1px #2a2a2a; }
+  :scope .ts-progress-bar {
+    border-radius: 0; animation: none; background: var(--bulb);
+    -webkit-mask: radial-gradient(circle, #000 2.4px, transparent 2.8px) 0 50% / 7px 10px repeat-x; mask: radial-gradient(circle, #000 2.4px, transparent 2.8px) 0 50% / 7px 10px repeat-x;
+    filter: drop-shadow(0 0 3px rgba(255, 176, 0, .9));
+  }
+  :scope .ts-progress-segmented .ts-progress-track { padding: 0; background: none; box-shadow: none; }
+  :scope .ts-progress-segmented .ts-seg { border-radius: var(--radius-xs); background: var(--surface-sunken); box-shadow: inset 0 0 0 1px var(--line); transform: skewX(-12deg); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(odd)::after { background: var(--tile-1); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(even)::after { background: var(--tile-2); }
+  :scope .ts-progress-segmented .ts-seg-current::after { background: var(--saffron); }
+
+  /* The spinner: four team colors. */
+  :scope .ts-spinner i { border-radius: 50%; }
+  :scope .ts-spinner i:nth-child(1) { color: var(--tile-1); }
+  :scope .ts-spinner i:nth-child(2) { color: var(--tile-2); }
+  :scope .ts-spinner i:nth-child(3) { color: var(--tile-4); }
+  :scope .ts-spinner i:nth-child(4) { color: var(--ink); }
+
+  /* Mosaic: mesh tiles in team colors. */
+  :scope .ts-mosaic .ts-mosaic-tile { border-radius: var(--radius-xs); background-image: radial-gradient(rgba(0, 0, 0, .18) 1px, transparent 1.4px); background-size: 4px 4px; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .25); }
+
+  @media (prefers-reduced-motion: reduce) {
+    :scope .ts-card-tile:hover::after, :scope .ts-toast-title { animation: none; }
+    :scope .ts-card-interactive:hover { transform: none; }
+  }
+}

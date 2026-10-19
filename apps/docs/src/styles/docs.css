@@ -256,6 +256,8 @@ a { color: var(--link); }
 .d-theme-dot-jelly { background: radial-gradient(circle at 35% 28%, #ffffff 0 14%, transparent 34%), linear-gradient(135deg, #1fa8e8, #9d63f5 50%, #ff5fa8); border-radius: 50%; box-shadow: inset 0 -2px 3px rgba(0, 0, 0, .2), 0 1px 3px rgba(0, 0, 0, .25); }
 .d-theme-dot-cartridge { --c1: #cc2d25; --c2: #2f6be0; --c3: #ffc72c; --c4: #3cba5c; border-radius: 4px; background: radial-gradient(ellipse at 50% 20%, rgba(255, 255, 255, .45), transparent 65%), conic-gradient(var(--c1) 0 25%, var(--c2) 0 50%, var(--c3) 0 75%, var(--c4) 0); box-shadow: 0 0 0 2px #4c4b53, 0 2px 0 2px #2e2d33; }
 .d-theme-dot-neon { background: radial-gradient(circle, #02060c 0 38%, #00e5ff 40% 50%, #02060c 52% 64%, #00e5ff 66% 74%, #02060c 76%); border-radius: 50%; box-shadow: 0 0 0 1px #00e5ff, 0 0 6px rgba(0, 229, 255, .8); }
+.d-theme-dot-jersey { background: linear-gradient(135deg, #00a3ad 0 40%, #ffffff 40% 46%, #4b2a85 46% 70%, #111111 70%); border-radius: 4px; box-shadow: 0 0 0 1.5px #111111, 2px 2px 0 #4b2a85; }
+.d-theme-dot-static { background: radial-gradient(circle at 60% 40%, #ff4a3d 0 30%, rgba(255, 74, 61, .4) 45%, transparent 60%), #161412; border-radius: 1px; box-shadow: 0 0 0 1.5px #161412; rotate: -4deg; }
 .ts-opt-icon:has(.d-theme-dot) { background: none; }
 .d-theme-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
 .d-themes { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); align-items: start; }
@@ -369,6 +371,65 @@ a { color: var(--link); }
   }
   @media (prefers-reduced-motion: reduce) {
     :scope .d-side::after { animation: none; }
+  }
+}
+@scope ([data-brand="jersey"]) to ([data-brand]:not([data-brand="jersey"])) {
+  :scope .d-mark rect:nth-child(1) { fill: var(--tile-1); }
+  :scope .d-mark rect:nth-child(2) { fill: var(--tile-2); }
+  :scope .d-mark rect:nth-child(3) { fill: var(--tile-3); }
+  :scope .d-mark .d-odd { fill: var(--tile-4); }
+  :scope .d-brand-name { font-weight: 400; text-transform: uppercase; letter-spacing: .02em; }
+  /* Big titles: varsity block in tackle twill. */
+  :scope :is(.d-title, .sc-w:not(.sc-tile)) { font-weight: 400; text-transform: uppercase; letter-spacing: .02em; color: var(--jy-twill-fill); -webkit-text-stroke: 6px var(--jy-twill); paint-order: stroke fill; text-shadow: 5px 5px 0 var(--jy-twill); }
+  :scope .d-title { font-size: 58px; line-height: 1.1; }
+  :scope .sc-h { font-weight: 400; font-size: 58px; line-height: 1.12; text-transform: uppercase; }
+  :scope .sc-tile { text-transform: uppercase; }
+  :scope .d-h2 { font-weight: 400; text-transform: uppercase; letter-spacing: .02em; color: var(--jy-twill-fill); -webkit-text-stroke: 4px var(--jy-twill); paint-order: stroke fill; text-shadow: 3px 3px 0 var(--jy-twill); }
+  :scope .d-h2 small { -webkit-text-stroke: 0; text-shadow: none; text-transform: none; }
+  :scope :is(.d-md h3, .d-tilelink b, .lay-head b, .d-theme-head h2) { font-weight: 400; text-transform: uppercase; letter-spacing: .02em; }
+  :scope .d-tilelink b { font-size: 17px; }
+  :scope .d-eyebrow { font-family: var(--font-sans); font-style: italic; font-weight: 800; letter-spacing: .06em; color: var(--lapis); }
+  :scope .d-eyebrow::before { width: 10px; height: 10px; border-radius: 50%; background: var(--saffron); box-shadow: inset 0 0 0 1px rgba(58, 26, 5, .6); }
+  :scope .d-side { border-right: 0; box-shadow: inset -3px 0 0 var(--tile-3), inset -6px 0 0 var(--tile-2), inset -9px 0 0 var(--tile-1); }
+  :scope .d-top { border-bottom: 0; box-shadow: inset 0 -3px 0 var(--tile-3), inset 0 -6px 0 var(--tile-2), inset 0 -9px 0 var(--tile-1); }
+  /* Link tiles are trading cards too. */
+  :scope .d-tilelink { position: relative; border: 0; border-radius: var(--radius-lg); background: var(--surface); box-shadow: inset 0 0 0 6px var(--jy-frame), inset 0 0 0 8px var(--lapis), var(--shadow-sm); overflow: hidden; }
+  :scope .d-tilelink::before { content: ""; position: absolute; top: 0; right: 0; width: 80px; height: 80px; pointer-events: none; background: linear-gradient(225deg, transparent 0 14px, var(--tile-1) 14px 22px, var(--jy-twill) 22px 29px, var(--tile-3) 29px 33px, transparent 33px); }
+  :scope .d-tilelink:hover { transform: translate(-2px, -3px) rotate(-.5deg); box-shadow: inset 0 0 0 6px var(--jy-frame), inset 0 0 0 8px var(--lapis), var(--shadow-md); }
+  :scope .d-stage { border: 0; box-shadow: inset 0 0 0 2px var(--line), var(--shadow-sm); }
+  @media (max-width: 900px) {
+    :scope :is(.d-title, .sc-h) { font-size: 40px; }
+  }
+}
+@scope ([data-brand="static"]) to ([data-brand]:not([data-brand="static"])) {
+  :scope .d-mark rect:nth-child(1) { fill: var(--ink); }
+  :scope .d-mark rect:nth-child(2) { fill: var(--ink); }
+  :scope .d-mark rect:nth-child(3) { fill: var(--ink); }
+  :scope .d-mark .d-odd { fill: var(--lapis); }
+  :scope .d-mark rect { rx: 0; }
+  :scope .d-brand-name { font-weight: 900; text-transform: uppercase; letter-spacing: .03em; font-size: 24px; }
+  /* Big titles: stencil capitals, off-register red by day, sprayed on after dark. */
+  :scope :is(.d-title, .sc-w:not(.sc-tile)) { font-weight: 900; text-transform: uppercase; letter-spacing: .01em; color: var(--st-title); text-shadow: var(--st-title-shadow); }
+  :scope .d-title { font-size: 76px; line-height: .95; }
+  :scope .sc-h { font-weight: 900; font-size: 80px; line-height: .92; text-transform: uppercase; }
+  :scope .sc-tile { text-transform: uppercase; color: var(--on-saffron); text-shadow: none; }
+  :scope .d-h2 { font-weight: 900; text-transform: uppercase; letter-spacing: .02em; font-size: 34px; color: var(--st-title); text-shadow: var(--st-title-shadow); }
+  :scope .d-h2 small { text-shadow: none; text-transform: none; font-family: var(--font-mono); }
+  :scope :is(.d-md h3, .d-tilelink b, .lay-head b, .d-theme-head h2) { font-weight: 800; text-transform: uppercase; letter-spacing: .02em; }
+  :scope .d-tilelink b { font-size: 22px; }
+  :scope .d-eyebrow { font-family: var(--font-mono); letter-spacing: .08em; }
+  :scope .d-eyebrow::before { content: "//"; width: auto; height: auto; background: none; box-shadow: none; border-radius: 0; color: var(--lapis); }
+  :scope .d-side { border-right: 1.5px solid var(--ink); }
+  :scope .d-top { border-bottom: 1.5px solid var(--ink); }
+  /* Link tiles are scraps taped to the wall. */
+  :scope .d-tilelink { position: relative; border: 1.5px solid var(--ink); border-radius: 2px; background: var(--surface); rotate: -.5deg; }
+  :scope .d-tilelink:nth-child(even) { rotate: .6deg; }
+  :scope .d-tilelink::before { content: ""; position: absolute; top: -9px; left: 50%; width: 62px; height: 18px; translate: -50% 0; rotate: -4deg; background: linear-gradient(180deg, rgba(255, 255, 255, .25), transparent 40%), var(--st-tape); pointer-events: none; }
+  :scope .d-tilelink:hover { transform: none; rotate: 0deg; box-shadow: 5px 5px 0 0 var(--lapis); border-color: var(--ink); }
+  :scope .d-stage { border: 1.5px solid var(--ink); border-radius: 2px; }
+  :scope .d-code { border-radius: 2px; }
+  @media (max-width: 900px) {
+    :scope :is(.d-title, .sc-h) { font-size: 52px; }
   }
 }
 @keyframes d-blink { 50% { opacity: 0; } }

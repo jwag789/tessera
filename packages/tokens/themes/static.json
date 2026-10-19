@@ -1,0 +1,311 @@
+{
+  "name": "static",
+  "label": "Static",
+  "description": "Early-2000s alt rock. A sketchbook by day: aged paper, pencil lines, condensed stencil type, red ink and photocopy grain. A spray-painted concrete wall after dark. Pages are taped up with duct tape, keys are stencilled and glitch when you hover, labels are Dymo tape, avatars are pin badges, progress is a VU meter, the spinner is an equalizer and toasts play in a Winamp-style LCD.",
+  "fonts": "https://fonts.googleapis.com/css2?family=Big+Shoulders+Stencil+Display:wght@700;800;900&family=Archivo+Narrow:wght@400;500;600;700&family=Special+Elite&display=swap",
+  "type": {
+    "families": {
+      "display": "\"Big Shoulders Stencil Display\", \"Stencil\", Impact, sans-serif",
+      "sans": "\"Archivo Narrow\", \"Arial Narrow\", system-ui, sans-serif",
+      "mono": "\"Special Elite\", \"Courier New\", ui-monospace, monospace"
+    }
+  },
+  "color": {
+    "tokens": [
+      {
+        "name": "bg",
+        "value": {
+          "light": "#e9e2cf",
+          "dark": "#121110"
+        }
+      },
+      {
+        "name": "surface",
+        "value": {
+          "light": "#f6f1e4",
+          "dark": "#1c1a18"
+        }
+      },
+      {
+        "name": "surface-sunken",
+        "value": {
+          "light": "#ddd4bd",
+          "dark": "#0a0909"
+        }
+      },
+      {
+        "name": "line",
+        "value": {
+          "light": "#cbbf9f",
+          "dark": "#2f2c28"
+        }
+      },
+      {
+        "name": "line-strong",
+        "value": {
+          "light": "#776c52",
+          "dark": "#7a7368"
+        }
+      },
+      {
+        "name": "ink",
+        "value": {
+          "light": "#161412",
+          "dark": "#ece6d8"
+        }
+      },
+      {
+        "name": "ink-muted",
+        "value": {
+          "light": "#4c463b",
+          "dark": "#aaa293"
+        }
+      },
+      {
+        "name": "lapis",
+        "value": {
+          "light": "#a3141c",
+          "dark": "#ff4a3d"
+        }
+      },
+      {
+        "name": "lapis-hover",
+        "value": {
+          "light": "#7f0f15",
+          "dark": "#ff7a6e"
+        }
+      },
+      {
+        "name": "lapis-soft",
+        "value": {
+          "light": "#f2d6d0",
+          "dark": "#3a0f0c"
+        }
+      },
+      {
+        "name": "lapis-deep",
+        "value": {
+          "light": "#5c0a0f",
+          "dark": "#a3141c"
+        }
+      },
+      {
+        "name": "lapis-glow",
+        "value": {
+          "light": "rgba(163, 20, 28, 0.25)",
+          "dark": "rgba(255, 74, 61, 0.4)"
+        }
+      },
+      {
+        "name": "on-lapis",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#1a0302"
+        }
+      },
+      {
+        "name": "on-lapis-deep",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#ffffff"
+        }
+      },
+      {
+        "name": "saffron",
+        "value": {
+          "light": "#e8c02a",
+          "dark": "#f2c230"
+        }
+      },
+      {
+        "name": "saffron-deep",
+        "value": {
+          "light": "#9c7a00",
+          "dark": "#b88d00"
+        }
+      },
+      {
+        "name": "saffron-soft",
+        "value": {
+          "light": "#f6ebc0",
+          "dark": "#352a08"
+        }
+      },
+      {
+        "name": "on-saffron",
+        "value": {
+          "light": "#161412",
+          "dark": "#161412"
+        }
+      },
+      {
+        "name": "success",
+        "value": {
+          "light": "#3d6b1c",
+          "dark": "#9bd36a"
+        }
+      },
+      {
+        "name": "success-soft",
+        "value": {
+          "light": "#dfe9cf",
+          "dark": "#1c2a10"
+        }
+      },
+      {
+        "name": "warning",
+        "value": {
+          "light": "#7d5800",
+          "dark": "#f2c230"
+        }
+      },
+      {
+        "name": "danger",
+        "value": {
+          "light": "#b03a00",
+          "dark": "#ff8a4d"
+        }
+      },
+      {
+        "name": "danger-soft",
+        "value": {
+          "light": "#f6dccd",
+          "dark": "#3a1806"
+        }
+      },
+      {
+        "name": "on-danger",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#1a0800"
+        }
+      },
+      {
+        "name": "inverse-accent",
+        "value": {
+          "light": "#ff7a6e",
+          "dark": "#a3141c"
+        }
+      },
+      {
+        "name": "focus",
+        "value": {
+          "light": "#a3141c",
+          "dark": "#ff4a3d"
+        }
+      },
+      {
+        "name": "link",
+        "value": {
+          "light": "#a3141c",
+          "dark": "#ff7a6e"
+        }
+      },
+      {
+        "name": "overlay",
+        "value": {
+          "light": "rgba(22, 20, 18, 0.55)",
+          "dark": "rgba(0, 0, 0, 0.75)"
+        }
+      },
+      {
+        "name": "tile-ground",
+        "value": "#161412"
+      },
+      {
+        "name": "tile-1",
+        "value": "#a3141c"
+      },
+      {
+        "name": "tile-2",
+        "value": "#2a2724"
+      },
+      {
+        "name": "tile-3",
+        "value": "#d8cfb8"
+      },
+      {
+        "name": "tile-4",
+        "value": "#e8c02a"
+      },
+      {
+        "name": "tape",
+        "value": "#a9a69e"
+      },
+      {
+        "name": "lcd-green",
+        "value": "#33ff66"
+      }
+    ]
+  },
+  "radius": {
+    "tokens": [
+      {
+        "name": "radius-xs",
+        "value": "1px"
+      },
+      {
+        "name": "radius-sm",
+        "value": "2px"
+      },
+      {
+        "name": "radius-md",
+        "value": "3px"
+      },
+      {
+        "name": "radius-lg",
+        "value": "4px"
+      },
+      {
+        "name": "radius-xl",
+        "value": "6px"
+      }
+    ]
+  },
+  "shadow": {
+    "tokens": [
+      {
+        "name": "shadow-sm",
+        "value": {
+          "light": "0 1px 2px rgba(22, 20, 18, 0.2)",
+          "dark": "0 1px 2px rgba(0, 0, 0, 0.7)"
+        }
+      },
+      {
+        "name": "shadow-md",
+        "value": {
+          "light": "0 4px 12px rgba(22, 20, 18, 0.2)",
+          "dark": "0 6px 18px rgba(0, 0, 0, 0.7)"
+        }
+      },
+      {
+        "name": "shadow-lg",
+        "value": {
+          "light": "0 14px 34px rgba(22, 20, 18, 0.3)",
+          "dark": "0 20px 46px rgba(0, 0, 0, 0.8)"
+        }
+      },
+      {
+        "name": "shadow-glow",
+        "value": {
+          "light": "3px 3px 0 0 #161412",
+          "dark": "0 0 16px rgba(255, 74, 61, 0.45)"
+        }
+      },
+      {
+        "name": "shadow-tile",
+        "value": {
+          "light": "5px 5px 0 0 #a3141c",
+          "dark": "5px 5px 0 0 #ff4a3d"
+        }
+      },
+      {
+        "name": "shadow-tile-lg",
+        "value": {
+          "light": "8px 8px 0 0 #a3141c",
+          "dark": "8px 8px 0 0 #ff4a3d"
+        }
+      }
+    ]
+  }
+}
