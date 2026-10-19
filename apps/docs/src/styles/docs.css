@@ -257,6 +257,7 @@ a { color: var(--link); }
 .d-theme-dot-cartridge { --c1: #cc2d25; --c2: #2f6be0; --c3: #ffc72c; --c4: #3cba5c; border-radius: 4px; background: radial-gradient(ellipse at 50% 20%, rgba(255, 255, 255, .45), transparent 65%), conic-gradient(var(--c1) 0 25%, var(--c2) 0 50%, var(--c3) 0 75%, var(--c4) 0); box-shadow: 0 0 0 2px #4c4b53, 0 2px 0 2px #2e2d33; }
 .d-theme-dot-neon { background: radial-gradient(circle, #02060c 0 38%, #00e5ff 40% 50%, #02060c 52% 64%, #00e5ff 66% 74%, #02060c 76%); border-radius: 50%; box-shadow: 0 0 0 1px #00e5ff, 0 0 6px rgba(0, 229, 255, .8); }
 .d-theme-dot-static { background: radial-gradient(circle at 60% 40%, #ff4a3d 0 30%, rgba(255, 74, 61, .4) 45%, transparent 60%), #161412; border-radius: 1px; box-shadow: 0 0 0 1.5px #161412; rotate: -4deg; }
+.d-theme-dot-clay { background: radial-gradient(circle at 32% 26%, rgba(255, 255, 255, .85) 0 8%, transparent 30%), radial-gradient(ellipse 60% 40% at 70% 70%, #ff7eb6 0 40%, transparent 70%), radial-gradient(ellipse 50% 60% at 25% 80%, #2f7de1 0 35%, transparent 70%), radial-gradient(circle at 60% 30%, #ffc73a 0 30%, transparent 60%), #e8513a; border-radius: 46% 54% 50% 50% / 54% 46% 54% 46%; box-shadow: inset -2px -3px 4px rgba(0, 0, 0, .3), 0 2px 3px rgba(0, 0, 0, .25); }
 .ts-opt-icon:has(.d-theme-dot) { background: none; }
 .d-theme-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
 .d-themes { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); align-items: start; }
@@ -494,3 +495,51 @@ a { color: var(--link); }
 .d-folio-shot:hover { transform: rotate(0deg) translateY(-4px); }
 .d-folio-shot img { display: block; width: 100%; height: auto; }
 @media (max-width: 900px) { .d-folio.ts-card { grid-template-columns: minmax(0, 1fr); padding: var(--space-6); } .d-folio-shot { transform: none; } }
+@scope ([data-brand="clay"]) to ([data-brand]:not([data-brand="clay"])) {
+  /* The mark: four clay balls, the odd one yellow. */
+  :scope .d-mark rect { rx: 11px; }
+  :scope .d-mark rect:nth-child(1) { fill: var(--tile-1); }
+  :scope .d-mark rect:nth-child(2) { fill: var(--clay-blue); }
+  :scope .d-mark rect:nth-child(3) { fill: var(--clay-green); }
+  :scope .d-mark .d-odd { fill: var(--saffron); }
+  :scope .d-mark { filter: drop-shadow(0 2px 1px rgba(0, 0, 0, .25)); }
+  :scope .d-brand-name { font-weight: 400; font-size: 24px; letter-spacing: .01em; }
+  /* Big titles: fat clay letters on a layer of yellow. In the hero each word is rolled from a different color. */
+  :scope :is(.d-title, .sc-w:not(.sc-tile)) { font-weight: 400; letter-spacing: .005em; color: var(--cl-title); text-shadow: var(--cl-title-shadow); }
+  :scope .d-title { font-size: 64px; line-height: 1.08; }
+  :scope .sc-h { font-weight: 400; font-size: 74px; line-height: 1.06; letter-spacing: 0; }
+  :scope .sc-w:not(.sc-tile) { color: var(--lapis); text-shadow: 0 2px 0 var(--lapis-deep), 0 4px 0 var(--lapis-deep), 0 7px 0 var(--saffron-deep), 0 12px 16px rgba(60, 30, 10, .3); }
+  :scope .sc-w:not(.sc-tile):nth-child(4n + 2) { --lapis: #2a64c9; --lapis-deep: #173e85; }
+  :scope .sc-w:not(.sc-tile):nth-child(4n + 3) { --lapis: #23803a; --lapis-deep: #135224; }
+  :scope .sc-w:not(.sc-tile):nth-child(4n + 4) { --lapis: #7a48e0; --lapis-deep: #4a2595; }
+  :scope[data-theme="dark"] .sc-w:not(.sc-tile):nth-child(4n + 2) { --lapis: #8cc4ff; --lapis-deep: #2a64c9; }
+  :scope[data-theme="dark"] .sc-w:not(.sc-tile):nth-child(4n + 3) { --lapis: #8fe388; --lapis-deep: #23803a; }
+  :scope[data-theme="dark"] .sc-w:not(.sc-tile):nth-child(4n + 4) { --lapis: #c9b0ff; --lapis-deep: #7a48e0; }
+  @media (prefers-color-scheme: dark) {
+    :scope:not([data-theme="light"]) .sc-w:not(.sc-tile):nth-child(4n + 2) { --lapis: #8cc4ff; --lapis-deep: #2a64c9; }
+    :scope:not([data-theme="light"]) .sc-w:not(.sc-tile):nth-child(4n + 3) { --lapis: #8fe388; --lapis-deep: #23803a; }
+    :scope:not([data-theme="light"]) .sc-w:not(.sc-tile):nth-child(4n + 4) { --lapis: #c9b0ff; --lapis-deep: #7a48e0; }
+  }
+  :scope .sc-tile { color: var(--on-saffron); text-shadow: none; }
+  :scope .sc-tile::before { border-radius: var(--cl-lump-sm); box-shadow: var(--cl-puff-color), 0 5px 0 0 var(--saffron-deep), var(--shadow-md); }
+  :scope :is(.d-h2, .d-theme-head h2) { font-weight: 400; letter-spacing: .01em; text-shadow: var(--cl-heading-shadow); }
+  :scope .d-h2 { font-size: 32px; line-height: 40px; }
+  :scope .d-h2 small { text-shadow: none; font-family: var(--font-sans); }
+  :scope :is(.d-md h3, .d-tilelink b, .lay-head b) { font-family: var(--font-display); font-weight: 400; letter-spacing: .01em; }
+  :scope .d-tilelink b { font-size: 21px; }
+  :scope .d-eyebrow { font-weight: 800; letter-spacing: .08em; }
+  :scope .d-eyebrow::before { border-radius: 50%; background: radial-gradient(circle at 34% 28%, rgba(255, 255, 255, .7), transparent 55%), var(--saffron); box-shadow: inset -1px -1px 2px rgba(0, 0, 0, .25); }
+  :scope .d-side { border-right: 0; background: var(--cl-grain), var(--surface); box-shadow: inset -3px 0 6px -3px var(--cl-lo); }
+  :scope .d-top { border-bottom: 0; background: var(--cl-grain), var(--surface); box-shadow: 0 8px 18px -10px rgba(60, 30, 10, .35); }
+  /* Link tiles are slabs of clay that squash when pressed. */
+  :scope .d-tilelink { border: 0; border-radius: var(--cl-lump); background: var(--cl-grain), var(--cl-mottle), var(--surface); box-shadow: var(--cl-puff); transition: transform var(--duration-base) var(--ease-spring), box-shadow var(--duration-base) var(--ease-out); }
+  :scope .d-tilelink:nth-child(even) { border-radius: 36px 28px 34px 30px / 32px 36px 28px 30px; }
+  :scope .d-tilelink:hover { transform: translateY(-4px) scale(1.01); box-shadow: var(--cl-puff), var(--shadow-lg); border-color: transparent; }
+  :scope .d-tilelink:active { transform: translateY(1px) scale(1.02, .97); }
+  :scope :is(.d-stage, .d-theme-col) { border: 0; border-radius: var(--cl-lump); box-shadow: var(--cl-dent); }
+  :scope .d-code { border-radius: 20px; }
+  @media (max-width: 900px) {
+    :scope .d-title { font-size: 44px; }
+    :scope .sc-h { font-size: 52px; }
+  }
+}

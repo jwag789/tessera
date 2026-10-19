@@ -1,0 +1,319 @@
+{
+  "name": "clay",
+  "label": "Clay",
+  "description": "Plasticine and Play-Doh. Everything is squished out of soft, colorful clay: puffy rounded slabs with a matte grain, a thumbprint pressed into the cards and a marbled swirl on the featured one. Keys are clay blobs that squash when you press them, fields are pressed into the clay, badges are rolled pills, avatars are clay balls, progress is a twisted two-color clay rope and the spinner is four balls bouncing. A craft table by day, a green cutting mat after dark.",
+  "fonts": "https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Nunito:wght@400;500;600;700;800;900&family=DM+Mono:wght@400;500&display=swap",
+  "type": {
+    "families": {
+      "display": "\"Bagel Fat One\", \"Nunito\", system-ui, sans-serif",
+      "sans": "\"Nunito\", ui-rounded, system-ui, sans-serif",
+      "mono": "\"DM Mono\", ui-monospace, monospace"
+    }
+  },
+  "color": {
+    "tokens": [
+      {
+        "name": "bg",
+        "value": {
+          "light": "#f8ecdb",
+          "dark": "#123a33"
+        }
+      },
+      {
+        "name": "surface",
+        "value": {
+          "light": "#fffaf1",
+          "dark": "#1b4a41"
+        }
+      },
+      {
+        "name": "surface-sunken",
+        "value": {
+          "light": "#f0dfc6",
+          "dark": "#0c2a24"
+        }
+      },
+      {
+        "name": "line",
+        "value": {
+          "light": "#ead5b5",
+          "dark": "#2c6156"
+        }
+      },
+      {
+        "name": "line-strong",
+        "value": {
+          "light": "#8c6a48",
+          "dark": "#7fb3a3"
+        }
+      },
+      {
+        "name": "ink",
+        "value": {
+          "light": "#2d1b33",
+          "dark": "#fff5e6"
+        }
+      },
+      {
+        "name": "ink-muted",
+        "value": {
+          "light": "#62485f",
+          "dark": "#bfdad0"
+        }
+      },
+      {
+        "name": "lapis",
+        "value": {
+          "light": "#b8301f",
+          "dark": "#ff9579"
+        }
+      },
+      {
+        "name": "lapis-hover",
+        "value": {
+          "light": "#962412",
+          "dark": "#ffb6a3"
+        }
+      },
+      {
+        "name": "lapis-soft",
+        "value": {
+          "light": "#feebe4",
+          "dark": "#4b2420"
+        }
+      },
+      {
+        "name": "lapis-deep",
+        "value": {
+          "light": "#7d1c12",
+          "dark": "#c8372a"
+        }
+      },
+      {
+        "name": "lapis-glow",
+        "value": {
+          "light": "rgba(184, 48, 31, 0.3)",
+          "dark": "rgba(255, 149, 121, 0.4)"
+        }
+      },
+      {
+        "name": "on-lapis",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#2d0a04"
+        }
+      },
+      {
+        "name": "on-lapis-deep",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#ffffff"
+        }
+      },
+      {
+        "name": "saffron",
+        "value": {
+          "light": "#ffc73a",
+          "dark": "#ffcf4d"
+        }
+      },
+      {
+        "name": "saffron-deep",
+        "value": {
+          "light": "#c58f00",
+          "dark": "#d9a300"
+        }
+      },
+      {
+        "name": "saffron-soft",
+        "value": {
+          "light": "#fff0c2",
+          "dark": "#3d3412"
+        }
+      },
+      {
+        "name": "on-saffron",
+        "value": {
+          "light": "#2d1b33",
+          "dark": "#2d1b33"
+        }
+      },
+      {
+        "name": "success",
+        "value": {
+          "light": "#266d2e",
+          "dark": "#8fe388"
+        }
+      },
+      {
+        "name": "success-soft",
+        "value": {
+          "light": "#daf2d2",
+          "dark": "#15402a"
+        }
+      },
+      {
+        "name": "warning",
+        "value": {
+          "light": "#8a5a00",
+          "dark": "#ffcf4d"
+        }
+      },
+      {
+        "name": "danger",
+        "value": {
+          "light": "#b8164a",
+          "dark": "#ff8fb1"
+        }
+      },
+      {
+        "name": "danger-soft",
+        "value": {
+          "light": "#fbdbe5",
+          "dark": "#47182c"
+        }
+      },
+      {
+        "name": "on-danger",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#2d0614"
+        }
+      },
+      {
+        "name": "inverse-accent",
+        "value": {
+          "light": "#ff9a80",
+          "dark": "#b3301f"
+        }
+      },
+      {
+        "name": "focus",
+        "value": {
+          "light": "#2f6fe0",
+          "dark": "#7ab8ff"
+        }
+      },
+      {
+        "name": "link",
+        "value": {
+          "light": "#2a5fcc",
+          "dark": "#8cc4ff"
+        }
+      },
+      {
+        "name": "overlay",
+        "value": {
+          "light": "rgba(45, 27, 51, 0.5)",
+          "dark": "rgba(4, 18, 15, 0.72)"
+        }
+      },
+      {
+        "name": "tile-ground",
+        "value": "#2d1b33"
+      },
+      {
+        "name": "tile-1",
+        "value": "#e8513a"
+      },
+      {
+        "name": "tile-2",
+        "value": "#2f7de1"
+      },
+      {
+        "name": "tile-3",
+        "value": "#3fb85f"
+      },
+      {
+        "name": "tile-4",
+        "value": "#ff7eb6"
+      },
+      {
+        "name": "clay-blue",
+        "value": "#2f7de1"
+      },
+      {
+        "name": "clay-green",
+        "value": "#3fb85f"
+      },
+      {
+        "name": "clay-pink",
+        "value": "#ff7eb6"
+      },
+      {
+        "name": "clay-purple",
+        "value": "#8a5cf0"
+      }
+    ]
+  },
+  "radius": {
+    "tokens": [
+      {
+        "name": "radius-xs",
+        "value": "6px"
+      },
+      {
+        "name": "radius-sm",
+        "value": "10px"
+      },
+      {
+        "name": "radius-md",
+        "value": "16px"
+      },
+      {
+        "name": "radius-lg",
+        "value": "24px"
+      },
+      {
+        "name": "radius-xl",
+        "value": "32px"
+      }
+    ]
+  },
+  "shadow": {
+    "tokens": [
+      {
+        "name": "shadow-sm",
+        "value": {
+          "light": "0 2px 4px rgba(120, 70, 30, 0.14), 0 1px 1px rgba(120, 70, 30, 0.1)",
+          "dark": "0 2px 4px rgba(0, 0, 0, 0.35)"
+        }
+      },
+      {
+        "name": "shadow-md",
+        "value": {
+          "light": "0 10px 22px -8px rgba(120, 70, 30, 0.3), 0 3px 6px rgba(120, 70, 30, 0.12)",
+          "dark": "0 12px 26px -8px rgba(0, 0, 0, 0.55), 0 3px 6px rgba(0, 0, 0, 0.3)"
+        }
+      },
+      {
+        "name": "shadow-lg",
+        "value": {
+          "light": "0 24px 48px -14px rgba(120, 70, 30, 0.38), 0 6px 12px rgba(120, 70, 30, 0.14)",
+          "dark": "0 28px 56px -14px rgba(0, 0, 0, 0.7), 0 6px 12px rgba(0, 0, 0, 0.35)"
+        }
+      },
+      {
+        "name": "shadow-glow",
+        "value": {
+          "light": "0 4px 0 0 #8e2416",
+          "dark": "0 4px 0 0 #b3452f"
+        }
+      },
+      {
+        "name": "shadow-tile",
+        "value": {
+          "light": "0 14px 28px -10px rgba(207, 59, 39, 0.5), 0 5px 0 0 #e0a514",
+          "dark": "0 14px 28px -10px rgba(0, 0, 0, 0.6), 0 5px 0 0 #c08f00"
+        }
+      },
+      {
+        "name": "shadow-tile-lg",
+        "value": {
+          "light": "0 22px 40px -12px rgba(207, 59, 39, 0.55), 0 7px 0 0 #e0a514",
+          "dark": "0 22px 40px -12px rgba(0, 0, 0, 0.7), 0 7px 0 0 #c08f00"
+        }
+      }
+    ]
+  }
+}

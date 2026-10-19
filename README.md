@@ -13,7 +13,7 @@
 [![Tessera's four themes side by side: Tessera, Cartridge, Polygon and Gloop](.github/assets/themes.jpg)](https://jwag789.github.io/tessera/#themes)
 
 - **40 React components**, typed, tested and keyboard-accessible: from Button and Select to Command palette, Date picker, Data table and Drawer, plus layout primitives.
-- **Eight themes** (Tessera, Cartridge, Polygon, Gloop, Shonen, Jelly, Neon and Static), each in light and dark, built from one set of design tokens. Switch them live in the docs.
+- **Nine themes** (Tessera, Cartridge, Polygon, Gloop, Shonen, Jelly, Neon, Static and Clay), each in light and dark, built from one set of design tokens. Switch them live in the docs.
 - **154 tests**, with axe accessibility checks on every component, strict TypeScript, and a bundle size budget enforced in CI.
 - **Folio**, a resume builder and job tracker that uses nearly every component, to show the system holding up in a real product.
 
@@ -66,7 +66,7 @@ The bundle starts with `"use client"`, so it works from React Server Components 
 
 ### Themes
 
-Tessera ships eight themes, each in light and dark:
+Tessera ships nine themes, each in light and dark:
 
 - **Tessera** (the default)
 - **Cartridge:** Nintendo 64. Charcoal controller plastic, cards as cartridges (the featured one is gold), A, C and Start buttons as keys, Mario 64 title lettering, Zelda text boxes for dialogs, menus and toasts, a magic meter and a power slider
@@ -76,6 +76,7 @@ Tessera ships eight themes, each in light and dark:
 - **Jelly:** Y2K candy plastic, see-through and glossy in iMac flavors, with gel keys, Tamagotchi LCD fields and a heart meter
 - **Neon:** Tron, a black grid world lit in cyan with orange for the other side, glowing Orbitron titles, HUD corner brackets, light-cycle trails, terminal fields and identity-disc avatars
 - **Static:** early-2000s alt rock, a sketchbook by day and a sprayed concrete wall after dark, with stencil type, duct-taped pages, glitching keys, Dymo labels, a VU meter and an equalizer
+- **Clay:** plasticine and Play-Doh, puffy lumpy slabs with a matte grain and a thumbprint, keys that squash when pressed, a marbled featured card, clay-ball avatars, a twisted clay-rope progress bar and a bouncing-ball spinner; a craft table by day, a green cutting mat after dark
 
 Import a theme's CSS and pick it with `ThemeProvider`:
 
