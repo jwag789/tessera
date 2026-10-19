@@ -1,5 +1,13 @@
 # @tessera-design/tokens
 
+## 0.4.0
+
+### Minor Changes
+
+- 357b71a: Cartridge redone as a Nintendo 64 theme instead of a recolor. Primary is the blue A button (domed, white label, presses down), danger is the red Start button, the accent is the yellow C button. Cards are cartridges: the label sits in grey plastic with grip ridges across the top, and the featured card is the gold one. Dialogs, popovers, menus, selects, tooltips and toasts are Zelda-style text boxes (dark navy, yellow titles, a blinking green arrow on dialogs, an A-blue menu cursor). Display headings get Mario 64 gold, extruded lettering. Progress is the magic meter, switches are the power slider with a red light, avatars are face buttons and mosaic tiles are shaded cubes. Focus rings are yellow.
+- 02eb669: New Neon theme: Tron. A black grid world lit in cyan, with orange for the other side. Big titles are Orbitron capitals, white-hot with a cyan glow and a slice through the middle; keys, tabs and badges are Orbitron capitals too, over Oxanium. Panels are dark glass with HUD brackets on their corners; the featured card is orange and flickers as it rezzes in. Light-cycle trails run along the navbar and fill the progress bar. Fields, tooltips and toasts are terminals in Share Tech Mono with phosphor-cyan type; dialogs boot from a line of light; avatars are identity discs; a grid floor runs to a glowing horizon behind the page. Light mode is the white grid. Adds `crt` and `crt-ink` tokens. Import `themes/neon.css` and `themes/neon-fonts.css`.
+- 68192e4: New Static theme: early-2000s alt rock. A sketchbook by day (aged paper, photocopy grain, pencil hatching, off-register red stencil titles in Big Shoulders Stencil) and a spray-painted concrete wall after dark. Duct-taped, slightly crooked pages; rough-cut stencil keys that glitch on hover; Dymo-tape badges and tooltips (Special Elite); pin-badge avatars; an amp toggle with a pilot light; a VU meter for progress; an equalizer spinner; toasts in a media-player LCD. Adds `tape` and `lcd-green` tokens. Import `themes/static.css` and `themes/static-fonts.css`.
+
 ## 0.3.0
 
 ### Minor Changes
