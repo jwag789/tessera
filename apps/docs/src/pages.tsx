@@ -257,7 +257,7 @@ export function BrandPage() {
 
 /* ---------- themes ---------- */
 
-const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop', 'shonen', 'jelly', 'neon', 'static'];
+const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop', 'shonen', 'jelly', 'neon', 'static', 'lagoon'];
 const THEME_NOTES: Record<string, string[]> = {
   tessera: ['Saturated lapis with one saffron tile', 'Tight corners, hard offset shadow', 'Bricolage Grotesque headings'],
   cartridge: ['Charcoal controller plastic, cards as cartridges with grip ridges', 'A, B, C and Start buttons as keys; a power slider for switches', 'Mario 64 title lettering, Zelda text boxes, a magic meter'],
@@ -266,7 +266,8 @@ const THEME_NOTES: Record<string, string[]> = {
   shonen: ['A manga page: black ink, newsprint and one red, inverted after dark', 'Comic panels, screentone, speech bubbles, focus lines, ゴゴゴ and ドン!', 'Bangers lettering over Zen Kaku Gothic New'],
   jelly: ['Y2K candy plastic in iMac flavors, smoked after dark', 'See-through glossy surfaces, gel keys that squash, Tamagotchi LCD fields and toasts', 'Comfortaa over Quicksand, DotGothic16 on the LCD'],
   neon: ['Tron: a black grid world lit in cyan, with orange for the other side', 'Glowing Orbitron titles, HUD brackets, terminal fields, identity-disc avatars', 'Light-cycle trails on the bars and progress; the white grid by day'],
-  static: ['Early-2000s alt rock: a sketchbook by day, a sprayed concrete wall after dark', 'Stencil type, duct-taped pages, rough-cut keys that glitch, Dymo labels', 'A VU meter, an equalizer spinner, pin-badge avatars, a media-player toast']
+  static: ['Early-2000s alt rock: a sketchbook by day, a sprayed concrete wall after dark', 'Stencil type, duct-taped pages, rough-cut keys that glitch, Dymo labels', 'A VU meter, an equalizer spinner, pin-badge avatars, a media-player toast'],
+  lagoon: ['A JRPG island, PS2 era: a sunlit beach by day, a starlit tide with pyreflies after dark', 'Blue gradient menu windows with a pointing-glove cursor, glossy gel keys', 'A gold-framed featured card, element-orb avatars, an overdrive gauge, an item-get toast']
 };
 
 function ThemeSample({ name }: { name: string }) {
@@ -316,7 +317,7 @@ export function ThemesPage() {
       <Head
         eyebrow="Overview"
         title="Themes"
-        lead="One set of components, eight looks. Each theme is a token pack plus a few component treatments, in light and dark. Compare them here, then switch the whole site with Use this theme."
+        lead="One set of components, nine looks. Each theme is a token pack plus a few component treatments, in light and dark. Compare them here, then switch the whole site with Use this theme."
       />
       <div className="d-theme-bar">
         <SegmentedControl label="Mode for the comparison" size="sm" options={[{ value: 'system', label: 'System' }, { value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }]} value={theme} onChange={(v) => setTheme(v as typeof theme)} />

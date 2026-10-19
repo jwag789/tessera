@@ -1,0 +1,211 @@
+/* Lagoon: component treatments the tokens can't express. A JRPG island, PS2 era. By day a sunlit beach: sand, a pale
+   sky and the tide rolling in along the bottom of the screen. After dark the same shore under the stars, with pyreflies
+   drifting up off the water. Menus, dialogs, tooltips and toasts are the classic blue gradient window with a white
+   edge, in both modes, and the menu cursor is a pointing glove that bobs. Titles are carved in Marcellus with a
+   sea-glass sheen; keys are glossy gel; the featured card sits in a gold window frame; avatars are element orbs;
+   progress is an overdrive gauge; the spinner is four orbs in orbit; toasts read like an item-get box; the navbar
+   ends in a wave. Scoped to [data-brand="lagoon"]. */
+@keyframes lg-bob { 0%, 100% { translate: 0 -50%; } 50% { translate: 3px -50%; } }
+@keyframes lg-rise { from { background-position: 0 0, 0 0; } to { background-position: 0 -700px, 0 -900px; } }
+@keyframes lg-flicker { 0%, 100% { opacity: .45; } 50% { opacity: .8; } }
+@keyframes lg-tide { from { background-position-x: 0, 0; } to { background-position-x: 160px, -240px; } }
+@keyframes lg-shine { from { background-position: -120% 0, 0 0; } to { background-position: 220% 0, 0 0; } }
+@keyframes lg-orbit { to { rotate: 1turn; } }
+@keyframes lg-glint { 0%, 100% { filter: brightness(1); } 50% { filter: brightness(1.35); } }
+
+/* Scoped so a nested area with a different data-brand keeps its own look. */
+@scope ([data-brand="lagoon"]) to ([data-brand]:not([data-brand="lagoon"])) {
+  :scope {
+    font-synthesis: none;
+    /* The pointing glove from every menu screen. */
+    --lg-glove: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 16'%3E%3Cg fill='%23fff' stroke='%230b2a3a' stroke-width='1.2' stroke-linejoin='round'%3E%3Crect x='3.5' y='3' width='10' height='11' rx='3'/%3E%3Crect x='10' y='3' width='13' height='4.2' rx='2.1'/%3E%3Cpath d='M8.5 9.4h5M8.5 11.8h4.5' fill='none'/%3E%3Crect x='.8' y='4.2' width='3.2' height='8.6' rx='1'/%3E%3C/g%3E%3C/svg%3E");
+    /* A wave, as a mask tile: filled above, scalloped below. */
+    --lg-wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='8'%3E%3Cpath d='M0 0h40v3c-5 0-5 5-10 5s-5-5-10-5-5 5-10 5S5 3 0 3z'/%3E%3C/svg%3E");
+    /* The blue window, the same in both modes. */
+    --lg-win-top: #275a9a;
+    --lg-win-bot: #0c2650;
+    --lg-win-edge: rgba(236, 246, 255, .85);
+    /* By day: sunlit sea-glass panels on sand. */
+    --lg-card-top: #ffffff;
+    --lg-card-bot: #eef7f3;
+    --lg-card-edge: rgba(0, 112, 122, .35);
+    --lg-title: linear-gradient(180deg, #0b3d5c 0 40%, #00707a 100%);
+    --lg-title-fx: drop-shadow(0 2px 0 rgba(255, 255, 255, .95)) drop-shadow(0 4px 8px rgba(11, 61, 92, .18));
+    --lg-sky: linear-gradient(180deg, #cfeef1 0, rgba(207, 238, 241, 0) 46vh);
+    --lg-sun: radial-gradient(circle at 88% 6%, rgba(255, 244, 200, .95) 0 4vmin, rgba(255, 214, 120, .35) 9vmin, transparent 30vmin);
+    --lg-sea-1: rgba(0, 163, 168, .1);
+    --lg-sea-2: rgba(0, 112, 122, .08);
+    --lg-flies: none;
+    --lg-bar-top: #0d6b80;
+    --lg-bar-bot: #0b3d5c;
+    --lg-press: inset 0 -2px 0 rgba(0, 0, 0, .18);
+  }
+  /* After dark: the shore under the stars. */
+  :scope[data-theme="dark"] {
+    --lg-card-top: #1d4680; --lg-card-bot: #0d2a52; --lg-card-edge: rgba(200, 228, 255, .55);
+    --lg-title: linear-gradient(180deg, #ffffff 0 45%, #a8f2ff 100%); --lg-title-fx: drop-shadow(0 2px 0 rgba(4, 17, 31, .85)) drop-shadow(0 0 14px rgba(82, 227, 214, .35));
+    --lg-sky: radial-gradient(1px 1px at 12% 18%, #fff, transparent), radial-gradient(1px 1px at 34% 8%, #fff, transparent), radial-gradient(1.5px 1.5px at 58% 22%, #fff, transparent), radial-gradient(1px 1px at 76% 30%, #fff, transparent), radial-gradient(1px 1px at 22% 36%, rgba(255, 255, 255, .7), transparent), radial-gradient(1.5px 1.5px at 46% 40%, rgba(255, 255, 255, .7), transparent), linear-gradient(180deg, #0b2a52 0, rgba(11, 42, 82, 0) 55vh);
+    --lg-sun: radial-gradient(circle at 86% 9%, rgba(240, 248, 255, .9) 0 2.6vmin, rgba(160, 210, 255, .2) 6vmin, transparent 26vmin);
+    --lg-sea-1: rgba(40, 110, 170, .16); --lg-sea-2: rgba(82, 227, 214, .06); --lg-flies: block; --lg-bar-top: #275a9a; --lg-bar-bot: #0c2650;
+  }
+  @media (prefers-color-scheme: dark) {
+    :scope:not([data-theme="light"]) {
+      --lg-card-top: #1d4680; --lg-card-bot: #0d2a52; --lg-card-edge: rgba(200, 228, 255, .55);
+      --lg-title: linear-gradient(180deg, #ffffff 0 45%, #a8f2ff 100%); --lg-title-fx: drop-shadow(0 2px 0 rgba(4, 17, 31, .85)) drop-shadow(0 0 14px rgba(82, 227, 214, .35));
+      --lg-sky: radial-gradient(1px 1px at 12% 18%, #fff, transparent), radial-gradient(1px 1px at 34% 8%, #fff, transparent), radial-gradient(1.5px 1.5px at 58% 22%, #fff, transparent), radial-gradient(1px 1px at 76% 30%, #fff, transparent), radial-gradient(1px 1px at 22% 36%, rgba(255, 255, 255, .7), transparent), radial-gradient(1.5px 1.5px at 46% 40%, rgba(255, 255, 255, .7), transparent), linear-gradient(180deg, #0b2a52 0, rgba(11, 42, 82, 0) 55vh);
+      --lg-sun: radial-gradient(circle at 86% 9%, rgba(240, 248, 255, .9) 0 2.6vmin, rgba(160, 210, 255, .2) 6vmin, transparent 26vmin);
+      --lg-sea-1: rgba(40, 110, 170, .16); --lg-sea-2: rgba(82, 227, 214, .06); --lg-flies: block; --lg-bar-top: #275a9a; --lg-bar-bot: #0c2650;
+    }
+  }
+
+  /* The ground: sky and sun (or moon) above, the tide rolling in along the bottom, pyreflies rising after dark. */
+  :scope body { background: var(--lg-sun), var(--lg-sky), var(--bg); background-attachment: fixed; }
+  :scope body::before, :scope body::after { content: ""; position: fixed; pointer-events: none; z-index: -1; }
+  :scope body::before {
+    left: 0; right: 0; bottom: 0; height: 72px;
+    background: linear-gradient(var(--lg-sea-1), var(--lg-sea-1)) 0 22px / 160px 100% repeat-x, linear-gradient(var(--lg-sea-2), var(--lg-sea-2)) 0 0 / 240px 100% repeat-x;
+    -webkit-mask: var(--lg-wave) 0 0 / 80px 16px repeat-x, linear-gradient(#000, #000) 0 15px / 100% 100% no-repeat;
+    mask: var(--lg-wave) 0 0 / 80px 16px repeat-x, linear-gradient(#000, #000) 0 15px / 100% 100% no-repeat;
+    -webkit-mask-composite: source-over; mask-composite: add;
+    animation: lg-tide 14s linear infinite;
+  }
+  :scope body::after {
+    inset: 0; display: var(--lg-flies);
+    background:
+      radial-gradient(circle at 12% 30%, rgba(200, 255, 248, .95) 0 1.5px, rgba(82, 227, 214, .5) 3px, transparent 9px),
+      radial-gradient(circle at 70% 64%, rgba(255, 236, 190, .9) 0 1.5px, rgba(255, 196, 87, .4) 3px, transparent 8px),
+      radial-gradient(circle at 44% 82%, rgba(200, 255, 248, .9) 0 1px, rgba(82, 227, 214, .45) 2.5px, transparent 7px),
+      radial-gradient(circle at 88% 20%, rgba(220, 240, 255, .9) 0 1px, rgba(140, 200, 255, .4) 2.5px, transparent 7px);
+    background-size: 520px 700px, 520px 700px, 680px 900px, 680px 900px;
+    animation: lg-rise 60s linear infinite, lg-flicker 4s ease-in-out infinite;
+  }
+
+  /* Type: Marcellus, carved, with a sea-glass sheen by day and moonlight after dark. */
+  :scope :is(.display-2xl, .display-xl, .display-lg) { font-weight: 400; letter-spacing: .01em; background: var(--lg-title); -webkit-background-clip: text; background-clip: text; color: transparent; filter: var(--lg-title-fx); }
+  :scope :is(.heading-lg, .heading-md) { font-weight: 400; letter-spacing: .01em; }
+  :scope :is(.ts-card-title, .ts-dialog-title, .ts-popover-title, .ts-empty-title, .ts-cal-title, .ts-navbar-brand) { font-weight: 400; letter-spacing: .02em; }
+  :scope :is(.ts-btn, .ts-tab, .ts-segctl-item) { font-weight: 800; letter-spacing: .02em; }
+  :scope .ts-card-eyebrow { color: var(--lapis); letter-spacing: .12em; }
+
+  /* Keys are glossy gel, PS2 style: a highlight across the top half, a pressed lip below. */
+  :scope .ts-btn { border-radius: var(--radius-full); transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast), filter var(--duration-fast), background-color var(--duration-fast); }
+  :scope .ts-btn-primary { background: linear-gradient(180deg, rgba(255, 255, 255, .18) 0 46%, transparent 54%), var(--lapis); color: var(--on-lapis); box-shadow: var(--lg-press), 0 2px 8px var(--lapis-glow); text-shadow: 0 1px 0 rgba(0, 0, 0, .2); }
+  :scope .ts-btn-primary:hover:not([disabled]) { background-color: var(--lapis-hover); transform: translateY(-1px); box-shadow: var(--lg-press), 0 6px 16px var(--lapis-glow); }
+  :scope .ts-btn-secondary { background: linear-gradient(180deg, rgba(255, 255, 255, .5), transparent 60%), var(--surface); color: var(--lapis); border: 1.5px solid var(--lapis); }
+  :scope .ts-btn-secondary:hover:not([disabled]) { background-color: var(--lapis-soft); border-color: var(--lapis); color: var(--lapis); transform: translateY(-1px); }
+  /* The accent key is a gold sphere, with a glint sweeping across it on hover. */
+  :scope .ts-btn-tile {
+    border: 0; color: var(--on-saffron); box-shadow: inset 0 -2px 0 rgba(140, 70, 0, .3), 0 2px 10px rgba(255, 180, 61, .4);
+    background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, .7) 50%, transparent 65%) -120% 0 / 60% 100% no-repeat, linear-gradient(180deg, #ffe39a, var(--saffron) 55%, #f29a2e);
+  }
+  :scope .ts-btn-tile:hover:not([disabled]) { transform: translateY(-1px); animation: lg-shine .8s ease-out 1; box-shadow: inset 0 -2px 0 rgba(140, 70, 0, .3), 0 6px 18px rgba(255, 180, 61, .5); }
+  :scope .ts-btn-danger { box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .18); }
+  :scope .ts-btn-ghost:hover:not([disabled]) { background: var(--lapis-soft); color: var(--lapis); }
+  :scope .ts-btn:active:not([disabled]) { transform: translateY(1px); box-shadow: inset 0 2px 3px rgba(0, 0, 0, .2); }
+  :scope :is(.ts-btn-primary, .ts-btn-tile)::after { display: none; }
+
+  /* Panels: sunlit sea glass by day, blue windows after dark, with a soft double edge. */
+  :scope :is(.ts-card, .ts-empty, .ts-table-wrap, .ts-accordion, .ts-drawer) { background: linear-gradient(180deg, var(--lg-card-top), var(--lg-card-bot)); border: 1.5px solid var(--lg-card-edge); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .5), var(--shadow-sm); }
+  :scope .ts-card-interactive:hover { transform: translateY(-3px); border-color: var(--lapis); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .5), var(--shadow-md); }
+  /* The featured card sits in a gold window frame with a jewel in each top corner. */
+  :scope .ts-card-tile { border: 2px solid #e8a83a; box-shadow: inset 0 0 0 1px rgba(255, 236, 190, .8), inset 0 0 0 3px rgba(11, 61, 92, .15), var(--shadow-tile); }
+  :scope .ts-card-tile::before, :scope .ts-card-tile::after { content: ""; position: absolute; top: 7px; width: 9px; height: 9px; rotate: 45deg; pointer-events: none; background: linear-gradient(135deg, #fff4c8, #ffc457 50%, #c9601c); box-shadow: 0 0 6px rgba(255, 196, 87, .7); }
+  :scope .ts-card-tile::before { left: 7px; }
+  :scope .ts-card-tile::after { right: 7px; }
+  :scope .ts-card-tile.ts-card-interactive:hover { transform: translateY(-3px); border-color: #ffc457; box-shadow: inset 0 0 0 1px rgba(255, 236, 190, .8), inset 0 0 0 3px rgba(11, 61, 92, .15), var(--shadow-tile-lg); }
+  :scope .ts-card-motif span { border-radius: 50%; }
+
+  /* Windows: the blue gradient window with a white edge, in both modes. Text in them gets the PS2 drop shadow. */
+  :scope :is(.ts-dialog, .ts-popover, .ts-menu, .ts-sel-list, .ts-cmd, .ts-side-flyout) {
+    --surface: #1a4378; --surface-sunken: #0a2148; --ink: #f2f8ff; --ink-muted: #c4d6ea; --line: rgba(236, 246, 255, .2); --line-strong: #8fb0d6;
+    --lapis: #7fefe5; --lapis-hover: #b0f6f0; --lapis-soft: rgba(127, 239, 229, .16); --on-lapis: #04181f; --link: #a6f4ee; --danger: #ff9d90; --on-danger: #1a0505; --focus: #7fefe5;
+    background: linear-gradient(180deg, var(--lg-win-top), var(--lg-win-bot)); color: var(--ink);
+    border: 2px solid var(--lg-win-edge); box-shadow: inset 0 0 0 1px rgba(4, 17, 40, .6), var(--shadow-lg);
+    text-shadow: 0 1px 0 rgba(0, 10, 30, .55);
+  }
+  :scope :is(.ts-dialog, .ts-cmd) { border-radius: var(--radius-lg); }
+  :scope .ts-dialog-title { color: #ffffff; }
+  :scope :is(.ts-dialog, .ts-popover, .ts-menu, .ts-sel-list, .ts-cmd, .ts-side-flyout) .ts-btn { text-shadow: none; }
+  :scope :is(.ts-dialog, .ts-popover, .ts-menu, .ts-sel-list, .ts-cmd, .ts-side-flyout) .ts-btn-primary { text-shadow: none; }
+  :scope .ts-overlay { backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+  /* The cursor: a pointing glove that bobs beside the item it's on, over a soft highlight. */
+  :scope :is(.ts-menu, .ts-sel-list, .ts-cmd) :is(.ts-menu-item, .ts-opt) { position: relative; padding-left: 38px; }
+  :scope :is(.ts-menu, .ts-sel-list, .ts-cmd) :is(.ts-menu-item-active, .ts-opt-active) { background: linear-gradient(90deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, .04)); color: #ffffff; box-shadow: none; }
+  :scope :is(.ts-menu, .ts-sel-list, .ts-cmd) :is(.ts-menu-item-active, .ts-opt-active) .ts-icon { color: #ffffff; }
+  :scope :is(.ts-menu, .ts-sel-list, .ts-cmd) :is(.ts-menu-item-active, .ts-opt-active)::before { content: ""; position: absolute; left: 6px; top: 50%; width: 22px; height: 15px; translate: 0 -50%; background: var(--lg-glove) center / contain no-repeat; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .5)); animation: lg-bob .5s ease-in-out infinite; }
+  :scope :is(.ts-menu, .ts-sel-list, .ts-cmd) .ts-opt-selected { background: rgba(127, 239, 229, .14); color: var(--lapis); }
+
+  /* Fields: a recessed slot, rounded, lit with the lagoon on focus. */
+  :scope :is(.ts-input, .ts-sel-trigger, .ts-tags, .ts-number) { border-radius: var(--radius-md); border: 1.5px solid var(--line-strong); background: var(--surface); box-shadow: inset 0 2px 3px rgba(11, 42, 58, .1); }
+  :scope :is(.ts-input:focus-visible, .ts-input:focus-within, .ts-tags:focus-within, .ts-number:focus-within), :scope .ts-sel-open .ts-sel-trigger { border-color: var(--lapis); box-shadow: inset 0 2px 3px rgba(11, 42, 58, .1), 0 0 0 3px var(--lapis-glow); }
+
+  /* Shell: a deep-water bar (the blue window after dark) that ends in a wave. */
+  :scope .ts-navbar {
+    position: relative; border-bottom: 0; background: linear-gradient(180deg, var(--lg-bar-top), var(--lg-bar-bot));
+    --ink: #f2f8ff; --ink-muted: #c4d6ea; --lapis: #8aefe6; --line: rgba(236, 246, 255, .2); --surface-sunken: rgba(255, 255, 255, .12); --lapis-soft: rgba(138, 239, 230, .16); --on-lapis: #04181f;
+    text-shadow: 0 1px 0 rgba(0, 10, 30, .4);
+  }
+  :scope .ts-navbar::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 8px; pointer-events: none; background: var(--lg-bar-bot); -webkit-mask: var(--lg-wave) 0 0 / 40px 8px repeat-x; mask: var(--lg-wave) 0 0 / 40px 8px repeat-x; }
+  :scope .ts-navbar .ts-navbar-brand { color: var(--ink); }
+  :scope .ts-navbar .ts-btn { text-shadow: none; }
+  :scope .ts-navlink[aria-current="page"]::after { height: 3px; border-radius: 3px; background: var(--saffron); box-shadow: 0 0 8px rgba(255, 196, 87, .7); }
+  :scope .ts-sidebar { background: color-mix(in srgb, var(--surface) 82%, transparent); border-right: 1.5px solid var(--lg-card-edge); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  :scope .ts-side-link:hover { background: var(--lapis-soft); color: var(--ink); }
+  :scope .ts-side-link[aria-current="page"] { background: linear-gradient(90deg, var(--lapis-soft), transparent); color: var(--ink); font-weight: 700; box-shadow: inset 3px 0 0 var(--saffron); }
+  :scope .ts-side-link[aria-current="page"] .ts-icon { color: var(--lapis); }
+  :scope .ts-side-title { font-family: var(--font-display); letter-spacing: .1em; }
+  :scope .ts-side-title::before { content: "\2726\00A0"; color: var(--saffron-deep); }
+
+  /* Small things: pill badges, element-orb avatars, a pearl on a tide-pool switch, a sunlit tab line. */
+  :scope .ts-badge { border-radius: var(--radius-full); padding-inline: 10px; }
+  :scope .ts-badge-accent { background: linear-gradient(180deg, #ffe39a, var(--saffron)); box-shadow: inset 0 -1px 0 rgba(140, 70, 0, .3); }
+  :scope .ts-avatar { --lg-orb: var(--tile-1); background: radial-gradient(circle at 34% 28%, rgba(255, 255, 255, .85) 0 8%, rgba(255, 255, 255, .25) 22%, transparent 46%), radial-gradient(circle at 60% 75%, var(--lg-orb), color-mix(in srgb, var(--lg-orb) 60%, #000) 100%); color: #ffffff; font-weight: 800; text-shadow: 0 1px 2px rgba(0, 0, 0, .5); box-shadow: inset 0 -2px 4px rgba(0, 0, 0, .25), 0 1px 3px rgba(0, 0, 0, .25); }
+  :scope .ts-avatar[data-hue="1"] { --lg-orb: var(--tile-2); }
+  :scope .ts-avatar[data-hue="2"] { --lg-orb: var(--tile-4); }
+  :scope .ts-avatar[data-hue="3"] { --lg-orb: #2e9e5b; }
+  :scope .ts-check-box { border-radius: var(--radius-xs); }
+  :scope .ts-switch-track { background: var(--surface-sunken); box-shadow: inset 0 0 0 1.5px var(--line-strong), inset 0 2px 3px rgba(0, 0, 0, .12); }
+  :scope .ts-switch-track::after { background: radial-gradient(circle at 35% 30%, #ffffff, #eaf1f4 55%, #b7c6cf); box-shadow: 0 1px 3px rgba(0, 0, 0, .3); }
+  :scope .ts-switch input:checked + .ts-switch-track { background: linear-gradient(180deg, rgba(255, 255, 255, .2), transparent 60%), var(--lapis); box-shadow: inset 0 2px 3px rgba(0, 0, 0, .15); }
+  :scope .ts-tab-ink { height: 3px; border-radius: 3px; background: var(--saffron); box-shadow: 0 0 8px rgba(255, 196, 87, .6); }
+  :scope .ts-segctl { border-radius: var(--radius-full); }
+  :scope .ts-segctl-ink { border-radius: var(--radius-full); background: linear-gradient(180deg, rgba(255, 255, 255, .5), transparent 60%), var(--surface); box-shadow: inset 0 0 0 1.5px var(--lapis), var(--shadow-sm); }
+  :scope :is(.ts-page-current, .ts-day-selected) { border-radius: var(--radius-full); box-shadow: 0 2px 8px var(--lapis-glow); }
+  :scope .ts-step-marker { border-radius: 50%; }
+
+  /* Progress is an overdrive gauge: a framed slot, the bar filling with water and a glint running across it. */
+  :scope .ts-progress-track { height: 12px; border-radius: var(--radius-full); background: linear-gradient(180deg, #04111f, #0c2650); box-shadow: 0 0 0 1.5px var(--lg-win-edge), 0 0 0 3px rgba(11, 61, 92, .35); }
+  :scope .ts-progress-bar {
+    border-radius: var(--radius-full); animation: lg-shine 2.4s linear infinite;
+    background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .55) 50%, transparent 70%) -120% 0 / 40% 100% no-repeat, linear-gradient(180deg, #c8fff8, #3fd8cc 50%, #0b8d96);
+  }
+  :scope .ts-progress-success .ts-progress-bar { background: linear-gradient(180deg, #d4ffd8, #4fcf7e 50%, #1e7a44); animation: none; }
+  :scope .ts-progress-segmented .ts-progress-track { background: none; box-shadow: none; }
+  :scope .ts-progress-segmented .ts-seg { border-radius: var(--radius-full); background: var(--surface-sunken); box-shadow: inset 0 0 0 1px var(--line); }
+  :scope .ts-progress-segmented .ts-seg::after { border-radius: var(--radius-full); background: linear-gradient(180deg, #c8fff8, #3fd8cc 50%, #0b8d96); }
+  :scope .ts-progress-segmented .ts-seg-current::after { background: linear-gradient(180deg, #ffe39a, var(--saffron) 55%, #f29a2e); }
+
+  /* The spinner: four element orbs in orbit. */
+  :scope .ts-spinner { animation: lg-orbit 1.6s linear infinite; }
+  :scope .ts-spinner i { border-radius: 50%; opacity: 1; background: radial-gradient(circle at 35% 30%, #ffffff 0 14%, currentColor 60%, color-mix(in srgb, currentColor 60%, #000)); animation: lg-glint 1.6s ease-in-out infinite; }
+  :scope .ts-spinner i:nth-child(1) { color: var(--tile-1); }
+  :scope .ts-spinner i:nth-child(2) { color: var(--tile-3); animation-delay: -.4s; }
+  :scope .ts-spinner i:nth-child(3) { color: var(--tile-4); animation-delay: -1.2s; }
+  :scope .ts-spinner i:nth-child(4) { color: #4fcf7e; animation-delay: -.8s; }
+
+  /* Toasts read like an item-get box: a small blue window with a gold icon. Tooltips are tiny windows. */
+  :scope .ts-toast { --inverse-accent: #ffc457; background: linear-gradient(180deg, var(--lg-win-top), var(--lg-win-bot)); color: #f2f8ff; border: 2px solid var(--lg-win-edge); box-shadow: inset 0 0 0 1px rgba(4, 17, 40, .6), var(--shadow-lg); text-shadow: 0 1px 0 rgba(0, 10, 30, .55); }
+  :scope .ts-toast-timer { background: linear-gradient(90deg, #ffc457, #fff4c8); }
+  :scope .ts-tooltip { --ink: #0c2650; --bg: #f2f8ff; background: linear-gradient(180deg, var(--lg-win-top), var(--lg-win-bot)); box-shadow: 0 0 0 1.5px var(--lg-win-edge), var(--shadow-sm); text-shadow: 0 1px 0 rgba(0, 10, 30, .55); }
+
+  /* The mosaic: polished sea glass. */
+  :scope .ts-mosaic .ts-mosaic-tile { border-radius: 30%; background-image: linear-gradient(160deg, rgba(255, 255, 255, .45), transparent 45%); }
+
+  @media (prefers-reduced-motion: reduce) {
+    :scope body::before, :scope body::after { animation: none; }
+    :scope :is(.ts-menu, .ts-sel-list, .ts-cmd) :is(.ts-menu-item-active, .ts-opt-active)::before { animation: none; }
+    :scope :is(.ts-btn-tile:hover, .ts-progress-bar) { animation: none; }
+    :scope .ts-spinner { animation-duration: 3s; }
+    :scope .ts-spinner i { animation: none; }
+  }
+}
