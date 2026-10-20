@@ -48,6 +48,7 @@ import '@tessera-design/react/themes/cartridge-fonts.css';
 | Theme | Files |
 | --- | --- |
 | Tessera (default) | nothing extra |
+| Atelier | `themes/atelier.css`, `themes/atelier-fonts.css` |
 | Cartridge | `themes/cartridge.css`, `themes/cartridge-fonts.css` |
 | Polygon | `themes/polygon.css`, `themes/polygon-fonts.css` |
 | Gloop | `themes/gloop.css`, `themes/gloop-fonts.css` |

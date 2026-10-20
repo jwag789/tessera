@@ -1,0 +1,318 @@
+{
+  "name": "atelier",
+  "label": "Atelier",
+  "description": "Editorial and quiet, for studios and portfolios: warm bone paper and near-black ink, a light high-contrast serif for titles over a clean sans, hairline rules instead of shadows, square corners, small tracked capitals on keys and labels, and one terracotta accent. After dark it's a gallery wall: deep charcoal with ivory type.",
+  "fonts": "https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Manrope:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap",
+  "type": {
+    "families": {
+      "display": "Fraunces, \"Iowan Old Style\", \"Palatino Linotype\", Georgia, serif",
+      "sans": "Manrope, \"Helvetica Neue\", system-ui, sans-serif",
+      "mono": "\"DM Mono\", ui-monospace, \"SF Mono\", monospace"
+    }
+  },
+  "color": {
+    "tokens": [
+      {
+        "name": "bg",
+        "value": {
+          "light": "#f6f2eb",
+          "dark": "#12110f"
+        }
+      },
+      {
+        "name": "surface",
+        "value": {
+          "light": "#fbf9f5",
+          "dark": "#1b1a17"
+        }
+      },
+      {
+        "name": "surface-sunken",
+        "value": {
+          "light": "#ede7dd",
+          "dark": "#0c0b0a"
+        }
+      },
+      {
+        "name": "line",
+        "value": {
+          "light": "#e2dacd",
+          "dark": "#2c2a26"
+        }
+      },
+      {
+        "name": "line-strong",
+        "value": {
+          "light": "#8b8172",
+          "dark": "#7c7568"
+        }
+      },
+      {
+        "name": "ink",
+        "value": {
+          "light": "#1d1b18",
+          "dark": "#f2ede4"
+        }
+      },
+      {
+        "name": "ink-muted",
+        "value": {
+          "light": "#5d564c",
+          "dark": "#b2aa9d"
+        }
+      },
+      {
+        "name": "lapis",
+        "value": {
+          "light": "#1d1b18",
+          "dark": "#f2ede4"
+        }
+      },
+      {
+        "name": "lapis-hover",
+        "value": {
+          "light": "#3a362f",
+          "dark": "#ffffff"
+        }
+      },
+      {
+        "name": "lapis-soft",
+        "value": {
+          "light": "#ebe5da",
+          "dark": "#25231f"
+        }
+      },
+      {
+        "name": "lapis-deep",
+        "value": {
+          "light": "#0f0e0c",
+          "dark": "#d9d2c6"
+        }
+      },
+      {
+        "name": "lapis-glow",
+        "value": {
+          "light": "rgba(29, 27, 24, 0.12)",
+          "dark": "rgba(242, 237, 228, 0.14)"
+        }
+      },
+      {
+        "name": "on-lapis",
+        "value": {
+          "light": "#f6f2eb",
+          "dark": "#12110f"
+        }
+      },
+      {
+        "name": "on-lapis-deep",
+        "value": {
+          "light": "#f6f2eb",
+          "dark": "#12110f"
+        }
+      },
+      {
+        "name": "saffron",
+        "value": {
+          "light": "#9c4a2b",
+          "dark": "#d4906c"
+        }
+      },
+      {
+        "name": "saffron-deep",
+        "value": {
+          "light": "#7d3a21",
+          "dark": "#b8734f"
+        }
+      },
+      {
+        "name": "saffron-soft",
+        "value": {
+          "light": "#f1e3d9",
+          "dark": "#2e211a"
+        }
+      },
+      {
+        "name": "on-saffron",
+        "value": {
+          "light": "#fbf9f5",
+          "dark": "#12110f"
+        }
+      },
+      {
+        "name": "success",
+        "value": {
+          "light": "#3f6b4a",
+          "dark": "#93c3a0"
+        }
+      },
+      {
+        "name": "success-soft",
+        "value": {
+          "light": "#e3ece4",
+          "dark": "#1a2a1f"
+        }
+      },
+      {
+        "name": "warning",
+        "value": {
+          "light": "#8a5a12",
+          "dark": "#e2b56a"
+        }
+      },
+      {
+        "name": "danger",
+        "value": {
+          "light": "#a33a2f",
+          "dark": "#ef9a8f"
+        }
+      },
+      {
+        "name": "danger-soft",
+        "value": {
+          "light": "#f6e1dd",
+          "dark": "#33201c"
+        }
+      },
+      {
+        "name": "on-danger",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#12110f"
+        }
+      },
+      {
+        "name": "inverse-accent",
+        "value": {
+          "light": "#e2b48f",
+          "dark": "#9c4a2b"
+        }
+      },
+      {
+        "name": "focus",
+        "value": {
+          "light": "#9c4a2b",
+          "dark": "#d4906c"
+        }
+      },
+      {
+        "name": "link",
+        "value": {
+          "light": "#8a3f22",
+          "dark": "#e0a07e"
+        }
+      },
+      {
+        "name": "overlay",
+        "value": {
+          "light": "rgba(18, 17, 15, 0.55)",
+          "dark": "rgba(0, 0, 0, 0.7)"
+        }
+      },
+      {
+        "name": "tile-ground",
+        "value": {
+          "light": "#ede7dd",
+          "dark": "#0c0b0a"
+        }
+      },
+      {
+        "name": "tile-1",
+        "value": {
+          "light": "#d9cfc0",
+          "dark": "#2c2a26"
+        }
+      },
+      {
+        "name": "tile-2",
+        "value": {
+          "light": "#c4b7a4",
+          "dark": "#3b3832"
+        }
+      },
+      {
+        "name": "tile-3",
+        "value": {
+          "light": "#e6ddd0",
+          "dark": "#22201c"
+        }
+      },
+      {
+        "name": "tile-4",
+        "value": {
+          "light": "#b3a48f",
+          "dark": "#4a463e"
+        }
+      }
+    ]
+  },
+  "radius": {
+    "tokens": [
+      {
+        "name": "radius-xs",
+        "value": "0px"
+      },
+      {
+        "name": "radius-sm",
+        "value": "1px"
+      },
+      {
+        "name": "radius-md",
+        "value": "2px"
+      },
+      {
+        "name": "radius-lg",
+        "value": "2px"
+      },
+      {
+        "name": "radius-xl",
+        "value": "4px"
+      }
+    ]
+  },
+  "shadow": {
+    "tokens": [
+      {
+        "name": "shadow-sm",
+        "value": {
+          "light": "none",
+          "dark": "none"
+        }
+      },
+      {
+        "name": "shadow-md",
+        "value": {
+          "light": "0 12px 32px -12px rgba(29, 27, 24, 0.18)",
+          "dark": "0 12px 32px -12px rgba(0, 0, 0, 0.7)"
+        }
+      },
+      {
+        "name": "shadow-lg",
+        "value": {
+          "light": "0 24px 64px -20px rgba(29, 27, 24, 0.28)",
+          "dark": "0 24px 64px -20px rgba(0, 0, 0, 0.8)"
+        }
+      },
+      {
+        "name": "shadow-glow",
+        "value": {
+          "light": "none",
+          "dark": "none"
+        }
+      },
+      {
+        "name": "shadow-tile",
+        "value": {
+          "light": "none",
+          "dark": "none"
+        }
+      },
+      {
+        "name": "shadow-tile-lg",
+        "value": {
+          "light": "0 18px 40px -18px rgba(29, 27, 24, 0.3)",
+          "dark": "0 18px 40px -18px rgba(0, 0, 0, 0.8)"
+        }
+      }
+    ]
+  }
+}

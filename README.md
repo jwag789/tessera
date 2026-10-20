@@ -13,7 +13,7 @@
 [![Tessera's four themes side by side: Tessera, Cartridge, Polygon and Gloop](.github/assets/themes.jpg)](https://jwag789.github.io/tessera/#themes)
 
 - **40 React components**, typed, tested and keyboard-accessible: from Button and Select to Command palette, Date picker, Data table and Drawer, plus layout primitives.
-- **Ten themes** (Tessera, Cartridge, Polygon, Gloop, Shonen, Jelly, Neon, Static, Lagoon and Clay), each in light and dark, built from one set of design tokens. Switch them live in the docs.
+- **Eleven themes** (Tessera, Atelier, Cartridge, Polygon, Gloop, Shonen, Jelly, Neon, Static, Lagoon and Clay), each in light and dark, built from one set of design tokens. Switch them live in the docs.
 - **154 tests**, with axe accessibility checks on every component, strict TypeScript, and a bundle size budget enforced in CI.
 - **Folio**, a resume builder and job tracker that uses nearly every component, to show the system holding up in a real product.
 
@@ -66,9 +66,10 @@ The bundle starts with `"use client"`, so it works from React Server Components 
 
 ### Themes
 
-Tessera ships ten themes, each in light and dark:
+Tessera ships eleven themes, each in light and dark:
 
 - **Tessera** (the default)
+- **Atelier:** editorial and quiet, for studios and portfolios, with warm bone paper and near-black ink, light serif titles, small spaced capitals on keys, hairlines instead of shadows and one terracotta accent; a gallery wall after dark
 - **Cartridge:** a late-90s 64-bit console, where cards are cartridges, keys carry A, B and C prompts, the mosaic is a 3D stage floor and text boxes blink their way on
 - **Polygon:** matte grey plastic, dark recessed panels, hard bevels and pixel headings
 - **Gloop:** 90s kids-TV, with slime green and orange, thick outlines, and everything a bit tilted

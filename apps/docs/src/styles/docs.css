@@ -258,6 +258,7 @@ a { color: var(--link); }
 .d-theme-dot-neon { background: radial-gradient(circle, #02060c 0 38%, #00e5ff 40% 50%, #02060c 52% 64%, #00e5ff 66% 74%, #02060c 76%); border-radius: 50%; box-shadow: 0 0 0 1px #00e5ff, 0 0 6px rgba(0, 229, 255, .8); }
 .d-theme-dot-static { background: radial-gradient(circle at 60% 40%, #ff4a3d 0 30%, rgba(255, 74, 61, .4) 45%, transparent 60%), #161412; border-radius: 1px; box-shadow: 0 0 0 1.5px #161412; rotate: -4deg; }
 .d-theme-dot-lagoon { background: radial-gradient(circle at 74% 22%, #fff4c8 0 12%, transparent 14%), linear-gradient(180deg, #8fdcea 0 46%, #00a3a8 46% 70%, #f2dfb0 70%); border-radius: 50%; box-shadow: 0 0 0 1.5px #0b3d5c, 0 0 0 3px rgba(255, 255, 255, .8); }
+.d-theme-dot-atelier { background: linear-gradient(135deg, #f6f2eb 0 50%, #1d1b18 50%); border-radius: 50%; box-shadow: 0 0 0 1px #1d1b18, inset 0 0 0 3px #f6f2eb; }
 .d-theme-dot-clay { background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, .6) 0 12%, transparent 30%), conic-gradient(from 20deg, #e8433a 0 25%, #ffc93c 0 50%, #3bb273 0 75%, #2f6fe4 0); border-radius: 46% 54% 50% 50% / 52% 46% 54% 48%; box-shadow: inset -2px -3px 4px rgba(0, 0, 0, .25), 0 2px 3px rgba(90, 60, 30, .3); }
 .ts-opt-icon:has(.d-theme-dot) { background: none; }
 .d-theme-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }

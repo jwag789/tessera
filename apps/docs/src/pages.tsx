@@ -257,8 +257,9 @@ export function BrandPage() {
 
 /* ---------- themes ---------- */
 
-const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop', 'shonen', 'jelly', 'neon', 'static', 'lagoon', 'clay'];
+const THEME_ORDER = ['tessera', 'atelier', 'cartridge', 'polygon', 'gloop', 'shonen', 'jelly', 'neon', 'static', 'lagoon', 'clay'];
 const THEME_NOTES: Record<string, string[]> = {
+  atelier: ['Editorial and quiet: warm bone paper and near-black ink, a gallery wall after dark', 'A light high-contrast serif over a clean sans, small spaced capitals on keys', 'Hairlines instead of shadows, square corners, one terracotta accent'],
   tessera: ['Saturated lapis with one saffron tile', 'Tight corners, hard offset shadow', 'Bricolage Grotesque headings'],
   cartridge: ['Late-90s 64-bit console: cards are cartridges, the mosaic is a 3D stage floor, a checkerboard fades into fog', 'A, B, C and Start keys with button prompts, a lock-on focus, see-through text boxes with a blinking arrow', 'Gold, extruded Titan One titles over Nunito'],
   polygon: ['Matte grey plastic with dark recessed panels', 'Hard 1-2px bevels, a menu cursor on the selection', 'Silkscreen pixel headings, Space Mono labels'],

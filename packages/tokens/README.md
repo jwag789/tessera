@@ -42,7 +42,7 @@ Load a theme after the base tokens, then set `data-brand` on any element:
 <html data-brand="polygon">
 ```
 
-Themes: `cartridge`, `polygon`, `gloop`, `shonen`, `jelly`, `neon`, `static`, `lagoon`, `clay` (plus the default, `tessera`). These files hold the tokens only; `@tessera-design/react/themes/*` adds the component styling too.
+Themes: `atelier`, `cartridge`, `polygon`, `gloop`, `shonen`, `jelly`, `neon`, `static`, `lagoon`, `clay` (plus the default, `tessera`). These files hold the tokens only; `@tessera-design/react/themes/*` adds the component styling too.
 
 ## JavaScript
 
