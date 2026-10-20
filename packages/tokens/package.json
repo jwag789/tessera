@@ -1,6 +1,6 @@
 {
   "name": "@tessera-design/tokens",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Design tokens for the Tessera design system: colors for light and dark, type, space, radius, shadow and motion.",
   "license": "MIT",
   "author": "Justin Wagner",
