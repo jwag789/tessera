@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { hydrateRoot } from 'react-dom/client';
+import { renderToString } from 'react-dom/server';
 import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { describe, expect, it, vi } from 'vitest';
@@ -481,6 +483,26 @@ describe('Toasts', () => {
     });
     expect(screen.queryByText('Saved')).not.toBeInTheDocument();
     vi.useRealTimers();
+  });
+
+  it('hydrates server-rendered HTML without a mismatch', async () => {
+    const tree = (
+      <ToastProvider>
+        <p>Page</p>
+      </ToastProvider>
+    );
+    const container = document.createElement('div');
+    container.innerHTML = renderToString(tree);
+    document.body.appendChild(container);
+    const onRecoverableError = vi.fn();
+    let root: ReturnType<typeof hydrateRoot> | undefined;
+    await act(async () => {
+      root = hydrateRoot(container, tree, { onRecoverableError });
+    });
+    expect(onRecoverableError).not.toHaveBeenCalled();
+    expect(document.querySelector('.ts-toaster')).toBeInTheDocument();
+    act(() => root!.unmount());
+    container.remove();
   });
 
   it('useToast outside a provider explains the fix', () => {

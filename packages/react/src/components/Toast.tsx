@@ -66,6 +66,10 @@ const ToastContext = createContext<ToastApi | null>(null);
 export function ToastProvider({ children, max = 4 }: { children?: ReactNode; max?: number }) {
   const [list, setList] = useState<ToastEntry[]>([]);
   const [hovered, setHovered] = useState(false);
+  // The toaster portals into <body>, which only exists in the browser. Waiting until after mount keeps the
+  // server and first client render identical, so server-rendered apps hydrate cleanly.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
   const nextId = useRef(0);
 
   const dismiss = useCallback((id: number) => {
@@ -87,7 +91,7 @@ export function ToastProvider({ children, max = 4 }: { children?: ReactNode; max
   return (
     <ToastContext.Provider value={api}>
       {children}
-      {typeof document !== 'undefined' &&
+      {mounted &&
         createPortal(
           <div className="ts-toaster" aria-live="polite" onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
             {list.map((t) => (
