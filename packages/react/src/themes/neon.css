@@ -1,0 +1,193 @@
+/* Neon: component treatments the tokens can't express. Tron. A black grid world lit in cyan, with orange for the
+   other side. Big titles are Orbitron, white-hot with a cyan glow and a slice through the middle; panel titles, keys
+   and tabs are Orbitron capitals. Panels are dark glass with a faint edge and bright HUD brackets on their corners.
+   Light-cycle trails run along the navbar and sidebar and fill the progress bar; fields, tooltips and toasts are
+   terminals in phosphor cyan; avatars are identity discs; a grid floor runs to a glowing horizon. In light mode it's
+   the white grid, with the glow turned down. Scoped to [data-brand="neon"]. */
+@keyframes nn-derez { 0%, 7%, 13%, 51% { border-color: color-mix(in srgb, var(--saffron) 25%, transparent); } 5%, 10%, 17%, 54%, 100% { border-color: var(--saffron); } }
+@keyframes nn-boot { 0% { opacity: 0; clip-path: inset(50% 0 50% 0); } 40% { opacity: 1; clip-path: inset(49% 0 49% 0); } 100% { clip-path: inset(0 0 0 0); } }
+@keyframes nn-run-x { from { background-position-x: -40%; } to { background-position-x: 140%; } }
+@keyframes nn-run-y { from { background-position-y: -40%; } to { background-position-y: 140%; } }
+@keyframes nn-pulse { 0%, 100% { box-shadow: 0 0 0 1px var(--saffron), 0 0 10px color-mix(in srgb, var(--saffron) var(--nn-glow), transparent); } 50% { box-shadow: 0 0 0 1px var(--saffron), 0 0 22px color-mix(in srgb, var(--saffron) var(--nn-glow), transparent); } }
+
+/* Scoped so a nested area with a different data-brand keeps its own look. */
+@scope ([data-brand="neon"]) to ([data-brand]:not([data-brand="neon"])) {
+  :scope {
+    font-synthesis: none;
+    --nn-term: "Share Tech Mono", ui-monospace, monospace;
+    /* The white grid: soft glow, dark type. */
+    --nn-glow: 30%;
+    --nn-edge: rgba(0, 112, 127, .28);
+    --nn-bracket: var(--lapis);
+    --nn-scan: rgba(0, 60, 80, .03);
+    --nn-grid: rgba(0, 112, 127, .14);
+    --nn-floor: rgba(0, 112, 127, .4);
+    --nn-horizon: rgba(0, 150, 170, .35);
+    --nn-title: var(--ink);
+    --nn-title-glow: drop-shadow(0 0 1px rgba(0, 112, 127, .6)) drop-shadow(0 0 10px rgba(0, 180, 200, .35));
+    --nn-trail: #00a5b8;
+  }
+  /* The grid after dark: the real thing. */
+  :scope[data-theme="dark"] {
+    --nn-glow: 70%; --nn-edge: rgba(0, 229, 255, .2); --nn-scan: rgba(0, 0, 0, .25); --nn-grid: rgba(0, 229, 255, .06); --nn-floor: rgba(0, 229, 255, .55); --nn-horizon: rgba(0, 229, 255, .5);
+    --nn-title: #f2feff; --nn-title-glow: drop-shadow(0 0 2px #6ff6ff) drop-shadow(0 0 10px rgba(0, 229, 255, .85)) drop-shadow(0 0 32px rgba(0, 229, 255, .45)); --nn-trail: #00e5ff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :scope:not([data-theme="light"]) {
+      --nn-glow: 70%; --nn-edge: rgba(0, 229, 255, .2); --nn-scan: rgba(0, 0, 0, .25); --nn-grid: rgba(0, 229, 255, .06); --nn-floor: rgba(0, 229, 255, .55); --nn-horizon: rgba(0, 229, 255, .5);
+      --nn-title: #f2feff; --nn-title-glow: drop-shadow(0 0 2px #6ff6ff) drop-shadow(0 0 10px rgba(0, 229, 255, .85)) drop-shadow(0 0 32px rgba(0, 229, 255, .45)); --nn-trail: #00e5ff;
+    }
+  }
+
+  /* The ground: a faint grid everywhere, a glowing horizon, and a grid floor running away in perspective below it. */
+  :scope body { background: linear-gradient(var(--nn-grid) 1px, transparent 1px) 0 0 / 48px 48px, linear-gradient(90deg, var(--nn-grid) 1px, transparent 1px) 0 0 / 48px 48px, radial-gradient(ellipse 70% 22% at 50% 72%, var(--nn-horizon), transparent 70%), var(--bg); background-attachment: fixed; }
+  :scope body::before, :scope body::after { content: ""; position: fixed; pointer-events: none; z-index: -1; }
+  :scope body::before { left: 0; right: 0; top: 72vh; height: 1px; background: linear-gradient(90deg, transparent, var(--nn-trail) 20%, var(--nn-trail) 80%, transparent); box-shadow: 0 0 12px 2px var(--nn-horizon); }
+  :scope body::after {
+    left: -50%; right: -50%; bottom: 0; height: 28vh; transform: perspective(240px) rotateX(60deg); transform-origin: 50% 100%;
+    background: linear-gradient(90deg, var(--nn-floor) 1.5px, transparent 1.5px) 50% 0 / 72px 100%, linear-gradient(0deg, var(--nn-floor) 1.5px, transparent 1.5px) 0 100% / 100% 44px;
+    -webkit-mask: linear-gradient(180deg, transparent, #000 45%); mask: linear-gradient(180deg, transparent, #000 45%);
+  }
+
+  /* Big titles: Orbitron capitals, white-hot with a cyan glow, sliced through the middle like the logo. */
+  :scope :is(.display-2xl, .display-xl, .display-lg) {
+    font-weight: 900; text-transform: uppercase; letter-spacing: .1em;
+    background: linear-gradient(180deg, var(--nn-title) 0 53%, transparent 53% 59%, var(--nn-title) 59%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: var(--nn-title-glow);
+  }
+  :scope :is(.heading-lg, .heading-md) { font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+  :scope :is(.ts-card-title, .ts-dialog-title, .ts-popover-title, .ts-empty-title, .ts-cal-title) { font-weight: 700; text-transform: uppercase; letter-spacing: .08em; font-size: .9em; }
+  :scope .ts-navbar-brand { font-weight: 900; text-transform: uppercase; letter-spacing: .14em; }
+  :scope :is(.ts-btn, .ts-badge, .ts-tab, .ts-segctl-item, .ts-side-title) { font-family: var(--font-display); font-weight: 600; text-transform: uppercase; letter-spacing: .1em; }
+  :scope .ts-btn { font-size: 12px; }
+  :scope .ts-badge { font-size: 10px; }
+  :scope :is(.ts-tab, .ts-segctl-item) { font-size: 11.5px; }
+  :scope .ts-side-title { font-size: 10px; }
+
+  /* Keys: cyan light. Primary is solid and glowing, secondary an outline, the accent is Clu's orange and pulses,
+     danger is the derezz red-orange. Pressing turns the glow all the way up. */
+  :scope .ts-btn { border-radius: var(--radius-xs); transition: transform var(--duration-instant) var(--ease-out), box-shadow var(--duration-fast), filter var(--duration-fast), background var(--duration-fast); }
+  :scope .ts-btn-primary { background: var(--lapis); color: var(--on-lapis); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 0 14px color-mix(in srgb, var(--lapis) var(--nn-glow), transparent); }
+  :scope .ts-btn-primary:hover:not([disabled]) { background: var(--lapis-hover); transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 0 24px color-mix(in srgb, var(--lapis) var(--nn-glow), transparent), 0 0 48px color-mix(in srgb, var(--lapis) calc(var(--nn-glow) / 2), transparent); }
+  :scope .ts-btn-secondary { background: color-mix(in srgb, var(--lapis) 6%, transparent); color: var(--ink); border: 1px solid var(--lapis); box-shadow: 0 0 10px color-mix(in srgb, var(--lapis) calc(var(--nn-glow) * .5), transparent), inset 0 0 10px color-mix(in srgb, var(--lapis) calc(var(--nn-glow) * .3), transparent); }
+  :scope .ts-btn-secondary:hover:not([disabled]) { background: color-mix(in srgb, var(--lapis) 14%, transparent); border-color: var(--lapis); transform: translateY(-1px); box-shadow: 0 0 18px color-mix(in srgb, var(--lapis) var(--nn-glow), transparent), inset 0 0 14px color-mix(in srgb, var(--lapis) calc(var(--nn-glow) * .4), transparent); }
+  :scope .ts-btn-tile { border: 0; color: var(--on-saffron); background: var(--saffron); animation: nn-pulse 1.8s ease-in-out infinite; }
+  :scope .ts-btn-tile:hover:not([disabled]) { transform: translateY(-1px); filter: brightness(1.08); }
+  :scope .ts-btn-danger { box-shadow: 0 0 12px color-mix(in srgb, var(--danger) var(--nn-glow), transparent); }
+  :scope .ts-btn-danger:hover:not([disabled]) { box-shadow: 0 0 22px color-mix(in srgb, var(--danger) var(--nn-glow), transparent); }
+  :scope .ts-btn-ghost:hover:not([disabled]) { background: color-mix(in srgb, var(--lapis) 10%, transparent); color: var(--lapis); }
+  :scope .ts-btn:active:not([disabled]) { transform: translateY(1px); filter: brightness(1.3) saturate(1.2); }
+  :scope :is(.ts-btn-primary, .ts-btn-tile)::after { display: none; }
+
+  /* Panels: dark glass (white by day) with a faint edge and bright HUD brackets on two corners. */
+  :scope :is(.ts-card, .ts-table-wrap, .ts-accordion, .ts-empty, .ts-file, .ts-drawer) {
+    background: repeating-linear-gradient(0deg, var(--nn-scan) 0 1px, transparent 1px 3px), color-mix(in srgb, var(--surface) 90%, transparent);
+    border: 1px solid var(--nn-edge); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  }
+  :scope .ts-card { box-shadow: var(--shadow-md); }
+  :scope .ts-card::before, :scope .ts-card::after { content: ""; position: absolute; width: 18px; height: 18px; pointer-events: none; border: 2px solid var(--nn-bracket); filter: drop-shadow(0 0 4px color-mix(in srgb, var(--nn-bracket) var(--nn-glow), transparent)); }
+  :scope .ts-card::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+  :scope .ts-card::after { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+  /* The featured card belongs to the other side: an orange edge that flickers on as it rezzes in. */
+  :scope .ts-card-tile { --nn-bracket: var(--saffron); border: 1.5px solid var(--saffron); box-shadow: 0 0 16px color-mix(in srgb, var(--saffron) calc(var(--nn-glow) * .7), transparent), inset 0 0 14px color-mix(in srgb, var(--saffron) calc(var(--nn-glow) * .3), transparent); animation: nn-derez 2.2s linear 1; }
+  :scope .ts-card-interactive:hover { transform: translateY(-2px); border-color: var(--lapis); box-shadow: var(--shadow-lg), 0 0 18px color-mix(in srgb, var(--lapis) calc(var(--nn-glow) * .6), transparent); }
+  :scope .ts-card-tile.ts-card-interactive:hover { transform: translateY(-2px); border-color: var(--saffron); box-shadow: 0 0 26px color-mix(in srgb, var(--saffron) var(--nn-glow), transparent), inset 0 0 18px color-mix(in srgb, var(--saffron) calc(var(--nn-glow) * .4), transparent); }
+
+  /* Floating panels: the same glass with a cyan edge. Dialogs boot from a line of light. */
+  :scope :is(.ts-dialog, .ts-popover, .ts-menu, .ts-sel-list, .ts-cmd, .ts-side-flyout) {
+    background: repeating-linear-gradient(0deg, var(--nn-scan) 0 1px, transparent 1px 3px), var(--surface);
+    border: 1px solid var(--lapis); box-shadow: var(--shadow-lg), 0 0 20px color-mix(in srgb, var(--lapis) calc(var(--nn-glow) * .45), transparent);
+  }
+  :scope .ts-dialog { animation-name: nn-boot; animation-duration: .4s; animation-timing-function: ease-out; }
+  :scope .ts-dialog-title { color: var(--lapis); }
+  :scope .ts-overlay { backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+  /* The menu cursor: a cyan bar with a lit edge. */
+  :scope :is(.ts-menu-item-active, .ts-opt-active) { background: linear-gradient(90deg, color-mix(in srgb, var(--lapis) 22%, transparent), transparent); color: var(--ink); box-shadow: inset 2px 0 0 var(--lapis); }
+  :scope :is(.ts-menu-item-active, .ts-opt-active) .ts-icon { color: var(--lapis); }
+
+  /* Fields are terminals: a black screen with scanlines and phosphor-cyan type. */
+  :scope :is(.ts-input, .ts-sel-trigger, .ts-tags, .ts-number) {
+    background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .3) 0 1px, transparent 1px 3px), radial-gradient(ellipse at 50% 0, rgba(111, 246, 255, .07), transparent 70%), var(--crt);
+    color: var(--crt-ink); font-family: var(--nn-term); font-size: 15px; letter-spacing: .03em; text-shadow: 0 0 6px rgba(111, 246, 255, .5);
+    border: 1px solid color-mix(in srgb, var(--lapis) 55%, var(--line-strong)); border-radius: var(--radius-xs); caret-color: var(--crt-ink);
+    box-shadow: inset 0 0 12px rgba(0, 0, 0, .8);
+  }
+  :scope :is(.ts-input, .ts-sel-trigger, .ts-tags, .ts-number) :is(input, textarea, .ts-icon, .ts-sel-value) { color: var(--crt-ink); font: inherit; caret-color: var(--crt-ink); }
+  :scope :is(.ts-input, .ts-tags) ::placeholder, :scope .ts-input::placeholder { color: color-mix(in srgb, var(--crt-ink) 50%, var(--crt)); text-shadow: none; }
+  :scope :is(.ts-input, .ts-sel-trigger, .ts-tags, .ts-number):hover { border-color: var(--lapis); }
+  :scope :is(.ts-input:focus-visible, .ts-input:focus-within, .ts-tags:focus-within, .ts-number:focus-within), :scope .ts-sel-open .ts-sel-trigger { border-color: var(--crt-ink); box-shadow: inset 0 0 12px rgba(0, 0, 0, .8), 0 0 0 3px color-mix(in srgb, var(--lapis) 30%, transparent), 0 0 16px color-mix(in srgb, var(--lapis) var(--nn-glow), transparent); }
+  :scope :is(.ts-tags, .ts-number) :is(.ts-tag, button) { font-family: var(--nn-term); }
+
+  /* Shell: glass bars with a light-cycle trail running along their edge. */
+  :scope :is(.ts-navbar, .ts-sidebar) { background: color-mix(in srgb, var(--surface) 84%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  :scope .ts-navbar { position: relative; border-bottom: 0; box-shadow: 0 1px 0 color-mix(in srgb, var(--nn-trail) 55%, transparent); }
+  :scope .ts-navbar::before { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; pointer-events: none; background: linear-gradient(90deg, transparent, var(--nn-trail) 70%, #ffffff) no-repeat 0 0 / 30% 100%; filter: drop-shadow(0 0 4px var(--nn-trail)); animation: nn-run-x 3.2s linear infinite; }
+  :scope .ts-sidebar { border-right: 0; box-shadow: 1px 0 0 color-mix(in srgb, var(--nn-trail) 55%, transparent); }
+  :scope :is(.ts-navlink, .ts-side-link):hover { background: color-mix(in srgb, var(--lapis) 9%, transparent); }
+  :scope .ts-navlink[aria-current="page"] { color: var(--lapis); }
+  :scope .ts-navlink[aria-current="page"]::after { height: 2px; background: var(--lapis); box-shadow: 0 0 8px var(--lapis); }
+  :scope .ts-side-link[aria-current="page"] { background: linear-gradient(90deg, color-mix(in srgb, var(--lapis) 20%, transparent), transparent); color: var(--ink); box-shadow: inset 2px 0 0 var(--lapis); font-weight: 600; }
+  :scope .ts-side-link[aria-current="page"] .ts-icon { color: var(--lapis); }
+  /* Section titles get a lit diamond, cyan and orange in turn. */
+  :scope .ts-side-title { display: flex; align-items: center; gap: 9px; }
+  :scope .ts-side-title::before { content: ""; width: 6px; height: 6px; flex: none; rotate: 45deg; background: var(--lapis); box-shadow: 0 0 6px var(--lapis); }
+  :scope .ts-sidebar-body > .ts-side-title:nth-of-type(even)::before { background: var(--saffron); box-shadow: 0 0 6px var(--saffron); }
+
+  /* Small controls light up when they're on. */
+  :scope .ts-badge { border-radius: var(--radius-xs); }
+  :scope .ts-badge-accent { box-shadow: 0 0 10px color-mix(in srgb, var(--saffron) var(--nn-glow), transparent); }
+  :scope .ts-check-box { border-radius: var(--radius-xs); }
+  :scope .ts-check input:is(:checked, :indeterminate) + .ts-check-box { box-shadow: 0 0 10px color-mix(in srgb, var(--lapis) var(--nn-glow), transparent); }
+  :scope .ts-radio input:checked + .ts-radio-dot::after { box-shadow: 0 0 8px var(--lapis); }
+  /* Switches are a light tube: dark when off, lit cyan when on. */
+  :scope .ts-switch-track { border-radius: var(--radius-xs); background: var(--surface-sunken); box-shadow: inset 0 0 0 1px var(--line-strong); }
+  :scope .ts-switch-track::after { border-radius: 1px; background: var(--line-strong); box-shadow: none; }
+  :scope .ts-switch input:checked + .ts-switch-track { background: color-mix(in srgb, var(--lapis) 20%, var(--surface-sunken)); box-shadow: inset 0 0 0 1px var(--lapis), 0 0 12px color-mix(in srgb, var(--lapis) var(--nn-glow), transparent); }
+  :scope .ts-switch input:checked + .ts-switch-track::after { background: var(--lapis); box-shadow: 0 0 10px var(--lapis); }
+  :scope .ts-tab-ink { height: 2px; background: var(--lapis); box-shadow: 0 0 8px var(--lapis), 0 0 16px color-mix(in srgb, var(--lapis) var(--nn-glow), transparent); }
+  :scope .ts-tab[aria-selected="true"] { color: var(--lapis); }
+  :scope .ts-segctl { border: 1px solid var(--line); border-radius: var(--radius-sm); }
+  :scope .ts-segctl-ink { border-radius: var(--radius-xs); background: color-mix(in srgb, var(--lapis) 16%, var(--surface)); box-shadow: inset 0 0 0 1px var(--lapis), 0 0 12px color-mix(in srgb, var(--lapis) var(--nn-glow), transparent); }
+  :scope :is(.ts-page-current, .ts-day-selected) { box-shadow: 0 0 12px color-mix(in srgb, var(--lapis) var(--nn-glow), transparent); }
+  :scope .ts-step-current .ts-step-marker { box-shadow: 0 0 12px color-mix(in srgb, var(--lapis) var(--nn-glow), transparent); }
+  :scope .ts-alert { box-shadow: inset 2px 0 0 var(--lapis); }
+  :scope .ts-alert-success { box-shadow: inset 2px 0 0 var(--success); }
+  :scope .ts-alert-warning { box-shadow: inset 2px 0 0 var(--warning); }
+  :scope .ts-alert-danger { box-shadow: inset 2px 0 0 var(--danger); }
+
+  /* Progress is a light-cycle trail: a fading ribbon with a white-hot head. */
+  :scope .ts-progress-track { height: 8px; border-radius: 0; background: var(--crt); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--lapis) 40%, var(--line)); overflow: visible; }
+  :scope .ts-progress-bar { border-radius: 0; animation: none; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--nn-trail) 70%, transparent) 35%, var(--nn-trail) 85%, #ffffff); box-shadow: 0 0 10px color-mix(in srgb, var(--nn-trail) var(--nn-glow), transparent), 4px 0 10px -2px #ffffff; }
+  :scope .ts-progress-success .ts-progress-bar { background: linear-gradient(90deg, transparent, var(--success) 70%, #ffffff); }
+  :scope .ts-progress-segmented .ts-progress-track { height: 10px; background: none; box-shadow: none; }
+  :scope .ts-progress-segmented .ts-seg { border-radius: 0; background: var(--crt); box-shadow: inset 0 0 0 1px var(--line); }
+  :scope .ts-progress-segmented .ts-seg::after { background: var(--lapis); box-shadow: 0 0 8px var(--lapis); }
+  :scope .ts-progress-segmented .ts-seg-current::after { background: var(--saffron); box-shadow: 0 0 8px var(--saffron); }
+
+  /* The spinner: four cells, cyan and orange, blinking in turn. */
+  :scope .ts-spinner i { border-radius: 0; box-shadow: 0 0 6px currentColor; }
+  :scope .ts-spinner i:is(:nth-child(1), :nth-child(4)) { color: var(--lapis); }
+  :scope .ts-spinner i:is(:nth-child(2), :nth-child(3)) { color: var(--saffron); }
+
+  /* Avatars are identity discs: two rings of light on a dark disc. */
+  :scope .ts-avatar { --nn-av: var(--tile-1); background: var(--crt); color: var(--nn-av); font-family: var(--font-display); font-weight: 700; box-shadow: inset 0 0 0 2px var(--nn-av), inset 0 0 0 5px var(--crt), inset 0 0 0 6px color-mix(in srgb, var(--nn-av) 60%, transparent), 0 0 10px color-mix(in srgb, var(--nn-av) var(--nn-glow), transparent); text-shadow: 0 0 6px var(--nn-av); }
+  :scope .ts-avatar:is([data-hue="1"], [data-hue="3"]) { --nn-av: var(--tile-2); }
+
+  /* Toasts and tooltips are terminal readouts. */
+  :scope .ts-toast { background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .3) 0 1px, transparent 1px 3px), var(--crt); color: var(--crt-ink); border: 1px solid var(--tile-1); border-radius: var(--radius-xs); box-shadow: 0 0 18px rgba(0, 229, 255, .35), var(--shadow-lg); font-family: var(--nn-term); }
+  :scope .ts-toast-title { font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: #ffffff; text-shadow: 0 0 8px rgba(0, 229, 255, .8); margin-bottom: 2px; }
+  :scope .ts-toast > .ts-icon { color: var(--tile-1); filter: drop-shadow(0 0 4px var(--tile-1)); }
+  :scope .ts-toast-action { color: var(--tile-2); font-family: var(--font-display); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+  :scope .ts-toast-timer { height: 2px; background: linear-gradient(90deg, transparent, #00e5ff 70%, #ffffff); box-shadow: 0 0 6px #00e5ff; }
+  :scope .ts-tooltip { --ink: var(--crt); --bg: var(--crt-ink); font: 400 13px/16px var(--nn-term); letter-spacing: .03em; border-radius: var(--radius-xs); box-shadow: 0 0 0 1px color-mix(in srgb, var(--crt-ink) 50%, transparent), 0 0 12px rgba(0, 229, 255, .35); }
+
+  /* The mosaic: lit cells on the grid. */
+  :scope .ts-mosaic { background: linear-gradient(rgba(0, 229, 255, .16) 1px, transparent 1px) 0 0 / 24px 24px, linear-gradient(90deg, rgba(0, 229, 255, .16) 1px, transparent 1px) 0 0 / 24px 24px, var(--tile-ground); }
+  :scope .ts-mosaic .ts-mosaic-tile { --nn-c: var(--tile-1); border-radius: 1px; box-shadow: 0 0 10px color-mix(in srgb, var(--nn-c) 70%, transparent), inset 0 0 0 1px rgba(255, 255, 255, .35); }
+  :scope .ts-mosaic .ts-mosaic-tile[data-c="1"] { --nn-c: var(--tile-2); }
+  :scope .ts-mosaic .ts-mosaic-tile[data-c="2"] { --nn-c: var(--tile-3); }
+  :scope .ts-mosaic .ts-mosaic-tile:is([data-c="3"], [data-c="4"], .ts-hot) { --nn-c: var(--tile-4); }
+
+  @media (prefers-reduced-motion: reduce) {
+    :scope :is(.ts-dialog, .ts-card-tile, .ts-btn-tile), :scope .ts-navbar::before { animation: none; }
+  }
+}

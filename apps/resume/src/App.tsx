@@ -15,7 +15,7 @@ import { cloudEnabled } from './cloud';
 import { nudges } from './followups';
 import { toIsoDay } from './store';
 
-const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop', 'shonen', 'jelly'];
+const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop', 'shonen', 'jelly', 'neon', 'static'];
 
 // A first visit (no saved work, never welcomed) opens on the welcome page. Read before the store saves anything.
 try {
