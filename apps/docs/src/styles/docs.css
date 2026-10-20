@@ -365,7 +365,7 @@ a { color: var(--link); }
   :scope .d-theme-head h2 { font-size: 20px; }
   :scope .d-eyebrow { font-family: var(--font-display); letter-spacing: .14em; font-size: 10.5px; }
   :scope .d-eyebrow::before { width: 6px; height: 6px; border-radius: 0; rotate: 45deg; background: var(--saffron); box-shadow: 0 0 6px var(--saffron); }
-  /* Glass bars; a light-cycle trail runs down the sidebar's edge. */
+  /* Glass bars; a light trail runs down the sidebar's edge. */
   :scope :is(.d-side, .d-top) { background: color-mix(in srgb, var(--surface) 86%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
   :scope .d-side { border-right: 0; box-shadow: 1px 0 0 color-mix(in srgb, var(--nn-trail) 55%, transparent); }
   :scope .d-side::after { content: ""; position: absolute; top: 0; bottom: 0; right: -1px; width: 2px; pointer-events: none; background: linear-gradient(180deg, transparent, var(--nn-trail) 70%, #ffffff) no-repeat 0 0 / 100% 30%; filter: drop-shadow(0 0 4px var(--nn-trail)); animation: nn-run-y 4s linear infinite; }

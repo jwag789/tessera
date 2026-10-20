@@ -1,6 +1,6 @@
-/* Lagoon: component treatments the tokens can't express. A JRPG island, PS2 era. By day a sunlit beach: a big sky
+/* Lagoon: component treatments the tokens can't express. A JRPG island, early-2000s. By day a sunlit beach: a big sky
    with the sun and a few clouds, sand along the foot of the page. After dark the night tide under the moon and stars,
-   with pyreflies drifting up off the water. Menus, dialogs, tooltips and toasts are the classic blue gradient window with a white
+   with drifting fireflies drifting up off the water. Menus, dialogs, tooltips and toasts are the classic blue gradient window with a white
    edge, in both modes, and the menu cursor is a pointing glove that bobs. Titles are carved in Marcellus with a
    sea-glass sheen; keys are glossy gel; the featured card sits in a gold window frame; avatars are element orbs;
    progress is an overdrive gauge; the spinner is four orbs in orbit; toasts read like an item-get box; the navbar
@@ -71,7 +71,7 @@
     }
   }
 
-  /* The ground: sky and sun (or moon and stars) above, sand (or the glowing sea) at the foot, pyreflies rising after dark. */
+  /* The ground: sky and sun (or moon and stars) above, sand (or the glowing sea) at the foot, drifting fireflies rising after dark. */
   :scope body { background: var(--lg-ground), var(--bg); background-attachment: fixed; }
   :scope body::after { content: ""; position: fixed; pointer-events: none; z-index: -1; }
   :scope body::after {
@@ -92,7 +92,7 @@
   :scope :is(.ts-btn, .ts-tab, .ts-segctl-item) { font-weight: 800; letter-spacing: .02em; }
   :scope .ts-card-eyebrow { color: var(--lapis); letter-spacing: .12em; }
 
-  /* Keys are glossy gel, PS2 style: a highlight across the top half, a pressed lip below. */
+  /* Keys are glossy gel, early-2000s style: a highlight across the top half, a pressed lip below. */
   :scope .ts-btn { border-radius: var(--radius-full); transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast), filter var(--duration-fast), background-color var(--duration-fast); }
   :scope .ts-btn-primary { background: linear-gradient(180deg, rgba(255, 255, 255, .18) 0 46%, transparent 54%), var(--lapis); color: var(--on-lapis); box-shadow: var(--lg-press), 0 2px 8px var(--lapis-glow); text-shadow: 0 1px 0 rgba(0, 0, 0, .2); }
   :scope .ts-btn-primary:hover:not([disabled]) { background-color: var(--lapis-hover); transform: translateY(-1px); box-shadow: var(--lg-press), 0 6px 16px var(--lapis-glow); }
@@ -120,7 +120,7 @@
   :scope .ts-card-tile.ts-card-interactive:hover { transform: translateY(-3px); border-color: #ffc457; box-shadow: inset 0 0 0 1px rgba(255, 236, 190, .8), inset 0 0 0 3px rgba(11, 61, 92, .15), var(--shadow-tile-lg); }
   :scope .ts-card-motif span { border-radius: 50%; }
 
-  /* Windows: the blue gradient window with a white edge, in both modes. Text in them gets the PS2 drop shadow. */
+  /* Windows: the blue gradient window with a white edge, in both modes. Text in them gets the early-2000s drop shadow. */
   :scope :is(.ts-dialog, .ts-popover, .ts-menu, .ts-sel-list, .ts-cmd, .ts-side-flyout) {
     --surface: #1a4378; --surface-sunken: #0a2148; --ink: #f2f8ff; --ink-muted: #c4d6ea; --line: rgba(236, 246, 255, .2); --line-strong: #8fb0d6;
     --lapis: #7fefe5; --lapis-hover: #b0f6f0; --lapis-soft: rgba(127, 239, 229, .16); --on-lapis: #04181f; --link: #a6f4ee; --danger: #ff9d90; --on-danger: #1a0505; --focus: #7fefe5;

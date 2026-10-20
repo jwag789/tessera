@@ -1,6 +1,6 @@
 /* Jelly: component treatments the tokens can't express. Y2K candy plastic: see-through, glossy surfaces tinted in
-   iMac flavors over a bubbly, pinstriped ground; gel pill keys with a highlight that squash when pressed and spring
-   back; Tamagotchi LCD fields and toasts in a dot-matrix face; egg-shaped avatars; a heart meter for progress.
+   fruit flavors over a bubbly, pinstriped ground; gel pill keys with a highlight that squash when pressed and spring
+   back; virtual-pet LCD fields and toasts in a dot-matrix face; egg-shaped avatars; a heart meter for progress.
    After dark it's the same toy in smoked plastic, with a backlit green LCD. Scoped to [data-brand="jelly"]. */
 @keyframes jelly-in { 0% { opacity: 0; transform: scale(.86) translateY(12px); } 60% { opacity: 1; transform: scale(1.03, .98); } 80% { transform: scale(.99, 1.01); } 100% { transform: none; } }
 @keyframes jelly-wobble { 0%, 100% { transform: none; } 30% { transform: scale(1.03, .97); } 60% { transform: scale(.985, 1.02); } }
@@ -57,7 +57,7 @@
     -webkit-backdrop-filter: blur(16px) saturate(1.7);
   }
   :scope :is(.ts-card, .ts-table-wrap, .ts-accordion, .ts-empty, .ts-file) { border-radius: var(--radius-xl); }
-  /* Cards come in iMac flavors: blueberry, strawberry, grape, lime. */
+  /* Cards come in fruit flavors: blueberry, strawberry, grape, lime. */
   :scope .ts-card { --surface: color-mix(in srgb, var(--tile-1) 18%, var(--jl-base, #ffffff)); }
   :scope .ts-card:nth-child(4n + 2) { --surface: color-mix(in srgb, var(--tile-2) 18%, var(--jl-base, #ffffff)); }
   :scope .ts-card:nth-child(4n + 3) { --surface: color-mix(in srgb, var(--tile-3) 18%, var(--jl-base, #ffffff)); }
@@ -90,7 +90,7 @@
   :scope .ts-btn-ghost:hover:not([disabled]) { background: color-mix(in srgb, var(--lapis) 12%, transparent); }
   :scope .ts-btn:active:not([disabled]) { transform: scale(1.06, .86); transition: transform 60ms ease-out; }
 
-  /* Fields are Tamagotchi screens: a grey-green LCD set into the plastic, in a dot-matrix face. */
+  /* Fields are virtual-pet screens: a grey-green LCD set into the plastic, in a dot-matrix face. */
   :scope :is(.ts-input:not(.ts-textarea), .ts-sel-trigger, .ts-tags, .ts-number) {
     background: linear-gradient(180deg, rgba(0, 0, 0, .06), transparent 30%), var(--lcd);
     color: var(--lcd-ink); font-family: var(--jl-pixel); letter-spacing: .02em;
@@ -136,7 +136,7 @@
   :scope .ts-step-current .ts-step-marker { background: linear-gradient(180deg, rgba(255, 255, 255, .5), transparent 55%), var(--saffron); color: var(--on-saffron); border-color: transparent; box-shadow: 0 2px 8px color-mix(in srgb, var(--saffron) 45%, transparent); }
   :scope .ts-tooltip { border-radius: 999px; padding-inline: 12px; }
 
-  /* Progress is a Tamagotchi heart meter on the LCD. */
+  /* Progress is a virtual-pet heart meter on the LCD. */
   :scope .ts-progress-track { height: 20px; padding: 3px 5px; box-sizing: border-box; border-radius: 10px; background: var(--lcd); box-shadow: inset 0 2px 4px rgba(0, 0, 0, .28), 0 0 0 2px color-mix(in srgb, var(--surface) 80%, var(--lapis)); }
   :scope .ts-progress-bar {
     border-radius: 0; animation: none; background: var(--lcd-ink);
@@ -158,7 +158,7 @@
   :scope .ts-avatar[data-hue="2"] { --jl-egg: var(--tile-3); }
   :scope .ts-avatar[data-hue="3"] { --jl-egg: var(--tile-4); }
 
-  /* Toasts pop up on a Tamagotchi: an LCD screen in a candy shell, with a beeping icon. */
+  /* Toasts pop up on a virtual pet: an LCD screen in a candy shell, with a beeping icon. */
   :scope .ts-toast { background: linear-gradient(180deg, rgba(0, 0, 0, .06), transparent 30%), var(--lcd); color: var(--lcd-ink); font-family: var(--jl-pixel); border: 7px solid color-mix(in srgb, var(--saffron) 80%, #ffffff); border-radius: 28px; box-shadow: inset 0 2px 6px rgba(0, 0, 0, .3), 0 0 0 1px rgba(0, 0, 0, .08), 0 12px 28px color-mix(in srgb, var(--saffron) 40%, transparent); }
   :scope .ts-toast:not(.ts-toast-leaving) { animation-name: jelly-in; animation-timing-function: var(--ease-out); }
   :scope .ts-toast-title { font-weight: 400; }

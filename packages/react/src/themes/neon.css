@@ -1,10 +1,10 @@
-/* Neon: component treatments the tokens can't express. Tron. A black grid world lit in cyan, with orange for the
-   other side. Big titles are Orbitron, white-hot with a cyan glow and a slice through the middle; panel titles, keys
+/* Neon: component treatments the tokens can't express. 80s sci-fi. A black grid world lit in cyan, with an orange
+   rival. Big titles are Orbitron, white-hot with a cyan glow and a slice through the middle; panel titles, keys
    and tabs are Orbitron capitals. Panels are dark glass with a faint edge and bright HUD brackets on their corners.
-   Light-cycle trails run along the navbar and sidebar and fill the progress bar; fields, tooltips and toasts are
-   terminals in phosphor cyan; avatars are identity discs; a grid floor runs to a glowing horizon. In light mode it's
+   Light trails run along the navbar and sidebar and fill the progress bar; fields, tooltips and toasts are
+   terminals in phosphor cyan; avatars are glowing rings; a grid floor runs to a glowing horizon. In light mode it's
    the white grid, with the glow turned down. Scoped to [data-brand="neon"]. */
-@keyframes nn-derez { 0%, 7%, 13%, 51% { border-color: color-mix(in srgb, var(--saffron) 25%, transparent); } 5%, 10%, 17%, 54%, 100% { border-color: var(--saffron); } }
+@keyframes nn-flicker { 0%, 7%, 13%, 51% { border-color: color-mix(in srgb, var(--saffron) 25%, transparent); } 5%, 10%, 17%, 54%, 100% { border-color: var(--saffron); } }
 @keyframes nn-boot { 0% { opacity: 0; clip-path: inset(50% 0 50% 0); } 40% { opacity: 1; clip-path: inset(49% 0 49% 0); } 100% { clip-path: inset(0 0 0 0); } }
 @keyframes nn-run-x { from { background-position-x: -40%; } to { background-position-x: 140%; } }
 @keyframes nn-run-y { from { background-position-y: -40%; } to { background-position-y: 140%; } }
@@ -49,7 +49,7 @@
     -webkit-mask: linear-gradient(180deg, transparent, #000 45%); mask: linear-gradient(180deg, transparent, #000 45%);
   }
 
-  /* Big titles: Orbitron capitals, white-hot with a cyan glow, sliced through the middle like the logo. */
+  /* Big titles: Orbitron capitals, white-hot with a cyan glow, sliced through the middle. */
   :scope :is(.display-2xl, .display-xl, .display-lg) {
     font-weight: 900; text-transform: uppercase; letter-spacing: .1em;
     background: linear-gradient(180deg, var(--nn-title) 0 53%, transparent 53% 59%, var(--nn-title) 59%); -webkit-background-clip: text; background-clip: text; color: transparent; filter: var(--nn-title-glow);
@@ -63,8 +63,8 @@
   :scope :is(.ts-tab, .ts-segctl-item) { font-size: 11.5px; }
   :scope .ts-side-title { font-size: 10px; }
 
-  /* Keys: cyan light. Primary is solid and glowing, secondary an outline, the accent is Clu's orange and pulses,
-     danger is the derezz red-orange. Pressing turns the glow all the way up. */
+  /* Keys: cyan light. Primary is solid and glowing, secondary an outline, the accent is the rival's orange and pulses,
+     danger is a hot red-orange. Pressing turns the glow all the way up. */
   :scope .ts-btn { border-radius: var(--radius-xs); transition: transform var(--duration-instant) var(--ease-out), box-shadow var(--duration-fast), filter var(--duration-fast), background var(--duration-fast); }
   :scope .ts-btn-primary { background: var(--lapis); color: var(--on-lapis); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 0 14px color-mix(in srgb, var(--lapis) var(--nn-glow), transparent); }
   :scope .ts-btn-primary:hover:not([disabled]) { background: var(--lapis-hover); transform: translateY(-1px); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 0 24px color-mix(in srgb, var(--lapis) var(--nn-glow), transparent), 0 0 48px color-mix(in srgb, var(--lapis) calc(var(--nn-glow) / 2), transparent); }
@@ -87,8 +87,8 @@
   :scope .ts-card::before, :scope .ts-card::after { content: ""; position: absolute; width: 18px; height: 18px; pointer-events: none; border: 2px solid var(--nn-bracket); filter: drop-shadow(0 0 4px color-mix(in srgb, var(--nn-bracket) var(--nn-glow), transparent)); }
   :scope .ts-card::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
   :scope .ts-card::after { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
-  /* The featured card belongs to the other side: an orange edge that flickers on as it rezzes in. */
-  :scope .ts-card-tile { --nn-bracket: var(--saffron); border: 1.5px solid var(--saffron); box-shadow: 0 0 16px color-mix(in srgb, var(--saffron) calc(var(--nn-glow) * .7), transparent), inset 0 0 14px color-mix(in srgb, var(--saffron) calc(var(--nn-glow) * .3), transparent); animation: nn-derez 2.2s linear 1; }
+  /* The featured card belongs to the rival: an orange edge that flickers on as it powers up. */
+  :scope .ts-card-tile { --nn-bracket: var(--saffron); border: 1.5px solid var(--saffron); box-shadow: 0 0 16px color-mix(in srgb, var(--saffron) calc(var(--nn-glow) * .7), transparent), inset 0 0 14px color-mix(in srgb, var(--saffron) calc(var(--nn-glow) * .3), transparent); animation: nn-flicker 2.2s linear 1; }
   :scope .ts-card-interactive:hover { transform: translateY(-2px); border-color: var(--lapis); box-shadow: var(--shadow-lg), 0 0 18px color-mix(in srgb, var(--lapis) calc(var(--nn-glow) * .6), transparent); }
   :scope .ts-card-tile.ts-card-interactive:hover { transform: translateY(-2px); border-color: var(--saffron); box-shadow: 0 0 26px color-mix(in srgb, var(--saffron) var(--nn-glow), transparent), inset 0 0 18px color-mix(in srgb, var(--saffron) calc(var(--nn-glow) * .4), transparent); }
 
@@ -117,7 +117,7 @@
   :scope :is(.ts-input:focus-visible, .ts-input:focus-within, .ts-tags:focus-within, .ts-number:focus-within), :scope .ts-sel-open .ts-sel-trigger { border-color: var(--crt-ink); box-shadow: inset 0 0 12px rgba(0, 0, 0, .8), 0 0 0 3px color-mix(in srgb, var(--lapis) 30%, transparent), 0 0 16px color-mix(in srgb, var(--lapis) var(--nn-glow), transparent); }
   :scope :is(.ts-tags, .ts-number) :is(.ts-tag, button) { font-family: var(--nn-term); }
 
-  /* Shell: glass bars with a light-cycle trail running along their edge. */
+  /* Shell: glass bars with a light trail running along their edge. */
   :scope :is(.ts-navbar, .ts-sidebar) { background: color-mix(in srgb, var(--surface) 84%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
   :scope .ts-navbar { position: relative; border-bottom: 0; box-shadow: 0 1px 0 color-mix(in srgb, var(--nn-trail) 55%, transparent); }
   :scope .ts-navbar::before { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; pointer-events: none; background: linear-gradient(90deg, transparent, var(--nn-trail) 70%, #ffffff) no-repeat 0 0 / 30% 100%; filter: drop-shadow(0 0 4px var(--nn-trail)); animation: nn-run-x 3.2s linear infinite; }
@@ -154,7 +154,7 @@
   :scope .ts-alert-warning { box-shadow: inset 2px 0 0 var(--warning); }
   :scope .ts-alert-danger { box-shadow: inset 2px 0 0 var(--danger); }
 
-  /* Progress is a light-cycle trail: a fading ribbon with a white-hot head. */
+  /* Progress is a light trail: a fading ribbon with a white-hot head. */
   :scope .ts-progress-track { height: 8px; border-radius: 0; background: var(--crt); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--lapis) 40%, var(--line)); overflow: visible; }
   :scope .ts-progress-bar { border-radius: 0; animation: none; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--nn-trail) 70%, transparent) 35%, var(--nn-trail) 85%, #ffffff); box-shadow: 0 0 10px color-mix(in srgb, var(--nn-trail) var(--nn-glow), transparent), 4px 0 10px -2px #ffffff; }
   :scope .ts-progress-success .ts-progress-bar { background: linear-gradient(90deg, transparent, var(--success) 70%, #ffffff); }
@@ -168,7 +168,7 @@
   :scope .ts-spinner i:is(:nth-child(1), :nth-child(4)) { color: var(--lapis); }
   :scope .ts-spinner i:is(:nth-child(2), :nth-child(3)) { color: var(--saffron); }
 
-  /* Avatars are identity discs: two rings of light on a dark disc. */
+  /* Avatars are glowing rings: two rings of light on a dark disc. */
   :scope .ts-avatar { --nn-av: var(--tile-1); background: var(--crt); color: var(--nn-av); font-family: var(--font-display); font-weight: 700; box-shadow: inset 0 0 0 2px var(--nn-av), inset 0 0 0 5px var(--crt), inset 0 0 0 6px color-mix(in srgb, var(--nn-av) 60%, transparent), 0 0 10px color-mix(in srgb, var(--nn-av) var(--nn-glow), transparent); text-shadow: 0 0 6px var(--nn-av); }
   :scope .ts-avatar:is([data-hue="1"], [data-hue="3"]) { --nn-av: var(--tile-2); }
 

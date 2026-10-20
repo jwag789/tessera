@@ -1,7 +1,7 @@
 {
   "name": "lagoon",
   "label": "Lagoon",
-  "description": "A JRPG island, PS2 era: a sunlit beach by day and a starlit tide after dark, with pyreflies drifting up. Menus are blue gradient windows with a white edge and a pointing-glove cursor; titles are carved in Marcellus with a sea-glass sheen; keys are glossy; the featured card has a gold window frame; avatars are element orbs; progress is an overdrive gauge; the spinner is four orbs in orbit; toasts read like an item-get box; the navbar has a wave edge.",
+  "description": "A JRPG island, early-2000s: a sunlit beach by day and a starlit tide after dark, with drifting fireflies drifting up. Menus are blue gradient windows with a white edge and a pointing-glove cursor; titles are carved in Marcellus with a sea-glass sheen; keys are glossy; the featured card has a gold window frame; avatars are element orbs; progress is an overdrive gauge; the spinner is four orbs in orbit; toasts read like an item-get box; the navbar has a wave edge.",
   "fonts": "https://fonts.googleapis.com/css2?family=Marcellus&family=Nunito:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap",
   "type": {
     "families": {

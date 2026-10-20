@@ -1,7 +1,7 @@
 {
   "name": "neon",
   "label": "Neon",
-  "description": "Tron: a black grid world lit in cyan, with orange for the other side. Glowing Orbitron titles, light-cycle trails along the navbar, sidebar and progress bars, HUD corner brackets on panels, identity-disc avatars, terminal fields in phosphor cyan and a grid floor running to a glowing horizon. Daylight is the white grid.",
+  "description": "80s sci-fi: a black grid world lit in cyan, with an orange rival. Glowing Orbitron titles, light trails along the navbar, sidebar and progress bars, HUD corner brackets on panels, glowing ring avatars, terminal fields in phosphor cyan and a grid floor running to a glowing horizon. Daylight is the white grid.",
   "fonts": "https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;900&family=Oxanium:wght@400;500;600;700&family=Share+Tech+Mono&display=swap",
   "type": {
     "families": {

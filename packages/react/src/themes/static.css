@@ -1,8 +1,8 @@
 /* Static: component treatments the tokens can't express. Early-2000s alt rock. By day a sketchbook: aged paper with
    photocopy grain and pencil hatching, condensed stencil titles printed slightly off-register in red. After dark a
    concrete wall, the titles sprayed on with overspray. Pages are taped up with duct tape and sit a little crooked;
-   keys are stencilled slabs with rough-cut edges that glitch on hover; badges and tooltips are Dymo tape; avatars are
-   pin badges; progress is a VU meter, the spinner an equalizer, and toasts play in a Winamp-style LCD.
+   keys are stencilled slabs with rough-cut edges that glitch on hover; badges and tooltips are embossed label tape; avatars are
+   pin badges; progress is a VU meter, the spinner an equalizer, and toasts play in a MP3-player LCD.
    Scoped to [data-brand="static"]. */
 @keyframes st-glitch { 0%, 100% { transform: none; text-shadow: none; } 20% { transform: translate(-2px, 1px); text-shadow: -2px 0 #00e5ff, 2px 0 #ff2a2a; } 40% { transform: translate(2px, -1px); text-shadow: 2px 0 #00e5ff, -2px 0 #ff2a2a; } 60% { transform: translate(-1px, 0); text-shadow: none; } }
 @keyframes st-eq { 0%, 100% { transform: scaleY(.25); } 50% { transform: scaleY(1); } }
@@ -99,7 +99,7 @@
   :scope .ts-side-title::before { content: "// "; color: var(--lapis); }
   :scope .ts-navlink[aria-current="page"]::after { height: 4px; background: var(--lapis); border-radius: 2px 6px 3px 5px; }
 
-  /* Labels are Dymo tape: black, letters punched out in white. */
+  /* Labels are embossed label tape: black, letters punched out in white. */
   :scope :is(.ts-badge, .ts-kbd) { font-family: var(--font-mono); font-weight: 400; text-transform: uppercase; letter-spacing: .1em; border-radius: 1px; }
   :scope .ts-badge { background: #1d1b19; color: #f2ede2; text-shadow: 0 1px 0 rgba(0, 0, 0, .6); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), inset 0 -1px 0 rgba(0, 0, 0, .5); }
   :scope .ts-badge-accent { background: var(--lapis-deep); color: #ffffff; }

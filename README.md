@@ -73,11 +73,11 @@ Tessera ships ten themes, each in light and dark:
 - **Polygon:** matte grey plastic, dark recessed panels, hard bevels and pixel headings
 - **Gloop:** 90s kids-TV, with slime green and orange, thick outlines, and everything a bit tilted
 - **Shonen:** a manga page, black ink on newsprint with one red spot color, with comic panels, screentone, speech bubbles and focus lines
-- **Jelly:** Y2K candy plastic, see-through and glossy in iMac flavors, with gel keys, Tamagotchi LCD fields and a heart meter
-- **Neon:** Tron, a black grid world lit in cyan with orange for the other side, glowing Orbitron titles, HUD corner brackets, light-cycle trails, terminal fields and identity-disc avatars
-- **Static:** early-2000s alt rock, a sketchbook by day and a sprayed concrete wall after dark, with stencil type, duct-taped pages, glitching keys, Dymo labels, a VU meter and an equalizer
-- **Lagoon:** a PS2-era JRPG island, a sunlit beach by day and a starlit tide with pyreflies after dark, with blue gradient menu windows and a pointing-glove cursor, glossy gel keys, a gold-framed featured card, element-orb avatars and an overdrive gauge
-- **Clay:** playdough, with everything a soft matte lump of clay in Play-Doh colors, clay grain and thumbprints, lumpy hand-rolled shapes, keys that wobble and squish, pressed-in fields, a rolled clay snake for progress and bouncing clay balls
+- **Jelly:** Y2K candy plastic, see-through and glossy in fruit flavors, with gel keys, virtual-pet LCD fields and a heart meter
+- **Neon:** 80s sci-fi, a black grid world lit in cyan with an orange rival, glowing Orbitron titles, HUD corner brackets, light trails, terminal fields and glowing ring avatars
+- **Static:** early-2000s alt rock, a sketchbook by day and a sprayed concrete wall after dark, with stencil type, duct-taped pages, glitching keys, label-maker tape, a VU meter and an equalizer
+- **Lagoon:** an early-2000s JRPG island, a sunlit beach by day and a starlit tide with drifting fireflies after dark, with blue gradient menu windows and a pointing-glove cursor, glossy gel keys, a gold-framed featured card, element-orb avatars and an overdrive gauge
+- **Clay:** playdough, with everything a soft matte lump of clay in toy-box colors, clay grain and thumbprints, lumpy hand-rolled shapes, keys that wobble and squish, pressed-in fields, a rolled clay snake for progress and bouncing clay balls
 
 Import a theme's CSS and pick it with `ThemeProvider`:
 
