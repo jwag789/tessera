@@ -257,6 +257,8 @@ a { color: var(--link); }
 .d-theme-dot-cartridge { --c1: #d42a20; --c2: #ffc72c; --c3: #2fa84f; --c4: #2f55e0; border-radius: 50%; box-shadow: 0 0 0 2px #2e2d33; }
 .d-theme-dot-neon { background: radial-gradient(circle, #02060c 0 38%, #00e5ff 40% 50%, #02060c 52% 64%, #00e5ff 66% 74%, #02060c 76%); border-radius: 50%; box-shadow: 0 0 0 1px #00e5ff, 0 0 6px rgba(0, 229, 255, .8); }
 .d-theme-dot-static { background: radial-gradient(circle at 60% 40%, #ff4a3d 0 30%, rgba(255, 74, 61, .4) 45%, transparent 60%), #161412; border-radius: 1px; box-shadow: 0 0 0 1.5px #161412; rotate: -4deg; }
+.d-theme-dot-lagoon { background: radial-gradient(circle at 74% 22%, #fff4c8 0 12%, transparent 14%), linear-gradient(180deg, #8fdcea 0 46%, #00a3a8 46% 70%, #f2dfb0 70%); border-radius: 50%; box-shadow: 0 0 0 1.5px #0b3d5c, 0 0 0 3px rgba(255, 255, 255, .8); }
+.d-theme-dot-clay { background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, .6) 0 12%, transparent 30%), conic-gradient(from 20deg, #e8433a 0 25%, #ffc93c 0 50%, #3bb273 0 75%, #2f6fe4 0); border-radius: 46% 54% 50% 50% / 52% 46% 54% 48%; box-shadow: inset -2px -3px 4px rgba(0, 0, 0, .25), 0 2px 3px rgba(90, 60, 30, .3); }
 .ts-opt-icon:has(.d-theme-dot) { background: none; }
 .d-theme-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
 .d-themes { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); align-items: start; }
@@ -504,3 +506,75 @@ a { color: var(--link); }
 .d-folio-shot:hover { transform: rotate(0deg) translateY(-4px); }
 .d-folio-shot img { display: block; width: 100%; height: auto; }
 @media (max-width: 900px) { .d-folio.ts-card { grid-template-columns: minmax(0, 1fr); padding: var(--space-6); } .d-folio-shot { transform: none; } }
+@scope ([data-brand="lagoon"]) to ([data-brand]:not([data-brand="lagoon"])) {
+  :scope .d-mark rect:nth-child(1) { fill: var(--tile-1); }
+  :scope .d-mark rect:nth-child(2) { fill: var(--tile-2); }
+  :scope .d-mark rect:nth-child(3) { fill: var(--lapis-deep); }
+  :scope .d-mark .d-odd { fill: var(--saffron); }
+  :scope .d-mark rect { rx: 50%; }
+  :scope .d-brand-name { font-weight: 400; letter-spacing: .03em; }
+  /* Big titles: carved Marcellus with a sea-glass sheen by day, moonlit after dark. */
+  :scope :is(.d-title, .sc-w:not(.sc-tile)) { font-weight: 400; letter-spacing: .01em; background: var(--lg-title); -webkit-background-clip: text; background-clip: text; color: transparent; filter: var(--lg-title-fx); }
+  :scope .d-title { font-size: 64px; line-height: 1.05; }
+  :scope .sc-h { font-weight: 400; font-size: 68px; line-height: 1.04; }
+  :scope .d-h2 { font-weight: 400; letter-spacing: .01em; }
+  :scope :is(.d-md h3, .d-tilelink b, .lay-head b, .d-theme-head h2) { font-weight: 400; letter-spacing: .02em; }
+  :scope .d-eyebrow { letter-spacing: .12em; color: var(--lapis); }
+  :scope .d-eyebrow::before { width: 9px; height: 9px; border-radius: 0; rotate: 45deg; background: linear-gradient(135deg, #fff4c8, #ffc457 50%, #c9601c); box-shadow: none; }
+  :scope .d-side { border-right: 1.5px solid var(--lg-card-edge); background: color-mix(in srgb, var(--surface) 70%, transparent); }
+  :scope .d-top { border-bottom: 1.5px solid var(--lg-card-edge); }
+  /* Link tiles are sea-glass windows; the cursor glove points at the one you're on. */
+  :scope .d-tilelink { position: relative; border: 1.5px solid var(--lg-card-edge); border-radius: var(--radius-lg); background: linear-gradient(180deg, var(--lg-card-top), var(--lg-card-bot)); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .5), var(--shadow-sm); }
+  :scope .d-tilelink:hover { transform: translateY(-3px); border-color: var(--lapis); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .5), var(--shadow-md); }
+  :scope .d-tilelink:hover::before { content: ""; position: absolute; left: -14px; top: 18px; width: 22px; height: 15px; background: var(--lg-glove) center / contain no-repeat; filter: drop-shadow(0 1px 1px rgba(0, 0, 0, .4)); animation: lg-bob .5s ease-in-out infinite; translate: 0 0; }
+  :scope .d-stage { border: 1.5px solid var(--lg-card-edge); border-radius: var(--radius-lg); }
+  @media (max-width: 900px) {
+    :scope :is(.d-title, .sc-h) { font-size: 46px; }
+  }
+}
+@scope ([data-brand="clay"]) to ([data-brand]:not([data-brand="clay"])) {
+  :scope { --cl-green: #2a9a5c; --cl-green-deep: #1c6b40; --cl-purple: #8e5bd9; --cl-purple-deep: #5f3a9e; }
+  :scope[data-theme="dark"] { --cl-green: #5fd492; --cl-green-deep: #1f7a48; --cl-purple: #b893ff; --cl-purple-deep: #6a43b0; }
+  @media (prefers-color-scheme: dark) { :scope:not([data-theme="light"]) { --cl-green: #5fd492; --cl-green-deep: #1f7a48; --cl-purple: #b893ff; --cl-purple-deep: #6a43b0; } }
+  :scope .d-mark rect:nth-child(1) { fill: var(--tile-1); }
+  :scope .d-mark rect:nth-child(2) { fill: var(--tile-2); }
+  :scope .d-mark rect:nth-child(3) { fill: var(--tile-3); }
+  :scope .d-mark .d-odd { fill: var(--tile-4); }
+  :scope .d-mark rect { rx: 45%; }
+  :scope .d-brand-name { font-weight: 700; }
+  /* Big titles: pressed out of red clay, standing up off the page. */
+  :scope :is(.d-title, .sc-w:not(.sc-tile)) {
+    --cl-c: var(--cl-title); --cl-c-deep: var(--cl-title-deep);
+    color: var(--cl-c); text-shadow: none;
+    background: var(--cl-grain), linear-gradient(180deg, color-mix(in srgb, var(--cl-c) 40%, #ffffff) 8%, var(--cl-c) 38%, var(--cl-c) 64%, color-mix(in srgb, var(--cl-c) 74%, #000000) 92%) 0 0 / 100% 1lh;
+    background-blend-mode: multiply; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 1px 0 var(--cl-c-deep)) drop-shadow(0 1px 0 var(--cl-c-deep)) drop-shadow(0 1.5px 0 var(--cl-c-deep)) drop-shadow(0 6px 5px var(--cl-letter-cast));
+  }
+  :scope :is(.d-title, .sc-w:not(.sc-tile)) { font-weight: 700; letter-spacing: -.01em; }
+  /* The hero is rolled from every tub: each word a different color. */
+  :scope .sc-w:nth-of-type(4n + 2) { --cl-c: var(--cl-heading); --cl-c-deep: var(--cl-heading-deep); }
+  :scope .sc-w:nth-of-type(4n + 3) { --cl-c: var(--cl-green); --cl-c-deep: var(--cl-green-deep); }
+  :scope .sc-w:nth-of-type(4n) { --cl-c: var(--cl-purple); --cl-c-deep: var(--cl-purple-deep); }
+  /* Section headings: blue clay standing on a thick edge; the caption beside them stays flat. */
+  :scope .d-h2 { color: var(--cl-heading); text-shadow: 0 1px 0 var(--cl-heading-deep), 0 2px 0 var(--cl-heading-deep), 0 3px 0 var(--cl-heading-deep), 0 7px 8px var(--cl-letter-cast); }
+  :scope .d-h2 small { text-shadow: none; }
+  :scope .d-title { font-size: 68px; line-height: 1.05; }
+  :scope .sc-h { font-weight: 700; font-size: 72px; line-height: 1.02; }
+  :scope .sc-tile { text-shadow: none; }
+  :scope .d-h2 { font-weight: 700; }
+  :scope :is(.d-md h3, .d-tilelink b, .lay-head b, .d-theme-head h2) { font-weight: 600; }
+  :scope .d-eyebrow { font-family: var(--font-display); font-weight: 600; letter-spacing: .06em; }
+  :scope .d-eyebrow::before { width: 10px; height: 10px; border-radius: 50%; background: var(--tile-1); box-shadow: inset 1px 1.5px 1px rgba(255, 255, 255, .5), inset -1px -1.5px 2px rgba(0, 0, 0, .3); }
+  :scope .d-side { border-right: 0; background: var(--cl-grain), var(--surface); background-blend-mode: multiply; box-shadow: inset -5px 0 8px rgba(90, 60, 30, .08); }
+  :scope .d-top { border-bottom: 0; box-shadow: 0 4px 10px rgba(90, 60, 30, .08); }
+  /* Link tiles are slabs of putty with a thumbprint. */
+  :scope .d-tilelink { border: 0; border-radius: var(--cl-blob); background: var(--cl-print) right 14px bottom 12px / 40px 46px no-repeat, var(--cl-grain), var(--surface); background-blend-mode: normal, multiply, normal; box-shadow: var(--shadow-md); }
+  :scope .d-tilelink { transition: translate var(--duration-slow) cubic-bezier(.34, 1.56, .64, 1), rotate var(--duration-slow) cubic-bezier(.34, 1.56, .64, 1), scale var(--duration-base) cubic-bezier(.34, 1.56, .64, 1), box-shadow var(--duration-base); }
+  :scope .d-tilelink:hover { transform: none; translate: 0 -4px; rotate: -.6deg; box-shadow: var(--shadow-lg); animation: cl-jiggle .5s ease-out; }
+  :scope .d-tilelink:active { animation: none; translate: 0 2px; rotate: 0deg; scale: 1.035 .94; box-shadow: var(--shadow-sm); transition-duration: 80ms; }
+  :scope .d-stage { border: 0; border-radius: var(--cl-blob); box-shadow: var(--shadow-sm); }
+  :scope .d-code { border-radius: 18px 22px 16px 20px; }
+  @media (max-width: 900px) {
+    :scope :is(.d-title, .sc-h) { font-size: 48px; }
+  }
+}

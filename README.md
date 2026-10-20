@@ -13,7 +13,7 @@
 [![Tessera's four themes side by side: Tessera, Cartridge, Polygon and Gloop](.github/assets/themes.jpg)](https://jwag789.github.io/tessera/#themes)
 
 - **40 React components**, typed, tested and keyboard-accessible: from Button and Select to Command palette, Date picker, Data table and Drawer, plus layout primitives.
-- **Six themes** (Tessera, Cartridge, Polygon, Gloop, Shonen and Jelly), each in light and dark, built from one set of design tokens. Switch them live in the docs.
+- **Ten themes** (Tessera, Cartridge, Polygon, Gloop, Shonen, Jelly, Neon, Static, Lagoon and Clay), each in light and dark, built from one set of design tokens. Switch them live in the docs.
 - **154 tests**, with axe accessibility checks on every component, strict TypeScript, and a bundle size budget enforced in CI.
 - **Folio**, a resume builder and job tracker that uses nearly every component, to show the system holding up in a real product.
 
@@ -66,7 +66,7 @@ The bundle starts with `"use client"`, so it works from React Server Components 
 
 ### Themes
 
-Tessera ships six themes, each in light and dark:
+Tessera ships ten themes, each in light and dark:
 
 - **Tessera** (the default)
 - **Cartridge:** a late-90s 64-bit console, where cards are cartridges, keys carry A, B and C prompts, the mosaic is a 3D stage floor and text boxes blink their way on
@@ -74,6 +74,10 @@ Tessera ships six themes, each in light and dark:
 - **Gloop:** 90s kids-TV, with slime green and orange, thick outlines, and everything a bit tilted
 - **Shonen:** a manga page, black ink on newsprint with one red spot color, with comic panels, screentone, speech bubbles and focus lines
 - **Jelly:** Y2K candy plastic, see-through and glossy in iMac flavors, with gel keys, Tamagotchi LCD fields and a heart meter
+- **Neon:** Tron, a black grid world lit in cyan with orange for the other side, glowing Orbitron titles, HUD corner brackets, light-cycle trails, terminal fields and identity-disc avatars
+- **Static:** early-2000s alt rock, a sketchbook by day and a sprayed concrete wall after dark, with stencil type, duct-taped pages, glitching keys, Dymo labels, a VU meter and an equalizer
+- **Lagoon:** a PS2-era JRPG island, a sunlit beach by day and a starlit tide with pyreflies after dark, with blue gradient menu windows and a pointing-glove cursor, glossy gel keys, a gold-framed featured card, element-orb avatars and an overdrive gauge
+- **Clay:** playdough, with everything a soft matte lump of clay in Play-Doh colors, clay grain and thumbprints, lumpy hand-rolled shapes, keys that wobble and squish, pressed-in fields, a rolled clay snake for progress and bouncing clay balls
 
 Import a theme's CSS and pick it with `ThemeProvider`:
 

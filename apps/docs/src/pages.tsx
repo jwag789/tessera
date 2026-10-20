@@ -257,14 +257,18 @@ export function BrandPage() {
 
 /* ---------- themes ---------- */
 
-const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop', 'shonen', 'jelly'];
+const THEME_ORDER = ['tessera', 'cartridge', 'polygon', 'gloop', 'shonen', 'jelly', 'neon', 'static', 'lagoon', 'clay'];
 const THEME_NOTES: Record<string, string[]> = {
   tessera: ['Saturated lapis with one saffron tile', 'Tight corners, hard offset shadow', 'Bricolage Grotesque headings'],
   cartridge: ['Late-90s 64-bit console: cards are cartridges, the mosaic is a 3D stage floor, a checkerboard fades into fog', 'A, B, C and Start keys with button prompts, a lock-on focus, see-through text boxes with a blinking arrow', 'Gold, extruded Titan One titles over Nunito'],
   polygon: ['Matte grey plastic with dark recessed panels', 'Hard 1-2px bevels, a menu cursor on the selection', 'Silkscreen pixel headings, Space Mono labels'],
   gloop: ['Slime green and orange, with a splash of blue and purple', 'Thick outlines, clashing shadows, everything a bit tilted', 'Luckiest Guy lettering over Fredoka'],
   shonen: ['A manga page: black ink, newsprint and one red, inverted after dark', 'Comic panels, screentone, speech bubbles, focus lines, ゴゴゴ and ドン!', 'Bangers lettering over Zen Kaku Gothic New'],
-  jelly: ['Y2K candy plastic in iMac flavors, smoked after dark', 'See-through glossy surfaces, gel keys that squash, Tamagotchi LCD fields and toasts', 'Comfortaa over Quicksand, DotGothic16 on the LCD']
+  jelly: ['Y2K candy plastic in iMac flavors, smoked after dark', 'See-through glossy surfaces, gel keys that squash, Tamagotchi LCD fields and toasts', 'Comfortaa over Quicksand, DotGothic16 on the LCD'],
+  neon: ['Tron: a black grid world lit in cyan, with orange for the other side', 'Glowing Orbitron titles, HUD brackets, terminal fields, identity-disc avatars', 'Light-cycle trails on the bars and progress; the white grid by day'],
+  static: ['Early-2000s alt rock: a sketchbook by day, a sprayed concrete wall after dark', 'Stencil type, duct-taped pages, rough-cut keys that glitch, Dymo labels', 'A VU meter, an equalizer spinner, pin-badge avatars, a media-player toast'],
+  lagoon: ['A JRPG island, PS2 era: a sunlit beach by day, a starlit tide with pyreflies after dark', 'Blue gradient menu windows with a pointing-glove cursor, glossy gel keys', 'A gold-framed featured card, element-orb avatars, an overdrive gauge, an item-get toast'],
+  clay: ['Playdough: soft matte lumps of clay in Play-Doh colors, on putty or dark plasticine', 'Clay grain and thumbprints, lumpy corners, keys that wobble and squish', 'Pressed-in fields and switches, a rolled clay snake, beads, bouncing balls']
 };
 
 function ThemeSample({ name }: { name: string }) {
@@ -314,7 +318,7 @@ export function ThemesPage() {
       <Head
         eyebrow="Overview"
         title="Themes"
-        lead="One set of components, six looks. Each theme is a token pack plus a few component treatments, in light and dark. Compare them here, then switch the whole site with Use this theme."
+        lead="One set of components, ten looks. Each theme is a token pack plus a few component treatments, in light and dark. Compare them here, then switch the whole site with Use this theme."
       />
       <div className="d-theme-bar">
         <SegmentedControl label="Mode for the comparison" size="sm" options={[{ value: 'system', label: 'System' }, { value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }]} value={theme} onChange={(v) => setTheme(v as typeof theme)} />
