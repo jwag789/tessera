@@ -1,5 +1,18 @@
 # @tessera-design/tokens
 
+## 0.5.0
+
+### Minor Changes
+
+- e1c7ca2: **Cartridge** goes further than a palette. Every card is a cartridge with the label set into a plastic shell, and interactive ones tip toward you on hover. On its own, the mosaic tips back in perspective into a stage floor of raised blocks, and the page sits on a checkerboard floor that fades into distance fog. Primary, secondary and tile keys carry a round A, B or C prompt; danger is the Start key and rumbles when pressed; focus is a breathing yellow lock-on. Dialogs, popovers, toasts and tooltips are see-through text boxes (toasts wait on a blinking red arrow, dialogs zoom in out of the fog). Progress is a magic meter, the slider thumb is an analog stick, the switch is a power slider, accent badges are coins and avatars are shaded spheres. New `key-a`, `key-b`, `key-c` and `key-start` tokens (with `on-*` pairs) hold the controller colors. Display type is Titan One, so reload `themes/cartridge-fonts.css`.
+- e0cba72: A new theme, Clay: playdough and claymation. Every surface is a soft matte lump of modelling clay in Play-Doh colors (blue, red, yellow, green, purple) on warm putty, or dark plasticine after dark, with a lit clay grain, the odd thumbprint and a few clay balls left lying around the page. Corners are lumpy and hand-rolled; big titles are fat Fredoka molded from clay like the keys (a lit top edge, a shaded belly, grain pressed into the letters, a thick edge underneath); keys are colored lumps and interactive cards are soft slabs, both wobbling on hover, squashing when pressed and springing back; fields, checkboxes, switches and segmented controls are pressed into the clay; the featured card is a yellow slab on a red one; dialogs and toasts plop in; progress is a rolled two-tone clay snake, steps are beads, the spinner is four balls bouncing with squash and stretch. Body type is Figtree, mono is Space Mono. Adds a `clay-purple` token.
+
+  Import `themes/clay.css` and `themes/clay-fonts.css`.
+
+- e0cba72: A new theme, Lagoon: a PS2-era JRPG island. A sunlit beach by day (a big sky with the sun and a few clouds, sand along the foot of the page) and the night tide after dark (the moon, a field of stars, the sea glowing at the foot, pyreflies drifting up). Menus, dialogs, popovers, tooltips and toasts are the classic blue gradient window with a white edge in both modes, with a bobbing pointing-glove cursor; titles are Marcellus with a sea-glass sheen; keys are glossy gel and the accent key is a gold sphere; the featured card sits in a gold window frame; avatars are element orbs; progress is an overdrive gauge; the spinner is four orbs in orbit; toasts read like an item-get box; the navbar ends in a wave. Body type is Nunito, mono is DM Mono.
+
+  Import `themes/lagoon.css` and `themes/lagoon-fonts.css`.
+
 ## 0.4.0
 
 ### Minor Changes
