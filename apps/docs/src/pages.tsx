@@ -257,7 +257,7 @@ export function BrandPage() {
 
 /* ---------- themes ---------- */
 
-const THEME_ORDER = ['tessera', 'atelier', 'cartridge', 'polygon', 'gloop', 'shonen', 'jelly', 'neon', 'static', 'lagoon', 'clay'];
+const THEME_ORDER = ['tessera', 'atelier', 'cartridge', 'polygon', 'gloop', 'shonen', 'jelly', 'neon', 'static', 'lagoon', 'clay', 'cutout'];
 const THEME_NOTES: Record<string, string[]> = {
   atelier: ['Editorial and quiet: warm bone paper and near-black ink, a gallery wall after dark', 'A light high-contrast serif over a clean sans, small spaced capitals on keys', 'Hairlines instead of shadows, square corners, one terracotta accent'],
   tessera: ['Saturated lapis with one saffron tile', 'Tight corners, hard offset shadow', 'Bricolage Grotesque headings'],
@@ -269,7 +269,8 @@ const THEME_NOTES: Record<string, string[]> = {
   neon: ['80s sci-fi: a black grid world lit in cyan, with an orange rival', 'Glowing Orbitron titles, HUD brackets, terminal fields, glowing ring avatars', 'Light trails on the bars and progress; the white grid by day'],
   static: ['Early-2000s alt rock: a sketchbook by day, a sprayed concrete wall after dark', 'Stencil type, duct-taped pages, rough-cut keys that glitch, label-maker tape', 'A VU meter, an equalizer spinner, pin-badge avatars, a media-player toast'],
   lagoon: ['A JRPG island, early-2000s: a sunlit beach by day, a starlit tide with drifting fireflies after dark', 'Blue gradient menu windows with a pointing-glove cursor, glossy gel keys', 'A gold-framed featured card, element-orb avatars, an overdrive gauge, an item-get toast'],
-  clay: ['Playdough: soft matte lumps of clay in toy-box colors, on putty or dark plasticine', 'Clay grain and thumbprints, lumpy corners, keys that wobble and squish', 'Pressed-in fields and switches, a rolled clay snake, beads, bouncing balls']
+  clay: ['Playdough: soft matte lumps of clay in toy-box colors, on putty or dark plasticine', 'Clay grain and thumbprints, lumpy corners, keys that wobble and squish', 'Pressed-in fields and switches, a rolled clay snake, beads, bouncing balls'],
+  cutout: ['Construction paper and scissors: a paper sky over snowy hills, or a paper moon and stars after dark', 'Fibrous paper in flat colors, scissor-cut corners, crooked sheets with hard little shadows', 'Chunky cut-out Lilita One titles; keys and cards move a frame at a time, like cutout animation']
 };
 
 function ThemeSample({ name }: { name: string }) {
@@ -319,7 +320,7 @@ export function ThemesPage() {
       <Head
         eyebrow="Overview"
         title="Themes"
-        lead="One set of components, ten looks. Each theme is a token pack plus a few component treatments, in light and dark. Compare them here, then switch the whole site with Use this theme."
+        lead="One set of components, twelve looks. Each theme is a token pack plus a few component treatments, in light and dark. Compare them here, then switch the whole site with Use this theme."
       />
       <div className="d-theme-bar">
         <SegmentedControl label="Mode for the comparison" size="sm" options={[{ value: 'system', label: 'System' }, { value: 'light', label: 'Light' }, { value: 'dark', label: 'Dark' }]} value={theme} onChange={(v) => setTheme(v as typeof theme)} />

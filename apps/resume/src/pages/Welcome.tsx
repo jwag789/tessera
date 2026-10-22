@@ -33,7 +33,7 @@ const PROMISES = [
   { title: 'Your data is yours', body: 'Download everything as a file any time, and take it with you.' }
 ];
 
-const THEME_ORDER = ['tessera', 'atelier', 'cartridge', 'polygon', 'gloop', 'shonen', 'jelly', 'neon', 'static', 'lagoon', 'clay'];
+const THEME_ORDER = ['tessera', 'atelier', 'cartridge', 'polygon', 'gloop', 'shonen', 'jelly', 'neon', 'static', 'lagoon', 'clay', 'cutout'];
 const THEME_PITCH: Record<string, string> = {
   atelier: 'Serif titles, warm paper, nothing shouting. A resume that reads like a monograph.',
   tessera: 'Bold and clean, for focused work.',
@@ -45,7 +45,8 @@ const THEME_PITCH: Record<string, string> = {
   neon: '80s sci-fi. Light trails, a glowing grid. Enter the job market.',
   static: 'Stencils, duct tape and a VU meter. In the end, you get the job.',
   lagoon: 'Blue windows, a glove cursor and the tide coming in. You obtained: an offer.',
-  clay: 'Playdough, thumbprints and a squish on every click. Mold the perfect resume.'
+  clay: 'Playdough, thumbprints and a squish on every click. Mold the perfect resume.',
+  cutout: 'Construction paper, safety scissors and a glue stick. Cut out for the job.'
 };
 
 function ThemeCard({ name, label }: { name: string; label: string }) {

@@ -13,7 +13,7 @@
 [![Tessera's four themes side by side: Tessera, Cartridge, Polygon and Gloop](.github/assets/themes.jpg)](https://jwag789.github.io/tessera/#themes)
 
 - **40 React components**, typed, tested and keyboard-accessible: from Button and Select to Command palette, Date picker, Data table and Drawer, plus layout primitives.
-- **Eleven themes** (Tessera, Atelier, Cartridge, Polygon, Gloop, Shonen, Jelly, Neon, Static, Lagoon and Clay), each in light and dark, built from one set of design tokens. Switch them live in the docs.
+- **Twelve themes** (Tessera, Atelier, Cartridge, Polygon, Gloop, Shonen, Jelly, Neon, Static, Lagoon, Clay and Cutout), each in light and dark, built from one set of design tokens. Switch them live in the docs.
 - **154 tests**, with axe accessibility checks on every component, strict TypeScript, and a bundle size budget enforced in CI.
 - **Folio**, a resume builder and job tracker that uses nearly every component, to show the system holding up in a real product.
 
@@ -66,7 +66,7 @@ The bundle starts with `"use client"`, so it works from React Server Components 
 
 ### Themes
 
-Tessera ships eleven themes, each in light and dark:
+Tessera ships twelve themes, each in light and dark:
 
 - **Tessera** (the default)
 - **Atelier:** editorial and quiet, for studios and portfolios, with warm bone paper and near-black ink, light serif titles, small spaced capitals on keys, hairlines instead of shadows and one terracotta accent; a gallery wall after dark
@@ -79,6 +79,7 @@ Tessera ships eleven themes, each in light and dark:
 - **Static:** early-2000s alt rock, a sketchbook by day and a sprayed concrete wall after dark, with stencil type, duct-taped pages, glitching keys, label-maker tape, a VU meter and an equalizer
 - **Lagoon:** an early-2000s JRPG island, a sunlit beach by day and a starlit tide with drifting fireflies after dark, with blue gradient menu windows and a pointing-glove cursor, glossy gel keys, a gold-framed featured card, element-orb avatars and an overdrive gauge
 - **Clay:** playdough, with everything a soft matte lump of clay in toy-box colors, clay grain and thumbprints, lumpy hand-rolled shapes, keys that wobble and squish, pressed-in fields, a rolled clay snake for progress and bouncing clay balls
+- **Cutout:** construction paper and scissors, like a cutout cartoon, with fibrous paper in flat colors, a paper sky over snowy paper hills (or a paper moon and stars after dark), scissor-cut corners, crooked sheets with hard little shadows, chunky cut-out titles, and keys and cards that move a frame at a time
 
 Import a theme's CSS and pick it with `ThemeProvider`:
 

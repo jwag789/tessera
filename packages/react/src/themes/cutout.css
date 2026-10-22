@@ -1,0 +1,189 @@
+/* Cutout: component treatments the tokens can't express. Construction paper and scissors, like a cutout cartoon. By
+   day a sky of blue paper with paper clouds over a row of snowy paper hills; after dark a navy night with a paper moon
+   and stars. Everything is cut from fibrous paper in flat colors: uneven scissor-cut corners, nothing sitting quite
+   straight, and a small hard shadow wherever one sheet sits on another. Titles are chunky letters cut out with a
+   white margin; keys and cards pop up a frame at a time, the way cutout animation moves; badges and tooltips are
+   scraps; avatars are paper circles; the featured card is yellow paper; progress is a strip glued on in jumps.
+   Scoped to [data-brand="cutout"]. */
+@keyframes co-pop { 0% { opacity: 0; transform: translateY(18px) rotate(-3deg) scale(.94); } 34% { opacity: 1; transform: translateY(-4px) rotate(1.5deg); } 67% { transform: translateY(1px) rotate(-.5deg); } 100% { transform: none; } }
+@keyframes co-hop { 0%, 100% { translate: 0 0; rotate: 0deg; } 25% { translate: 0 -40%; rotate: -10deg; } 50% { translate: 0 0; rotate: 0deg; } }
+
+/* Scoped so a nested area with a different data-brand keeps its own look. */
+@scope ([data-brand="cutout"]) to ([data-brand]:not([data-brand="cutout"])) {
+  :scope {
+    font-synthesis: none;
+    /* Construction paper: soft blotches, the tooth of the sheet and a few darker fibres. */
+    --co-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E %3Cfilter id='p' x='0' y='0'%3E %3CfeTurbulence type='fractalNoise' baseFrequency='.03' numOctaves='3' seed='4' stitchTiles='stitch' result='b'/%3E %3CfeColorMatrix in='b' values='0 0 0 0 .2 0 0 0 0 .16 0 0 0 0 .1 .5 0 0 0 -.17' result='blot'/%3E %3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' seed='9' stitchTiles='stitch' result='f'/%3E %3CfeColorMatrix in='f' values='0 0 0 0 .2 0 0 0 0 .16 0 0 0 0 .1 0 0 0 .7 -.22' result='tooth'/%3E %3CfeTurbulence type='turbulence' baseFrequency='.06 .5' numOctaves='1' seed='2' stitchTiles='stitch' result='s'/%3E %3CfeColorMatrix in='s' values='0 0 0 0 .15 0 0 0 0 .12 0 0 0 0 .08 0 0 0 9 -4.4' result='fleck'/%3E %3CfeMerge%3E%3CfeMergeNode in='blot'/%3E%3CfeMergeNode in='tooth'/%3E%3CfeMergeNode in='fleck'/%3E%3C/feMerge%3E %3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+    --co-grain-alpha: .6;
+    --co-grain-blend: multiply;
+    /* The scenery, behind everything. */
+    --co-scenery:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='80' viewBox='0 0 170 80'%3E %3Cg fill='rgba(30,27,24,.16)' transform='translate(4 5)'%3E%3Ccircle cx='42' cy='46' r='22'/%3E%3Ccircle cx='74' cy='32' r='28'/%3E%3Ccircle cx='110' cy='40' r='24'/%3E%3Ccircle cx='134' cy='52' r='16'/%3E%3Crect x='20' y='46' width='130' height='22' rx='11'/%3E%3C/g%3E %3Cg fill='%23fdfbf4'%3E%3Ccircle cx='42' cy='46' r='22'/%3E%3Ccircle cx='74' cy='32' r='28'/%3E%3Ccircle cx='110' cy='40' r='24'/%3E%3Ccircle cx='134' cy='52' r='16'/%3E%3Crect x='20' y='46' width='130' height='22' rx='11'/%3E%3C/g%3E%3C/svg%3E") right 7% top 96px / 170px 80px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='170' height='80' viewBox='0 0 170 80'%3E %3Cg fill='rgba(30,27,24,.16)' transform='translate(4 5)'%3E%3Ccircle cx='42' cy='46' r='22'/%3E%3Ccircle cx='74' cy='32' r='28'/%3E%3Ccircle cx='110' cy='40' r='24'/%3E%3Ccircle cx='134' cy='52' r='16'/%3E%3Crect x='20' y='46' width='130' height='22' rx='11'/%3E%3C/g%3E %3Cg fill='%23fdfbf4'%3E%3Ccircle cx='42' cy='46' r='22'/%3E%3Ccircle cx='74' cy='32' r='28'/%3E%3Ccircle cx='110' cy='40' r='24'/%3E%3Ccircle cx='134' cy='52' r='16'/%3E%3Crect x='20' y='46' width='130' height='22' rx='11'/%3E%3C/g%3E%3C/svg%3E") left 3% top 34vh / 120px 56px no-repeat,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 170' preserveAspectRatio='none'%3E %3Cpath d='M0 170V96L54 72L118 98L196 44L262 86L330 58L404 102L470 64L548 30L616 82L690 52L752 80L800 66V170Z' fill='rgba(30,27,24,.16)' transform='translate(3 4)'/%3E %3Cpath d='M0 170V96L54 72L118 98L196 44L262 86L330 58L404 102L470 64L548 30L616 82L690 52L752 80L800 66V170Z' fill='%238fb2c7'/%3E %3Cpath d='M0 170V130Q90 108 190 124T380 116Q470 104 560 122T800 112V170Z' fill='rgba(30,27,24,.16)' transform='translate(0 -4)'/%3E %3Cpath d='M0 170V130Q90 108 190 124T380 116Q470 104 560 122T800 112V170Z' fill='%23fdfbf4'/%3E%3C/svg%3E") center bottom / 100% 170px no-repeat;
+    /* The paper strip under the bar, cut with scissors. */
+    --co-edge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='12' viewBox='0 0 200 12'%3E%3Cpath d='M0 0H200V4L188 8L171 3L152 9L133 4L112 8L92 3L73 9L52 4L34 8L15 3L0 7Z' fill='rgba(30,27,24,.18)' transform='translate(0 2)'/%3E%3Cpath d='M0 0H200V4L188 8L171 3L152 9L133 4L112 8L92 3L73 9L52 4L34 8L15 3L0 7Z' fill='%23fbf6ea'/%3E%3C/svg%3E");
+    /* Scissor-cut corners: never quite even. */
+    --co-cut: 4px 9px 3px 7px / 8px 3px 9px 4px;
+    --co-cut-sm: 2px 5px 3px 4px / 4px 2px 5px 3px;
+    /* One sheet on another. */
+    --co-lay: 2px 3px 0 rgba(30, 27, 24, .24);
+    --co-lay-sm: 1px 2px 0 rgba(30, 27, 24, .22);
+    /* The margin left around cut-out letters, and the shadow they cast. */
+    --co-letter: #fffdf6;
+    --co-letter-cast: rgba(30, 27, 24, .3);
+  }
+  /* After dark: a navy night with a paper moon and stars. */
+  :scope[data-theme="dark"] {
+    --co-grain-alpha: .5; --co-grain-blend: overlay;
+    --co-scenery: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E %3Ccircle cx='50' cy='51' r='36' fill='rgba(0,0,0,.4)'/%3E%3Ccircle cx='46' cy='46' r='36' fill='%23f3ead0'/%3E %3Ccircle cx='34' cy='38' r='7' fill='%23ded2b0'/%3E%3Ccircle cx='58' cy='58' r='9' fill='%23ded2b0'/%3E%3Ccircle cx='60' cy='30' r='4' fill='%23ded2b0'/%3E%3C/svg%3E") right 8% top 92px / 96px 96px no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='760' height='540'%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='rgba(0,0,0,.45)' transform='translate(62 42) rotate(8) scale(0.9)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='%23f7cd45' transform='translate(60 40) rotate(8) scale(0.9)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='rgba(0,0,0,.45)' transform='translate(302 26) rotate(-12) scale(0.6)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='%23f7cd45' transform='translate(300 24) rotate(-12) scale(0.6)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='rgba(0,0,0,.45)' transform='translate(522 92) rotate(20) scale(1)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='%23f7cd45' transform='translate(520 90) rotate(20) scale(1)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='rgba(0,0,0,.45)' transform='translate(702 32) rotate(4) scale(0.7)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='%23f7cd45' transform='translate(700 30) rotate(4) scale(0.7)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='rgba(0,0,0,.45)' transform='translate(162 302) rotate(-6) scale(0.55)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='%23f7cd45' transform='translate(160 300) rotate(-6) scale(0.55)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='rgba(0,0,0,.45)' transform='translate(622 382) rotate(14) scale(0.8)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='%23f7cd45' transform='translate(620 380) rotate(14) scale(0.8)'/%3E%3C/svg%3E") 0 40px / 760px 540px repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 170' preserveAspectRatio='none'%3E %3Cpath d='M0 170V96L54 72L118 98L196 44L262 86L330 58L404 102L470 64L548 30L616 82L690 52L752 80L800 66V170Z' fill='rgba(0,0,0,.4)' transform='translate(3 4)'/%3E %3Cpath d='M0 170V96L54 72L118 98L196 44L262 86L330 58L404 102L470 64L548 30L616 82L690 52L752 80L800 66V170Z' fill='%232e3c62'/%3E %3Cpath d='M0 170V130Q90 108 190 124T380 116Q470 104 560 122T800 112V170Z' fill='rgba(0,0,0,.4)' transform='translate(0 -4)'/%3E %3Cpath d='M0 170V130Q90 108 190 124T380 116Q470 104 560 122T800 112V170Z' fill='%23c9d3e6'/%3E%3C/svg%3E") center bottom / 100% 170px no-repeat;
+    --co-edge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='12' viewBox='0 0 200 12'%3E%3Cpath d='M0 0H200V4L188 8L171 3L152 9L133 4L112 8L92 3L73 9L52 4L34 8L15 3L0 7Z' fill='rgba(0,0,0,.45)' transform='translate(0 2)'/%3E%3Cpath d='M0 0H200V4L188 8L171 3L152 9L133 4L112 8L92 3L73 9L52 4L34 8L15 3L0 7Z' fill='%232a3352'/%3E%3C/svg%3E");
+    --co-lay: 2px 3px 0 rgba(0, 0, 0, .5); --co-lay-sm: 1px 2px 0 rgba(0, 0, 0, .45);
+    --co-letter: #0f1527; --co-letter-cast: rgba(0, 0, 0, .55);
+  }
+  @media (prefers-color-scheme: dark) {
+    :scope:not([data-theme="light"]) {
+      --co-grain-alpha: .5; --co-grain-blend: overlay;
+      --co-scenery: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='96' height='96' viewBox='0 0 96 96'%3E %3Ccircle cx='50' cy='51' r='36' fill='rgba(0,0,0,.4)'/%3E%3Ccircle cx='46' cy='46' r='36' fill='%23f3ead0'/%3E %3Ccircle cx='34' cy='38' r='7' fill='%23ded2b0'/%3E%3Ccircle cx='58' cy='58' r='9' fill='%23ded2b0'/%3E%3Ccircle cx='60' cy='30' r='4' fill='%23ded2b0'/%3E%3C/svg%3E") right 8% top 92px / 96px 96px no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='760' height='540'%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='rgba(0,0,0,.45)' transform='translate(62 42) rotate(8) scale(0.9)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='%23f7cd45' transform='translate(60 40) rotate(8) scale(0.9)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='rgba(0,0,0,.45)' transform='translate(302 26) rotate(-12) scale(0.6)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='%23f7cd45' transform='translate(300 24) rotate(-12) scale(0.6)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='rgba(0,0,0,.45)' transform='translate(522 92) rotate(20) scale(1)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='%23f7cd45' transform='translate(520 90) rotate(20) scale(1)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='rgba(0,0,0,.45)' transform='translate(702 32) rotate(4) scale(0.7)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='%23f7cd45' transform='translate(700 30) rotate(4) scale(0.7)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='rgba(0,0,0,.45)' transform='translate(162 302) rotate(-6) scale(0.55)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='%23f7cd45' transform='translate(160 300) rotate(-6) scale(0.55)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='rgba(0,0,0,.45)' transform='translate(622 382) rotate(14) scale(0.8)'/%3E%3Cpolygon points='0,-10 2.9,-4 9.5,-3.1 4.7,1.5 5.9,8.1 0,5 -5.9,8.1 -4.7,1.5 -9.5,-3.1 -2.9,-4' fill='%23f7cd45' transform='translate(620 380) rotate(14) scale(0.8)'/%3E%3C/svg%3E") 0 40px / 760px 540px repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 170' preserveAspectRatio='none'%3E %3Cpath d='M0 170V96L54 72L118 98L196 44L262 86L330 58L404 102L470 64L548 30L616 82L690 52L752 80L800 66V170Z' fill='rgba(0,0,0,.4)' transform='translate(3 4)'/%3E %3Cpath d='M0 170V96L54 72L118 98L196 44L262 86L330 58L404 102L470 64L548 30L616 82L690 52L752 80L800 66V170Z' fill='%232e3c62'/%3E %3Cpath d='M0 170V130Q90 108 190 124T380 116Q470 104 560 122T800 112V170Z' fill='rgba(0,0,0,.4)' transform='translate(0 -4)'/%3E %3Cpath d='M0 170V130Q90 108 190 124T380 116Q470 104 560 122T800 112V170Z' fill='%23c9d3e6'/%3E%3C/svg%3E") center bottom / 100% 170px no-repeat;
+      --co-edge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='12' viewBox='0 0 200 12'%3E%3Cpath d='M0 0H200V4L188 8L171 3L152 9L133 4L112 8L92 3L73 9L52 4L34 8L15 3L0 7Z' fill='rgba(0,0,0,.45)' transform='translate(0 2)'/%3E%3Cpath d='M0 0H200V4L188 8L171 3L152 9L133 4L112 8L92 3L73 9L52 4L34 8L15 3L0 7Z' fill='%232a3352'/%3E%3C/svg%3E");
+      --co-lay: 2px 3px 0 rgba(0, 0, 0, .5); --co-lay-sm: 1px 2px 0 rgba(0, 0, 0, .45);
+      --co-letter: #0f1527; --co-letter-cast: rgba(0, 0, 0, .55);
+    }
+  }
+
+  /* The ground: the scenery pinned behind the page, and the paper grain laid over everything, as if all of it were
+     one collage. */
+  :scope body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1; background: var(--co-scenery); }
+  :scope body::after { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 2147483000; background: var(--co-grain); opacity: var(--co-grain-alpha); mix-blend-mode: var(--co-grain-blend); }
+
+  /* Type: chunky letters cut out of paper with a margin around them, casting a small shadow. */
+  :scope :is(.display-2xl, .display-xl, .display-lg, .heading-lg, .heading-md) {
+    font-weight: 400; letter-spacing: .015em;
+    -webkit-text-stroke: .16em var(--co-letter); paint-order: stroke fill;
+    filter: drop-shadow(2px 3px 0 var(--co-letter-cast));
+  }
+  :scope :is(.heading-lg, .heading-md) { -webkit-text-stroke-width: .2em; filter: drop-shadow(1px 2px 0 var(--co-letter-cast)); }
+  :scope :is(.ts-card-title, .ts-dialog-title, .ts-popover-title, .ts-empty-title, .ts-cal-title, .ts-navbar-brand) { font-weight: 400; letter-spacing: .015em; }
+  :scope .ts-card-title { font-size: 22px; line-height: 28px; }
+  :scope .ts-navbar-brand { font-size: 23px; rotate: -2deg; }
+  :scope :is(.ts-btn, .ts-tab, .ts-segctl-item, .ts-badge, .ts-tooltip, .ts-side-title, .ts-avatar) { font-family: var(--font-display); font-weight: 400; letter-spacing: .02em; }
+  :scope .ts-btn { font-size: 16px; }
+
+  /* Keys: scraps of paper, a little crooked. They don't glide: on hover they jump up a frame and tip the other way,
+     and pressing pastes them flat onto the page. */
+  :scope .ts-btn { border-radius: var(--co-cut); rotate: -.8deg; transition: none; }
+  :scope .ts-btn:nth-of-type(2n) { rotate: .7deg; }
+  :scope :is(.ts-btn-primary, .ts-btn-secondary, .ts-btn-tile, .ts-btn-danger) { border: 0; box-shadow: var(--co-lay); }
+  :scope .ts-btn-primary { background: var(--lapis); color: var(--on-lapis); }
+  :scope .ts-btn-secondary { background: var(--surface); color: var(--ink); }
+  :scope .ts-btn-secondary:hover:not([disabled]) { background: var(--surface); color: var(--ink); }
+  :scope .ts-btn-tile { background: var(--saffron); color: var(--on-saffron); }
+  :scope .ts-btn-tile:active:not([disabled]) { background: var(--saffron); }
+  :scope :is(.ts-btn-primary, .ts-btn-secondary, .ts-btn-tile, .ts-btn-danger):hover:not([disabled]) { transform: none; translate: 0 -3px; rotate: 1.2deg; box-shadow: 3px 5px 0 rgba(30, 27, 24, .26); filter: none; }
+  :scope .ts-btn:nth-of-type(2n):hover:not([disabled]) { rotate: -1.2deg; }
+  :scope .ts-btn-ghost:hover:not([disabled]) { background: color-mix(in srgb, var(--surface) 70%, transparent); }
+  :scope .ts-btn:active:not([disabled]) { transform: none; translate: 1px 2px; rotate: 0deg; box-shadow: none; }
+  :scope :is(.ts-btn-primary, .ts-btn-tile, .ts-btn-danger)::after, :scope .ts-ripple { display: none; }
+
+  /* Sheets: flat paper with scissor-cut corners, laid down a little crooked, each casting a hard shadow. */
+  :scope :is(.ts-card, .ts-empty, .ts-table-wrap, .ts-accordion, .ts-file, .ts-drop) { border: 0; border-radius: var(--co-cut); box-shadow: var(--shadow-md); }
+  :scope .ts-card { rotate: -.5deg; }
+  :scope .ts-card:nth-child(3n + 2) { rotate: .6deg; }
+  :scope .ts-card:nth-child(3n + 3) { rotate: -.2deg; }
+  :scope .ts-card-interactive { transition: none; }
+  :scope .ts-card-interactive:hover { transform: none; translate: 0 -4px; rotate: .8deg; box-shadow: var(--shadow-lg); }
+  :scope .ts-card-interactive:active { translate: 1px 2px; rotate: 0deg; box-shadow: var(--shadow-sm); }
+  /* The featured card is a sheet of yellow paper. */
+  :scope .ts-card-tile {
+    --surface: #f2c230; --surface-sunken: #e0ae1c; --ink: #2a2000; --ink-muted: #4a3a00; --line: rgba(42, 32, 0, .2); --line-strong: #6b5300;
+    --lapis: #9e1f19; --lapis-hover: #861813; --lapis-soft: #fbe08a; --on-lapis: #ffffff; --link: #6e120e; --focus: #1e1b18;
+    color: var(--ink); background: var(--surface); box-shadow: var(--shadow-tile);
+  }
+  :scope .ts-card-tile.ts-card-interactive:hover { transform: none; box-shadow: var(--shadow-tile-lg); }
+  /* Motif tiles are confetti snipped from every color. */
+  :scope .ts-card-motif span { border-radius: 1px 3px 2px 1px; background: var(--tile-4); box-shadow: var(--co-lay-sm); rotate: -8deg; }
+  :scope .ts-card-motif span:nth-child(2n) { background: var(--tile-3); rotate: 6deg; }
+  :scope .ts-card-motif span:nth-child(3n) { background: var(--tile-1); rotate: -3deg; }
+  :scope .ts-card-motif span.ts-odd { background: var(--tile-2); rotate: 12deg; }
+
+  /* Floating sheets: dropped on top, in three frames. */
+  :scope :is(.ts-dialog, .ts-popover, .ts-menu, .ts-sel-list, .ts-cmd, .ts-side-flyout, .ts-drawer) { border: 0; border-radius: var(--co-cut); box-shadow: var(--shadow-lg); }
+  :scope :is(.ts-dialog, .ts-cmd) { animation-name: co-pop; animation-duration: .3s; animation-timing-function: steps(3, jump-none); }
+  :scope :is(.ts-menu-item-active, .ts-opt-active) { background: var(--saffron-soft); color: var(--ink); border-radius: var(--co-cut-sm); }
+
+  /* Fields: slips of white paper with a pencilled edge. */
+  :scope :is(.ts-input, .ts-sel-trigger, .ts-tags, .ts-number) { border: 0; border-radius: var(--co-cut-sm); background: var(--surface); box-shadow: inset 0 0 0 1.5px var(--line-strong), var(--co-lay-sm); }
+  :scope :is(.ts-input, .ts-sel-trigger, .ts-tags, .ts-number):hover { box-shadow: inset 0 0 0 2px var(--ink), var(--co-lay-sm); }
+  :scope :is(.ts-input:focus-visible, .ts-input:focus-within, .ts-tags:focus-within, .ts-number:focus-within), :scope .ts-sel-open .ts-sel-trigger { box-shadow: inset 0 0 0 2px var(--focus), 0 0 0 3px var(--saffron), var(--co-lay-sm); }
+
+  /* Shell: a strip of paper across the top with a scissor-cut bottom edge; the sidebar is a sheet pinned down the side. */
+  :scope .ts-navbar { border-bottom: 0; }
+  :scope .ts-navbar:not(.ts-navbar-sticky) { position: relative; }
+  :scope .ts-navbar::after { content: ""; position: absolute; left: 0; right: 0; top: 100%; height: 12px; pointer-events: none; background: var(--co-edge) 0 0 / 200px 12px repeat-x; }
+  :scope .ts-navlink { font-weight: 700; }
+  :scope .ts-navlink:hover { background: var(--surface-sunken); border-radius: var(--co-cut-sm); }
+  :scope .ts-navlink[aria-current="page"]::after { height: 5px; border-radius: 1px 3px 2px 1px; background: var(--tile-1); rotate: -1.5deg; box-shadow: var(--co-lay-sm); }
+  :scope .ts-sidebar { border-right: 0; box-shadow: 3px 0 0 rgba(30, 27, 24, .14); }
+  :scope .ts-side-link { border-radius: var(--co-cut-sm); }
+  :scope .ts-side-link[aria-current="page"] { background: var(--saffron); color: var(--on-saffron); font-weight: 700; rotate: -1deg; box-shadow: var(--co-lay-sm); }
+  :scope .ts-side-link[aria-current="page"] .ts-icon { color: var(--on-saffron); }
+  :scope .ts-side-title { color: var(--lapis); }
+
+  /* Small bits: badges are snipped scraps, avatars are paper circles in every color. */
+  :scope .ts-badge { border-radius: 1px 4px 2px 3px; rotate: -2deg; box-shadow: var(--co-lay-sm); padding-inline: 9px; }
+  :scope .ts-badge-accent { background: var(--saffron); color: var(--on-saffron); }
+  :scope .ts-avatar { border-radius: 47% 53% 50% 50% / 52% 48% 52% 48%; background: var(--tile-4); color: #ffffff; box-shadow: var(--co-lay-sm); font-size: 15px; }
+  :scope .ts-avatar[data-hue="1"] { background: var(--tile-1); color: #ffffff; }
+  :scope .ts-avatar[data-hue="2"] { background: var(--tile-2); color: #2a2000; }
+  :scope .ts-avatar[data-hue="3"] { background: var(--tile-3); color: #ffffff; }
+  :scope .ts-avatar-group .ts-avatar { box-shadow: 0 0 0 2.5px var(--bg), var(--co-lay-sm); }
+
+  /* Controls: paper squares and circles. */
+  :scope .ts-check-box { border-radius: var(--co-cut-sm); border-width: 2px; border-color: var(--ink); }
+  :scope .ts-check input:is(:checked, :indeterminate) + .ts-check-box { background: var(--lapis); border-color: var(--lapis); box-shadow: var(--co-lay-sm); }
+  :scope .ts-radio-dot { border-width: 2px; border-color: var(--ink); }
+  :scope .ts-switch-track { border-radius: var(--co-cut); background: var(--surface-sunken); box-shadow: inset 0 0 0 1.5px var(--line-strong); }
+  :scope .ts-switch-track::after { border-radius: 47% 53% 50% 50%; box-shadow: var(--co-lay-sm); }
+  :scope .ts-switch input:checked + .ts-switch-track { background: var(--tile-3); box-shadow: none; }
+  :scope .ts-tab-ink { height: 5px; border-radius: 1px 3px 2px 1px; background: var(--tile-1); rotate: -.6deg; box-shadow: var(--co-lay-sm); }
+  :scope .ts-segctl { border: 0; border-radius: var(--co-cut); background: var(--surface-sunken); box-shadow: inset 0 0 0 1.5px var(--line-strong); }
+  :scope .ts-segctl-ink { border-radius: var(--co-cut-sm); background: var(--surface); box-shadow: var(--co-lay); }
+  :scope :is(.ts-page-current, .ts-day-selected) { border-radius: 47% 53% 50% 50% / 52% 48% 52% 48%; box-shadow: var(--co-lay-sm); animation: none; }
+  :scope .ts-step-marker { border-radius: 47% 53% 50% 50% / 52% 48% 52% 48%; }
+  :scope .ts-kbd { border-radius: var(--co-cut-sm); box-shadow: var(--co-lay-sm); }
+
+  /* Progress: a strip of red paper glued on in jumps; the segmented kind is a row of confetti. */
+  :scope .ts-progress-track { height: 12px; border-radius: var(--co-cut-sm); background: var(--surface-sunken); box-shadow: inset 0 0 0 1.5px var(--line-strong); }
+  :scope .ts-progress-bar { border-radius: 1px 4px 2px 3px; background: var(--tile-1); animation: none; box-shadow: var(--co-lay-sm); transition: width .6s steps(4, jump-end); }
+  :scope .ts-progress-success .ts-progress-bar { background: var(--tile-3); }
+  :scope .ts-progress-segmented .ts-seg::after { border-radius: var(--co-cut-sm); background: var(--tile-4); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 2)::after { background: var(--tile-1); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n + 3)::after { background: var(--tile-3); }
+  :scope .ts-progress-segmented .ts-seg:nth-child(4n)::after { background: var(--tile-2); }
+
+  /* The spinner: four scraps hopping in turn, a frame at a time. */
+  :scope .ts-spinner { overflow: visible; }
+  :scope .ts-spinner i { border-radius: 1px 3px 2px 1px; opacity: 1; animation: co-hop 1s steps(1, end) infinite; box-shadow: var(--co-lay-sm); }
+  :scope .ts-spinner i:nth-child(1) { color: var(--tile-1); }
+  :scope .ts-spinner i:nth-child(2) { color: var(--tile-2); animation-delay: -.75s; }
+  :scope .ts-spinner i:nth-child(4) { color: var(--tile-3); animation-delay: -.5s; }
+  :scope .ts-spinner i:nth-child(3) { color: var(--tile-4); animation-delay: -.25s; }
+
+  /* Toasts and tooltips: scraps of dark paper, slapped down. */
+  :scope .ts-toast { border-radius: var(--co-cut); box-shadow: var(--co-lay), var(--shadow-md); rotate: -.6deg; animation-name: co-pop; animation-duration: .3s; animation-timing-function: steps(3, jump-none); }
+  :scope .ts-toast-timer { height: 4px; background: var(--saffron); }
+  :scope .ts-tooltip { border-radius: var(--co-cut-sm); rotate: -1.5deg; box-shadow: var(--co-lay-sm); }
+
+  /* The mosaic: squares snipped from construction paper and pasted down by hand. */
+  :scope .ts-mosaic { border-radius: var(--co-cut); }
+  :scope .ts-mosaic-tile { border-radius: 1px 3px 2px 2px; box-shadow: var(--co-lay-sm); rotate: -2deg; }
+  :scope .ts-mosaic-tile:nth-child(3n + 1) { rotate: 1.5deg; }
+  :scope .ts-mosaic-tile:nth-child(5n + 2) { rotate: -3.5deg; }
+  :scope .ts-mosaic-tile:nth-child(7n + 3) { rotate: 3deg; }
+
+  @media (prefers-reduced-motion: reduce) {
+    :scope :is(.ts-dialog, .ts-cmd, .ts-toast) { animation-name: none; }
+    :scope .ts-progress-bar { transition: none; }
+    :scope .ts-spinner i { animation-duration: 2.4s; }
+  }
+}

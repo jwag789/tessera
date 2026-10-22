@@ -260,6 +260,7 @@ a { color: var(--link); }
 .d-theme-dot-lagoon { background: radial-gradient(circle at 74% 22%, #fff4c8 0 12%, transparent 14%), linear-gradient(180deg, #8fdcea 0 46%, #00a3a8 46% 70%, #f2dfb0 70%); border-radius: 50%; box-shadow: 0 0 0 1.5px #0b3d5c, 0 0 0 3px rgba(255, 255, 255, .8); }
 .d-theme-dot-atelier { background: linear-gradient(135deg, #f6f2eb 0 50%, #1d1b18 50%); border-radius: 50%; box-shadow: 0 0 0 1px #1d1b18, inset 0 0 0 3px #f6f2eb; }
 .d-theme-dot-clay { background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, .6) 0 12%, transparent 30%), conic-gradient(from 20deg, #e8433a 0 25%, #ffc93c 0 50%, #3bb273 0 75%, #2f6fe4 0); border-radius: 46% 54% 50% 50% / 52% 46% 54% 48%; box-shadow: inset -2px -3px 4px rgba(0, 0, 0, .25), 0 2px 3px rgba(90, 60, 30, .3); }
+.d-theme-dot-cutout { background: linear-gradient(160deg, transparent 0 58%, #fdfbf4 58%), radial-gradient(circle at 70% 30%, #f2c230 0 22%, transparent 24%), #8fb2c7; border-radius: 46% 54% 48% 52% / 52% 46% 54% 48%; box-shadow: 0 0 0 1.5px #1e1b18, 1px 2px 0 1.5px rgba(30, 27, 24, .35); rotate: -6deg; }
 .ts-opt-icon:has(.d-theme-dot) { background: none; }
 .d-theme-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
 .d-themes { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); align-items: start; }
@@ -577,5 +578,35 @@ a { color: var(--link); }
   :scope .d-code { border-radius: 18px 22px 16px 20px; }
   @media (max-width: 900px) {
     :scope :is(.d-title, .sc-h) { font-size: 48px; }
+  }
+}
+@scope ([data-brand="cutout"]) to ([data-brand]:not([data-brand="cutout"])) {
+  :scope .d-mark rect:nth-child(1) { fill: var(--tile-1); }
+  :scope .d-mark rect:nth-child(2) { fill: var(--tile-4); }
+  :scope .d-mark rect:nth-child(3) { fill: var(--tile-3); }
+  :scope .d-mark .d-odd { fill: var(--tile-2); }
+  :scope .d-brand-name { font-weight: 400; letter-spacing: .02em; }
+  /* Big titles: chunky letters cut out of paper with a margin, casting a small shadow. */
+  :scope :is(.d-title, .sc-h, .d-h2) { font-weight: 400; letter-spacing: .01em; -webkit-text-stroke: .16em var(--co-letter); paint-order: stroke fill; filter: drop-shadow(2px 3px 0 var(--co-letter-cast)); }
+  :scope .d-h2 { -webkit-text-stroke-width: .2em; filter: drop-shadow(1px 2px 0 var(--co-letter-cast)); }
+  :scope .d-h2 small { -webkit-text-stroke: 0; }
+  :scope .sc-tile { color: var(--on-saffron); -webkit-text-stroke-color: transparent; }
+  :scope .sc-tile::before { border-radius: var(--co-cut); box-shadow: var(--co-lay); }
+  :scope .d-title { font-size: 64px; line-height: 1.08; }
+  :scope .sc-h { font-size: 70px; line-height: 1.04; }
+  :scope :is(.d-md h3, .d-tilelink b, .lay-head b, .d-theme-head h2) { font-weight: 400; letter-spacing: .015em; }
+  :scope .d-eyebrow { color: var(--lapis); }
+  :scope .d-eyebrow::before { border-radius: 1px 3px 2px 1px; background: var(--tile-2); box-shadow: var(--co-lay-sm); rotate: -8deg; }
+  :scope .d-side { border-right: 0; box-shadow: 3px 0 0 rgba(30, 27, 24, .14); }
+  :scope .d-top { border-bottom: 0; box-shadow: 0 3px 0 rgba(30, 27, 24, .14); }
+  /* Link tiles are sheets of paper laid down a little crooked; they jump up a frame on hover. */
+  :scope .d-tilelink { border: 0; border-radius: var(--co-cut); box-shadow: var(--shadow-md); rotate: -.5deg; transition: none; }
+  :scope .d-tilelink:nth-child(2n) { rotate: .6deg; }
+  :scope .d-tilelink:hover { transform: none; translate: 0 -4px; rotate: .8deg; box-shadow: var(--shadow-lg); }
+  :scope .d-tilelink:nth-child(2n):hover { rotate: -.8deg; }
+  :scope .d-stage { border: 0; border-radius: var(--co-cut); box-shadow: var(--shadow-md); }
+  :scope .d-code { border: 0; border-radius: var(--co-cut); box-shadow: var(--co-lay-sm); }
+  @media (max-width: 900px) {
+    :scope :is(.d-title, .sc-h) { font-size: 46px; }
   }
 }

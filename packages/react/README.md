@@ -58,6 +58,7 @@ import '@tessera-design/react/themes/cartridge-fonts.css';
 | Static | `themes/static.css`, `themes/static-fonts.css` |
 | Lagoon | `themes/lagoon.css`, `themes/lagoon-fonts.css` |
 | Clay | `themes/clay.css`, `themes/clay-fonts.css` |
+| Cutout | `themes/cutout.css`, `themes/cutout-fonts.css` |
 
 Dark mode follows the system unless the user picks one; `useTheme()` reads and changes both the mode and the theme.
 

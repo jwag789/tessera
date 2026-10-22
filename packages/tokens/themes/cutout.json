@@ -1,0 +1,318 @@
+{
+  "name": "cutout",
+  "label": "Cutout",
+  "description": "Construction paper and scissors, like a cutout cartoon: a sky of blue paper over snowy paper hills, or a night sky with paper stars after dark. Everything is cut from fibrous paper in flat colors, with uneven scissor-cut corners and a small shadow where one sheet sits on another. Titles are chunky letters cut out with a white margin; keys are paper scraps that pop up a frame at a time; badges and tooltips are torn strips; avatars are paper circles; progress is a strip of paper being glued on.",
+  "fonts": "https://fonts.googleapis.com/css2?family=Lilita+One&family=Mali:wght@400;500;600;700&family=Courier+Prime:wght@400;700&display=swap",
+  "type": {
+    "families": {
+      "display": "\"Lilita One\", \"Arial Rounded MT Bold\", \"Arial Black\", sans-serif",
+      "sans": "Mali, \"Comic Neue\", ui-rounded, system-ui, sans-serif",
+      "mono": "\"Courier Prime\", \"Courier New\", ui-monospace, monospace"
+    }
+  },
+  "color": {
+    "tokens": [
+      {
+        "name": "bg",
+        "value": {
+          "light": "#b9d7e8",
+          "dark": "#1a2440"
+        }
+      },
+      {
+        "name": "surface",
+        "value": {
+          "light": "#fbf6ea",
+          "dark": "#2a3352"
+        }
+      },
+      {
+        "name": "surface-sunken",
+        "value": {
+          "light": "#ece3cf",
+          "dark": "#141b31"
+        }
+      },
+      {
+        "name": "line",
+        "value": {
+          "light": "#d6ccb5",
+          "dark": "#3b4566"
+        }
+      },
+      {
+        "name": "line-strong",
+        "value": {
+          "light": "#5f5a50",
+          "dark": "#8a93ad"
+        }
+      },
+      {
+        "name": "ink",
+        "value": {
+          "light": "#1e1b18",
+          "dark": "#f6f0e2"
+        }
+      },
+      {
+        "name": "ink-muted",
+        "value": {
+          "light": "#3f454c",
+          "dark": "#c2c7d4"
+        }
+      },
+      {
+        "name": "lapis",
+        "value": {
+          "light": "#9e1f19",
+          "dark": "#ff8a7a"
+        }
+      },
+      {
+        "name": "lapis-hover",
+        "value": {
+          "light": "#861813",
+          "dark": "#ffa496"
+        }
+      },
+      {
+        "name": "lapis-soft",
+        "value": {
+          "light": "#f6d9d2",
+          "dark": "#3f2230"
+        }
+      },
+      {
+        "name": "lapis-deep",
+        "value": {
+          "light": "#6e120e",
+          "dark": "#ffc0b6"
+        }
+      },
+      {
+        "name": "lapis-glow",
+        "value": {
+          "light": "rgba(158, 31, 25, 0.2)",
+          "dark": "rgba(255, 138, 122, 0.25)"
+        }
+      },
+      {
+        "name": "on-lapis",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#1e0c09"
+        }
+      },
+      {
+        "name": "on-lapis-deep",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#1e0c09"
+        }
+      },
+      {
+        "name": "saffron",
+        "value": {
+          "light": "#f2c230",
+          "dark": "#f7cd45"
+        }
+      },
+      {
+        "name": "saffron-deep",
+        "value": {
+          "light": "#d9a514",
+          "dark": "#e0b22a"
+        }
+      },
+      {
+        "name": "saffron-soft",
+        "value": {
+          "light": "#fbeebd",
+          "dark": "#3a3320"
+        }
+      },
+      {
+        "name": "on-saffron",
+        "value": {
+          "light": "#2a2000",
+          "dark": "#251c00"
+        }
+      },
+      {
+        "name": "success",
+        "value": {
+          "light": "#2c6e2f",
+          "dark": "#8ed68a"
+        }
+      },
+      {
+        "name": "success-soft",
+        "value": {
+          "light": "#dcefd5",
+          "dark": "#1d3324"
+        }
+      },
+      {
+        "name": "warning",
+        "value": {
+          "light": "#7a5200",
+          "dark": "#f2c86a"
+        }
+      },
+      {
+        "name": "danger",
+        "value": {
+          "light": "#a8261c",
+          "dark": "#ff8f84"
+        }
+      },
+      {
+        "name": "danger-soft",
+        "value": {
+          "light": "#f8dcd6",
+          "dark": "#3d1f26"
+        }
+      },
+      {
+        "name": "on-danger",
+        "value": {
+          "light": "#ffffff",
+          "dark": "#1e0c09"
+        }
+      },
+      {
+        "name": "inverse-accent",
+        "value": {
+          "light": "#f2c230",
+          "dark": "#9e1f19"
+        }
+      },
+      {
+        "name": "focus",
+        "value": {
+          "light": "#1f4fa3",
+          "dark": "#f7cd45"
+        }
+      },
+      {
+        "name": "link",
+        "value": {
+          "light": "#1d4a99",
+          "dark": "#9ec3ff"
+        }
+      },
+      {
+        "name": "overlay",
+        "value": {
+          "light": "rgba(30, 27, 24, 0.55)",
+          "dark": "rgba(0, 0, 0, 0.65)"
+        }
+      },
+      {
+        "name": "tile-ground",
+        "value": {
+          "light": "#ece3cf",
+          "dark": "#141b31"
+        }
+      },
+      {
+        "name": "tile-1",
+        "value": {
+          "light": "#d2382d",
+          "dark": "#e0493c"
+        }
+      },
+      {
+        "name": "tile-2",
+        "value": {
+          "light": "#f2c230",
+          "dark": "#f2c230"
+        }
+      },
+      {
+        "name": "tile-3",
+        "value": {
+          "light": "#3f9a3a",
+          "dark": "#4fae4a"
+        }
+      },
+      {
+        "name": "tile-4",
+        "value": {
+          "light": "#2f6fc4",
+          "dark": "#4a86d8"
+        }
+      }
+    ]
+  },
+  "radius": {
+    "tokens": [
+      {
+        "name": "radius-xs",
+        "value": "2px"
+      },
+      {
+        "name": "radius-sm",
+        "value": "3px"
+      },
+      {
+        "name": "radius-md",
+        "value": "5px"
+      },
+      {
+        "name": "radius-lg",
+        "value": "6px"
+      },
+      {
+        "name": "radius-xl",
+        "value": "10px"
+      }
+    ]
+  },
+  "shadow": {
+    "tokens": [
+      {
+        "name": "shadow-sm",
+        "value": {
+          "light": "1px 2px 0 rgba(30, 27, 24, 0.2)",
+          "dark": "1px 2px 0 rgba(0, 0, 0, 0.45)"
+        }
+      },
+      {
+        "name": "shadow-md",
+        "value": {
+          "light": "2px 4px 0 rgba(30, 27, 24, 0.22), 0 8px 16px -8px rgba(30, 27, 24, 0.25)",
+          "dark": "2px 4px 0 rgba(0, 0, 0, 0.45), 0 8px 16px -8px rgba(0, 0, 0, 0.6)"
+        }
+      },
+      {
+        "name": "shadow-lg",
+        "value": {
+          "light": "3px 6px 0 rgba(30, 27, 24, 0.24), 0 18px 34px -14px rgba(30, 27, 24, 0.35)",
+          "dark": "3px 6px 0 rgba(0, 0, 0, 0.5), 0 18px 34px -14px rgba(0, 0, 0, 0.7)"
+        }
+      },
+      {
+        "name": "shadow-glow",
+        "value": {
+          "light": "0 0 0 4px rgba(242, 194, 48, 0.45)",
+          "dark": "0 0 0 4px rgba(247, 205, 69, 0.35)"
+        }
+      },
+      {
+        "name": "shadow-tile",
+        "value": {
+          "light": "3px 4px 0 rgba(30, 27, 24, 0.28)",
+          "dark": "3px 4px 0 rgba(0, 0, 0, 0.5)"
+        }
+      },
+      {
+        "name": "shadow-tile-lg",
+        "value": {
+          "light": "5px 7px 0 rgba(30, 27, 24, 0.3)",
+          "dark": "5px 7px 0 rgba(0, 0, 0, 0.55)"
+        }
+      }
+    ]
+  }
+}
